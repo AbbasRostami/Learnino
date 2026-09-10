@@ -1,11 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-
-import { api } from "@/lib/api/api";
 import { ResendChangeEmailResponse } from "@/types/auth/auth.types";
+import { api } from "@/hooks/upfetch";
 
 export const useResendChangeEmailCode = () => {
   return useMutation<ResendChangeEmailResponse, Error>({
     mutationFn: () =>
-      api.post("/auth/resend-change-email-code"),
+      api<ResendChangeEmailResponse>("/auth/resend-change-email-code", {
+        method: "POST",
+      }),
   });
 };

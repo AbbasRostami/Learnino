@@ -1,0 +1,52 @@
+{
+  "common": {
+    "appName": "کورس شاپ",
+    "loading": "در حال بارگذاری...",
+    "error": "خطایی رخ داد",
+    "retry": "تلاش مجدد",
+    "toman": "تومان"
+  },
+  "nav": {
+    "home": "خانه",
+    "courses": "دوره‌ها",
+    "blog": "بلاگ",
+    "cart": "سبد خرید",
+    "profile": "حساب کاربری"
+  },
+  "auth": {
+    "login": "ورود",
+    "register": "ثبت‌نام",
+    "logout": "خروج",
+    "email": "ایمیل",
+    "password": "رمز عبور",
+    "name": "نام (اختیاری)",
+    "namePlaceholder": "نام شما",
+    "forgotPassword": "فراموشی رمز عبور",
+    "submitLogin": "ورود به حساب",
+    "submitRegister": "ثبت‌نام و ارسال کد تایید",
+    "hasAccount": "حساب کاربری دارید؟",
+    "registerTitle": "ثبت‌نام در کورس شاپ",
+    "registerDescription": "برای شروع، حساب کاربری خود را بسازید",
+    "passwordDescription": "رمز عبور باید حداقل ۶ کاراکتر باشد",
+    "sending": "در حال ارسال...",
+    "verifying": "در حال تایید...",
+    "verifyEmailTitle": "تایید ایمیل",
+    "verifyEmailDescription": "کد ۶ رقمی ارسال‌شده به {email} را وارد کنید",
+    "submitVerify": "تایید و ورود",
+    "resendCodeIn": "ارسال مجدد کد تا: {time}",
+    "resendCode": "ارسال مجدد کد",
+    "otpResentSuccess": "کد جدید ارسال شد",
+    "changeEmail": "تغییر ایمیل",
+    
+    "validation": {
+      "emailRequired": "ایمیل الزامی است",
+      "emailInvalid": "ایمیل وارد شده معتبر نیست",
+      "passwordRequired": "رمز عبور الزامی است",
+      "passwordMin": "رمز عبور باید حداقل ۶ کاراکتر باشد",
+      "otpRequired": "کد الزامی است",
+      "otpLength": "کد تایید باید ۶ رقمی باشد",
+      "currentPasswordRequired": "رمز عبور فعلی الزامی است",
+      "newPasswordSameAsCurrent": "رمز عبور جدید نباید با رمز فعلی یکسان باشد"
+    }
+  }
+}

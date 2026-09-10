@@ -1,0 +1,52 @@
+{
+  "common": {
+    "appName": "Course Shop",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "toman": "Toman"
+  },
+  "nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "blog": "Blog",
+    "cart": "Cart",
+    "profile": "Profile"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name (Optional)",
+    "namePlaceholder": "Your Name",
+    "forgotPassword": "Forgot Password",
+    "submitLogin": "Login to Account",
+    "submitRegister": "Register and Send Verification Code",
+    "hasAccount": "Already have an account?",
+    "registerTitle": "Register in Course Shop",
+    "registerDescription": "Create your account to get started",
+    "passwordDescription": "Password must be at least 6 characters",
+    "sending": "Sending...",
+    "verifying": "Verifying...",
+    "verifyEmailTitle": "Verify Email",
+    "verifyEmailDescription": "Enter the 6-digit code sent to {email}",
+    "submitVerify": "Verify and Login",
+    "resendCodeIn": "Resend code in: {time}",
+    "resendCode": "Resend Code",
+    "otpResentSuccess": "New verification code sent",
+    "changeEmail": "Change Email",
+    
+    "validation": {
+      "emailRequired": "Email is required",
+      "emailInvalid": "The entered email is invalid",
+      "passwordRequired": "Password is required",
+      "passwordMin": "Password must be at least 6 characters",
+      "otpRequired": "Code is required",
+      "otpLength": "Verification code must be 6 digits",
+      "currentPasswordRequired": "Current password is required",
+      "newPasswordSameAsCurrent": "New password must not be the same as current password"
+    }
+  }
+}
