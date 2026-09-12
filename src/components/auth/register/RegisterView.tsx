@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import VerifyOtpForm from "../verify-email/VerifyOtpForm";
 import RegisterForm from "./RegisterForm";
-import VerifyOtpForm from "./VerifyOtpForm";
 
 type Step = "register" | "verify";
 
