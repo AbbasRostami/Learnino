@@ -17,9 +17,8 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { cn } from "@/lib/utils";
-import { getVerifyEmailSchema } from "@/schemas/auth/auth.schema";
-import { useResendVerification } from "@/services/auth/useResendVerification";
-import { useVerifyEmail } from "@/services/auth/useVerifyEmail";
+import { getVerifyEmailSchema } from "@/schemas";
+import { useResendVerification, useVerifyEmail } from "@/services";
 
 type FormValues = z.infer<ReturnType<typeof getVerifyEmailSchema>>;
 type OtpStatus = "idle" | "error" | "success";

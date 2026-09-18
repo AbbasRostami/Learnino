@@ -23,9 +23,8 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { cn } from "@/lib/utils";
-import { getResetPasswordSchema } from "@/schemas/auth/auth.schema";
-import { useResendResetCode } from "@/services/auth/useResendResetCode";
-import { useResetPassword } from "@/services/auth/useResetPassword";
+import { getResetPasswordSchema } from "@/schemas";
+import { useResendResetCode, useResetPassword } from "@/services";
 
 type FormValues = z.infer<ReturnType<typeof getResetPasswordSchema>>;
 type OtpStatus = "idle" | "error" | "success";
@@ -133,7 +132,6 @@ export default function ResetPasswordForm({ email, onBack }: Props) {
         noValidate
       >
         <FieldGroup className="space-y-5">
-          {/* OTP Code Input */}
           <Controller
             control={form.control}
             name="code"
@@ -272,7 +270,6 @@ export default function ResetPasswordForm({ email, onBack }: Props) {
             )}
           </Button>
 
-          {/* Resend OTP Timer */}
           <div className="text-center text-sm text-muted-foreground">
             {timer > 0 ? (
               <p>{t("resendCodeIn", { time: formatTime(timer) })}</p>

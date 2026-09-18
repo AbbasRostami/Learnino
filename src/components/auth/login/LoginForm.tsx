@@ -17,8 +17,8 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { getLoginSchema } from "@/schemas/auth/auth.schema";
-import { useLogin } from "@/services/auth/useLogin";
+import { getLoginSchema } from "@/schemas";
+import { useLogin } from "@/services";
 
 type FormValues = z.infer<ReturnType<typeof getLoginSchema>>;
 

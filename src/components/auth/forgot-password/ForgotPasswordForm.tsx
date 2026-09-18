@@ -16,8 +16,8 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { getForgotPasswordSchema } from "@/schemas/auth/auth.schema";
-import { useForgotPassword } from "@/services/auth/useForgotPassword";
+import { getForgotPasswordSchema } from "@/schemas";
+import { useForgotPassword } from "@/services";
 
 type FormValues = z.infer<ReturnType<typeof getForgotPasswordSchema>>;
 

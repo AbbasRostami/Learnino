@@ -16,8 +16,8 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { getRegisterSchema } from "@/schemas/auth/auth.schema";
-import { useRegister } from "@/services/auth/useRegister";
+import { getRegisterSchema } from "@/schemas";
+import { useRegister } from "@/services";
 
 type FormValues = z.infer<ReturnType<typeof getRegisterSchema>>;
 
