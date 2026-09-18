@@ -1,0 +1,118 @@
+"use client";
+
+import { Link } from "@/i18n/routing";
+import { getCategoryStyle } from "@/lib/category-icons";
+import { cn } from "@/lib/utils";
+import { usePost } from "@/services";
+import type { Post } from "@/types";
+import { formatRelativeTime } from "@/utils/formatters";
+import { Calendar, Tag } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import Image from "next/image";
+import { CommentsSection } from "./CommentsSection";
+import { PostFavoriteButton } from "./PostFavoriteButton";
+import { PostReactions } from "./PostReactions";
+import { PostShareButton } from "./PostShareButton";
+import { PostSidebar } from "./PostSidebar";
+
+interface PostDetailClientProps {
+  slug: string;
+  initialPost: Post;
+}
+
+export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
+  const t = useTranslations("blog");
+  const locale = useLocale();
+
+  const { data } = usePost(slug, initialPost);
+  const post = data?.data?.post ?? initialPost;
+
+  const style = post?.category ? getCategoryStyle(post?.category?.slug) : null;
+
+  return (
+    <article
+      className="container mx-auto px-4 sm:px-6 lg:px-8 py-12"
+      itemScope
+      itemType="https://schema.org/BlogPosting"
+    >
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-12">
+        <div className="min-w-0">
+          <header className="mb-8">
+            {post?.category && style && (
+              <Link
+                href={`/blog?category=${post?.category?.slug}`}
+                className={cn(
+                  "inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold mb-6 transition-colors hover:opacity-80 shadow-xs",
+                  style.badgeColor,
+                )}
+              >
+                <Tag className="h-3 w-3" aria-hidden="true" />
+                <span>{post?.category?.name}</span>
+              </Link>
+            )}
+
+            <h1
+              className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight leading-tight mb-4"
+              itemProp="headline"
+            >
+              {post?.title}
+            </h1>
+
+            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+              <div className="flex items-center gap-1.5">
+                <Calendar className="h-4 w-4" aria-hidden="true" />
+                <time dateTime={post?.createdAt} itemProp="datePublished">
+                  {formatRelativeTime(post?.createdAt, locale)}
+                </time>
+              </div>
+
+              <div className="flex items-center gap-2 ms-auto">
+                <PostReactions
+                  postId={post?.id}
+                  postSlug={slug}
+                  reactions={post?.reactions}
+                />
+                <PostFavoriteButton
+                  postId={post?.id}
+                  isFavorite={post?.isFavorite}
+                />
+                <PostShareButton title={post?.title} slug={post?.slug} />
+              </div>
+            </div>
+          </header>
+
+          {post?.imageUrl && (
+            <div className="relative aspect-video w-full overflow-hidden rounded-3xl mb-10 border border-border/50 shadow-lg">
+              <Image
+                src={post?.imageUrl}
+                alt={post?.title}
+                fill
+                priority
+                quality={90}
+                sizes="(max-width: 768px) 100vw, 800px"
+                className="object-cover"
+                itemProp="image"
+              />
+            </div>
+          )}
+
+          <div
+            className="prose prose-lg dark:prose-invert max-w-none mb-12 prose-headings:font-black prose-headings:tracking-tight prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-2xl prose-img:shadow-lg prose-blockquote:border-primary/40 prose-blockquote:bg-primary/5 dark:prose-blockquote:bg-primary/10 prose-blockquote:rounded-e-2xl prose-blockquote:py-1 prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm prose-pre:rounded-2xl prose-pre:shadow-lg"
+            dangerouslySetInnerHTML={{ __html: post?.content }}
+            itemProp="articleBody"
+          />
+
+          <hr className="border-dashed border-border/60 my-12" />
+
+          <CommentsSection postSlug={slug} postId={post?.id} />
+        </div>
+
+        <aside className="hidden lg:block sticky top-24 h-fit">
+          <PostSidebar categorySlug={post?.category?.slug} />
+        </aside>
+      </div>
+
+      <meta itemProp="url" content={`/blog/${post?.slug}`} />
+    </article>
+  );
+}
