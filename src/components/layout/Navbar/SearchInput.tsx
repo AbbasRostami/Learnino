@@ -1,0 +1,194 @@
+"use client";
+
+import { Link, useRouter } from "@/i18n/routing";
+import {
+  ArrowUpLeft,
+  BookOpen,
+  FileText,
+  Loader2,
+  Search,
+  X,
+} from "lucide-react";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { parseAsString, useQueryState } from "nuqs";
+import { useEffect, useRef, useState } from "react";
+
+import { Input } from "@/components/ui/input";
+import { useSearch } from "@/services";
+
+export function SearchInput() {
+  const t = useTranslations("nav");
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const [q, setQ] = useQueryState(
+    "q",
+    parseAsString.withDefault("").withOptions({
+      shallow: true,
+      throttleMs: 300,
+    }),
+  );
+
+  const { data, isLoading } = useSearch(q);
+  const searchResult = data?.data;
+
+  const hasCourses = (searchResult?.courses?.length ?? 0) > 0;
+  const hasPosts = (searchResult?.posts?.length ?? 0) > 0;
+  const hasResults = hasCourses || hasPosts;
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!q.trim()) return;
+    setIsOpen(false);
+    router.push(`/search?q=${encodeURIComponent(q.trim())}`);
+  };
+
+  return (
+    <div ref={containerRef} className="relative w-full max-w-xs lg:max-w-md">
+      <form onSubmit={handleSubmit} className="relative flex items-center">
+        <Search className="absolute right-3.5 ltr:right-auto ltr:left-3.5 h-4 w-4 text-muted-foreground pointer-events-none" />
+        <Input
+          type="search"
+          value={q}
+          onFocus={() => setIsOpen(true)}
+          onChange={(e) => {
+            setQ(e.target.value);
+            setIsOpen(true);
+          }}
+          placeholder={t("searchPlaceholder")}
+          className="h-10 text-sm rounded-full bg-muted/50 border-border/60 pr-10 ltr:pr-8 ltr:pl-10 focus-visible:bg-background focus-visible:ring-primary/40 transition-all"
+        />
+        {q && (
+          <button
+            type="button"
+            onClick={() => {
+              setQ("");
+              setIsOpen(false);
+            }}
+            className="absolute left-3 ltr:left-auto ltr:right-3 text-muted-foreground hover:text-foreground p-0.5 cursor-pointer"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        )}
+      </form>
+
+      {isOpen && q.trim().length >= 2 && (
+        <div className="absolute top-full left-0 right-0 mt-2 rounded-2xl border border-border/80 bg-popover/95 backdrop-blur-xl shadow-2xl p-3 z-50 animate-in fade-in-50 zoom-in-95 duration-200 max-h-[80vh] overflow-y-auto">
+          <Link
+            href={`/search?q=${encodeURIComponent(q.trim())}`}
+            onClick={() => setIsOpen(false)}
+            className="flex items-center justify-between p-2.5 rounded-xl hover:bg-accent text-sm font-semibold text-primary transition-colors group mb-2"
+          >
+            <span>{t("viewAllResults", { query: q })}</span>
+            <ArrowUpLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 rtl:rotate-90" />
+          </Link>
+
+          {isLoading && (
+            <div className="flex items-center justify-center py-8 text-muted-foreground gap-2 text-sm">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>{t("searching")}</span>
+            </div>
+          )}
+
+          {!isLoading && !hasResults && (
+            <div className="py-8 text-center text-sm text-muted-foreground">
+              {t("noResults", { query: q })}
+            </div>
+          )}
+
+          {!isLoading && hasResults && (
+            <div className="space-y-4">
+              {hasCourses && (
+                <div>
+                  <div className="flex items-center gap-1.5 px-2 mb-2 text-xs font-bold text-muted-foreground">
+                    <BookOpen className="h-3.5 w-3.5" />
+                    <span>{t("coursesGroup")}</span>
+                  </div>
+                  <div className="space-y-1">
+                    {searchResult?.courses.map((course) => (
+                      <Link
+                        key={course.id}
+                        href={`/courses/${course.slug}`}
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-3 p-2 rounded-xl hover:bg-accent transition-colors"
+                      >
+                        <div className="relative h-12 w-16 shrink-0 rounded-lg overflow-hidden bg-muted border border-border/50">
+                          {course.imageUrl && (
+                            <Image
+                              src={course.imageUrl}
+                              alt={course.title}
+                              fill
+                              className="object-cover"
+                            />
+                          )}
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                          <p className="text-sm font-medium text-foreground truncate">
+                            {course.title}
+                          </p>
+                          <p className="text-xs text-muted-foreground truncate">
+                            {course.category?.name}
+                          </p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {hasPosts && (
+                <div>
+                  <div className="flex items-center gap-1.5 px-2 mb-2 text-xs font-bold text-muted-foreground">
+                    <FileText className="h-3.5 w-3.5" />
+                    <span>{t("postsGroup")}</span>
+                  </div>
+                  <div className="space-y-1">
+                    {searchResult?.posts.map((post) => (
+                      <Link
+                        key={post.id}
+                        href={`/blog/${post.slug}`}
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-3 p-2 rounded-xl hover:bg-accent transition-colors"
+                      >
+                        <div className="relative h-10 w-12 shrink-0 rounded-lg overflow-hidden bg-muted border border-border/50">
+                          {post.imageUrl && (
+                            <Image
+                              src={post.imageUrl}
+                              alt={post.title}
+                              fill
+                              className="object-cover"
+                            />
+                          )}
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                          <p className="text-sm font-medium text-foreground truncate">
+                            {post.title}
+                          </p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
