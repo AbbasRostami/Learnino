@@ -1,12 +1,7 @@
 import type { useTranslations } from "next-intl";
 import { z } from "zod";
 
-// 🎯 تعریف تایپ دقیق برای تابع ترجمه بخش auth
 type AuthT = ReturnType<typeof useTranslations<"auth">>;
-
-// ═══════════════════════════════════════════════════
-// 1. Common Schemas
-// ═══════════════════════════════════════════════════
 
 const getEmailSchema = (t: AuthT) =>
   z
@@ -28,10 +23,6 @@ const getOtpSchema = (t: AuthT) =>
     .min(1, t("validation.otpRequired"))
     .length(6, t("validation.otpLength"))
     .regex(/^\d{6}$/, t("validation.otpLength"));
-
-// ═══════════════════════════════════════════════════
-// 2. Schema Factories
-// ═══════════════════════════════════════════════════
 
 export const getRegisterSchema = (t: AuthT) =>
   z.object({
