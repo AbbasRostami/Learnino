@@ -1,5 +1,6 @@
 "use client";
 
+import { AppBreadcrumb } from "@/components/shared/AppBreadcrumb";
 import { Link } from "@/i18n/routing";
 import { getCategoryStyle } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";
@@ -9,7 +10,7 @@ import { formatRelativeTime } from "@/utils/formatters";
 import { Calendar, Tag } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import { CommentsSection } from "./CommentsSection";
+import { CommentsSection } from "./comments/CommentsSection";
 import { PostFavoriteButton } from "./PostFavoriteButton";
 import { PostReactions } from "./PostReactions";
 import { PostShareButton } from "./PostShareButton";
@@ -22,12 +23,25 @@ interface PostDetailClientProps {
 
 export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
   const t = useTranslations("blog");
+  const tNav = useTranslations("nav");
   const locale = useLocale();
 
   const { data } = usePost(slug, initialPost);
   const post = data?.data?.post ?? initialPost;
 
   const style = post?.category ? getCategoryStyle(post?.category?.slug) : null;
+  const breadcrumbItems = [
+    { label: tNav("blog"), href: "/blog" },
+    ...(post?.category
+      ? [
+          {
+            label: post.category.name,
+            href: `/blog?category=${post.category.slug}`,
+          },
+        ]
+      : []),
+    { label: post?.title },
+  ];
 
   return (
     <article
@@ -35,6 +49,7 @@ export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
       itemScope
       itemType="https://schema.org/BlogPosting"
     >
+      <AppBreadcrumb items={breadcrumbItems} className="mb-6" />
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-12">
         <div className="min-w-0">
           <header className="mb-8">

@@ -1,4 +1,4 @@
-import { PostDetailClient } from "@/components/blog/detail/PostDetailClient";
+import { PostDetailClient } from "@/components/blog/detail";
 import { getPostBySlugServer } from "@/services/post/posts";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 

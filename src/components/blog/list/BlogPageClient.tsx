@@ -10,6 +10,7 @@ import { parseAsInteger, parseAsString, useQueryStates } from "nuqs";
 import { useState } from "react";
 import { BlogFilters } from "./BlogFilters";
 import { BlogPostCard } from "./BlogPostCard";
+import { AppBreadcrumb } from "@/components/shared/AppBreadcrumb";
 
 interface BlogPageClientProps {
   initialPosts?: Post[];
@@ -55,6 +56,7 @@ export function BlogPageClient({ initialPosts = [] }: BlogPageClientProps) {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <AppBreadcrumb className="mb-6" />
       <div className="flex flex-col items-center text-center gap-4 mb-12 max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-xs font-semibold text-primary shadow-sm">
           <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />

@@ -1,5 +1,5 @@
-import { BlogPageClient } from "@/components/blog/list/BlogPageClient";
-import { PostsGridSkeleton } from "@/components/skeleton/PostsGridSkeleton";
+import { BlogPageClient } from "@/components/blog/list";
+import { PostsGridSkeleton } from "@/components/skeleton";
 import { getLatestPostsServer } from "@/services/post/posts";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
