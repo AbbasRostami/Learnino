@@ -1,0 +1,180 @@
+"use client";
+
+import { useLocale } from "@/hooks/useLocale";
+import { Link } from "@/i18n/routing";
+import { getCategoryStyle } from "@/lib/category-icons";
+import { cn } from "@/lib/utils";
+import type { Course } from "@/types";
+import { BookOpen, Heart, MessageCircle, Users } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+
+interface CoursesListCardProps {
+  course: Course;
+  priority?: boolean;
+  index?: number;
+}
+
+export function CoursesListCard({
+  course,
+  priority = false,
+  index = 0,
+}: CoursesListCardProps) {
+  const t = useTranslations("course");
+  const style = getCategoryStyle(course?.category?.slug);
+  const locale = useLocale();
+  const prefersReducedMotion = useReducedMotion();
+
+  const isFree = course?.price === 0;
+
+  return (
+    <motion.article
+      initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
+      whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
+      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/50 bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-primary/40 motion-reduce:transition-none motion-reduce:hover:transform-none"
+      itemScope
+      itemType="https://schema.org/Course"
+    >
+      <Link
+        href={`/courses/${course?.slug}`}
+        className="relative block aspect-16/10 w-full overflow-hidden bg-muted"
+        aria-label={course?.title}
+      >
+        {course?.imageUrl ? (
+          <Image
+            src={course.imageUrl}
+            alt={course.title}
+            fill
+            priority={priority}
+            quality={85}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-110 motion-reduce:transition-none"
+            itemProp="image"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-primary/5 to-brand-accent/5">
+            <BookOpen className="h-12 w-12 text-muted-foreground/30" />
+          </div>
+        )}
+
+        <div
+          className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          aria-hidden="true"
+        />
+
+        <span className="absolute top-3 inset-e-3 flex items-center rounded-full bg-background/90 backdrop-blur-md px-2.5 py-1 text-[10px] font-bold shadow-sm border border-border/50">
+          {t(`levels.${course?.level}`)}
+        </span>
+
+        {isFree && (
+          <span className="absolute top-3 inset-s-3 flex items-center gap-1 rounded-full bg-emerald-500 text-white px-2.5 py-1 text-[10px] font-black shadow-lg">
+            {t("free")}
+          </span>
+        )}
+      </Link>
+
+      <div className="flex flex-1 flex-col p-5">
+        <div className="flex items-center justify-between mb-3 text-xs font-semibold">
+          <span
+            className={cn(
+              "px-2.5 py-1 rounded-full text-[10px] font-bold",
+              style.badgeColor,
+            )}
+          >
+            {course?.category?.name}
+          </span>
+          <div
+            className="flex items-center gap-1 text-muted-foreground"
+            title={t("studentsCount", { count: course?.stats?.enrollments })}
+          >
+            <Users className="h-3.5 w-3.5" aria-hidden="true" />
+            <span className="font-bold">
+              {course?.stats?.enrollments?.toLocaleString()}
+            </span>
+          </div>
+        </div>
+
+        <h3
+          className="mb-2 line-clamp-2 text-base md:text-[17px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors min-h-12"
+          itemProp="name"
+        >
+          <Link
+            href={`/courses/${course?.slug}`}
+            className="hover:underline underline-offset-2"
+          >
+            {course?.title}
+          </Link>
+        </h3>
+
+        <div className="mt-2 flex items-center gap-2">
+          <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border-2 border-background bg-muted shadow-xs ring-1 ring-border/40">
+            {course?.teacher?.avatar ? (
+              <Image
+                src={course.teacher.avatar}
+                alt={course.teacher.name}
+                fill
+                sizes="32px"
+                className="object-cover"
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center bg-primary/10 text-primary text-xs font-bold">
+                {course?.teacher?.name?.charAt(0)}
+              </div>
+            )}
+          </div>
+          <span
+            className="text-xs font-semibold text-muted-foreground truncate"
+            itemProp="provider"
+          >
+            {course?.teacher?.name}
+          </span>
+        </div>
+
+        <div className="mt-auto pt-4 flex items-center justify-between border-t border-dashed border-border/60">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <Heart className="h-3.5 w-3.5" aria-hidden="true" />
+              <span className="font-semibold">
+                {course?.reactions?.likes?.toLocaleString()}
+              </span>
+            </div>
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
+              <span className="font-semibold">
+                {course?.stats?.comments?.toLocaleString()}
+              </span>
+            </div>
+          </div>
+
+          <div className="text-end">
+            {isFree ? (
+              <span className="text-sm font-black text-emerald-600 dark:text-emerald-400">
+                {t("free")}
+              </span>
+            ) : (
+              <div className="flex flex-col items-end">
+                <span
+                  className="text-base font-black leading-tight text-foreground"
+                  dir="ltr"
+                >
+                  {new Intl.NumberFormat(
+                    locale === "fa" ? "fa-IR" : "en-US",
+                  ).format(course?.price)}
+                </span>
+                <span className="text-[10px] text-muted-foreground -mt-0.5">
+                  {t("currency")}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <meta itemProp="url" content={`/courses/${course?.slug}`} />
+      <meta itemProp="description" content={course?.description} />
+    </motion.article>
+  );
+}
