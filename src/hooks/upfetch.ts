@@ -1,47 +1,51 @@
 import { up } from "up-fetch";
 import { useAuthStore } from "./authStore";
 
-// ═══════════════════════════════════════════════════
-// 1. Constants
-// ═══════════════════════════════════════════════════
-const API_BASE_URL =
-  process.env.NODE_ENV === "development"
-    ? "/api"
-    : `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
+const isServer = typeof window === "undefined";
 
-console.log("🚀 API_BASE_URL loaded as:", API_BASE_URL);
+const RAW_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "https://course-shop-api.onrender.com";
+
+const CLEAN_BASE_URL = `${RAW_BASE_URL.replace(/\/$/, "")}/api`;
+
+const API_BASE_URL = isServer
+  ? CLEAN_BASE_URL
+  : process.env.NODE_ENV === "development"
+    ? "/api"
+    : CLEAN_BASE_URL;
 
 const DEFAULT_LOCALE = "fa";
 const SUPPORTED_LOCALES = ["fa", "en"] as const;
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
 
-// ═══════════════════════════════════════════════════
-// 2. Locale Detection
-// ═══════════════════════════════════════════════════
 export const getCurrentLocale = (): Locale => {
-  if (typeof window === "undefined") {
+  if (isServer) {
     return DEFAULT_LOCALE;
   }
 
-  const pathLocale = window.location.pathname.split("/")[1];
-  if (SUPPORTED_LOCALES.includes(pathLocale as Locale)) {
-    return pathLocale as Locale;
-  }
+  try {
+    const pathLocale = window.location.pathname.split("/")[1];
+    if (SUPPORTED_LOCALES.includes(pathLocale as Locale)) {
+      return pathLocale as Locale;
+    }
 
-  const cookieMatch = document.cookie.match(/(?:^|;\s*)NEXT_LOCALE=([^;]+)/);
-  if (cookieMatch && SUPPORTED_LOCALES.includes(cookieMatch[1] as Locale)) {
-    return cookieMatch[1] as Locale;
+    const cookieMatch = document.cookie.match(/(?:^|;\s*)NEXT_LOCALE=([^;]+)/);
+    if (cookieMatch && SUPPORTED_LOCALES.includes(cookieMatch[1] as Locale)) {
+      return cookieMatch[1] as Locale;
+    }
+  } catch {
+    return DEFAULT_LOCALE;
   }
 
   return DEFAULT_LOCALE;
 };
 
-// ═══════════════════════════════════════════════════
-// 3. Refresh Token Queue
-// ═══════════════════════════════════════════════════
 let refreshPromise: Promise<boolean> | null = null;
 
 const refreshAccessToken = async () => {
+  if (isServer) return false;
+
   if (refreshPromise) {
     return refreshPromise;
   }
@@ -62,29 +66,54 @@ const refreshAccessToken = async () => {
   return refreshPromise;
 };
 
-// ═══════════════════════════════════════════════════
-// 4. Session Expired Handler
-// ═══════════════════════════════════════════════════
 const handleSessionExpired = () => {
+  if (isServer) return;
+
   useAuthStore.getState().resetAuth();
 
-  if (typeof window !== "undefined") {
-    const locale = getCurrentLocale();
-    const homePath = `/${locale}`;
+  const locale = getCurrentLocale();
+  const homePath = `/${locale}`;
 
-    if (window.location.pathname !== homePath) {
-      window.location.href = homePath;
-    }
+  if (window.location.pathname !== homePath) {
+    window.location.href = homePath;
   }
 };
 
-// ═══════════════════════════════════════════════════
-// 5. Authenticated Fetch
-// ═══════════════════════════════════════════════════
+const PUBLIC_AUTH_ENDPOINTS = [
+  "/auth/login",
+  "/auth/register",
+  "/auth/verify-email",
+  "/auth/forgot-password",
+  "/auth/reset-password",
+  "/auth/resend-verification",
+  "/auth/resend-reset-code",
+  "/auth/refresh",
+];
+
+const isPublicAuthEndpoint = (url: string) => {
+  return PUBLIC_AUTH_ENDPOINTS.some((endpoint) => url.includes(endpoint));
+};
+
 const authenticatedFetch: typeof fetch = async (input, init) => {
-  const response = await fetch(input, init);
+  const isRequestInstance =
+    typeof Request !== "undefined" && input instanceof Request;
+
+  const requestUrl =
+    typeof input === "string"
+      ? input
+      : isRequestInstance
+        ? input.url
+        : String(input);
+
+  const firstAttemptInput = isRequestInstance ? input.clone() : input;
+
+  const response = await fetch(firstAttemptInput, init);
 
   if (response.status !== 401) {
+    return response;
+  }
+
+  if (isServer || isPublicAuthEndpoint(requestUrl)) {
     return response;
   }
 
@@ -95,16 +124,14 @@ const authenticatedFetch: typeof fetch = async (input, init) => {
     return response;
   }
 
-  return fetch(input, init);
+  const retryInput = isRequestInstance ? input.clone() : input;
+  return fetch(retryInput, init);
 };
 
-// ═══════════════════════════════════════════════════
-// 6. up-fetch Instance
-// ═══════════════════════════════════════════════════
 export const api = up(authenticatedFetch, () => ({
   baseUrl: API_BASE_URL,
   credentials: "include",
-  timeout: 10_000,
+  timeout: 50_000,
   headers: {
     Accept: "application/json",
     "Accept-Language": getCurrentLocale(),
