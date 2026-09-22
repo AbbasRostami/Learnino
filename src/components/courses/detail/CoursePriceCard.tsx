@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/hooks/authStore";
 import { useLocale } from "@/hooks/useLocale";
-import { Link, useRouter } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useAddToCart, useEnrollFreeCourse } from "@/services";
 import type { Course } from "@/types";
@@ -28,12 +28,9 @@ export function CoursePriceCard({ course, slug }: CoursePriceCardProps) {
   const t = useTranslations("course");
   const tCart = useTranslations("cart");
   const locale = useLocale();
-  const router = useRouter();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
-  const { mutate: addToCart, isPending: isAdding } = useAddToCart({
-    onSuccessCallback: () => router.push("/cart"),
-  });
+  const { mutate: addToCart, isPending: isAdding } = useAddToCart({});
 
   const { mutate: enrollFree, isPending: isEnrolling } = useEnrollFreeCourse();
 
@@ -42,24 +39,60 @@ export function CoursePriceCard({ course, slug }: CoursePriceCardProps) {
 
   const handleAddToCart = () => {
     if (!isAuthenticated) {
-      toast.info(tCart("loginRequired"));
-      router.push("/auth/login");
+      try {
+        const storedCart = JSON.parse(
+          localStorage.getItem("learnino_guest_cart") || "[]",
+        );
+
+        const guestItem = {
+          id: course.id,
+          courseId: course.id,
+          title: course.title,
+          slug: course.slug,
+          price: course.price,
+          imageUrl: course.imageUrl,
+          level: course.level,
+          category: course.category,
+          addedAt: new Date().toISOString(),
+        };
+
+        const exists = storedCart.some((item: any) =>
+          typeof item === "string"
+            ? item === course.id
+            : item.courseId === course.id,
+        );
+
+        if (!exists) {
+          storedCart.push(guestItem);
+          localStorage.setItem(
+            "learnino_guest_cart",
+            JSON.stringify(storedCart),
+          );
+
+          window.dispatchEvent(new Event("cart-updated"));
+
+          toast.success(tCart("addSuccess"));
+        } else {
+          toast.info(tCart("alreadyInCart"));
+        }
+      } catch {
+        toast.error(tCart("errorGeneral"));
+      }
       return;
     }
+
     addToCart({ courseId: course.id });
   };
 
   const handleEnrollFree = () => {
     if (!isAuthenticated) {
       toast.info(tCart("loginRequired"));
-      router.push("/auth/login");
       return;
     }
     enrollFree(slug);
   };
 
   return (
-    // 🎯 شیشه‌ای و دارای گرادیان ملایم در لایت مود
     <div className="relative overflow-hidden rounded-3xl border border-border/50 bg-card/80 backdrop-blur-xl shadow-2xl dark:shadow-none">
       <div
         className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-primary/20 blur-3xl"

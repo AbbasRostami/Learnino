@@ -93,7 +93,7 @@ export function CourseCommentsSection({
             size="sm"
             className="rounded-full px-6 font-bold cursor-pointer"
           >
-            <Link href="/auth/login">ورود به حساب</Link>
+            <Link href="/login">ورود به حساب</Link>
           </Button>
         </div>
       )}

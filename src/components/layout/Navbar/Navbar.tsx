@@ -31,7 +31,7 @@ export function Navbar() {
           <div className="flex items-center gap-2">
             <LanguageToggle />
             <ThemeToggle />
-            {isAuthenticated && <CartButton />}
+            <CartButton />
             {isAuthenticated ? <UserMenu /> : <AuthButtons />}
           </div>
         </div>
