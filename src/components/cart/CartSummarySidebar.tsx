@@ -77,17 +77,15 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
   const formatPrice = (value: number) =>
     new Intl.NumberFormat(locale === "fa" ? "fa-IR" : "en-US").format(value);
 
-  // 🎯 مدیریت هوشمند انتخاب روش پرداخت
   const handleSelectPaymentMethod = (method: "ZARINPAL" | "WALLET") => {
     if (method === "WALLET" && !isAuthenticated) {
       toast.info(t("loginRequired"));
-      router.push("/auth/login?redirect=/cart");
+      router.push("/login?redirect=/cart");
       return;
     }
     setPaymentMethod(method);
   };
 
-  // 🎯 مدیریت هوشمند اعمال کد تخفیف
   const handleApplyDiscount = (e: React.FormEvent) => {
     e.preventDefault();
     if (!discountCode.trim()) return;
@@ -124,7 +122,6 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
 
   return (
     <div className="flex flex-col gap-6 p-6 rounded-3xl border border-border/50 bg-card/80 backdrop-blur-xl shadow-xl">
-      {/* 1. بخش کد تخفیف */}
       <div className="flex flex-col gap-2.5">
         <label
           htmlFor="discount"
@@ -207,14 +204,12 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
 
       <hr className="border-dashed border-border/60" />
 
-      {/* 2. انتخاب روش پرداخت */}
       <div className="flex flex-col gap-2">
         <span className="text-xs font-bold text-foreground">
           {t("paymentSection")}
         </span>
 
         <div className="grid grid-cols-2 gap-2">
-          {/* درگاه زرین‌پال */}
           <button
             type="button"
             onClick={() => handleSelectPaymentMethod("ZARINPAL")}
@@ -230,7 +225,6 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
             <span>{tOrder("paymentMethods.ZARINPAL")}</span>
           </button>
 
-          {/* کیف‌پول (با بج قفل برای کاربران مهمان) */}
           <button
             type="button"
             onClick={() => handleSelectPaymentMethod("WALLET")}
@@ -250,7 +244,6 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
           </button>
         </div>
 
-        {/* نمایش موجودی کیف‌پول (فقط در صورت لاگین بودن) */}
         {paymentMethod === "WALLET" && isAuthenticated && (
           <div
             className={cn(
@@ -270,7 +263,6 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
 
       <hr className="border-dashed border-border/60" />
 
-      {/* 3. خلاصه قیمت‌ها */}
       <div className="flex flex-col gap-2.5 text-xs">
         <div className="flex justify-between text-muted-foreground font-semibold">
           <span>{t("subtotal")}</span>
@@ -299,7 +291,6 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
         </div>
       </div>
 
-      {/* 4. دکمه پرداخت/ورود نهایی (CTA) */}
       <Button
         size="lg"
         onClick={handleCheckout}
@@ -331,7 +322,6 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
         )}
       </Button>
 
-      {/* تضمین امنیت */}
       <div className="flex items-center justify-center gap-1.5 text-[10px] text-muted-foreground font-semibold">
         <ShieldCheck className="h-4 w-4 text-emerald-500" aria-hidden="true" />
         <span>{t("secureCheckout")}</span>
