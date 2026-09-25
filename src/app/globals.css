@@ -4,41 +4,47 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ═══════════════════════════════════════════════════════════
+   ۱. THEME TOKENS MAPPING (مطابق داکیومنت رسمی shadcn)
+   ═══════════════════════════════════════════════════════════ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Charts */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Radius Scale (دقیقاً فرمول داکیومنت shadcn) */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -46,85 +52,181 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* 🌸 اضافه کردن توکن‌های اختصاصی (با رعایت فرمت shadcn) */
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-accent-foreground: var(--brand-accent-foreground);
+  --color-brand-cyan: var(--brand-cyan);
 }
 
+/* ═══════════════════════════════════════════════════════════
+   ۲. LIGHT MODE (بر پایه Slate + Indigo لرنینو)
+   ═══════════════════════════════════════════════════════════ */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --radius: 0.75rem;
+
+  /* App Surface */
+  --background: oklch(98.4% 0.003 247.858); /* slate-50 */
+  --foreground: oklch(20.8% 0.042 265.755); /* slate-900 */
+
+  /* Cards & Popovers */
+  --card: oklch(100% 0 0); /* pure white */
+  --card-foreground: oklch(20.8% 0.042 265.755); /* slate-900 */
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(20.8% 0.042 265.755);
+
+  /* Primary (دکمه‌های اصلی، برند و CTA) -> Indigo-600 */
+  --primary: oklch(51.1% 0.262 276.966); /* indigo-600 */
+  --primary-foreground: oklch(98.4% 0.003 247.858); /* slate-50 */
+
+  /* Secondary */
+  --secondary: oklch(96.8% 0.007 247.896); /* slate-100 */
+  --secondary-foreground: oklch(27.9% 0.041 260.031); /* slate-800 */
+
+  /* Muted */
+  --muted: oklch(96.8% 0.007 247.896); /* slate-100 */
+  --muted-foreground: oklch(55.4% 0.046 257.417); /* slate-500 */
+
+  /* Accent (Hover ها و آیتم‌های انتخابی) -> Violet ملایم */
+  --accent: oklch(96.9% 0.016 293.756); /* violet-50 */
+  --accent-foreground: oklch(54.1% 0.281 293.009); /* violet-600 */
+
+  /* Destructive & Status */
+  --destructive: oklch(57.7% 0.245 27.325); /* red-600 */
+
+  /* Borders, Inputs, Focus Ring */
+  --border: oklch(92.9% 0.013 255.508); /* slate-200 */
+  --input: oklch(92.9% 0.013 255.508); /* slate-200 */
+  --ring: oklch(58.5% 0.233 277.117); /* indigo-500 */
+
+  /* 🌸 Extra Custom Tokens (طیف‌های لوکوی لرنینو) */
+  --brand-accent: oklch(54.1% 0.281 293.009); /* violet-600 (لیلیوم) */
+  --brand-accent-foreground: oklch(100% 0 0);
+  --brand-cyan: oklch(74.6% 0.16 232.661); /* sky-400 */
+
+  /* Charts */
+  --chart-1: oklch(51.1% 0.262 276.966); /* indigo-600 */
+  --chart-2: oklch(54.1% 0.281 293.009); /* violet-600 */
+  --chart-3: oklch(74.6% 0.16 232.661); /* sky-400 */
+  --chart-4: oklch(76.9% 0.188 70.08); /* amber-500 */
+  --chart-5: oklch(69.6% 0.17 162.48); /* emerald-500 */
+
+  /* Sidebar */
+  --sidebar: oklch(100% 0 0);
+  --sidebar-foreground: oklch(20.8% 0.042 265.755);
+  --sidebar-primary: oklch(51.1% 0.262 276.966);
+  --sidebar-primary-foreground: oklch(98.4% 0.003 247.858);
+  --sidebar-accent: oklch(96.8% 0.007 247.896);
+  --sidebar-accent-foreground: oklch(51.1% 0.262 276.966);
+  --sidebar-border: oklch(92.9% 0.013 255.508);
+  --sidebar-ring: oklch(58.5% 0.233 277.117);
 }
 
+/* ═══════════════════════════════════════════════════════════
+   ۳. DARK MODE (سرمه‌ای تیره + Indigo/Violet درخشان)
+   ═══════════════════════════════════════════════════════════ */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* App Surface -> سرمه‌ای عمیق لوگو لرنینو (#0B1120) */
+  --background: oklch(15% 0.035 265);
+  --foreground: oklch(96.8% 0.007 247.896); /* slate-100 */
+
+  /* Cards & Popovers */
+  --card: oklch(20.8% 0.042 265.755); /* slate-900 */
+  --card-foreground: oklch(96.8% 0.007 247.896); /* slate-100 */
+  --popover: oklch(20.8% 0.042 265.755); /* slate-900 */
+  --popover-foreground: oklch(96.8% 0.007 247.896);
+
+  /* Primary -> Indigo روشن‌تر در دارک مود */
+  --primary: oklch(67.3% 0.182 276.935); /* indigo-400 */
+  --primary-foreground: oklch(15% 0.035 265); /* سرمه‌ای تیره */
+
+  /* Secondary */
+  --secondary: oklch(27.9% 0.041 260.031); /* slate-800 */
+  --secondary-foreground: oklch(96.8% 0.007 247.896);
+
+  /* Muted */
+  --muted: oklch(27.9% 0.041 260.031); /* slate-800 */
+  --muted-foreground: oklch(70.4% 0.04 256.788); /* slate-400 */
+
+  /* Accent */
+  --accent: oklch(25.7% 0.09 281.288); /* indigo-950 */
+  --accent-foreground: oklch(81.1% 0.111 293.571); /* violet-300 */
+
+  /* Destructive */
+  --destructive: oklch(70.4% 0.191 22.216); /* red-400 */
+
+  /* Borders, Inputs, Focus Ring */
+  --border: oklch(100% 0 0 / 10%);
+  --input: oklch(100% 0 0 / 15%);
+  --ring: oklch(67.3% 0.182 276.935); /* indigo-400 */
+
+  /* Extra Custom Tokens */
+  --brand-accent: oklch(70.2% 0.183 293.541); /* violet-400 */
+  --brand-accent-foreground: oklch(15% 0.035 265);
+  --brand-cyan: oklch(82.8% 0.111 230.318); /* sky-300 */
+
+  /* Charts */
+  --chart-1: oklch(67.3% 0.182 276.935); /* indigo-400 */
+  --chart-2: oklch(70.2% 0.183 293.541); /* violet-400 */
+  --chart-3: oklch(82.8% 0.111 230.318); /* sky-300 */
+  --chart-4: oklch(82.8% 0.189 84.429); /* amber-400 */
+  --chart-5: oklch(76.5% 0.177 163.223); /* emerald-400 */
+
+  /* Sidebar */
+  --sidebar: oklch(20.8% 0.042 265.755);
+  --sidebar-foreground: oklch(96.8% 0.007 247.896);
+  --sidebar-primary: oklch(67.3% 0.182 276.935);
+  --sidebar-primary-foreground: oklch(15% 0.035 265);
+  --sidebar-accent: oklch(27.9% 0.041 260.031);
+  --sidebar-accent-foreground: oklch(67.3% 0.182 276.935);
+  --sidebar-border: oklch(100% 0 0 / 10%);
+  --sidebar-ring: oklch(67.3% 0.182 276.935);
 }
 
+/* ═══════════════════════════════════════════════════════════
+   ۴. BASE STYLES
+   ═══════════════════════════════════════════════════════════ */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
-  html {
-    @apply font-sans;
+}
+
+/* ═══ Hero float animation ═══ */
+@theme {
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float 7s ease-in-out 1.5s infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+}
+
+
+/* ✅ فقط اگر واقعاً نیاز داشتید، این‌ها را نگه دارید */
+
+/* اسکرول‌بار نامرئی */
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* اسکرول‌بار سفارشی با تم لرنینو */
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    @apply size-1.5;
+  }
+  &::-webkit-scrollbar-track {
+    @apply rounded-full bg-transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-primary/40 hover:bg-primary/60;
   }
 }
