@@ -5,85 +5,119 @@ type CategoryT = ReturnType<typeof useTranslations<"category">>;
 
 export const getCreateCategorySchema = (t: CategoryT) =>
   z.object({
-    name: z
+    nameFa: z
       .string()
       .trim()
-      .min(2, t("validation.nameMin"))
-      .max(50, t("validation.nameMax")),
+      .min(2, { message: t("validation.nameFaMin") })
+      .max(50, { message: t("validation.nameFaMax") }),
 
-    description: z
+    nameEn: z
       .string()
       .trim()
-      .max(500, t("validation.descriptionMax"))
+      .min(2, { message: t("validation.nameEnMin") })
+      .max(50, { message: t("validation.nameEnMax") }),
+
+    descriptionFa: z
+      .string()
+      .trim()
+      .max(500, { message: t("validation.descriptionMax") })
       .optional()
       .or(z.literal("")),
 
-    show: z.boolean().optional().default(true),
+    descriptionEn: z
+      .string()
+      .trim()
+      .max(500, { message: t("validation.descriptionMax") })
+      .optional()
+      .or(z.literal("")),
+
+    show: z.boolean().default(true),
   });
 
 export const getUpdateCategorySchema = (t: CategoryT) =>
   z
     .object({
-      name: z
+      nameFa: z
         .string()
         .trim()
-        .min(2, t("validation.nameMin"))
-        .max(50, t("validation.nameMax"))
+        .max(50, { message: t("validation.nameFaMax") })
         .optional()
         .or(z.literal("")),
 
-      description: z
+      nameEn: z
         .string()
         .trim()
-        .max(500, t("validation.descriptionMax"))
+        .max(50, { message: t("validation.nameEnMax") })
+        .optional()
+        .or(z.literal("")),
+
+      descriptionFa: z
+        .string()
+        .trim()
+        .max(500, { message: t("validation.descriptionMax") })
+        .optional()
+        .or(z.literal("")),
+
+      descriptionEn: z
+        .string()
+        .trim()
+        .max(500, { message: t("validation.descriptionMax") })
         .optional()
         .or(z.literal("")),
     })
+    .superRefine((data, ctx) => {
+      if (
+        data?.nameFa &&
+        data.nameFa.trim().length > 0 &&
+        data.nameFa.trim().length < 2
+      ) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: t("validation.nameFaMin"),
+          path: ["nameFa"],
+        });
+      }
+      if (
+        data?.nameEn &&
+        data.nameEn.trim().length > 0 &&
+        data.nameEn.trim().length < 2
+      ) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: t("validation.nameEnMin"),
+          path: ["nameEn"],
+        });
+      }
+    })
     .refine(
       (data) => {
-        const hasName = Boolean(data.name && data.name.length > 0);
-        const hasDescription =
-          data.description !== undefined && data.description !== null;
-        return hasName || hasDescription;
+        const hasNameFa = Boolean(
+          data?.nameFa && data.nameFa.trim().length > 0,
+        );
+        const hasNameEn = Boolean(
+          data?.nameEn && data.nameEn.trim().length > 0,
+        );
+        const hasDescFa = Boolean(
+          data?.descriptionFa && data.descriptionFa.trim().length > 0,
+        );
+        const hasDescEn = Boolean(
+          data?.descriptionEn && data.descriptionEn.trim().length > 0,
+        );
+
+        return hasNameFa || hasNameEn || hasDescFa || hasDescEn;
       },
       {
         message: t("validation.atLeastOneField"),
-        path: ["name"],
+        path: ["nameFa"],
       },
     );
 
-export const getToggleVisibilitySchema = (t: CategoryT) =>
-  z.object({
-    show: z.boolean({
-      error: (issue) =>
-        issue.input === undefined
-          ? t("validation.showRequired")
-          : t("validation.showInvalid"),
-    }),
-  });
+export type CreateCategorySchemaType = ReturnType<
+  typeof getCreateCategorySchema
+>;
+export type CreateCategoryFormValues = z.infer<CreateCategorySchemaType>;
 
-export const getAdminCategoriesSchema = (t: CategoryT) =>
-  z.object({
-    page: z.coerce.number().int().min(1).default(1).optional(),
-    limit: z.coerce.number().int().min(1).max(100).default(10).optional(),
-    show: z.enum(["true", "false"]).optional(),
-    search: z
-      .string()
-      .trim()
-      .max(100, t("validation.searchMaxLength"))
-      .optional(),
-  });
-
-export const getCategoryUuidSchema = (t: CategoryT) =>
-  z.object({
-    id: z.string().uuid(t("validation.invalidUuid")),
-  });
-
-export const getCategorySlugSchema = (t: CategoryT) =>
-  z.object({
-    slug: z
-      .string()
-      .trim()
-      .min(1, t("validation.slugRequired"))
-      .max(100, t("validation.slugMaxLength")),
-  });
+export type UpdateCategorySchemaType = ReturnType<
+  typeof getUpdateCategorySchema
+>;
+export type UpdateCategoryFormValues = z.infer<UpdateCategorySchemaType>;
