@@ -17,36 +17,21 @@ export const getCreateDiscountSchema = (t: DiscountT) =>
         .regex(DISCOUNT_CODE_REGEX, { message: t("validation.codePattern") }),
 
       type: z.enum(["PERCENTAGE", "AMOUNT"], {
-        error: () => t("validation.typeRequired"),
+        message: t("validation.typeRequired"),
       }),
 
-      value: z.coerce
-        .number({
-          error: (issue) =>
-            issue.input === undefined || issue.input === ""
-              ? t("validation.valueRequired")
-              : t("validation.valueInvalid"),
-        })
+      value: z
+        .number({ message: t("validation.valueInvalid") })
         .positive({ message: t("validation.valuePositive") }),
 
-      maxUses: z.coerce
-        .number({
-          error: (issue) =>
-            issue.input === undefined || issue.input === ""
-              ? t("validation.maxUsesRequired")
-              : t("validation.maxUsesInvalid"),
-        })
+      maxUses: z
+        .number({ message: t("validation.maxUsesInvalid") })
         .int({ message: t("validation.maxUsesInt") })
         .min(1, { message: t("validation.maxUsesMin") })
         .max(10000, { message: t("validation.maxUsesMax") }),
 
-      expiresInDays: z.coerce
-        .number({
-          error: (issue) =>
-            issue.input === undefined || issue.input === ""
-              ? t("validation.expiresInDaysRequired")
-              : t("validation.expiresInDaysInvalid"),
-        })
+      expiresInDays: z
+        .number({ message: t("validation.expiresInDaysInvalid") })
         .int({ message: t("validation.expiresInDaysInt") })
         .min(1, { message: t("validation.expiresInDaysMin") })
         .max(365, { message: t("validation.expiresInDaysMax") }),
@@ -72,6 +57,11 @@ export const getCreateDiscountSchema = (t: DiscountT) =>
         }
       }
     });
+
+export type CreateDiscountSchemaType = ReturnType<
+  typeof getCreateDiscountSchema
+>;
+export type CreateDiscountFormValues = z.infer<CreateDiscountSchemaType>;
 
 export const getDiscountUuidSchema = (t: DiscountT) =>
   z.object({
