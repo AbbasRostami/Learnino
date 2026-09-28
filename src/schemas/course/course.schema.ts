@@ -13,11 +13,16 @@ const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
 const getImageSchema = (t: CourseT) =>
   z
-    .instanceof(File)
-    .refine((file) => file.size <= MAX_IMAGE_SIZE, t("validation.imageMaxSize"))
+    .custom<File | null | undefined>()
     .refine(
-      (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
-      t("validation.imageInvalidType"),
+      (file) => !file || (file instanceof File && file.size <= MAX_IMAGE_SIZE),
+      { message: t("validation.imageMaxSize") },
+    )
+    .refine(
+      (file) =>
+        !file ||
+        (file instanceof File && ACCEPTED_IMAGE_TYPES.includes(file.type)),
+      { message: t("validation.imageInvalidType") },
     );
 
 export const getCreateCourseSchema = (t: CourseT) =>
@@ -25,47 +30,48 @@ export const getCreateCourseSchema = (t: CourseT) =>
     titleFa: z
       .string()
       .trim()
-      .min(3, t("validation.titleFaMin"))
-      .max(150, t("validation.titleFaMax")),
+      .min(3, { message: t("validation.titleFaMin") })
+      .max(150, { message: t("validation.titleFaMax") }),
 
     titleEn: z
       .string()
       .trim()
-      .min(3, t("validation.titleEnMin"))
-      .max(150, t("validation.titleEnMax")),
+      .min(3, { message: t("validation.titleEnMin") })
+      .max(150, { message: t("validation.titleEnMax") }),
 
     descriptionFa: z
       .string()
       .trim()
-      .max(5000, t("validation.descriptionMax"))
+      .max(5000, { message: t("validation.descriptionMax") })
       .optional()
       .or(z.literal("")),
 
     descriptionEn: z
       .string()
       .trim()
-      .max(5000, t("validation.descriptionMax"))
+      .max(5000, { message: t("validation.descriptionMax") })
       .optional()
       .or(z.literal("")),
 
-    price: z.coerce
-      .number({
-        error: (issue) =>
-          issue.input === undefined
-            ? t("validation.priceRequired")
-            : t("validation.priceInvalid"),
-      })
-      .int({ error: t("validation.priceInt") })
-      .min(0, { error: t("validation.priceMin") })
-      .max(1_000_000_000, { error: t("validation.priceMax") }),
+    price: z
+      .number({ message: t("validation.priceInvalid") })
+      .int({ message: t("validation.priceInt") })
+      .min(0, { message: t("validation.priceMin") })
+      .max(1_000_000_000, { message: t("validation.priceMax") }),
 
-    level: z.enum(["BEGINNER", "INTERMEDIATE", "ADVANCED"]).optional(),
+    level: z.enum(["BEGINNER", "INTERMEDIATE", "ADVANCED"]).default("BEGINNER"),
 
-    categoryId: z.string().uuid(t("validation.categoryIdInvalid")),
+    categoryId: z
+      .string()
+      .min(1, { message: t("validation.categoryIdInvalid") })
+      .uuid({ message: t("validation.categoryIdInvalid") }),
 
-    teacherId: z.string().uuid(t("validation.teacherIdInvalid")),
+    teacherId: z
+      .string()
+      .min(1, { message: t("validation.teacherIdInvalid") })
+      .uuid({ message: t("validation.teacherIdInvalid") }),
 
-    published: z.boolean().optional(),
+    published: z.boolean().default(false),
 
     image: getImageSchema(t).optional().nullable(),
   });
@@ -76,57 +82,99 @@ export const getUpdateCourseSchema = (t: CourseT) =>
       titleFa: z
         .string()
         .trim()
-        .min(3, t("validation.titleFaMin"))
-        .max(150, t("validation.titleFaMax"))
+        .max(150, { message: t("validation.titleFaMax") })
         .optional()
         .or(z.literal("")),
 
       titleEn: z
         .string()
         .trim()
-        .min(3, t("validation.titleEnMin"))
-        .max(150, t("validation.titleEnMax"))
+        .max(150, { message: t("validation.titleEnMax") })
         .optional()
         .or(z.literal("")),
 
       descriptionFa: z
-        .union([
-          z.string().trim().max(5000, t("validation.descriptionMax")),
-          z.null(),
-          z.literal(""),
-        ])
-        .optional(),
+        .string()
+        .trim()
+        .max(5000, { message: t("validation.descriptionMax") })
+        .optional()
+        .nullable()
+        .or(z.literal("")),
 
       descriptionEn: z
-        .union([
-          z.string().trim().max(5000, t("validation.descriptionMax")),
-          z.null(),
-          z.literal(""),
-        ])
-        .optional(),
+        .string()
+        .trim()
+        .max(5000, { message: t("validation.descriptionMax") })
+        .optional()
+        .nullable()
+        .or(z.literal("")),
 
-      price: z.coerce
-        .number()
-        .int(t("validation.priceInt"))
-        .min(0, t("validation.priceMin"))
-        .max(1_000_000_000, t("validation.priceMax"))
+      price: z
+        .number({ message: t("validation.priceInvalid") })
+        .int({ message: t("validation.priceInt") })
+        .min(0, { message: t("validation.priceMin") })
+        .max(1_000_000_000, { message: t("validation.priceMax") })
         .optional(),
 
       level: z.enum(["BEGINNER", "INTERMEDIATE", "ADVANCED"]).optional(),
 
-      categoryId: z.string().uuid(t("validation.categoryIdInvalid")).optional(),
+      categoryId: z
+        .string()
+        .uuid({ message: t("validation.categoryIdInvalid") })
+        .optional()
+        .or(z.literal("")),
 
-      teacherId: z.string().uuid(t("validation.teacherIdInvalid")).optional(),
+      teacherId: z
+        .string()
+        .uuid({ message: t("validation.teacherIdInvalid") })
+        .optional()
+        .or(z.literal("")),
 
       published: z.boolean().optional(),
 
       image: getImageSchema(t).optional().nullable(),
     })
+    .superRefine((data, ctx) => {
+      if (
+        data?.titleFa &&
+        data.titleFa.trim().length > 0 &&
+        data.titleFa.trim().length < 3
+      ) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: t("validation.titleFaMin"),
+          path: ["titleFa"],
+        });
+      }
+      if (
+        data?.titleEn &&
+        data.titleEn.trim().length > 0 &&
+        data.titleEn.trim().length < 3
+      ) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: t("validation.titleEnMin"),
+          path: ["titleEn"],
+        });
+      }
+    })
     .refine(
       (data) => {
-        // حداقل یک فیلد باید ارسال شود
-        return Object.values(data).some(
-          (value) => value !== undefined && value !== "",
+        return (
+          Boolean(data?.titleFa && data.titleFa.trim().length > 0) ||
+          Boolean(data?.titleEn && data.titleEn.trim().length > 0) ||
+          Boolean(
+            data?.descriptionFa && data.descriptionFa.trim().length > 0,
+          ) ||
+          Boolean(
+            data?.descriptionEn && data.descriptionEn.trim().length > 0,
+          ) ||
+          data?.price !== undefined ||
+          data?.level !== undefined ||
+          Boolean(data?.categoryId) ||
+          Boolean(data?.teacherId) ||
+          data?.published !== undefined ||
+          data?.image instanceof File
         );
       },
       {
@@ -135,13 +183,16 @@ export const getUpdateCourseSchema = (t: CourseT) =>
       },
     );
 
+export type CreateCourseSchemaType = ReturnType<typeof getCreateCourseSchema>;
+export type CreateCourseFormValues = z.infer<CreateCourseSchemaType>;
+
+export type UpdateCourseSchemaType = ReturnType<typeof getUpdateCourseSchema>;
+export type UpdateCourseFormValues = z.infer<UpdateCourseSchemaType>;
+
 export const getToggleCoursePublishSchema = (t: CourseT) =>
   z.object({
     published: z.boolean({
-      error: (issue) =>
-        issue.input === undefined
-          ? t("validation.publishedRequired")
-          : t("validation.publishedInvalid"),
+      message: t("validation.publishedInvalid"),
     }),
   });
 
@@ -156,7 +207,7 @@ export const getCoursesQuerySchema = (t: CourseT) =>
     search: z
       .string()
       .trim()
-      .max(100, t("validation.searchMaxLength"))
+      .max(100, { message: t("validation.searchMaxLength") })
       .optional(),
     sortBy: z
       .enum(["createdAt", "price", "titleFa", "titleEn"])
@@ -172,7 +223,7 @@ export const getAdminCoursesQuerySchema = (t: CourseT) =>
 
 export const getCourseUuidSchema = (t: CourseT) =>
   z.object({
-    id: z.string().uuid(t("validation.invalidUuid")),
+    id: z.string().uuid({ message: t("validation.invalidUuid") }),
   });
 
 export const getCourseSlugSchema = (t: CourseT) =>
@@ -180,6 +231,6 @@ export const getCourseSlugSchema = (t: CourseT) =>
     slug: z
       .string()
       .trim()
-      .min(1, t("validation.slugRequired"))
-      .max(200, t("validation.slugMaxLength")),
+      .min(1, { message: t("validation.slugRequired") })
+      .max(200, { message: t("validation.slugMaxLength") }),
   });
