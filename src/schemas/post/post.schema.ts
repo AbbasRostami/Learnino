@@ -1,111 +1,112 @@
-import {
-  ApiSuccessResponse,
-  Pagination,
-  PaginationSearchParams,
-  ReactionSummary,
-  UserReactionType,
-} from "@/types";
+import type { useTranslations } from "next-intl";
+import { z } from "zod";
 
-export type PostSortBy = "createdAt" | "title";
+type PostT = ReturnType<typeof useTranslations<"post">>;
 
-export type PostPublishedFilter = "true" | "false";
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
-export type PostCategoryRef = {
-  id: string;
-  name: string;
-  slug: string;
-};
+const getImageSchema = (t: PostT) =>
+  z
+    .instanceof(File)
+    .refine((file) => file.size <= MAX_IMAGE_SIZE, t("validation.imageMaxSize"))
+    .refine(
+      (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
+      t("validation.imageInvalidType"),
+    );
 
-export type PostStats = {
-  comments: number;
-};
+const stripHtml = (html: string) =>
+  html
+    .replace(/<[^>]*>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .trim();
 
-export type PostReactions = ReactionSummary & {
-  myReaction: UserReactionType;
-};
+export const getCreatePostSchema = (t: PostT) =>
+  z.object({
+    titleFa: z
+      .string()
+      .trim()
+      .min(3, t("validation.titleFaMin"))
+      .max(200, t("validation.titleFaMax")),
 
-export type Post = {
-  id: string;
-  title: string;
-  slug: string;
-  content: string;
-  imageUrl: string | null;
-  published: boolean;
-  createdAt: string;
-  updatedAt: string;
-  category: PostCategoryRef | null;
-  stats: PostStats;
-  reactions: PostReactions;
-  isFavorite: boolean;
-};
+    titleEn: z
+      .string()
+      .trim()
+      .min(3, t("validation.titleEnMin"))
+      .max(200, t("validation.titleEnMax")),
 
-export type GetPostsParams = PaginationSearchParams & {
-  category?: string;
-  sortBy?: PostSortBy;
-  order?: "asc" | "desc";
-};
+    contentFa: z
+      .string()
+      .refine((v) => stripHtml(v).length >= 10, t("validation.contentFaMin"))
+      .refine((v) => v.length <= 100_000, t("validation.contentMax")),
 
-export type GetAdminPostsParams = PaginationSearchParams & {
-  published?: PostPublishedFilter;
-};
+    contentEn: z
+      .string()
+      .refine((v) => stripHtml(v).length >= 10, t("validation.contentEnMin"))
+      .refine((v) => v.length <= 100_000, t("validation.contentMax")),
 
-export type CreatePostPayload = {
-  title: string;
-  content: string;
-  categoryId: string;
-  published?: boolean;
-  image?: File | null;
-};
+    categoryId: z.string().uuid(t("validation.categoryIdInvalid")),
 
-export type UpdatePostPayload = {
-  id: string;
-  title?: string;
-  content?: string;
-  categoryId?: string;
-  published?: boolean;
-  image?: File | null;
-};
+    published: z.boolean().optional().default(false),
 
-export type TogglePostPublishPayload = {
-  id: string;
-  published: boolean;
-};
+    image: getImageSchema(t).optional().nullable(),
+  });
 
-export type UploadEditorImagePayload = {
-  image: File;
-};
+export const getUpdatePostSchema = (t: PostT) =>
+  z
+    .object({
+      titleFa: z
+        .string()
+        .trim()
+        .min(3, t("validation.titleFaMin"))
+        .max(200, t("validation.titleFaMax"))
+        .optional()
+        .or(z.literal("")),
 
-export type GetPostsResponse = ApiSuccessResponse<{
-  items: Post[];
-  pagination: Pagination;
-}>;
+      titleEn: z
+        .string()
+        .trim()
+        .min(3, t("validation.titleEnMin"))
+        .max(200, t("validation.titleEnMax"))
+        .optional()
+        .or(z.literal("")),
 
-export type GetAdminPostsResponse = ApiSuccessResponse<{
-  items: Post[];
-  pagination: Pagination;
-}>;
+      contentFa: z
+        .string()
+        .refine(
+          (v) => !v || stripHtml(v).length >= 10,
+          t("validation.contentFaMin"),
+        )
+        .optional()
+        .or(z.literal("")),
 
-export type GetPostBySlugResponse = ApiSuccessResponse<{
-  post: Post;
-}>;
+      contentEn: z
+        .string()
+        .refine(
+          (v) => !v || stripHtml(v).length >= 10,
+          t("validation.contentEnMin"),
+        )
+        .optional()
+        .or(z.literal("")),
 
-export type CreatePostResponse = ApiSuccessResponse<{
-  message: string;
-  post: Post;
-}>;
+      categoryId: z.string().uuid(t("validation.categoryIdInvalid")).optional(),
 
-export type UpdatePostResponse = ApiSuccessResponse<{
-  message: string;
-}>;
+      published: z.boolean().optional(),
 
-export type DeletePostResponse = ApiSuccessResponse<{
-  message: string;
-}>;
-
-export type TogglePostPublishResponse = ApiSuccessResponse<{
-  message: string;
-}>;
-
-export type UploadEditorImageResponse = ApiSuccessResponse<{
-  url: string;
-}>;
+      image: getImageSchema(t).optional().nullable(),
+    })
+    .refine(
+      (data) =>
+        Object.values(data).some(
+          (v) => v !== undefined && v !== "" && v !== null,
+        ),
+      {
+        message: t("validation.atLeastOneField"),
+        path: ["titleFa"],
+      },
+    );

@@ -1,5 +1,6 @@
 "use client";
 
+import { stripHtml } from "@/components/shared/SafeHtml"; // ✅ اضافه شد
 import { Link } from "@/i18n/routing";
 import { getCategoryStyle } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";
@@ -32,10 +33,7 @@ export function BlogPostCard({
   const prefersReducedMotion = useReducedMotion();
   const style = post?.category ? getCategoryStyle(post?.category?.slug) : null;
 
-  const excerpt = post.content
-    ?.replace(/<[^>]*>/g, "")
-    .slice(0, 120)
-    .trim();
+  const excerpt = stripHtml(post.content, 120);
 
   return (
     <motion.article

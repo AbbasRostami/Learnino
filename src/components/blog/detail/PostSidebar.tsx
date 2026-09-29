@@ -1,5 +1,6 @@
 "use client";
 
+import { stripHtml } from "@/components/shared/SafeHtml"; // ✅ اضافه شد
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "@/i18n/routing";
 import { usePosts } from "@/services";
@@ -76,7 +77,7 @@ export function PostSidebar({ categorySlug }: PostSidebarProps) {
                   {post?.title}
                 </h4>
                 <p className="text-[10px] text-muted-foreground mt-1 line-clamp-1">
-                  {post?.content?.replace(/<[^>]*>/g, "").slice(0, 60)}
+                  {stripHtml(post?.content, 60)}
                 </p>
               </div>
             </Link>
