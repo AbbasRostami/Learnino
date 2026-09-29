@@ -13,14 +13,16 @@ const MAX_AVATAR_SIZE = 2 * 1024 * 1024;
 
 const getAvatarSchema = (t: TeacherT) =>
   z
-    .instanceof(File)
+    .custom<File | null | undefined>()
     .refine(
-      (file) => file.size <= MAX_AVATAR_SIZE,
-      t("validation.avatarMaxSize"),
+      (file) => !file || (file instanceof File && file.size <= MAX_AVATAR_SIZE),
+      { message: t("validation.avatarMaxSize") },
     )
     .refine(
-      (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
-      t("validation.avatarInvalidType"),
+      (file) =>
+        !file ||
+        (file instanceof File && ACCEPTED_IMAGE_TYPES.includes(file.type)),
+      { message: t("validation.avatarInvalidType") },
     );
 
 export const getCreateTeacherSchema = (t: TeacherT) =>
@@ -28,30 +30,30 @@ export const getCreateTeacherSchema = (t: TeacherT) =>
     nameFa: z
       .string()
       .trim()
-      .min(2, t("validation.nameFaMin"))
-      .max(100, t("validation.nameFaMax")),
+      .min(2, { message: t("validation.nameFaMin") })
+      .max(100, { message: t("validation.nameFaMax") }),
 
     nameEn: z
       .string()
       .trim()
-      .min(2, t("validation.nameEnMin"))
-      .max(100, t("validation.nameEnMax")),
+      .min(2, { message: t("validation.nameEnMin") })
+      .max(100, { message: t("validation.nameEnMax") }),
 
     bioFa: z
       .string()
       .trim()
-      .max(2000, t("validation.bioMax"))
+      .max(2000, { message: t("validation.bioMax") })
       .optional()
       .or(z.literal("")),
 
     bioEn: z
       .string()
       .trim()
-      .max(2000, t("validation.bioMax"))
+      .max(2000, { message: t("validation.bioMax") })
       .optional()
       .or(z.literal("")),
 
-    show: z.boolean().optional().default(true),
+    show: z.boolean().default(true),
 
     avatar: getAvatarSchema(t).optional().nullable(),
   });
@@ -62,44 +64,56 @@ export const getUpdateTeacherSchema = (t: TeacherT) =>
       nameFa: z
         .string()
         .trim()
-        .min(2, t("validation.nameFaMin"))
-        .max(100, t("validation.nameFaMax"))
-        .optional()
-        .or(z.literal("")),
+        .refine((val) => val === "" || val.length >= 2, {
+          message: t("validation.nameFaMin"),
+        })
+        .refine((val) => val.length <= 100, {
+          message: t("validation.nameFaMax"),
+        })
+        .optional(),
 
       nameEn: z
         .string()
         .trim()
-        .min(2, t("validation.nameEnMin"))
-        .max(100, t("validation.nameEnMax"))
-        .optional()
-        .or(z.literal("")),
+        .refine((val) => val === "" || val.length >= 2, {
+          message: t("validation.nameEnMin"),
+        })
+        .refine((val) => val.length <= 100, {
+          message: t("validation.nameEnMax"),
+        })
+        .optional(),
 
       bioFa: z
-        .union([
-          z.string().trim().max(2000, t("validation.bioMax")),
-          z.null(),
-          z.literal(""),
-        ])
-        .optional(),
+        .string()
+        .trim()
+        .refine((val) => val === "" || val.length <= 2000, {
+          message: t("validation.bioMax"),
+        })
+        .optional()
+        .nullable(),
 
       bioEn: z
-        .union([
-          z.string().trim().max(2000, t("validation.bioMax")),
-          z.null(),
-          z.literal(""),
-        ])
-        .optional(),
+        .string()
+        .trim()
+        .refine((val) => val === "" || val.length <= 2000, {
+          message: t("validation.bioMax"),
+        })
+        .optional()
+        .nullable(),
 
       avatar: getAvatarSchema(t).optional().nullable(),
     })
     .refine(
       (data) => {
-        const hasNameFa = Boolean(data.nameFa && data.nameFa.length > 0);
-        const hasNameEn = Boolean(data.nameEn && data.nameEn.length > 0);
-        const hasBioFa = data.bioFa !== undefined;
-        const hasBioEn = data.bioEn !== undefined;
-        const hasAvatar = data.avatar instanceof File;
+        const hasNameFa = Boolean(
+          data?.nameFa && data.nameFa.trim().length > 0,
+        );
+        const hasNameEn = Boolean(
+          data?.nameEn && data.nameEn.trim().length > 0,
+        );
+        const hasBioFa = Boolean(data?.bioFa && data.bioFa.trim().length > 0);
+        const hasBioEn = Boolean(data?.bioEn && data.bioEn.trim().length > 0);
+        const hasAvatar = data?.avatar instanceof File;
 
         return hasNameFa || hasNameEn || hasBioFa || hasBioEn || hasAvatar;
       },
@@ -109,6 +123,12 @@ export const getUpdateTeacherSchema = (t: TeacherT) =>
       },
     );
 
+export type CreateTeacherSchemaType = ReturnType<typeof getCreateTeacherSchema>;
+export type CreateTeacherFormValues = z.infer<CreateTeacherSchemaType>;
+
+export type UpdateTeacherSchemaType = ReturnType<typeof getUpdateTeacherSchema>;
+export type UpdateTeacherFormValues = z.infer<UpdateTeacherSchemaType>;
+
 export const getTeachersQuerySchema = (t: TeacherT) =>
   z.object({
     page: z.coerce.number().int().min(1).default(1).optional(),
@@ -116,13 +136,13 @@ export const getTeachersQuerySchema = (t: TeacherT) =>
     search: z
       .string()
       .trim()
-      .max(100, t("validation.searchMaxLength"))
+      .max(100, { message: t("validation.searchMaxLength") })
       .optional(),
   });
 
 export const getTeacherUuidSchema = (t: TeacherT) =>
   z.object({
-    id: z.string().uuid(t("validation.invalidUuid")),
+    id: z.string().uuid({ message: t("validation.invalidUuid") }),
   });
 
 export const getTeacherSlugSchema = (t: TeacherT) =>
@@ -130,6 +150,6 @@ export const getTeacherSlugSchema = (t: TeacherT) =>
     slug: z
       .string()
       .trim()
-      .min(1, t("validation.slugRequired"))
-      .max(100, t("validation.slugMaxLength")),
+      .min(1, { message: t("validation.slugRequired") })
+      .max(100, { message: t("validation.slugMaxLength") }),
   });

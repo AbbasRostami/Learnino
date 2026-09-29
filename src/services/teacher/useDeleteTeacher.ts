@@ -1,0 +1,36 @@
+import { api } from "@/hooks/upfetch";
+import type { ApiError, DeleteTeacherResponse } from "@/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
+
+interface UseDeleteTeacherOptions {
+  onSuccessCallback?: () => void;
+}
+
+export const useDeleteTeacher = ({
+  onSuccessCallback,
+}: UseDeleteTeacherOptions = {}) => {
+  const t = useTranslations("teacher");
+  const queryClient = useQueryClient();
+
+  return useMutation<DeleteTeacherResponse, ApiError, string>({
+    mutationFn: (teacherId) =>
+      api<DeleteTeacherResponse>(`/teachers/${teacherId}`, {
+        method: "DELETE",
+      }),
+
+    onSuccess: (response) => {
+      toast.success(response?.data?.message || t("deleteSuccess"));
+
+      queryClient.invalidateQueries({ queryKey: ["teachers"] });
+      queryClient.invalidateQueries({ queryKey: ["admin", "teachers"] });
+
+      onSuccessCallback?.();
+    },
+
+    onError: (error) => {
+      toast.error(error?.message || t("errorGeneral"));
+    },
+  });
+};
