@@ -7,7 +7,7 @@ import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useUsers } from "@/services";
 import { ShieldOff, Users } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { parseAsInteger, parseAsString, useQueryStates } from "nuqs";
 import { getUsersColumns } from "./columns";
 import { UsersFilters } from "./UsersFilters";
@@ -15,7 +15,7 @@ import { UsersStatsSection } from "./UsersStatsSection";
 
 export function AdminUsersClient() {
   const t = useTranslations("admin.users");
-
+  const locale = useLocale();
   const [params, setParams] = useQueryStates({
     page: parseAsInteger.withDefault(1),
     limit: parseAsInteger.withDefault(10),
@@ -56,6 +56,7 @@ export function AdminUsersClient() {
 
   const columns = getUsersColumns({
     t,
+    locale,
     sortBy: params.sortBy,
     order: params.order,
     onSortChange: handleSortChange,

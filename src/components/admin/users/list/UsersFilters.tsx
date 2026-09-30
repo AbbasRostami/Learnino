@@ -72,9 +72,9 @@ export function UsersFilters({
       onChange: onSortByChange,
       allValue: "createdAt",
       options: [
-        { value: "createdAt", label: "تاریخ عضویت" },
-        { value: "name", label: "نام کاربر" },
-        { value: "email", label: "آدرس ایمیل" },
+        { value: "createdAt", label: t("sortDate") },
+        { value: "name", label: t("sortName") },
+        { value: "email", label: t("sortEmail") },
       ],
     },
     {

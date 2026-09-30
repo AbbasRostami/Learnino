@@ -46,7 +46,7 @@ interface ColumnsProps {
 
 export const getUsersColumns = ({
   t,
-  locale = "fa",
+  locale,
   sortBy,
   order,
   onSortChange,
