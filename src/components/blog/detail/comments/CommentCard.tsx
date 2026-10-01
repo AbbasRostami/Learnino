@@ -1,8 +1,8 @@
 "use client";
 
-import { useAuthStore } from "@/hooks/authStore";
 import { cn } from "@/lib/utils";
 import { useCommentReaction } from "@/services";
+import { useAuthStore } from "@/store/authStore";
 import type { CommentTreeItem } from "@/types";
 import { formatRelativeTime } from "@/utils/formatters";
 import { Loader2, Reply, ThumbsDown, ThumbsUp } from "lucide-react";

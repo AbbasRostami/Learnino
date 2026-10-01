@@ -1,8 +1,8 @@
 "use client";
 
-import { useAuthStore } from "@/hooks/authStore";
 import { cn } from "@/lib/utils";
 import { useCourseReaction, useToggleCourseFavorite } from "@/services";
+import { useAuthStore } from "@/store/authStore";
 import type { Course } from "@/types";
 import {
   Bookmark,

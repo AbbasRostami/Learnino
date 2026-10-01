@@ -1,8 +1,8 @@
 "use client";
 
-import { useAuthStore } from "@/hooks/authStore";
 import { cn } from "@/lib/utils";
 import { useTogglePostFavorite } from "@/services";
+import { useAuthStore } from "@/store/authStore";
 import { Bookmark, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";

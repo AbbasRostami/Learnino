@@ -30,6 +30,7 @@ export function CoursesListCard({
 
   return (
     <motion.article
+      data-testid="course-card"
       initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
       whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -39,6 +40,7 @@ export function CoursesListCard({
       itemType="https://schema.org/Course"
     >
       <Link
+        data-testid="course-title-link"
         href={`/courses/${course?.slug}`}
         className="relative block aspect-16/10 w-full overflow-hidden bg-muted"
         aria-label={course?.title}

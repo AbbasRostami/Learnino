@@ -2,7 +2,6 @@
 
 import { AppBreadcrumb } from "@/components/shared/AppBreadcrumb";
 import { Button } from "@/components/ui/button";
-import { useAuthStore } from "@/hooks/authStore";
 import { useGuestCart } from "@/hooks/useGuestCart";
 import {
   useCart,
@@ -10,6 +9,7 @@ import {
   useRemoveFromCart,
   useSyncCart,
 } from "@/services";
+import { useAuthStore } from "@/store/authStore";
 import { ShoppingBag, Trash2 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
@@ -48,15 +48,16 @@ export function CartPageClient() {
     : guestItems;
 
   const guestSubtotal = guestItems.reduce(
-    (acc, item) => acc + (item.price || 0),
+    (acc, item) => acc + (item?.price || 0),
     0,
   );
   const displayCart = isAuthenticated
     ? cartData?.data?.cart
     : {
         id: "guest-cart",
-        totalItems: guestItems.length,
+        totalItems: guestItems?.length,
         subtotal: guestSubtotal,
+        totalAmount: guestSubtotal,
         totalPayment: guestSubtotal,
         discount: null,
         items: guestItems,
@@ -65,7 +66,9 @@ export function CartPageClient() {
   const hasItems = items.length > 0;
   const shouldShowEmpty =
     !isLoading &&
-    (isAuthenticated ? items.length === 0 : isReady && guestItems.length === 0);
+    (isAuthenticated
+      ? items.length === 0
+      : isReady && guestItems?.length === 0);
 
   const handleClear = () => {
     if (isAuthenticated) {
@@ -119,6 +122,7 @@ export function CartPageClient() {
           <Button
             variant="ghost"
             size="sm"
+            data-testid="clear-cart-btn"
             onClick={handleClear}
             disabled={isClearing}
             className="text-xs text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-xl gap-1.5 self-start sm:self-auto cursor-pointer"
@@ -139,9 +143,9 @@ export function CartPageClient() {
                   aria-hidden="true"
                 />
               ))
-            : items.map((item, index) => (
+            : items?.map((item, index) => (
                 <motion.div
-                  key={item.id || item.courseId}
+                  key={item?.id || item?.courseId}
                   initial={
                     prefersReducedMotion ? undefined : { opacity: 0, y: 15 }
                   }
@@ -155,7 +159,7 @@ export function CartPageClient() {
                 >
                   <CartItemCard
                     item={item}
-                    onRemove={() => handleRemoveItem(item.courseId)}
+                    onRemove={() => handleRemoveItem(item?.courseId)}
                     isRemoving={isRemoving}
                   />
                 </motion.div>

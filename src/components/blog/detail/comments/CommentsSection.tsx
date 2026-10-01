@@ -2,9 +2,9 @@
 
 import { CommentsListSkeleton } from "@/components/skeleton";
 import { Button } from "@/components/ui/button";
-import { useAuthStore } from "@/hooks/authStore";
 import { Link } from "@/i18n/routing";
 import { useCreateComment, usePostComments } from "@/services";
+import { useAuthStore } from "@/store/authStore";
 import { MessageCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";

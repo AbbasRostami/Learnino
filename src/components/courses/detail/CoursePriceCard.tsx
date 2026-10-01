@@ -1,11 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useAuthStore } from "@/hooks/authStore";
 import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useAddToCart, useEnrollFreeCourse } from "@/services";
+import { useAuthStore } from "@/store/authStore";
 import type { Course } from "@/types";
 import {
   Award,
@@ -138,6 +138,7 @@ export function CoursePriceCard({ course, slug }: CoursePriceCardProps) {
                 className="w-full rounded-2xl h-12 shadow-primary/20 shadow-lg hover:shadow-xl transition-all"
               >
                 <Link
+                  data-testid="start-learning-link"
                   href={`/dashboard/my-courses/${slug}`}
                   className="flex items-center justify-center w-full gap-2"
                 >
@@ -149,6 +150,7 @@ export function CoursePriceCard({ course, slug }: CoursePriceCardProps) {
           ) : isFree ? (
             <Button
               size="lg"
+              data-testid="enroll-free-btn"
               onClick={handleEnrollFree}
               disabled={isEnrolling}
               className="w-full rounded-2xl h-12 gap-2 shadow-emerald-500/20 shadow-lg hover:shadow-xl transition-all bg-emerald-600 hover:bg-emerald-700 text-white"
@@ -163,6 +165,7 @@ export function CoursePriceCard({ course, slug }: CoursePriceCardProps) {
           ) : (
             <Button
               size="lg"
+              data-testid="add-to-cart-btn" // 👈 این خط اضافه شد
               onClick={handleAddToCart}
               disabled={isAdding}
               className="w-full rounded-2xl h-12 gap-2 cursor-pointer shadow-primary/20 shadow-lg hover:shadow-xl transition-all"

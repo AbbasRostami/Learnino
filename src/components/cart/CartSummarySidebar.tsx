@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useAuthStore } from "@/hooks/authStore";
 import { useLocale } from "@/hooks/useLocale";
 import { useRouter } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
@@ -12,6 +11,7 @@ import {
   useWallet,
 } from "@/services";
 import { useRemoveDiscount } from "@/services/cart/useRemoveDiscount";
+import { useAuthStore } from "@/store/authStore";
 import type { GetCartResponse } from "@/types";
 import {
   CheckCircle2,
@@ -168,6 +168,7 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
             <div className="relative flex items-center rounded-2xl border border-border/60 bg-background focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all overflow-hidden shadow-xs">
               <input
                 id="discount"
+                data-testid="coupon-input"
                 type="text"
                 value={discountCode}
                 onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
@@ -180,6 +181,7 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
 
               <button
                 type="submit"
+                data-testid="coupon-submit-btn"
                 disabled={isApplyingDiscount || !discountCode.trim()}
                 className={cn(
                   "shrink-0 h-9 me-1 px-4 rounded-xl text-xs font-black transition-all cursor-pointer inline-flex items-center justify-center gap-1.5",
@@ -212,6 +214,7 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
         <div className="grid grid-cols-2 gap-2">
           <button
             type="button"
+            data-testid="zarinpal-pay-btn"
             onClick={() => handleSelectPaymentMethod("ZARINPAL")}
             className={cn(
               "flex flex-col items-center gap-2 p-3 rounded-2xl border text-xs font-bold transition-all cursor-pointer",
@@ -227,6 +230,7 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
 
           <button
             type="button"
+            data-testid="wallet-pay-btn"
             onClick={() => handleSelectPaymentMethod("WALLET")}
             className={cn(
               "flex flex-col items-center gap-2 p-3 rounded-2xl border text-xs font-bold transition-all cursor-pointer relative",
@@ -293,6 +297,7 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
 
       <Button
         size="lg"
+        data-testid="checkout-btn"
         onClick={handleCheckout}
         disabled={
           isCheckoutPending ||

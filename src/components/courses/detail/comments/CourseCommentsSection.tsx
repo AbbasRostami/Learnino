@@ -1,16 +1,16 @@
 "use client";
 
 import { CommentForm } from "@/components/blog/detail/comments/CommentForm";
+import { CommentsListSkeleton } from "@/components/skeleton";
 import { Button } from "@/components/ui/button";
-import { useAuthStore } from "@/hooks/authStore";
 import { Link } from "@/i18n/routing";
 import { useCourseComments, useCreateComment } from "@/services";
+import { useAuthStore } from "@/store/authStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { MessageSquare } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { CourseCommentCard } from "./CourseCommentCard";
-import { CommentsListSkeleton } from "@/components/skeleton";
 
 interface CourseCommentsSectionProps {
   courseSlug: string;

@@ -68,9 +68,13 @@ export function CartItemCard({
           </h3>
         </div>
 
-        <div className="flex items-center justify-between mt-4 pt-3 border-t border-dashed border-border/60">
+        <div
+          data-testid="cart-item-card"
+          className="flex items-center justify-between mt-4 pt-3 border-t border-dashed border-border/60"
+        >
           <button
             type="button"
+            data-testid="remove-item-btn"
             onClick={onRemove}
             disabled={isRemoving}
             className="flex items-center gap-1 text-xs text-muted-foreground hover:text-destructive transition-colors cursor-pointer disabled:opacity-50"

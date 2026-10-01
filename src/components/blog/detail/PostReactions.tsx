@@ -1,8 +1,8 @@
 "use client";
 
-import { useAuthStore } from "@/hooks/authStore";
 import { cn } from "@/lib/utils";
 import { usePostReaction } from "@/services";
+import { useAuthStore } from "@/store/authStore";
 import type { PostReactions as PostReactionsType } from "@/types";
 import { Loader2, ThumbsDown, ThumbsUp } from "lucide-react";
 import { useTranslations } from "next-intl";
