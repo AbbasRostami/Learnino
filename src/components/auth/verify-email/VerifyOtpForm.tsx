@@ -149,6 +149,7 @@ export default function VerifyOtpForm({ email, onBack }: Props) {
                   >
                     <InputOTP
                       dir="ltr"
+                      data-testid="otp-input"
                       maxLength={6}
                       value={field.value}
                       disabled={isPending || otpStatus === "success"}
@@ -162,7 +163,6 @@ export default function VerifyOtpForm({ email, onBack }: Props) {
                           setOtpStatus("idle");
                         }
 
-                        // ⚡ سابمیت خودکار با تکمیل ۶ رقم
                         if (value.length === 6 && !isPending) {
                           form.handleSubmit(onSubmit)();
                         }
@@ -206,6 +206,7 @@ export default function VerifyOtpForm({ email, onBack }: Props) {
 
           <Button
             type="submit"
+            data-testid="otp-submit-btn"
             form="verify-form"
             className="w-full h-11 text-base font-semibold cursor-pointer bg-linear-to-r from-primary via-primary to-brand-accent hover:opacity-90 text-primary-foreground shadow-lg shadow-primary/25 rounded-xl transition-all active:scale-[0.99]"
             disabled={isPending || otpStatus === "success"}

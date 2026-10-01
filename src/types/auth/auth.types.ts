@@ -1,4 +1,4 @@
-// ==================== Register ====================
+import { ApiSuccessResponse } from "../common";
 
 export type RegisterPayload = {
   email: string;
@@ -13,8 +13,6 @@ export type RegisterResponse = {
     message: string;
   };
 };
-
-// ==================== Verify Email ====================
 
 export type VerifyEmailPayload = {
   email: string;
@@ -36,23 +34,21 @@ export type VerifyEmailResponse = {
   };
 };
 
-// ==================== Login ====================
-
 export type LoginPayload = {
   email: string;
   password: string;
 };
 
-export type LoginResponse = {
-  status: "success";
-  data: {
-    message: string;
-    accessToken: string;
-    user: User;
+export type LoginResponse = ApiSuccessResponse<{
+  message: string;
+  accessToken: string;
+  user: {
+    id: string;
+    email: string;
+    name: string | null;
+    role: "USER" | "ADMIN";
   };
-};
-
-// ==================== Refresh ====================
+}>;
 
 export type RefreshResponse = {
   status: "success";
@@ -62,16 +58,12 @@ export type RefreshResponse = {
   };
 };
 
-// ==================== Logout ====================
-
 export type LogoutResponse = {
   status: "success";
   data: {
     message: string;
   };
 };
-
-// ==================== Forgot Password ====================
 
 export type ForgotPasswordPayload = {
   email: string;
@@ -83,8 +75,6 @@ export type ForgotPasswordResponse = {
     message: string;
   };
 };
-
-// ==================== Reset Password ====================
 
 export type ResetPasswordPayload = {
   email: string;
@@ -99,8 +89,6 @@ export type ResetPasswordResponse = {
   };
 };
 
-// ==================== Resend Verification ====================
-
 export type ResendVerificationPayload = {
   email: string;
 };
@@ -111,8 +99,6 @@ export type ResendVerificationResponse = {
     message: string;
   };
 };
-
-// ==================== Resend Reset Code ====================
 
 export type ResendResetCodePayload = {
   email: string;
@@ -125,8 +111,6 @@ export type ResendResetCodeResponse = {
   };
 };
 
-// ==================== Change Password ====================
-
 export type ChangePasswordPayload = {
   currentPassword: string;
   newPassword: string;
@@ -138,8 +122,6 @@ export type ChangePasswordResponse = {
     message: string;
   };
 };
-
-// ==================== Request Change Email ====================
 
 export type RequestChangeEmailPayload = {
   newEmail: string;
@@ -154,8 +136,6 @@ export type RequestChangeEmailResponse = {
   };
 };
 
-// ==================== Verify Change Email ====================
-
 export type VerifyChangeEmailPayload = {
   code: string;
 };
@@ -167,8 +147,6 @@ export type VerifyChangeEmailResponse = {
     newEmail: string;
   };
 };
-
-// ==================== Resend Change Email Code ====================
 
 export type ResendChangeEmailResponse = {
   status: "success";

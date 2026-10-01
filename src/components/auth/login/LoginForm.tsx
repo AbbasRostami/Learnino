@@ -79,6 +79,7 @@ export default function LoginForm() {
                   <Input
                     {...field}
                     id="login-email"
+                    data-testid="email-input"
                     type="email"
                     placeholder="example@email.com"
                     dir="ltr"
@@ -116,6 +117,7 @@ export default function LoginForm() {
                   <Input
                     {...field}
                     id="login-password"
+                    data-testid="password-input"
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     className="h-11 rounded-xl pr-10 pl-10 ltr:pl-10 ltr:pr-10"
@@ -149,6 +151,7 @@ export default function LoginForm() {
           <Button
             type="submit"
             form="login-form"
+            data-testid="login-submit-btn"
             className="w-full h-11 text-base font-semibold cursor-pointer bg-linear-to-r from-primary via-primary to-brand-accent hover:opacity-90 text-primary-foreground shadow-lg shadow-primary/25 rounded-xl transition-all active:scale-[0.99]"
             disabled={isPending}
           >

@@ -43,6 +43,8 @@ export const getLoginSchema = (t: AuthT) =>
     password: z.string().min(1, t("validation.passwordRequired")),
   });
 
+export const getAdminLoginSchema = (t: AuthT) => getLoginSchema(t);
+
 export const getForgotPasswordSchema = (t: AuthT) =>
   z.object({
     email: getEmailSchema(t),
@@ -88,3 +90,23 @@ export const getVerifyChangeEmailSchema = (t: AuthT) =>
   z.object({
     code: getOtpSchema(t),
   });
+
+export type RegisterInput = z.infer<ReturnType<typeof getRegisterSchema>>;
+export type LoginInput = z.infer<ReturnType<typeof getLoginSchema>>;
+export type AdminLoginInput = z.infer<ReturnType<typeof getAdminLoginSchema>>;
+export type VerifyEmailInput = z.infer<ReturnType<typeof getVerifyEmailSchema>>;
+export type ForgotPasswordInput = z.infer<
+  ReturnType<typeof getForgotPasswordSchema>
+>;
+export type ResetPasswordInput = z.infer<
+  ReturnType<typeof getResetPasswordSchema>
+>;
+export type ChangePasswordInput = z.infer<
+  ReturnType<typeof getChangePasswordSchema>
+>;
+export type RequestChangeEmailInput = z.infer<
+  ReturnType<typeof getRequestChangeEmailSchema>
+>;
+export type VerifyChangeEmailInput = z.infer<
+  ReturnType<typeof getVerifyChangeEmailSchema>
+>;

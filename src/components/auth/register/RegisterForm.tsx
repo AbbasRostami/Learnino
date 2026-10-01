@@ -80,6 +80,7 @@ export default function RegisterForm({ onSuccess }: Props) {
                   <Input
                     {...field}
                     id="register-name"
+                    data-testid="name-input"
                     placeholder={t("namePlaceholder")}
                     className="rtl:pr-10 ltr:pl-10 h-11 rounded-xl"
                     disabled={isPending}
@@ -104,6 +105,7 @@ export default function RegisterForm({ onSuccess }: Props) {
                   <Input
                     {...field}
                     id="register-email"
+                    data-testid="email-input"
                     type="email"
                     placeholder="example@email.com"
                     dir="ltr"
@@ -133,6 +135,7 @@ export default function RegisterForm({ onSuccess }: Props) {
                   <Input
                     {...field}
                     id="register-password"
+                    data-testid="password-input"
                     type="password"
                     placeholder="••••••••"
                     className="rtl:pr-10 ltr:pl-10 h-11 rounded-xl"
@@ -150,6 +153,7 @@ export default function RegisterForm({ onSuccess }: Props) {
 
           <Button
             type="submit"
+            data-testid="register-submit-btn"
             form="register-form"
             className="w-full h-11 text-base font-semibold cursor-pointer bg-linear-to-r from-primary via-primary to-brand-accent hover:opacity-90 text-primary-foreground shadow-lg shadow-primary/25 rounded-xl transition-all active:scale-[0.99]"
             disabled={isPending}
