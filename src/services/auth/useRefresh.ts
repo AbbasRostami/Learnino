@@ -1,6 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
-import { RefreshResponse } from "@/types/auth/auth.types";
 import { api } from "@/hooks/upfetch";
+import { RefreshResponse } from "@/types";
+import { useMutation } from "@tanstack/react-query";
 
 export const useRefresh = () => {
   return useMutation<RefreshResponse, Error>({

@@ -1,17 +1,31 @@
-import { useAuthStore } from "@/hooks/authStore";
 import { api } from "@/hooks/upfetch";
-import {
+import { useRouter } from "@/i18n/routing";
+import { useAuthStore } from "@/store/authStore";
+import type {
+  ApiError,
   VerifyChangeEmailPayload,
   VerifyChangeEmailResponse,
-} from "@/types/auth/auth.types";
+} from "@/types";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
-export const useVerifyChangeEmail = () => {
+interface UseVerifyChangeEmailOptions {
+  onSuccessCallback?: () => void;
+  onErrorCallback?: (error: ApiError) => void;
+}
+
+export const useVerifyChangeEmail = ({
+  onSuccessCallback,
+  onErrorCallback,
+}: UseVerifyChangeEmailOptions = {}) => {
+  const t = useTranslations("auth");
+  const router = useRouter();
   const resetAuth = useAuthStore((state) => state.resetAuth);
 
   return useMutation<
     VerifyChangeEmailResponse,
-    Error,
+    ApiError,
     VerifyChangeEmailPayload
   >({
     mutationFn: (data) =>
@@ -20,8 +34,19 @@ export const useVerifyChangeEmail = () => {
         body: data,
       }),
 
-    onSuccess: () => {
-      resetAuth();
+    onSuccess: (response) => {
+      toast.success(response?.data?.message);
+      onSuccessCallback?.();
+
+      setTimeout(() => {
+        resetAuth();
+        router.push("/login");
+      }, 1500);
+    },
+
+    onError: (error) => {
+      toast.error(error?.message || t("errorGeneral"));
+      onErrorCallback?.(error);
     },
   });
 };

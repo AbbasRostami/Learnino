@@ -1,12 +1,24 @@
-import { useMutation } from "@tanstack/react-query";
-import { ResendChangeEmailResponse } from "@/types/auth/auth.types";
 import { api } from "@/hooks/upfetch";
+import type { ApiError, ResendChangeEmailResponse } from "@/types";
+import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 export const useResendChangeEmailCode = () => {
-  return useMutation<ResendChangeEmailResponse, Error>({
+  const t = useTranslations("auth");
+
+  return useMutation<ResendChangeEmailResponse, ApiError>({
     mutationFn: () =>
       api<ResendChangeEmailResponse>("/auth/resend-change-email-code", {
         method: "POST",
       }),
+
+    onSuccess: (response) => {
+      toast.success(response?.data?.message || t("otpResentSuccess"));
+    },
+
+    onError: (error) => {
+      toast.error(error?.message || t("errorGeneral"));
+    },
   });
 };
