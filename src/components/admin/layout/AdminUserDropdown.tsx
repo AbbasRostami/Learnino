@@ -9,9 +9,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useAuthStore } from "@/hooks/authStore";
 import { useRouter } from "@/i18n/routing";
 import { useLogout, useProfile } from "@/services";
+import { useAuthStore } from "@/store/authStore";
 import {
   ChevronDown,
   Home,

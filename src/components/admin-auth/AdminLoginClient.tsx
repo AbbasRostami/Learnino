@@ -1,300 +1,353 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
-import { getLoginSchema } from "@/schemas";
+import { getAdminLoginSchema, type AdminLoginInput } from "@/schemas";
 import { useAdminLogin } from "@/services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ArrowLeft,
   Eye,
   EyeOff,
-  Loader2,
   Lock,
   Mail,
-  Shield,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import type { z } from "zod";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 export function AdminLoginClient() {
-  const t = useTranslations("auth");
-  const tAdmin = useTranslations("admin.loginPage");
-  const prefersReducedMotion = useReducedMotion();
-
+  const t = useTranslations("admin.loginPage");
+  const tAuth = useTranslations("auth");
+const { mutate: adminLogin, isPending } = useAdminLogin({
+  redirectTo: "/admin",
+});
   const [showPassword, setShowPassword] = useState(false);
+  const [currentYear, setCurrentYear] = useState<string>("2025");
 
-  const schema = getLoginSchema(t);
-  type FormValues = z.infer<typeof schema>;
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear().toString());
+  }, []);
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(schema),
+  const adminLoginSchema = getAdminLoginSchema(tAuth);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AdminLoginInput>({
+    resolver: zodResolver(adminLoginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
-    mode: "onChange",
   });
 
-  const { mutate: adminLogin, isPending } = useAdminLogin({
-    redirectTo: "/admin",
-  });
-
-  const onSubmit = (values: FormValues) => {
-    adminLogin(values);
+  const onSubmit = (data: AdminLoginInput) => {
+    adminLogin(data);
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center p-4 sm:p-6 overflow-hidden bg-linear-to-br from-slate-950 via-slate-900 to-primary/20">
-      <div
-        className="absolute inset-0 -z-10 overflow-hidden"
-        aria-hidden="true"
-      >
+    <div
+      className={cn(
+        "relative min-h-screen w-full overflow-hidden",
+        "flex items-center justify-center p-4 sm:p-6 lg:p-8",
+        "bg-linear-to-br from-background via-background to-primary/5",
+      )}
+    >
+      {/* ── Animated Background Blobs ── */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -inset-e-40 h-96 w-96 rounded-full bg-primary/20 blur-3xl animate-pulse" />
         <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
-            backgroundSize: "40px 40px",
-          }}
+          className="absolute -bottom-40 -inset-s-40 h-96 w-96 rounded-full bg-brand-accent/20 blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
         />
-
-        <div className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-primary/30 blur-[100px]" />
-        <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-brand-accent/30 blur-[100px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full bg-brand-cyan/20 blur-[80px]" />
+        <div
+          className="absolute top-1/2 inset-s-1/2 -translate-x-1/2 -translate-y-1/2 h-125 w-125 rounded-full bg-primary/5 blur-3xl animate-pulse"
+          style={{ animationDelay: "2s" }}
+        />
       </div>
 
-      <div className="absolute top-4 sm:top-6 inset-x-0 px-4 sm:px-8 flex items-center justify-between z-10">
+      {/* ── Grid Pattern Overlay ── */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.02] dark:opacity-[0.05]"
+        style={{
+          backgroundImage: `linear-gradient(currentColor 1px, transparent 1px),
+                            linear-gradient(90deg, currentColor 1px, transparent 1px)`,
+          backgroundSize: "40px 40px",
+        }}
+      />
+
+      {/* ── Main Content ── */}
+      <div className="relative z-10 w-full max-w-md">
+        {/* Back to Site Link */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-xs font-bold text-white/60 hover:text-white transition-colors group"
+          className={cn(
+            "inline-flex items-center gap-2 mb-6 group",
+            "text-xs font-bold text-muted-foreground hover:text-primary",
+            "transition-colors duration-200",
+          )}
         >
-          <ArrowLeft
-            className="h-4 w-4 rtl:rotate-180 group-hover:-translate-x-1 rtl:group-hover:translate-x-1 transition-transform"
-            aria-hidden="true"
-          />
-          <span>{tAdmin("backToUserSite")}</span>
+          <ArrowLeft className="h-3.5 w-3.5 rtl:rotate-180 group-hover:-translate-x-1 rtl:group-hover:translate-x-1 transition-transform" />
+          <span>{t("backToUserSite")}</span>
         </Link>
 
-        <div className="flex items-center gap-2 text-white/80">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-linear-to-br from-primary to-brand-accent shadow-lg">
-            <Sparkles className="h-4 w-4 text-white" aria-hidden="true" />
+        {/* Card */}
+        <Card
+          className={cn(
+            "relative border-border/60 shadow-2xl shadow-primary/10",
+            "bg-card/80 backdrop-blur-xl",
+            "overflow-hidden",
+          )}
+        >
+          {/* Card Top Gradient Border */}
+          <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-primary via-brand-accent to-primary" />
+
+          {/* Sparkle Decoration */}
+          <div className="absolute top-4 inset-e-4 opacity-20">
+            <Sparkles className="h-16 w-16 text-primary" />
           </div>
-          <span className="text-sm font-black">{tAdmin("brandName")}</span>
-        </div>
-      </div>
 
-      <motion.div
-        initial={
-          prefersReducedMotion ? undefined : { opacity: 0, y: 20, scale: 0.95 }
-        }
-        animate={
-          prefersReducedMotion ? undefined : { opacity: 1, y: 0, scale: 1 }
-        }
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="relative w-full max-w-md"
-      >
-        <div
-          className="absolute -inset-2 bg-linear-to-r from-primary via-brand-accent to-brand-cyan rounded-3xl blur-2xl opacity-30"
-          aria-hidden="true"
-        />
+          <CardHeader className="space-y-4 pt-8">
+            {/* Logo & Brand */}
+            <div className="flex flex-col items-center gap-4">
+              <div className="relative">
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-primary/40 blur-2xl rounded-full" />
 
-        <div className="relative rounded-3xl bg-slate-900/80 backdrop-blur-2xl border border-white/10 shadow-2xl overflow-hidden">
-          <div className="h-1.5 bg-linear-to-r from-primary via-brand-accent to-brand-cyan" />
+                {/* Logo Container */}
+                <div
+                  className={cn(
+                    "relative flex h-20 w-20 items-center justify-center",
+                    "rounded-3xl bg-linear-to-br from-primary to-brand-accent",
+                    "shadow-xl shadow-primary/30 ring-4 ring-background",
+                    "p-3",
+                  )}
+                >
+                  <div className="relative h-full w-full">
+                    <Image
+                      src="/logo/Main-Logo.png"
+                      alt="Learnino Logo"
+                      fill
+                      className="object-contain"
+                      priority
+                    />
+                  </div>
+                </div>
 
-          <div className="p-6 sm:p-8">
-            <div className="flex justify-center mb-6">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 backdrop-blur-md">
-                <ShieldCheck
-                  className="h-3.5 w-3.5 text-primary"
-                  aria-hidden="true"
-                />
-                <span className="text-[11px] font-black text-primary uppercase tracking-wider">
-                  {tAdmin("portalBadge")}
-                </span>
+                {/* Shield Badge */}
+                <div
+                  className={cn(
+                    "absolute -bottom-1 -inset-e-1",
+                    "flex h-8 w-8 items-center justify-center rounded-full",
+                    "bg-emerald-500 border-4 border-background shadow-lg",
+                  )}
+                >
+                  <ShieldCheck className="h-4 w-4 text-white" strokeWidth={3} />
+                </div>
+              </div>
+
+              {/* Brand Name */}
+              <div className="flex flex-col items-center gap-1.5">
+                <h1 className="text-2xl font-black text-foreground tracking-tight">
+                  {t("brandName")}
+                </h1>
+                <div
+                  className={cn(
+                    "inline-flex items-center gap-1.5 px-3 py-1 rounded-full",
+                    "bg-primary/10 border border-primary/20",
+                    "text-[10px] font-black text-primary uppercase tracking-widest",
+                  )}
+                >
+                  <ShieldCheck className="h-3 w-3" />
+                  <span>{t("portalBadge")}</span>
+                </div>
               </div>
             </div>
+          </CardHeader>
 
-            <div className="flex justify-center mb-6">
-              <motion.div
-                initial={
-                  prefersReducedMotion ? undefined : { scale: 0, rotate: -180 }
-                }
-                animate={
-                  prefersReducedMotion ? undefined : { scale: 1, rotate: 0 }
-                }
-                transition={{
-                  duration: 0.6,
-                  delay: 0.2,
-                  type: "spring",
-                }}
-                className="relative"
-              >
-                <div className="absolute inset-0 bg-primary/40 blur-xl rounded-full" />
-                <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-primary via-primary to-brand-accent shadow-lg shadow-primary/30">
-                  <Shield
-                    className="h-8 w-8 text-white"
-                    strokeWidth={2.5}
-                    aria-hidden="true"
-                  />
-                </div>
-              </motion.div>
-            </div>
-
-            <div className="text-center mb-8">
-              <h1 className="text-2xl sm:text-3xl font-black text-white mb-2">
-                {tAdmin("title")}
-              </h1>
-              <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
-                {tAdmin("description")}
-              </p>
-            </div>
-
+          <CardContent className="space-y-5">
             <form
-              onSubmit={form?.handleSubmit(onSubmit)}
-              className="flex flex-col gap-4"
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-4"
               noValidate
             >
-              <FieldGroup>
-                <Controller
-                  control={form?.control}
-                  name="email"
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState?.invalid}>
-                      <FieldLabel
-                        htmlFor="admin-email"
-                        className="text-xs font-bold text-white/80"
-                      >
-                        {tAdmin("emailLabel")}
-                      </FieldLabel>
-                      <div className="relative">
-                        <Mail className="absolute top-1/2 -translate-y-1/2 right-3 h-4 w-4 text-white/40 pointer-events-none ltr:left-3 ltr:right-auto" />
-                        <Input
-                          {...field}
-                          id="admin-email"
-                          type="email"
-                          placeholder={tAdmin("emailPlaceholder")}
-                          disabled={isPending}
-                          aria-invalid={fieldState?.invalid}
-                          autoComplete="email"
-                          dir="ltr"
-                          className={cn(
-                            "h-12 rounded-xl text-sm font-bold pr-10 ltr:pl-10 ltr:pr-3",
-                            "bg-white/5 border-white/10 text-white placeholder:text-white/30",
-                            "focus-visible:ring-primary/50 focus-visible:border-primary/50",
-                            "hover:bg-white/10 transition-colors",
-                          )}
-                        />
-                      </div>
-                      {fieldState?.invalid && fieldState?.error && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
-                />
+              {/* Email Field */}
+              <div className="space-y-2">
+                <Label
+                  htmlFor="email"
+                  className="text-xs font-bold text-foreground flex items-center gap-1.5"
+                >
+                  <Mail className="h-3 w-3 text-primary" />
+                  {t("emailLabel")}
+                </Label>
+                <div className="relative group">
+                  <div
+                    className={cn(
+                      "absolute inset-s-3 top-1/2 -translate-y-1/2 z-10",
+                      "text-muted-foreground group-focus-within:text-primary",
+                      "transition-colors duration-200",
+                    )}
+                  >
+                    <Mail className="h-4 w-4" />
+                  </div>
+                  <Input
+                    id="email"
+                    type="email"
+                    dir="ltr"
+                    placeholder={t("emailPlaceholder")}
+                    autoComplete="email"
+                    disabled={isPending}
+                    {...register("email")}
+                    className={cn(
+                      "h-11 ps-10 pe-3 rounded-xl",
+                      "bg-background/50 border-border/60",
+                      "focus:border-primary focus:ring-2 focus:ring-primary/20",
+                      "text-sm font-medium",
+                      "transition-all duration-200",
+                      errors.email &&
+                        "border-destructive focus:ring-destructive/20",
+                    )}
+                  />
+                </div>
+                {errors.email && (
+                  <p className="text-[11px] font-bold text-destructive flex items-center gap-1 animate-in fade-in slide-in-from-top-1">
+                    <span className="inline-block h-1 w-1 rounded-full bg-destructive" />
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
 
-                <Controller
-                  control={form?.control}
-                  name="password"
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState?.invalid}>
-                      <FieldLabel
-                        htmlFor="admin-password"
-                        className="text-xs font-bold text-white/80"
-                      >
-                        {tAdmin("passwordLabel")}
-                      </FieldLabel>
-                      <div className="relative">
-                        <Lock className="absolute top-1/2 -translate-y-1/2 right-3 h-4 w-4 text-white/40 pointer-events-none ltr:left-3 ltr:right-auto" />
-                        <Input
-                          {...field}
-                          id="admin-password"
-                          type={showPassword ? "text" : "password"}
-                          placeholder={tAdmin("passwordPlaceholder")}
-                          disabled={isPending}
-                          aria-invalid={fieldState?.invalid}
-                          autoComplete="current-password"
-                          className={cn(
-                            "h-12 rounded-xl text-sm font-bold pr-10 pl-10",
-                            "bg-white/5 border-white/10 text-white placeholder:text-white/30",
-                            "focus-visible:ring-primary/50 focus-visible:border-primary/50",
-                            "hover:bg-white/10 transition-colors",
-                          )}
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword((s) => !s)}
-                          disabled={isPending}
-                          className="absolute top-1/2 -translate-y-1/2 left-3 ltr:right-3 ltr:left-auto text-white/40 hover:text-white transition-colors cursor-pointer p-1"
-                          aria-label={
-                            showPassword ? "Hide password" : "Show password"
-                          }
-                        >
-                          {showPassword ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
-                        </button>
-                      </div>
-                      {fieldState?.invalid && fieldState?.error && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
-                />
-              </FieldGroup>
+              {/* Password Field */}
+              <div className="space-y-2">
+                <Label
+                  htmlFor="password"
+                  className="text-xs font-bold text-foreground flex items-center gap-1.5"
+                >
+                  <Lock className="h-3 w-3 text-primary" />
+                  {t("passwordLabel")}
+                </Label>
+                <div className="relative group">
+                  <div
+                    className={cn(
+                      "absolute inset-s-3 top-1/2 -translate-y-1/2 z-10",
+                      "text-muted-foreground group-focus-within:text-primary",
+                      "transition-colors duration-200",
+                    )}
+                  >
+                    <Lock className="h-4 w-4" />
+                  </div>
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    dir="ltr"
+                    placeholder={t("passwordPlaceholder")}
+                    autoComplete="current-password"
+                    disabled={isPending}
+                    {...register("password")}
+                    className={cn(
+                      "h-11 ps-10 pe-10 rounded-xl",
+                      "bg-background/50 border-border/60",
+                      "focus:border-primary focus:ring-2 focus:ring-primary/20",
+                      "text-sm font-medium",
+                      "transition-all duration-200",
+                      errors.password &&
+                        "border-destructive focus:ring-destructive/20",
+                    )}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    aria-label={
+                      showPassword ? t("hidePassword") : t("showPassword")
+                    }
+                    className={cn(
+                      "absolute inset-e-3 top-1/2 -translate-y-1/2 z-10",
+                      "text-muted-foreground hover:text-primary",
+                      "transition-colors duration-200 cursor-pointer",
+                    )}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="text-[11px] font-bold text-destructive flex items-center gap-1 animate-in fade-in slide-in-from-top-1">
+                    <span className="inline-block h-1 w-1 rounded-full bg-destructive" />
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
 
+              {/* Submit Button */}
               <Button
                 type="submit"
                 disabled={isPending}
                 className={cn(
-                  "w-full h-12 text-sm font-black rounded-xl mt-2 cursor-pointer gap-2",
-                  "bg-linear-to-r from-primary via-primary to-brand-accent",
-                  "hover:opacity-90 hover:shadow-2xl hover:shadow-primary/40",
-                  "text-white shadow-lg shadow-primary/25",
-                  "transition-all active:scale-[0.98]",
+                  "w-full h-12 rounded-xl text-sm font-black cursor-pointer",
+                  "bg-linear-to-r from-primary to-brand-accent ",
+                  "hover:shadow-lg hover:shadow-primary/30",
+                  "text-primary-foreground",
+                  "transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]",
+                  "disabled:opacity-70 disabled:hover:scale-100",
                 )}
               >
                 {isPending ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    <span>{tAdmin("submitting")}</span>
-                  </>
+                  <div className="flex items-center gap-2">
+                    <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span>{t("submitting")}</span>
+                  </div>
                 ) : (
-                  <>
-                    <Shield className="h-4 w-4" aria-hidden="true" />
-                    <span>{tAdmin("submitButton")}</span>
-                  </>
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="h-4 w-4" />
+                    <span>{t("submitButton")}</span>
+                  </div>
                 )}
               </Button>
             </form>
-          </div>
 
-          <div className="border-t border-white/5 bg-white/5 px-6 sm:px-8 py-4">
-            <div className="flex items-start gap-2 text-[10px] text-white/50 leading-relaxed">
-              <Shield
-                className="h-3 w-3 shrink-0 mt-0.5 text-amber-400"
-                aria-hidden="true"
-              />
-              <span>{tAdmin("securityNote")}</span>
+            {/* Security Note */}
+            <div
+              className={cn(
+                "relative p-3 rounded-xl overflow-hidden",
+                "bg-amber-500/5 dark:bg-amber-500/10",
+                "border border-amber-500/20",
+              )}
+            >
+              <div className="flex items-start gap-2.5">
+                <div className="mt-0.5 shrink-0">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-amber-500/20">
+                    <ShieldCheck className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+                  </div>
+                </div>
+                <p className="text-[11px] leading-relaxed text-amber-800 dark:text-amber-200/90 font-medium">
+                  {t("securityNote")}
+                </p>
+              </div>
             </div>
-          </div>
+          </CardContent>
+        </Card>
+
+        {/* Bottom Decoration */}
+        <div className="mt-6 flex items-center justify-center gap-2 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
+          <div className="h-px w-8 bg-linear-to-r from-transparent to-border" />
+          <Sparkles className="h-3 w-3 text-primary" />
+          <span>Learnino © {currentYear}</span>
+          <Sparkles className="h-3 w-3 text-primary" />
+          <div className="h-px w-8 bg-linear-to-l from-transparent to-border" />
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
