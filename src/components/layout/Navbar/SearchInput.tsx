@@ -120,18 +120,18 @@ export function SearchInput() {
                     <span>{t("coursesGroup")}</span>
                   </div>
                   <div className="space-y-1">
-                    {searchResult?.courses.map((course) => (
+                    {searchResult?.courses?.map((course) => (
                       <Link
-                        key={course.id}
-                        href={`/courses/${course.slug}`}
+                        key={course?.id}
+                        href={`/courses/${course?.slug}`}
                         onClick={() => setIsOpen(false)}
                         className="flex items-center gap-3 p-2 rounded-xl hover:bg-accent transition-colors"
                       >
                         <div className="relative h-12 w-16 shrink-0 rounded-lg overflow-hidden bg-muted border border-border/50">
-                          {course.imageUrl && (
+                          {course?.imageUrl && (
                             <Image
-                              src={course.imageUrl}
-                              alt={course.title}
+                              src={course?.imageUrl}
+                              alt={course?.title}
                               fill
                               className="object-cover"
                             />
@@ -139,10 +139,10 @@ export function SearchInput() {
                         </div>
                         <div className="flex flex-col min-w-0">
                           <p className="text-sm font-medium text-foreground truncate">
-                            {course.title}
+                            {course?.title}
                           </p>
                           <p className="text-xs text-muted-foreground truncate">
-                            {course.category?.name}
+                            {course?.category?.name}
                           </p>
                         </div>
                       </Link>
@@ -158,18 +158,18 @@ export function SearchInput() {
                     <span>{t("postsGroup")}</span>
                   </div>
                   <div className="space-y-1">
-                    {searchResult?.posts.map((post) => (
+                    {searchResult?.posts?.map((post) => (
                       <Link
-                        key={post.id}
-                        href={`/blog/${post.slug}`}
+                        key={post?.id}
+                        href={`/blog/${post?.slug}`}
                         onClick={() => setIsOpen(false)}
                         className="flex items-center gap-3 p-2 rounded-xl hover:bg-accent transition-colors"
                       >
                         <div className="relative h-10 w-12 shrink-0 rounded-lg overflow-hidden bg-muted border border-border/50">
-                          {post.imageUrl && (
+                          {post?.imageUrl && (
                             <Image
-                              src={post.imageUrl}
-                              alt={post.title}
+                              src={post?.imageUrl}
+                              alt={post?.title}
                               fill
                               className="object-cover"
                             />
@@ -177,7 +177,7 @@ export function SearchInput() {
                         </div>
                         <div className="flex flex-col min-w-0">
                           <p className="text-sm font-medium text-foreground truncate">
-                            {post.title}
+                            {post?.title}
                           </p>
                         </div>
                       </Link>

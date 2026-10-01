@@ -1,6 +1,7 @@
 "use client";
 
-import { useAuthStore } from "@/hooks/authStore";
+import { useAuthStore } from "@/store/authStore";
+import { Suspense } from "react";
 import { AuthButtons } from "./AuthButtons";
 import { CartButton } from "./CartButton";
 import { DesktopNav } from "./DesktopNav";
@@ -25,7 +26,13 @@ export function Navbar() {
           </div>
 
           <div className="hidden md:flex flex-1 justify-center max-w-sm">
-            <SearchInput />
+            <Suspense
+              fallback={
+                <div className="h-10 w-full max-w-xs bg-muted/30 rounded-full animate-pulse" />
+              }
+            >
+              <SearchInput />
+            </Suspense>
           </div>
 
           <div className="flex items-center gap-2">

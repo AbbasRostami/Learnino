@@ -6,9 +6,9 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
-import { useAuthStore } from "@/hooks/authStore";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/services";
+import { useAuthStore } from "@/store/authStore";
 
 export function CartButton() {
   const t = useTranslations("nav");
@@ -50,6 +50,7 @@ export function CartButton() {
   return (
     <Link
       href="/cart"
+      data-testid="nav-cart-btn"
       aria-label={t("cart")}
       className={cn(
         buttonVariants({ variant: "ghost", size: "icon" }),
@@ -60,6 +61,7 @@ export function CartButton() {
 
       {cartCount > 0 && (
         <span
+          data-testid="nav-cart-count"
           className={cn(
             "absolute -top-1 -inset-e-1",
             "flex h-5 min-w-5 items-center justify-center rounded-full px-1",
