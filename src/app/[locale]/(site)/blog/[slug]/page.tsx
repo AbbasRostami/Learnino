@@ -1,27 +1,99 @@
 import { PostDetailClient } from "@/components/blog/detail";
+import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/seo";
+import {
+  cleanMetaDescription,
+  getAlternates,
+  SEO_CONFIG,
+  type Locale,
+} from "@/lib/seo";
 import { getPostBySlugServer } from "@/services/post/posts";
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { notFound } from "next/navigation";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const post = await getPostBySlugServer(locale, slug);
+
+  if (!post) {
+    return {
+      title: locale === "fa" ? "مقاله یافت نشد" : "Article Not Found",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const description = cleanMetaDescription(post?.content || "");
+  const isFa = locale === "fa";
+
+  const ogImage = post?.imageUrl || "/logo/Main-Logo.png";
+
+  return {
+    title: post?.title,
+    description,
+
+    openGraph: {
+      type: "article",
+      title: post?.title,
+      description,
+      url: `/${locale}/blog/${slug}`,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: post?.title,
+        },
+      ],
+      locale: isFa ? "fa_IR" : "en_US",
+      siteName: SEO_CONFIG.siteName[locale],
+      publishedTime: post?.createdAt,
+      modifiedTime: post?.updatedAt || post?.createdAt,
+      authors: [SEO_CONFIG.author.name],
+      tags: post?.category ? [post?.category?.name] : [],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: post?.title,
+      description,
+      images: [ogImage],
+    },
+
+    alternates: getAlternates(`/blog/${slug}`, locale),
+  };
+}
 
 export default async function PostDetailPage({
   params,
 }: {
-  params: Promise<{ locale: string; slug: string }>;
+  params: Promise<{ locale: Locale; slug: string }>;
 }) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations("blog");
+  const tNav = await getTranslations({ locale, namespace: "nav" });
 
   const post = await getPostBySlugServer(locale, slug);
 
   if (!post) {
-    return (
-      <div className="container mx-auto px-4 py-20 text-center">
-        <p className="text-lg font-bold text-muted-foreground">
-          {t("postNotFound")}
-        </p>
-      </div>
-    );
+    notFound();
   }
 
-  return <PostDetailClient slug={slug} initialPost={post} />;
+  return (
+    <>
+      <ArticleJsonLd post={post} locale={locale} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: tNav("home"), url: `/${locale}` },
+          { name: tNav("blog"), url: `/${locale}/blog` },
+          { name: post.title },
+        ]}
+      />
+
+      <PostDetailClient slug={slug} initialPost={post} />
+    </>
+  );
 }
