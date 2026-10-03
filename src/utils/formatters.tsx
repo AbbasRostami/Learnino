@@ -1,101 +1,89 @@
-import { toJalaali } from "jalaali-js";
+export function formatNumber(
+  num?: number | string | null,
+  locale: string = "fa",
+): string {
+  if (num === null || num === undefined || num === "") return "-";
 
-// ─── فرمت واحد پول ───
-export const formatCurrency = (amount?: number | null, locale = "fa-IR") =>
-  amount != null ? new Intl.NumberFormat(locale).format(amount) : "-";
+  const parsedNum = typeof num === "string" ? Number(num) : num;
+  if (isNaN(parsedNum)) return "-";
 
-const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`);
+  const targetLocale =
+    locale === "en" || locale === "en-US" ? "en-US" : "fa-IR";
 
-export const WEEKDAYS = [
-  "یکشنبه",
-  "دوشنبه",
-  "سه‌شنبه",
-  "چهارشنبه",
-  "پنج‌شنبه",
-  "جمعه",
-  "شنبه",
-] as const;
+  return new Intl.NumberFormat(targetLocale).format(parsedNum);
+}
 
-export const JALALI_MONTHS = [
-  "فروردین",
-  "اردیبهشت",
-  "خرداد",
-  "تیر",
-  "مرداد",
-  "شهریور",
-  "مهر",
-  "آبان",
-  "آذر",
-  "دی",
-  "بهمن",
-  "اسفند",
-] as const;
-
-type JalaaliResult = {
-  jy: number;
-  jm: number;
-  jd: number;
-};
-
-const formatMap = {
-  jYYYY: (d: JalaaliResult) => d.jy,
-  jMM: (d: JalaaliResult) => pad(d.jm),
-  jDD: (d: JalaaliResult) => pad(d.jd),
-
-  jMMMM: (d: JalaaliResult) => JALALI_MONTHS[d.jm - 1],
-
-  HH: (d: Date) => pad(d.getHours()),
-  mm: (d: Date) => pad(d.getMinutes()),
-  ss: (d: Date) => pad(d.getSeconds()),
-};
-
-// ─── فرمت تاریخ شمسی ───
-export const formatJalaliDate = (
-  date: string | Date,
-  format = "jYYYY/jMM/jDD - HH:mm",
-) => {
+export const formatFullDate = (
+  date?: string | Date | null,
+  locale = "fa",
+): string => {
   if (!date) return "-";
-
   const d = new Date(date);
-  const j = toJalaali(d); // ✅ استفاده مستقیم از toJalaali
+  if (isNaN(d.getTime())) return "-";
 
-  return format
-    .replace("jYYYY", String(formatMap.jYYYY(j)))
-    .replace("jMMMM", formatMap.jMMMM(j))
-    .replace("jMM", formatMap.jMM(j))
-    .replace("jDD", formatMap.jDD(j))
-    .replace("HH", formatMap.HH(d))
-    .replace("mm", formatMap.mm(d))
-    .replace("ss", formatMap.ss(d));
+  return new Intl.DateTimeFormat(locale === "fa" ? "fa-IR" : "en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(d);
 };
 
-// ─── فرمت ساعت ───
-export const formatTime = (time?: string): string => {
-  if (!time) return "";
-
-  const parts = time.split(":");
-  return parts.length >= 2 ? `${parts[0]}:${parts[1]}` : time;
-};
-
-// ─── زمان نسبی (Relative Time) ───
-export const formatRelativeTime = (date: string | Date): string => {
+/**
+ * 🎯 فرمت کوتاه تاریخ (سال/ماه/روز)
+ * - fa: 1404/06/20
+ * - en: 2025/09/20
+ */
+export const formatShortDate = (
+  date?: string | Date | null,
+  locale = "fa",
+): string => {
   if (!date) return "-";
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return "-";
+
+  return new Intl.DateTimeFormat(locale === "fa" ? "fa-IR" : "en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(d);
+};
+
+export const formatRelativeTime = (
+  date?: string | Date | null,
+  locale: string = "fa",
+): string => {
+  if (!date) return "-";
+
+  const d = new Date(date).getTime();
+  if (isNaN(d)) return "-";
 
   const now = Date.now();
-  const d = new Date(date).getTime();
+  const diffInSeconds = Math.floor((d - now) / 1000);
 
-  const diff = now - d;
+  const absDiff = Math.abs(diffInSeconds);
 
-  const minute = 60_000;
-  const hour = 60 * minute;
-  const day = 24 * hour;
-  const week = 7 * day;
+  if (absDiff < 60) {
+    return locale === "fa" ? "همین الان" : "just now";
+  }
 
-  if (diff < minute) return "همین الان";
-  if (diff < hour) return `${Math.floor(diff / minute)} دقیقه پیش`;
-  if (diff < day) return `${Math.floor(diff / hour)} ساعت پیش`;
-  if (diff < week) return `${Math.floor(diff / day)} روز پیش`;
-  if (diff < 30 * day) return `${Math.floor(diff / week)} هفته پیش`;
+  const rtf = new Intl.RelativeTimeFormat(locale === "fa" ? "fa-IR" : "en-US", {
+    numeric: "always",
+  });
 
-  return formatJalaliDate(date, "jYYYY/jMM/jDD");
+  const minutes = Math.floor(diffInSeconds / 60);
+  if (Math.abs(minutes) < 60) return rtf.format(minutes, "minute");
+
+  const hours = Math.floor(minutes / 60);
+  if (Math.abs(hours) < 24) return rtf.format(hours, "hour");
+
+  const days = Math.floor(hours / 24);
+  if (Math.abs(days) < 30) return rtf.format(days, "day");
+
+  const months = Math.floor(days / 30);
+  if (Math.abs(months) < 12) return rtf.format(months, "month");
+
+  const years = Math.floor(days / 365);
+  return rtf.format(years, "year");
 };
