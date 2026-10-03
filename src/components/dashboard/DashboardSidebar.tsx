@@ -1,10 +1,10 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { useAuthStore } from "@/hooks/authStore";
 import { Link, usePathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useLogout, useProfile } from "@/services";
+import { useAuthStore } from "@/store/authStore";
 import {
   BookOpen,
   Heart,

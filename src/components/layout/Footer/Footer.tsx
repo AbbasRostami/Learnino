@@ -220,10 +220,6 @@ export function Footer() {
                   </span>
                 </Button>
               </div>
-              <p className="text-[11px] text-muted-foreground text-center flex items-center justify-center gap-1">
-                <Sparkles className="h-3 w-3 text-brand-accent" />
-                <span>{t("newsletter.privacy")}</span>
-              </p>
             </form>
           </div>
         </div>

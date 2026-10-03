@@ -99,7 +99,6 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
     applyDiscount({ code: discountCode });
   };
 
-  // 🎯 مدیریت هوشمند دکمه پرداخت نهایی
   const handleCheckout = () => {
     if (!isAuthenticated) {
       toast.info(t("loginRequiredCheckout"));
