@@ -16,7 +16,7 @@ export function HeroSection() {
         aria-hidden="true"
       >
         <div className="absolute -top-40 -right-40 h-125 w-125 rounded-full bg-primary/15 blur-[120px]" />
-        <div className="absolute -bottom-40 -left-40 h-125 w-125 rounded-full bg-brand-accent/15 blur-[120px]" />
+        <div className="absolute bottom-0 -left-40 h-72 w-72 rounded-full bg-brand-accent/15 blur-[120px]" />
         <div className="absolute top-1/2 left-1/2 h-75 w-75 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-cyan/10 blur-[100px]" />
       </div>
 
