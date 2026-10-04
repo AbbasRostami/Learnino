@@ -6,6 +6,47 @@ import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 
+interface ListSectionProps {
+  locale: Locale;
+  searchParamsPromise: Promise<{
+    page?: string;
+    search?: string;
+    categories?: string | string[];
+    level?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    sortBy?: string;
+    order?: string;
+  }>;
+}
+
+async function CoursesListSection({
+  locale,
+  searchParamsPromise,
+}: ListSectionProps) {
+  const sp = await searchParamsPromise;
+
+  const page = sp.page ? parseInt(sp.page, 10) : 1;
+  const categories = Array.isArray(sp.categories)
+    ? sp.categories
+    : sp.categories
+      ? [sp.categories]
+      : [];
+
+  const initialData = await getCoursesServer(locale, {
+    page,
+    search: sp.search,
+    categories,
+    level: sp.level,
+    minPrice: sp.minPrice ? Number(sp.minPrice) : undefined,
+    maxPrice: sp.maxPrice ? Number(sp.maxPrice) : undefined,
+    sortBy: sp.sortBy || "createdAt",
+    order: (sp.order as "asc" | "desc") || "desc",
+  });
+
+  return <CoursesPageClient initialData={initialData?.data} />;
+}
+
 export async function generateMetadata({
   params,
   searchParams,
@@ -18,7 +59,6 @@ export async function generateMetadata({
   const isFa = locale === "fa";
 
   const currentPage = sp.page ? parseInt(sp.page, 10) : 1;
-
   const baseTitle = isFa ? "دوره‌های آموزشی" : "All Courses";
 
   const title =
@@ -35,21 +75,6 @@ export async function generateMetadata({
   return {
     title,
     description,
-    keywords: isFa
-      ? [
-          "دوره آموزشی",
-          "آموزش React",
-          "آموزش Next.js",
-          "آموزش جاوااسکریپت",
-          "لرنینو",
-        ]
-      : [
-          "online courses",
-          "React tutorial",
-          "Next.js course",
-          "JavaScript tutorial",
-          "Learnino",
-        ],
     openGraph: {
       title,
       description,
@@ -59,7 +84,6 @@ export async function generateMetadata({
       locale: isFa ? "fa_IR" : "en_US",
     },
     alternates: getAlternates("/courses", locale),
-
     robots:
       currentPage > 1
         ? { index: false, follow: true }
@@ -72,46 +96,18 @@ export default async function CoursesPage({
   searchParams,
 }: {
   params: Promise<{ locale: Locale }>;
-  searchParams: Promise<{
-    page?: string;
-    search?: string;
-    categories?: string | string[];
-    level?: string;
-    minPrice?: string;
-    maxPrice?: string;
-    sortBy?: string;
-    order?: string;
-  }>;
+  searchParams: Promise<any>;
 }) {
   const { locale } = await params;
-  const sp = await searchParams;
-
   setRequestLocale(locale);
-
-  const page = sp?.page ? parseInt(sp?.page, 10) : 1;
-  const categories = Array.isArray(sp?.categories)
-    ? sp?.categories
-    : sp?.categories
-      ? [sp?.categories]
-      : [];
-
-  const initialData = await getCoursesServer(locale, {
-    page,
-    search: sp?.search,
-    categories,
-    level: sp?.level,
-    minPrice: sp?.minPrice ? Number(sp?.minPrice) : undefined,
-    maxPrice: sp?.maxPrice ? Number(sp?.maxPrice) : undefined,
-    sortBy: sp?.sortBy || "createdAt",
-    order: (sp?.order as "asc" | "desc") || "desc",
-  });
-
-  const suspenseKey = JSON.stringify(sp);
 
   return (
     <main className="flex-1">
-      <Suspense key={suspenseKey} fallback={<CoursesGridSkeleton count={6} />}>
-        <CoursesPageClient initialData={initialData?.data} />
+      <Suspense fallback={<CoursesGridSkeleton count={6} />}>
+        <CoursesListSection
+          locale={locale}
+          searchParamsPromise={searchParams}
+        />
       </Suspense>
     </main>
   );
