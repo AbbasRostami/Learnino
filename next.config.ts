@@ -3,7 +3,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const nextConfig: NextConfig = {
   output: "standalone",
@@ -21,6 +21,10 @@ const nextConfig: NextConfig = {
   },
 
   async rewrites() {
+    if (!BACKEND_URL) {
+      return [];
+    }
+
     return [
       {
         source: "/api/:path*",
@@ -28,6 +32,7 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+
   async headers() {
     return [
       {
