@@ -1,5 +1,9 @@
 import { api } from "@/hooks/upfetch";
-import type { Course, GetCoursesResponse } from "@/types";
+import type {
+  Course,
+  GetCourseBySlugResponse,
+  GetCoursesResponse,
+} from "@/types";
 import { cacheLife, cacheTag } from "next/cache";
 
 async function fetchFeaturedCoursesData(
@@ -67,39 +71,36 @@ export async function getFreeCoursesServer(
   }
 }
 
-import { GetCourseBySlugResponse } from "@/types";
-
-async function fetchCoursesData(
+async function fetchCoursesDataIsolated(
   locale: string,
-  params: {
-    page?: number;
-    search?: string;
-    categories?: string[];
-    level?: string;
-    minPrice?: number;
-    maxPrice?: number;
-    sortBy?: string;
-    order?: "asc" | "desc";
-  },
+  page: number,
+  search: string,
+  categoriesStr: string,
+  level: string,
+  minPrice: number | undefined,
+  maxPrice: number | undefined,
+  sortBy: string,
+  order: "asc" | "desc",
 ): Promise<GetCoursesResponse | null> {
   "use cache";
   cacheLife("minutes");
 
-  const cacheKey = `${params.page || 1}-${params.search || ""}-${params.categories?.join(",") || ""}-${params.level || ""}-${params.minPrice || ""}-${params.maxPrice || ""}-${params.sortBy || ""}-${params.order || ""}`;
-  cacheTag("courses-list", `courses-list-${locale}-${cacheKey}`);
+  cacheTag("courses-list");
+
+  const categories = categoriesStr ? categoriesStr.split(",") : [];
 
   const searchParams: Record<string, unknown> = {
-    page: params.page || 1,
+    page,
     limit: 12,
-    sortBy: params.sortBy || "createdAt",
-    order: params.order || "desc",
+    sortBy,
+    order,
   };
 
-  if (params.search) searchParams.search = params.search;
-  if (params.level) searchParams.level = params.level;
-  if (params.minPrice !== undefined) searchParams.minPrice = params.minPrice;
-  if (params.maxPrice !== undefined) searchParams.maxPrice = params.maxPrice;
-  if (params.categories?.length) searchParams.categories = params.categories;
+  if (search) searchParams.search = search;
+  if (level) searchParams.level = level;
+  if (minPrice !== undefined) searchParams.minPrice = minPrice;
+  if (maxPrice !== undefined) searchParams.maxPrice = maxPrice;
+  if (categories.length) searchParams.categories = categories;
 
   const res = await api<GetCoursesResponse>("/courses", {
     params: searchParams,
@@ -123,7 +124,17 @@ export async function getCoursesServer(
   } = {},
 ): Promise<GetCoursesResponse | null> {
   try {
-    return await fetchCoursesData(locale, params);
+    return await fetchCoursesDataIsolated(
+      locale,
+      params.page || 1,
+      params.search || "",
+      params.categories?.join(",") || "",
+      params.level || "",
+      params.minPrice,
+      params.maxPrice,
+      params.sortBy || "createdAt",
+      params.order || "desc",
+    );
   } catch (error) {
     console.error(`[Courses List Server Fetch Error]`, error);
     return null;
@@ -132,12 +143,10 @@ export async function getCoursesServer(
 
 async function fetchCourseBySlugData(
   locale: string,
-  rawSlug: string,
+  decodedSlug: string,
 ): Promise<Course | null> {
   "use cache";
   cacheLife("hours");
-
-  const decodedSlug = decodeURIComponent(rawSlug);
   cacheTag("courses", `course-${decodedSlug}`);
 
   const res = await api<GetCourseBySlugResponse>(
@@ -155,7 +164,7 @@ export async function getCourseBySlugServer(
   slug: string,
 ): Promise<Course | null> {
   try {
-    return await fetchCourseBySlugData(locale, slug);
+    return await fetchCourseBySlugData(locale, decodeURIComponent(slug));
   } catch (error) {
     console.error(`[Course Detail Server Fetch Error]`, error);
     return null;

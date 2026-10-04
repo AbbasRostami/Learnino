@@ -1,5 +1,5 @@
-import { useAuthStore } from "@/hooks/authStore";
 import { api } from "@/hooks/upfetch";
+import { useAuthStore } from "@/store/authStore";
 import type {
   GetFavoriteCoursesParams,
   GetFavoriteCoursesResponse,
