@@ -1,13 +1,11 @@
 import { up } from "up-fetch";
-import { useAuthStore } from "./authStore";
+import { useAuthStore } from "../store/authStore";
 
 const isServer = typeof window === "undefined";
 
-const RAW_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ||
-  "https://course-shop-api.onrender.com";
+const RAW_BASE_URL = process.env.API_BASE_URL!;
 
-const CLEAN_BASE_URL = `${RAW_BASE_URL.replace(/\/$/, "")}/api`;
+const CLEAN_BASE_URL = `${RAW_BASE_URL}/api`;
 
 const API_BASE_URL = isServer
   ? CLEAN_BASE_URL
@@ -137,7 +135,7 @@ export const api = up(authenticatedFetch, () => ({
     "Accept-Language": getCurrentLocale(),
   },
 
-  parseRejected: async (response) => {
+  parseRejected: async (response: Response) => {
     let body: any;
     try {
       body = await response.json();
@@ -153,9 +151,9 @@ export const api = up(authenticatedFetch, () => ({
       if (body.data.message) {
         errorMessage = body.data.message;
       } else {
-        const firstFieldKey = Object.keys(body.data)[0];
-        if (firstFieldKey) {
-          errorMessage = body.data[firstFieldKey];
+        const keys = Object.keys(body.data);
+        if (keys.length > 0) {
+          errorMessage = body.data[keys[0]];
         }
       }
     }
