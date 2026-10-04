@@ -1,17 +1,159 @@
 {
   "common": {
-    "appName": "کورس شاپ",
+    "appName": "لرنینو",
     "loading": "در حال بارگذاری...",
     "error": "خطایی رخ داد",
     "retry": "تلاش مجدد",
     "toman": "تومان"
   },
+  "error": {
+    "notFound": {
+      "title": "صفحه مورد نظر یافت نشد",
+      "description": "متأسفانه صفحه‌ای که به دنبال آن هستید وجود ندارد یا به آدرس دیگری منتقل شده است.",
+      "backToHome": "بازگشت به صفحه اصلی",
+      "searchCourses": "جستجوی دوره‌ها"
+    },
+    "serverError": {
+      "title": "مشکلی پیش آمد!",
+      "description": "متأسفانه در پردازش درخواست شما خطایی رخ داد. این مشکل ممکن است موقتی باشد.",
+      "retry": "تلاش مجدد",
+      "backToHome": "صفحه اصلی"
+    }
+  },
   "nav": {
-    "home": "خانه",
     "courses": "دوره‌ها",
+    "learningPaths": "مسیرهای یادگیری",
     "blog": "بلاگ",
+    "aboutUs": "درباره ما",
+    "contact": "تماس با ما",
     "cart": "سبد خرید",
-    "profile": "حساب کاربری"
+    "search": "جستجو",
+    "searchPlaceholder": "جستجوی دوره، مقاله یا مدرس...",
+    "loginRegister": "ورود | ثبت‌نام",
+    "menu": "منو",
+    "viewAllResults": "مشاهده تمام نتایج برای «{query}»",
+    "searching": "در حال جستجو...",
+    "noResults": "نتیجه‌ای برای «{query}» پیدا نشد.",
+    "coursesGroup": "دوره‌ها",
+    "postsGroup": "مقاله‌ها"
+  },
+  "user": {
+    "profile": "پروفایل",
+    "myCourses": "دوره‌های من",
+    "myFavorites": "علاقه‌مندی‌ها",
+    "wallet": "کیف پول",
+    "orders": "سفارش‌ها",
+    "settings": "تنظیمات",
+    "logout": "خروج از حساب",
+    "logoutSuccess": "با موفقیت خارج شدید",
+    "myAccount": "حساب من",
+    "updateSuccess": "پروفایل با موفقیت به‌روزرسانی شد",
+    "avatarDeleted": "تصویر پروفایل با موفقیت حذف شد",
+    "banSuccess": "کاربر با موفقیت مسدود شد",
+    "unbanSuccess": "کاربر با موفقیت رفع مسدودیت شد",
+    "errorGeneral": "خطایی رخ داد. دوباره تلاش کنید",
+    "validation": {
+      "nameMin": "نام باید حداقل ۲ کاراکتر باشد",
+      "nameMax": "نام نباید بیش از ۵۰ کاراکتر باشد",
+      "phoneInvalid": "شماره موبایل باید با 09 شروع و ۱۱ رقم باشد",
+      "avatarMaxSize": "حجم تصویر باید حداکثر ۲ مگابایت باشد",
+      "avatarInvalidType": "فرمت مجاز تصویر: jpg، jpeg، png، webp",
+      "atLeastOneField": "حداقل یک فیلد باید برای بروزرسانی وارد شود",
+      "searchMaxLength": "متن جستجو نباید بیش از ۱۰۰ کاراکتر باشد",
+      "invalidUuid": "شناسه وارد شده معتبر نیست"
+    }
+  },
+  "home": {
+    "hero": {
+      "badge": "یادگیری، بدون مرز",
+      "title": "رشد از پایه،",
+      "titleHighlight": "شکوفایی بی‌مرز",
+      "subtitle": "لرنینو مسیر یادگیری برنامه‌نویسی را از صفر تا پروژه‌های حرفه‌ای برای تو هموار می‌کند؛ با مدرسان مجرب و مسیرهای یادگیری هدفمند.",
+      "primaryCta": "مشاهده دوره‌ها",
+      "secondaryCta": "مسیرهای یادگیری",
+      "imageAlt": "لرنینو - یادگیری برنامه‌نویسی",
+      "stats": {
+        "studentsValue": "۲,۵۰۰+",
+        "studentsLabel": "دانشجوی فعال",
+        "coursesValue": "۴۰+",
+        "coursesLabel": "دوره تخصصی",
+        "instructorsValue": "۱۵+",
+        "instructorsLabel": "مدرس مجرب"
+      },
+      "floating": {
+        "first": "یادگیری پروژه‌محور",
+        "firstSub": "با ساخت نمونه‌کار واقعی",
+        "second": "گواهینامه معتبر",
+        "secondSub": "پس از اتمام هر دوره"
+      }
+    }
+  },
+  "hero": {
+    "badge": "یادگیری، بدون مرز",
+    "titlePart1": "رشد از پایه،",
+    "titlePart2": "شکوفایی بی‌مرز",
+    "description": "لرنینو مسیر یادگیری برنامه‌نویسی را از صفر تا پروژه‌های حرفه‌ای برای تو هموار می‌کند. با مدرسان مجرب و مسیرهای یادگیری هدفمند.",
+    "ctaPrimary": "مشاهده دوره‌ها",
+    "ctaSecondary": "مسیرهای یادگیری",
+    "imageAlt": "لرنینو - پلتفرم آموزش برنامه‌نویسی",
+    "features": {
+      "certificate": "گواهی معتبر",
+      "certificateDesc": "مدرک پایان دوره",
+      "support": "پشتیبانی ۲۴/۷",
+      "supportDesc": "همیشه در دسترس",
+      "projects": "پروژه محور",
+      "projectsDesc": "یادگیری با تمرین"
+    },
+    "floatingBadge1": "React & Next.js",
+    "floatingBadge2": "دوره‌های زنده"
+  },
+  "theme": {
+    "light": "روشن",
+    "dark": "تیره",
+    "system": "سیستم",
+    "toggle": "تغییر تم"
+  },
+  "language": {
+    "toggle": "تغییر زبان",
+    "fa": "فارسی",
+    "en": "English"
+  },
+  "footer": {
+    "description": "پلتفرم تخصصی آموزش برنامه‌نویسی و توسعه نرم‌افزار. از صفر تا ورود به بازار کار با پروژه‌های دنیای واقعی.",
+    "quickLinks": "دسترسی سریع",
+    "support": "پشتیبانی و راهنما",
+    "suggestedCourses": "دوره‌های پیشنهادی",
+    "rights": "لرنینو - تمامی حقوق مادی و معنوی محفوظ است.",
+    "developedBy": "طراحی و توسعه توسط",
+    "highlightTitle": "لرنینو",
+    "highlightText": "یادگیری برنامه‌نویسی بدون مرز، از صفر تا ورود به بازار کار.",
+    "courseHtmlCss": "آموزش جامع HTML و CSS",
+    "courseJavascript": "آموزش جاوااسکریپت مدرن",
+    "courseReactNext": "آموزش پیشرفته React و Next.js",
+    "coursePython": "آموزش پایتون پروژه محور",
+    "linkLearningPaths": "مسیرهای یادگیری برنامه‌نویسی",
+    "linkSql": "آموزش پایگاه داده SQL",
+    "linkBlog": "بلاگ و مقالات آموزشی",
+    "linkFaq": "سوالات متداول",
+    "newsletter": {
+      "badge": "خبرنامه هفتگی",
+      "title": "با ما به‌روز بمان",
+      "description": "هر هفته جدیدترین دوره‌ها، مقالات و تخفیف‌های ویژه لرنینو رو مستقیم در ایمیلت دریافت کن.",
+      "emailPlaceholder": "ایمیل خودت رو وارد کن...",
+      "submit": "عضویت",
+      "success": "با موفقیت عضو شدی! 🎉"
+    },
+    "stats": {
+      "students": "دانشجو فعال",
+      "courses": "دوره تخصصی",
+      "instructors": "مدرس مجرب",
+      "hours": "ساعت آموزش"
+    },
+    "brand": {
+      "tagline": "کد بنویس، دنیا رو بساز",
+      "madeWith": "ساخته شده با",
+      "loveIn": "در ایران"
+    }
   },
   "auth": {
     "login": "ورود",
@@ -21,13 +163,24 @@
     "password": "رمز عبور",
     "name": "نام (اختیاری)",
     "namePlaceholder": "نام شما",
-    "forgotPassword": "فراموشی رمز عبور",
+    "forgotPassword": "فراموشی رمز عبور؟",
+    "forgotPasswordTitle": "بازیابی رمز عبور",
+    "forgotPasswordDescription": "ایمیل حساب کاربری خود را وارد کنید تا کد بازیابی ارسال شود",
+    "submitForgotPassword": "ارسال کد بازیابی",
+    "resetPasswordTitle": "تنظیم رمز عبور جدید",
+    "resetPasswordDescription": "کد ۶ رقمی ارسال‌شده به {email} و رمز عبور جدید را وارد کنید",
+    "newPassword": "رمز عبور جدید",
+    "newPasswordPlaceholder": "رمز عبور جدید خود را وارد کنید",
+    "submitResetPassword": "تغییر رمز عبور",
+    "resetPasswordSuccess": "رمز عبور با موفقیت تغییر یافت. لطفاً وارد شوید",
     "submitLogin": "ورود به حساب",
-    "submitRegister": "ثبت‌نام و ارسال کد تایید",
+    "submitRegister": "دریافت کد تایید",
     "hasAccount": "حساب کاربری دارید؟",
-    "registerTitle": "ثبت‌نام در کورس شاپ",
-    "registerDescription": "برای شروع، حساب کاربری خود را بسازید",
-    "passwordDescription": "رمز عبور باید حداقل ۶ کاراکتر باشد",
+    "noAccount": "حساب کاربری ندارید؟",
+    "loginTitle": "ورود به لرنینو",
+    "loginDescription": "برای ادامه یادگیری وارد حساب خود شوید",
+    "loginSuccess": "با موفقیت وارد شدید",
+    "registerTitle": "ثبت‌نام در لرنینو",
     "sending": "در حال ارسال...",
     "verifying": "در حال تایید...",
     "verifyEmailTitle": "تایید ایمیل",
@@ -36,8 +189,23 @@
     "resendCodeIn": "ارسال مجدد کد تا: {time}",
     "resendCode": "ارسال مجدد کد",
     "otpResentSuccess": "کد جدید ارسال شد",
+    "backToLogin": "بازگشت به صفحه ورود",
+    "errorGeneral": "خطایی رخ داد. دوباره تلاش کنید",
+    "changePassword": "تغییر رمز عبور",
+    "changePasswordDescription": "برای حفظ امنیت حساب، رمز عبور را هر چند ماه یک‌بار تغییر دهید.",
+    "currentPassword": "رمز عبور فعلی",
+    "submitChangePassword": "تغییر رمز عبور",
+    "passwordChanged": "رمز عبور با موفقیت تغییر کرد. در حال انتقال به صفحه ورود...",
     "changeEmail": "تغییر ایمیل",
-    
+    "changeEmailDescription": "ایمیل جدید و رمز عبور فعلی خود را وارد کنید. کد تایید به ایمیل جدید ارسال می‌شود.",
+    "newEmail": "ایمیل جدید",
+    "newEmailPlaceholder": "ایمیل جدید خود را وارد کنید",
+    "submitChangeEmail": "ارسال کد تایید",
+    "verifyChangeEmailTitle": "تایید تغییر ایمیل",
+    "verifyChangeEmailDescription": "کد ۶ رقمی ارسال‌شده به {email} را وارد کنید",
+    "submitVerifyChangeEmail": "تایید و تغییر ایمیل",
+    "emailChanged": "ایمیل با موفقیت تغییر کرد. در حال انتقال به صفحه ورود...",
+    "cancelChangeEmail": "انصراف",
     "validation": {
       "emailRequired": "ایمیل الزامی است",
       "emailInvalid": "ایمیل وارد شده معتبر نیست",
@@ -47,6 +215,1861 @@
       "otpLength": "کد تایید باید ۶ رقمی باشد",
       "currentPasswordRequired": "رمز عبور فعلی الزامی است",
       "newPasswordSameAsCurrent": "رمز عبور جدید نباید با رمز فعلی یکسان باشد"
+    }
+  },
+  "teacher": {
+    "teachers": "مدرسان",
+    "teacher": "مدرس",
+    "nameFa": "نام فارسی",
+    "nameEn": "نام انگلیسی",
+    "bioFa": "بیوگرافی فارسی",
+    "bioEn": "بیوگرافی انگلیسی",
+    "visibility": "وضعیت نمایش",
+    "active": "فعال",
+    "inactive": "غیرفعال",
+    "createNew": "افزودن مدرس جدید",
+    "editTeacher": "ویرایش مدرس",
+    "deleteTeacher": "حذف مدرس",
+    "teacherCourses": "دوره‌های <highlight>{name}</highlight>",
+    "noCourses": "هنوز دوره‌ای برای این مدرس منتشر نشده است.",
+    "totalCourses": "دوره آموزشی",
+    "totalStudents": "دانشجوی تخصصی",
+    "socialLinks": "شبکه‌های اجتماعی",
+    "createSuccess": "مدرس با موفقیت ایجاد شد",
+    "updateSuccess": "مدرس با موفقیت ویرایش شد",
+    "deleteSuccess": "مدرس با موفقیت حذف شد",
+    "visibilityToggleSuccess": "وضعیت نمایش مدرس با موفقیت تغییر یافت",
+    "errorGeneral": "خطایی رخ داد. دوباره تلاش کنید",
+    "validation": {
+      "nameFaMin": "نام فارسی باید حداقل ۲ کاراکتر باشد",
+      "nameFaMax": "نام فارسی نباید بیش از ۱۰۰ کاراکتر باشد",
+      "nameEnMin": "نام انگلیسی باید حداقل ۲ کاراکتر باشد",
+      "nameEnMax": "نام انگلیسی نباید بیش از ۱۰۰ کاراکتر باشد",
+      "bioMax": "بیوگرافی نباید بیش از ۲۰۰۰ کاراکتر باشد",
+      "avatarMaxSize": "حجم تصویر باید حداکثر ۲ مگابایت باشد",
+      "avatarInvalidType": "فرمت مجاز تصویر: jpg، jpeg، png، webp",
+      "atLeastOneField": "حداقل یک فیلد باید برای ویرایش وارد شود",
+      "showRequired": "وضعیت نمایش الزامی است",
+      "searchMaxLength": "متن جستجو نباید بیش از ۱۰۰ کاراکتر باشد",
+      "invalidUuid": "شناسه مدرس معتبر نیست",
+      "slugRequired": "slug الزامی است",
+      "slugMaxLength": "slug نباید بیش از ۱۰۰ کاراکتر باشد"
+    }
+  },
+  "order": {
+    "orders": "سفارشات",
+    "myOrders": "سفارشات من",
+    "orderDetails": "جزئیات سفارش",
+    "orderId": "شناسه سفارش",
+    "orderStatus": "وضعیت سفارش",
+    "totalAmount": "مبلغ کل",
+    "paymentMethod": "روش پرداخت",
+    "createdAt": "تاریخ ایجاد",
+    "user": "کاربر",
+    "items": "آیتم‌ها",
+    "statuses": {
+      "PENDING": "در انتظار پرداخت",
+      "PAID": "پرداخت شده",
+      "CANCELLED": "لغو شده"
+    },
+    "paymentMethods": {
+      "WALLET": "کیف پول",
+      "ZARINPAL": "درگاه زرین‌پال"
+    },
+    "checkoutWallet": "پرداخت با کیف پول",
+    "checkoutZarinpal": "پرداخت با درگاه زرین‌پال",
+    "cancelOrder": "لغو سفارش",
+    "viewOrder": "مشاهده سفارش",
+    "paymentSuccess": "پرداخت با موفقیت انجام شد",
+    "redirectingToGateway": "در حال انتقال به درگاه پرداخت...",
+    "cancelSuccess": "سفارش با موفقیت لغو شد",
+    "adminCancelSuccess": "سفارش توسط ادمین لغو شد",
+    "errorGeneral": "خطایی رخ داد. دوباره تلاش کنید",
+    "confirmCancel": "آیا از لغو این سفارش مطمئن هستید؟",
+    "emptyOrders": "هنوز سفارشی ثبت نکرده‌اید",
+    "cannotCancelPaid": "امکان لغو سفارش پرداخت‌شده وجود ندارد",
+    "cannotCancelCancelled": "این سفارش قبلاً لغو شده است",
+    "newBalance": "موجودی جدید",
+    "validation": {
+      "invalidUuid": "شناسه سفارش معتبر نیست",
+      "searchMaxLength": "متن جستجو نباید بیش از ۱۰۰ کاراکتر باشد"
+    }
+  },
+  "favorite": {
+    "favorites": "علاقه‌مندی‌ها",
+    "favoriteCourses": "دوره‌های محبوب من",
+    "favoritePosts": "مقالات محبوب من",
+    "savedAt": "تاریخ ذخیره",
+    "addedToFavorites": "به علاقه‌مندی‌ها اضافه شد",
+    "removedFromFavorites": "از علاقه‌مندی‌ها حذف شد",
+    "toggleSuccess": "فهرست علاقه‌مندی‌ها بروزرسانی شد",
+    "errorGeneral": "خطایی رخ داد. دوباره تلاش کنید",
+    "emptyCourses": "هنوز هیچ دوره‌ای را به علاقه‌مندی‌ها اضافه نکرده‌اید",
+    "emptyPosts": "هنوز هیچ مقاله‌ای را به علاقه‌مندی‌ها اضافه نکرده‌اید",
+    "browseCourses": "مشاهده دوره‌ها",
+    "browseBlog": "مشاهده بلاگ",
+    "loginRequired": "برای افزودن به علاقه‌مندی‌ها ابتدا وارد شوید",
+    "subtitle": "دوره‌ها و مقالات نشان‌شده شما",
+    "tabCourses": "دوره‌ها",
+    "tabPosts": "مقالات",
+    "removeFromFavorites": "حذف از علاقه‌مندی‌ها",
+    "validation": {
+      "invalidCourseUuid": "شناسه دوره معتبر نیست",
+      "invalidPostUuid": "شناسه مقاله معتبر نیست"
+    }
+  },
+  "enrollment": {
+    "myEnrollments": "دوره‌های من",
+    "enrolledAt": "تاریخ ثبت‌نام",
+    "pricePaid": "مبلغ پرداختی",
+    "startLearning": "شروع یادگیری",
+    "continueLearning": "ادامه یادگیری",
+    "enrollFreeCourse": "ثبت‌نام رایگان",
+    "enrollSuccess": "با موفقیت در دوره ثبت‌نام شدید",
+    "errorGeneral": "خطایی رخ داد. دوباره تلاش کنید",
+    "emptyState": "هنوز در هیچ دوره‌ای ثبت‌نام نکرده‌اید",
+    "browseCourses": "مشاهده دوره‌ها",
+    "alreadyEnrolled": "شما قبلاً در این دوره ثبت‌نام کرده‌اید",
+    "paidCourseError": "برای خرید دوره‌های پولی از سبد خرید استفاده کنید"
+  },
+  "course": {
+    "courses": "دوره‌ها",
+    "course": "دوره",
+    "titleFa": "عنوان فارسی",
+    "titleEn": "عنوان انگلیسی",
+    "descriptionFa": "توضیحات فارسی",
+    "descriptionEn": "توضیحات انگلیسی",
+    "sectionBadge": "جدیدترین‌ها",
+    "sectionTitle": "دوره‌های <highlight>ویژه و جدید</highlight>",
+    "viewAll": "همه دوره‌ها",
+    "studentsCount": "{count} دانشجو",
+    "free": "رایگان",
+    "price": "{price} تومان",
+    "level": "سطح",
+    "category": "دسته‌بندی",
+    "teacher": "مدرس",
+    "image": "تصویر دوره",
+    "published": "منتشر شده",
+    "draft": "پیش‌نویس",
+    "enrollments": "ثبت‌نام‌ها",
+    "comments": "نظرات",
+    "currency": "تومان",
+    "levels": {
+      "BEGINNER": "مقدماتی",
+      "INTERMEDIATE": "متوسط",
+      "ADVANCED": "پیشرفته"
+    },
+    "removeItem": "حذف",
+    "createNew": "افزودن دوره جدید",
+    "editCourse": "ویرایش دوره",
+    "deleteCourse": "حذف دوره",
+    "togglePublish": "انتشار / عدم انتشار",
+    "createSuccess": "دوره با موفقیت ایجاد شد",
+    "updateSuccess": "دوره با موفقیت ویرایش شد",
+    "deleteSuccess": "دوره با موفقیت حذف شد",
+    "publishToggleSuccess": "وضعیت انتشار با موفقیت تغییر یافت",
+    "errorGeneral": "خطایی رخ داد. دوباره تلاش کنید",
+    "confirmDelete": "آیا از حذف این دوره مطمئن هستید؟ تمام داده‌های وابسته نیز حذف خواهند شد.",
+    "cannotPublishHiddenCategory": "دسته‌بندی این دوره مخفی است. ابتدا دسته را فعال کنید.",
+    "validation": {
+      "titleFaMin": "عنوان فارسی باید حداقل ۳ کاراکتر باشد",
+      "titleFaMax": "عنوان فارسی نباید بیش از ۱۵۰ کاراکتر باشد",
+      "titleEnMin": "عنوان انگلیسی باید حداقل ۳ کاراکتر باشد",
+      "titleEnMax": "عنوان انگلیسی نباید بیش از ۱۵۰ کاراکتر باشد",
+      "descriptionMax": "توضیحات نباید بیش از ۵۰۰۰ کاراکتر باشد",
+      "priceRequired": "قیمت الزامی است",
+      "priceInvalid": "قیمت باید یک عدد باشد",
+      "priceInt": "قیمت باید یک عدد صحیح باشد",
+      "priceMin": "قیمت نباید کمتر از ۰ باشد",
+      "priceMax": "قیمت نباید بیش از ۱,۰۰۰,۰۰۰,۰۰۰ باشد",
+      "categoryIdInvalid": "شناسه دسته‌بندی معتبر نیست",
+      "teacherIdInvalid": "شناسه مدرس معتبر نیست",
+      "imageMaxSize": "حجم تصویر باید حداکثر ۵ مگابایت باشد",
+      "imageInvalidType": "فرمت مجاز تصویر: jpg، jpeg، png، webp",
+      "publishedRequired": "وضعیت انتشار الزامی است",
+      "publishedInvalid": "وضعیت انتشار باید true یا false باشد",
+      "atLeastOneField": "حداقل یک فیلد باید برای ویرایش وارد شود",
+      "searchMaxLength": "متن جستجو نباید بیش از ۱۰۰ کاراکتر باشد",
+      "invalidUuid": "شناسه دوره معتبر نیست",
+      "slugRequired": "slug الزامی است",
+      "slugMaxLength": "slug نباید بیش از ۲۰۰ کاراکتر باشد"
+    },
+    "pageTitle": "همه دوره‌ها",
+    "pageDescription": "کاتالوگ کامل دوره‌های تخصصی لرنینو را کاوش کنید",
+    "pageBadge": "دوره‌های آموزشی",
+    "searchPlaceholder": "جستجو در دوره‌ها...",
+    "filters": "فیلترها",
+    "clearFilters": "پاک کردن فیلترها",
+    "filterCategories": "دسته‌بندی",
+    "filterLevel": "سطح دوره",
+    "filterPrice": "محدوده قیمت",
+    "filterSort": "مرتب‌سازی",
+    "allLevels": "همه سطح‌ها",
+    "sortNewest": "جدیدترین",
+    "sortOldest": "قدیمی‌ترین",
+    "sortPriceAsc": "ارزان‌ترین",
+    "sortPriceDesc": "گران‌ترین",
+    "sortTitle": "بر اساس عنوان",
+    "priceMin": "حداقل قیمت",
+    "priceMax": "حداکثر قیمت",
+    "onlyFree": "فقط دوره‌های رایگان",
+    "onlyPaid": "فقط دوره‌های پولی",
+    "resultsCount": "{count} دوره یافت شد",
+    "noResults": "دوره‌ای با این فیلترها یافت نشد",
+    "tryDifferentFilters": "با تغییر فیلترها دوباره امتحان کنید",
+    "loadMore": "نمایش بیشتر",
+    "courseNotFound": "دوره مورد نظر یافت نشد",
+    "backToCourses": "بازگشت به دوره‌ها",
+    "addToCart": "افزودن به سبد خرید",
+    "goToCart": "مشاهده سبد خرید",
+    "buyNow": "خرید سریع",
+    "enrollFree": "ثبت‌نام رایگان",
+    "startLearning": "شروع یادگیری",
+    "goToLesson": "ورود به دوره",
+    "alreadyOwned": "شما این دوره را دارید",
+    "aboutCourse": "درباره دوره",
+    "aboutTeacher": "درباره مدرس",
+    "courseFeatures": "ویژگی‌های دوره",
+    "moreCourses": "دوره‌های بیشتر از این مدرس",
+    "relatedCourses": "دوره‌های مرتبط",
+    "features": {
+      "lifetime": "دسترسی مادام‌العمر",
+      "certificate": "گواهی پایان دوره",
+      "support": "پشتیبانی مدرس",
+      "projectBased": "آموزش پروژه‌محور",
+      "updates": "به‌روزرسانی رایگان",
+      "community": "دسترسی به انجمن"
+    },
+    "stats": {
+      "students": "دانشجو",
+      "comments": "نظر",
+      "likes": "لایک"
+    },
+    "openFilters": "باز کردن فیلترها",
+    "activeFilters": "{count} فیلتر فعال"
+  },
+  "cart": {
+    "currency": "تومان",
+    "cart": "سبد خرید",
+    "shoppingCart": "سبد خرید شما",
+    "cartEmpty": "سبد خرید شما خالی است",
+    "browseCourses": "مشاهده دوره‌ها",
+    "totalAmount": "مبلغ قابل پرداخت",
+    "totalItems": "{count} دوره",
+    "checkout": "تکمیل فرآیند خرید",
+    "clearCart": "خالی کردن سبد خرید",
+    "applyDiscount": "اعمال کد",
+    "discountCodePlaceholder": "کد تخفیف...",
+    "discountApplied": "کد تخفیف با موفقیت اعمال شد",
+    "addSuccess": "دوره با موفقیت به سبد خرید اضافه شد",
+    "removeSuccess": "دوره از سبد خرید حذف شد",
+    "clearSuccess": "سبد خرید با موفقیت خالی شد",
+    "syncSuccess": "سبد خرید با موفقیت همگام‌سازی شد",
+    "errorGeneral": "خطایی رخ داد. دوباره تلاش کنید",
+    "loginRequired": "برای ادامه ابتدا وارد حساب کاربری خود شوید",
+    "confirmClear": "آیا از خالی کردن سبد خرید مطمئن هستید؟",
+    "alreadyInCart": "این دوره از قبل در سبد خرید شما وجود دارد",
+    "alreadyEnrolled": "شما قبلاً در این دوره ثبت‌نام کرده‌اید",
+    "freeCourseError": "دوره‌های رایگان نیازی به افزودن به سبد خرید ندارند",
+    "discount": "کد تخفیف",
+    "discountPlaceholder": "کد تخفیف خود را وارد کنید",
+    "discountRemoved": "کد تخفیف حذف شد",
+    "discountRemove": "حذف کد",
+    "paymentSection": "روش پرداخت",
+    "walletBalance": "موجودی کیف پول",
+    "insufficientBalance": "موجودی کیف پول کافی نیست",
+    "subtotal": "مبلغ کل",
+    "discountAmount": "سود شما از تخفیف",
+    "secureCheckout": "پرداخت امن با ضمانت بازگشت وجه",
+    "emptyCartDescription": "هنوز هیچ دوره‌ای به سبد خرید خود اضافه نکرده‌اید. همین حالا کاتالوگ دوره‌ها را کاوش کنید.",
+    "loginRequiredCheckout": "برای تکمیل خرید ابتدا وارد حساب شوید",
+    "loginRequiredDiscount": "برای اعمال کد تخفیف ابتدا وارد حساب شوید",
+    "removeItem": "حذف از سبد",
+    "paymentSuccessRedirectMessage": "در حال انتقال...",
+    "validation": {
+      "invalidCourseUuid": "شناسه دوره معتبر نیست",
+      "codeMin": "کد تخفیف باید حداقل ۳ کاراکتر باشد",
+      "codeMax": "کد تخفیف نباید بیش از ۵۰ کاراکتر باشد",
+      "codePattern": "کد فقط می‌تواند شامل حروف انگلیسی، اعداد، خط تیره و آندرلاین باشد",
+      "courseIdsRequired": "ارسال لیست دوره‌ها الزامی است",
+      "courseIdsArray": "لیست دوره‌ها باید به‌صورت آرایه ارسال شود",
+      "courseIdsMin": "حداقل باید ۱ دوره ارسال شود",
+      "courseIdsMax": "حداکثر ۵۰ دوره قابل همگام‌سازی است"
+    }
+  },
+  "discount": {
+    "discounts": "کدهای تخفیف",
+    "code": "کد تخفیف",
+    "type": "نوع",
+    "value": "مقدار",
+    "maxUses": "حداکثر استفاده",
+    "usedCount": "تعداد استفاده",
+    "expiresAt": "تاریخ انقضا",
+    "expiresInDays": "مدت اعتبار (روز)",
+    "active": "فعال",
+    "inactive": "غیرفعال",
+    "types": {
+      "PERCENTAGE": "درصدی",
+      "AMOUNT": "مبلغی (ریال)"
+    },
+    "createNew": "ایجاد کد تخفیف",
+    "deleteDiscount": "حذف کد تخفیف",
+    "toggleActive": "تغییر وضعیت فعال/غیرفعال",
+    "createSuccess": "کد تخفیف با موفقیت ایجاد شد",
+    "toggleSuccess": "وضعیت کد تخفیف با موفقیت تغییر یافت",
+    "deleteSuccess": "کد تخفیف با موفقیت حذف شد",
+    "errorGeneral": "خطایی رخ داد. دوباره تلاش کنید",
+    "confirmDelete": "آیا از حذف این کد تخفیف مطمئن هستید؟",
+    "validation": {
+      "codeMin": "کد تخفیف باید حداقل ۳ کاراکتر باشد",
+      "codeMax": "کد تخفیف نباید بیش از ۵۰ کاراکتر باشد",
+      "codePattern": "کد فقط می‌تواند شامل حروف انگلیسی، اعداد، خط تیره و آندرلاین باشد",
+      "typeRequired": "نوع کد تخفیف الزامی است",
+      "valueRequired": "مقدار تخفیف الزامی است",
+      "valueInvalid": "مقدار باید یک عدد باشد",
+      "valuePositive": "مقدار باید مثبت باشد",
+      "percentageRange": "درصد تخفیف باید بین ۱ تا ۱۰۰ باشد",
+      "amountMin": "مبلغ تخفیف باید حداقل ۱۰,۰۰۰ ریال باشد",
+      "maxUsesRequired": "حداکثر تعداد استفاده الزامی است",
+      "maxUsesInvalid": "تعداد استفاده باید یک عدد باشد",
+      "maxUsesInt": "تعداد استفاده باید عدد صحیح باشد",
+      "maxUsesMin": "حداقل تعداد استفاده ۱ است",
+      "maxUsesMax": "حداکثر تعداد استفاده ۱۰,۰۰۰ است",
+      "expiresInDaysRequired": "مدت اعتبار الزامی است",
+      "expiresInDaysInvalid": "مدت اعتبار باید یک عدد باشد",
+      "expiresInDaysInt": "مدت اعتبار باید عدد صحیح باشد",
+      "expiresInDaysMin": "حداقل مدت اعتبار ۱ روز است",
+      "expiresInDaysMax": "حداکثر مدت اعتبار ۳۶۵ روز است",
+      "searchMaxLength": "متن جستجو نباید بیش از ۵۰ کاراکتر باشد",
+      "invalidUuid": "شناسه کد تخفیف معتبر نیست"
+    }
+  },
+  "reaction": {
+    "like": "پسندیدم",
+    "dislike": "نپسندیدم",
+    "reactionUpdated": "واکنش شما ثبت شد",
+    "loginRequired": "برای ثبت واکنش ابتدا وارد شوید",
+    "errorGeneral": "خطایی رخ داد. دوباره تلاش کنید"
+  },
+  "wallet": {
+    "wallet": "کیف پول",
+    "balance": "موجودی کیف پول",
+    "currentBalance": "موجودی فعلی",
+    "chargeWallet": "شارژ کیف پول",
+    "chargeAmount": "مبلغ شارژ (ریال)",
+    "transactions": "تاریخچه تراکنش‌ها",
+    "transactionDetails": "جزئیات تراکنش",
+    "refId": "کد پیگیری",
+    "authority": "شناسه ارجاع",
+    "description": "توضیحات",
+    "date": "تاریخ",
+    "type": "نوع",
+    "status": "وضعیت",
+    "redirectingToGateway": "در حال انتقال به درگاه پرداخت زرین‌پال...",
+    "errorGeneral": "خطایی رخ داد. دوباره تلاش کنید",
+    "emptyTransactions": "هنوز تراکنشی ثبت نشده است",
+    "statuses": {
+      "PENDING": "در انتظار پرداخت",
+      "SUCCESS": "موفق",
+      "FAILED": "ناموفق",
+      "CANCELLED": "لغو شده"
+    },
+    "types": {
+      "CHARGE": "شارژ کیف پول",
+      "PURCHASE": "خرید دوره",
+      "REFUND": "بازپرداخت"
+    },
+    "validation": {
+      "amountRequired": "وارد کردن مبلغ شارژ الزامی است",
+      "amountInvalid": "مبلغ باید یک عدد باشد",
+      "amountInt": "مبلغ باید یک عدد صحیح باشد",
+      "amountMin": "حداقل مبلغ شارژ ۱۰,۰۰۰ ریال است",
+      "amountMax": "حداکثر مبلغ شارژ ۵۰۰,۰۰۰,۰۰۰ ریال است",
+      "invalidUserUuid": "شناسه کاربر معتبر نیست",
+      "searchMaxLength": "متن جستجو نباید بیش از ۱۰۰ کاراکتر باشد"
+    }
+  },
+  "payment": {
+    "success": {
+      "badge": "پرداخت موفق",
+      "title": "پرداخت با موفقیت انجام شد",
+      "subtitle": "خرید شما تکمیل شد و دسترسی به دوره‌ها فعال شده است. آماده یادگیری هستید؟ 🚀",
+      "walletTitle": "کیف پول با موفقیت شارژ شد",
+      "walletSubtitle": "موجودی کیف پول شما با موفقیت افزایش یافت. حالا می‌توانید دوره‌های موردنظر خود را خریداری کنید.",
+      "detailsTitle": "جزئیات تراکنش",
+      "refId": "کد پیگیری",
+      "amount": "مبلغ پرداختی",
+      "newBalance": "موجودی جدید کیف پول",
+      "transactionId": "شناسه تراکنش",
+      "orderId": "شناسه سفارش",
+      "dateTime": "تاریخ و ساعت",
+      "myCourses": "مشاهده دوره‌های من",
+      "backToHome": "بازگشت به صفحه اصلی",
+      "viewOrder": "مشاهده سفارش",
+      "viewWallet": "مشاهده کیف پول",
+      "nextSteps": "قدم بعدی چیه؟",
+      "tip1": "به بخش دوره‌های من برو و یادگیری رو شروع کن",
+      "tip2": "رسید پرداخت به ایمیلت ارسال شد",
+      "tip3": "در صورت بروز مشکل با پشتیبانی تماس بگیر"
+    },
+    "failed": {
+      "badge": "پرداخت ناموفق",
+      "title": "پرداخت انجام نشد",
+      "subtitle": "متأسفانه در فرآیند پرداخت مشکلی رخ داد. جای نگرانی نیست، می‌توانید دوباره تلاش کنید.",
+      "reasonTitle": "علت خطا",
+      "defaultReason": "پرداخت توسط کاربر لغو شد یا خطایی در درگاه پرداخت رخ داده است.",
+      "authorityLabel": "کد مرجع",
+      "retryPayment": "تلاش مجدد پرداخت",
+      "backToCart": "بازگشت به سبد خرید",
+      "backToHome": "بازگشت به صفحه اصلی",
+      "supportTitle": "مشکل حل نشد؟",
+      "supportText": "اگر مشکل ادامه دارد و مبلغی از حساب شما کسر شده، طی ۷۲ ساعت به‌طور خودکار برگشت می‌خورد. برای پیگیری با پشتیبانی تماس بگیرید.",
+      "contactSupport": "تماس با پشتیبانی",
+      "commonIssues": "خطاهای رایج",
+      "issue1": "موجودی کارت بانکی کافی نبوده",
+      "issue2": "رمز دوم کارت اشتباه وارد شده",
+      "issue3": "زمان پرداخت به پایان رسیده",
+      "issue4": "قطعی موقت درگاه پرداخت"
+    }
+  },
+  "category": {
+    "sectionBadge": "موضوعات آموزشی",
+    "sectionTitle": "نقشه راه خودت رو <highlight>انتخاب کن</highlight>",
+    "viewAll": "مشاهده همه",
+    "viewCourses": "مشاهده دوره‌ها",
+    "coursesCount": "{count} دوره",
+    "postsCount": "{count} مقاله",
+    "validation": {
+      "nameFaMin": "نام فارسی باید حداقل ۲ کاراکتر باشد",
+      "nameFaMax": "نام فارسی نباید بیش از ۵۰ کاراکتر باشد",
+      "nameEnMin": "نام انگلیسی باید حداقل ۲ کاراکتر باشد",
+      "nameEnMax": "نام انگلیسی نباید بیش از ۵۰ کاراکتر باشد",
+      "descriptionMax": "توضیحات نباید بیش از ۵۰۰ کاراکتر باشد",
+      "atLeastOneField": "حداقل یک فیلد باید برای ویرایش وارد شود",
+      "showRequired": "وضعیت نمایش الزامی است",
+      "showInvalid": "وضعیت نمایش نامعتبر است",
+      "searchMaxLength": "متن جستجو نباید بیش از ۱۰۰ کاراکتر باشد",
+      "invalidUuid": "شناسه دسته‌بندی معتبر نیست",
+      "slugRequired": "اسلاگ الزامی است",
+      "slugMaxLength": "اسلاگ نباید بیش از ۱۰۰ کاراکتر باشد"
+    }
+  },
+  "post": {
+    "editorImageUploaded": "تصویر با موفقیت آپلود شد",
+    "createSuccess": "مقاله با موفقیت ایجاد شد",
+    "updateSuccess": "مقاله با موفقیت ویرایش شد",
+    "deleteSuccess": "مقاله با موفقیت حذف شد",
+    "publishToggleSuccess": "وضعیت انتشار مقاله تغییر یافت",
+    "errorGeneral": "خطایی رخ داد. دوباره تلاش کنید",
+    "validation": {
+      "titleFaMin": "عنوان فارسی باید حداقل ۳ کاراکتر باشد",
+      "titleFaMax": "عنوان فارسی نباید بیش از ۲۰۰ کاراکتر باشد",
+      "titleEnMin": "عنوان انگلیسی باید حداقل ۳ کاراکتر باشد",
+      "titleEnMax": "عنوان انگلیسی نباید بیش از ۲۰۰ کاراکتر باشد",
+      "contentFaMin": "محتوای فارسی باید حداقل ۱۰ کاراکتر متن داشته باشد",
+      "contentEnMin": "محتوای انگلیسی باید حداقل ۱۰ کاراکتر متن داشته باشد",
+      "contentMax": "محتوا نباید بیش از ۱۰۰,۰۰۰ کاراکتر باشد",
+      "categoryIdInvalid": "شناسه دسته‌بندی معتبر نیست",
+      "imageMaxSize": "حجم تصویر باید حداکثر ۵ مگابایت باشد",
+      "imageInvalidType": "فرمت مجاز تصویر: jpg، jpeg، png، webp",
+      "atLeastOneField": "حداقل یک فیلد باید برای ویرایش وارد شود",
+      "searchMaxLength": "متن جستجو نباید بیش از ۱۰۰ کاراکتر باشد",
+      "invalidUuid": "شناسه مقاله معتبر نیست"
+    }
+  },
+  "about": {
+    "sectionBadge": "چرا لرنینو؟",
+    "sectionTitle": "بستری برای <highlight>یادگیری بی‌مرز</highlight>",
+    "sectionDescription": "لرنینو با تمرکز بر یادگیری عملی و پروژه‌محور، مسیر تبدیل شدن به یک برنامه‌نویس حرفه‌ای را برای همه هموار کرده است.",
+    "features": {
+      "quality": {
+        "title": "کیفیت بی‌رقیب",
+        "description": "دوره‌های تولیدشده توسط بهترین مدرسان با تجربه صنعتی و پروژه‌های دنیای واقعی"
+      },
+      "community": {
+        "title": "جامعه پویا",
+        "description": "دسترسی به هزاران دانشجوی همفکر و شبکه گسترده مدرسان برای یادگیری بهتر"
+      },
+      "certificate": {
+        "title": "گواهی معتبر",
+        "description": "دریافت مدرک پایان دوره قابل تأیید که در بازار کار به شما اعتبار می‌بخشد"
+      },
+      "lifetime": {
+        "title": "دسترسی دائمی",
+        "description": "هر دوره‌ای که خریداری کنید، برای همیشه در حساب شما باقی می‌ماند و آپدیت می‌شود"
+      }
+    }
+  },
+  "freeCourses": {
+    "sectionBadge": "بدون هزینه",
+    "sectionTitle": "دوره‌های <highlight>رایگان</highlight> ما",
+    "viewAll": "همه دوره‌های رایگان"
+  },
+  "teachers": {
+    "sectionBadge": "استادان لرنینو",
+    "sectionTitle": "با <highlight>بهترین مدرسان</highlight> بیاموز",
+    "viewAll": "همه مدرسان",
+    "coursesCount": "{count} دوره"
+  },
+  "learningPaths": {
+    "sectionBadge": "مسیر یادگیری",
+    "sectionTitle": "مسیرهای <highlight>تخصصی یادگیری</highlight>",
+    "sectionDescription": "با انتخاب یکی از این مسیرها، برنامه یادگیری مشخص و هدفمندی برای تخصصی شدن داشته باش.",
+    "viewAll": "مشاهده همه مسیرها",
+    "steps": "{count} مرحله",
+    "duration": "{months} ماه",
+    "startPath": "شروع مسیر",
+    "paths": {
+      "frontend": {
+        "title": "توسعه‌دهنده فرانت‌اند",
+        "description": "از HTML و CSS تا React و Next.js — یک توسعه‌دهنده مدرن وب شو"
+      },
+      "backend": {
+        "title": "توسعه‌دهنده بک‌اند",
+        "description": "با Node.js، دیتابیس و طراحی API، سرور سایت‌های بزرگ را بساز"
+      },
+      "ai": {
+        "title": "متخصص هوش مصنوعی",
+        "description": "با پایتون و یادگیری ماشین، وارد دنیای هیجان‌انگیز AI شو"
+      },
+      "mobile": {
+        "title": "توسعه‌دهنده موبایل",
+        "description": "با React Native و Flutter، اپلیکیشن‌های Cross-Platform بساز"
+      }
+    }
+  },
+  "posts": {
+    "sectionBadge": "مقالات و بلاگ",
+    "sectionTitle": "دنیای <highlight>دانش برنامه‌نویسی</highlight>",
+    "viewAll": "همه مقالات",
+    "readMore": "ادامه مطلب",
+    "readTime": "{minutes} دقیقه مطالعه"
+  },
+  "testimonials": {
+    "sectionBadge": "نظرات دانشجویان",
+    "sectionTitle": "دانشجوهای ما <highlight>چه می‌گویند؟</highlight>",
+    "sectionDescription": "بیش از هزاران دانشجو با لرنینو مسیر رشد خود را آغاز کرده‌اند."
+  },
+  "cta": {
+    "badge": "آماده شروع هستی؟",
+    "title": "همین امروز مسیر <highlight>برنامه‌نویس شدن</highlight> رو شروع کن",
+    "description": "به بیش از ۱۲,۰۰۰ دانشجوی لرنینو بپیوند و مهارت‌های بازار کار رو یاد بگیر.",
+    "primary": "ثبت‌نام رایگان",
+    "secondary": "مشاهده دوره‌ها"
+  },
+  "blog": {
+    "title": "بلاگ لرنینو",
+    "description": "جدیدترین مقالات و آموزش‌های برنامه‌نویسی",
+    "searchPlaceholder": "جستجو در مقالات...",
+    "allCategories": "همه دسته‌ها",
+    "sortNewest": "جدیدترین",
+    "sortTitle": "بر اساس عنوان",
+    "noResults": "مقاله‌ای با این مشخصات یافت نشد",
+    "readMore": "ادامه مطلب",
+    "sharePost": "اشتراک‌گذاری",
+    "relatedPosts": "مقالات مرتبط",
+    "tableOfContents": "فهرست مطالب",
+    "comments": "نظرات",
+    "writeComment": "نظر خود را بنویسید...",
+    "submitComment": "ارسال نظر",
+    "replyTo": "پاسخ به {name}",
+    "cancelReply": "لغو پاسخ",
+    "pendingApproval": "نظر شما ثبت شد و پس از بررسی نمایش داده می‌شود",
+    "loginToComment": "برای ارسال نظر ابتدا وارد شوید",
+    "loadMoreComments": "نظرات بیشتر",
+    "noComments": "اولین نظر را شما بنویسید!",
+    "postNotFound": "مقاله مورد نظر یافت نشد."
+  },
+  "breadcrumb": {
+    "home": "خانه",
+    "courses": "دوره‌ها",
+    "learningPaths": "مسیرهای یادگیری",
+    "blog": "بلاگ",
+    "about": "درباره ما",
+    "contact": "تماس با ما",
+    "cart": "سبد خرید",
+    "search": "جستجو",
+    "dashboard": "داشبورد",
+    "profile": "پروفایل",
+    "myCourses": "دوره‌های من",
+    "orders": "سفارشات",
+    "wallet": "کیف پول",
+    "favorites": "علاقه‌مندی‌ها",
+    "settings": "تنظیمات",
+    "admin": "مدیریت",
+    "categories": "دسته‌بندی‌ها",
+    "teachers": "مدرسان"
+  },
+  "aboutPage": {
+    "meta": {
+      "title": "درباره لرنینو | داستان ما، ماموریت و تیم",
+      "description": "لرنینو پلتفرم تخصصی آموزش برنامه‌نویسی است. با ماموریت، ارزش‌ها، تیم و آمار موفقیت ما آشنا شوید."
+    },
+    "hero": {
+      "badge": "درباره لرنینو",
+      "title": "ما به <highlight>یادگیری بدون مرز</highlight> باور داریم",
+      "description": "لرنینو در سال ۱۴۰۰ با یک هدف ساده متولد شد: در دسترس قرار دادن آموزش‌های باکیفیت برنامه‌نویسی برای همه فارسی‌زبانان دنیا."
+    },
+    "stats": {
+      "students": "دانشجوی فعال",
+      "courses": "دوره تخصصی",
+      "instructors": "مدرس مجرب",
+      "hours": "ساعت آموزش"
+    },
+    "mission": {
+      "badge": "ماموریت ما",
+      "title": "چرا <highlight>لرنینو</highlight> را ساختیم؟",
+      "description": "ما دیدیم که خیلی از علاقه‌مندان به برنامه‌نویسی به دلیل نبود منابع آموزشی منسجم و به‌روز، مسیر یادگیری‌شان طولانی و پرچالش می‌شود. لرنینو راه‌حل ماست.",
+      "cards": {
+        "vision": {
+          "title": "چشم‌انداز",
+          "description": "تبدیل شدن به بزرگ‌ترین اکوسیستم آموزش برنامه‌نویسی فارسی در دنیا"
+        },
+        "mission": {
+          "title": "ماموریت",
+          "description": "توانمندسازی هزاران نفر برای ورود به بازار کار جهانی برنامه‌نویسی"
+        },
+        "goal": {
+          "title": "هدف بلندمدت",
+          "description": "ساخت پلی امن میان یادگیرندگان فارسی‌زبان و فرصت‌های شغلی بین‌المللی"
+        }
+      }
+    },
+    "values": {
+      "badge": "ارزش‌های ما",
+      "title": "اصولی که <highlight>پایه لرنینو</highlight> هستند",
+      "items": {
+        "quality": {
+          "title": "کیفیت بی‌قید و شرط",
+          "description": "هر دوره قبل از انتشار، توسط تیم کیفیت بازبینی می‌شود"
+        },
+        "practical": {
+          "title": "یادگیری عملی",
+          "description": "پروژه‌های واقعی، نه صرفا تئوری‌های خشک و بی‌کاربرد"
+        },
+        "community": {
+          "title": "جامعه فعال",
+          "description": "پشتیبانی گروهی و ارتباط نزدیک با مدرسان و همتایان"
+        },
+        "growth": {
+          "title": "رشد مستمر",
+          "description": "دوره‌ها همواره آپدیت می‌شوند تا به‌روز باقی بمانند"
+        },
+        "accessible": {
+          "title": "دسترسی برای همه",
+          "description": "دوره‌های رایگان متعدد در کنار پکیج‌های حرفه‌ای"
+        },
+        "transparent": {
+          "title": "شفافیت کامل",
+          "description": "قیمت‌گذاری شفاف، بدون هزینه‌های مخفی و ضمانت بازگشت"
+        }
+      }
+    },
+    "story": {
+      "badge": "داستان ما",
+      "title": "چگونه <highlight>لرنینو متولد شد</highlight>",
+      "timeline": {
+        "step1": {
+          "year": "۱۴۰۰",
+          "title": "شروع یک رویا",
+          "description": "با یک تیم ۳ نفره و ۵ دوره کوچک، سفر لرنینو آغاز شد"
+        },
+        "step2": {
+          "year": "۱۴۰۱",
+          "title": "رشد جامعه",
+          "description": "بیش از ۵۰۰ دانشجو به خانواده لرنینو پیوستند"
+        },
+        "step3": {
+          "year": "۱۴۰۲",
+          "title": "توسعه بین‌المللی",
+          "description": "افزودن نسخه انگلیسی و پذیرش دانشجویان از سراسر دنیا"
+        },
+        "step4": {
+          "year": "۱۴۰۳",
+          "title": "امروز",
+          "description": "بیش از ۲,۵۰۰ دانشجوی فعال، ۱۵ مدرس و ۴۰ دوره تخصصی"
+        }
+      }
+    },
+    "cta": {
+      "title": "آماده‌ای <highlight>سفر یادگیری</highlight> را شروع کنی؟",
+      "description": "به هزاران دانشجوی لرنینو بپیوند و آینده شغلی روشنی برای خودت بساز.",
+      "primary": "شروع رایگان",
+      "secondary": "مشاهده دوره‌ها"
+    }
+  },
+  "learningPathsPage": {
+    "meta": {
+      "title": "مسیرهای یادگیری | لرنینو",
+      "description": "مسیرهای تخصصی یادگیری برنامه‌نویسی: فرانت‌اند، بک‌اند، هوش مصنوعی و توسعه موبایل. مسیر شغلی خود را انتخاب کنید."
+    },
+    "hero": {
+      "badge": "مسیرهای تخصصی",
+      "title": "مسیر شغلی <highlight>رویاهایت</highlight> را انتخاب کن",
+      "description": "با انتخاب یکی از این مسیرهای هدفمند، از صفر تا استخدام قدم‌به‌قدم پیش برو و به یک متخصص واقعی تبدیل شو."
+    },
+    "features": {
+      "structured": {
+        "title": "برنامه ساختاریافته",
+        "description": "قدم‌به‌قدم از مقدماتی تا پیشرفته"
+      },
+      "projects": {
+        "title": "پروژه واقعی",
+        "description": "۵+ پروژه پرتفولیو در هر مسیر"
+      },
+      "mentor": {
+        "title": "پشتیبانی مدرس",
+        "description": "دسترسی مستقیم به منتور تخصصی"
+      },
+      "certificate": {
+        "title": "گواهی معتبر",
+        "description": "مدرک پایان مسیر قابل استعلام"
+      }
+    },
+    "pathsSection": {
+      "badge": "مسیرهای ما",
+      "title": "کدام <highlight>مسیر</highlight> برای تو مناسب‌تر است؟",
+      "description": "هر مسیر با هدف تربیت یک متخصص کامل در آن حوزه طراحی شده است."
+    },
+    "howItWorks": {
+      "badge": "چطور کار می‌کند؟",
+      "title": "در <highlight>۴ قدم ساده</highlight> شروع کن",
+      "steps": {
+        "choose": {
+          "title": "انتخاب مسیر",
+          "description": "مسیری را که با هدف شغلی‌ات همخوانی دارد انتخاب کن"
+        },
+        "learn": {
+          "title": "یادگیری منظم",
+          "description": "طبق برنامه ارائه‌شده، دوره‌ها را به ترتیب گذران"
+        },
+        "practice": {
+          "title": "تمرین و پروژه",
+          "description": "پروژه‌های عملی را انجام بده و پرتفولیو بساز"
+        },
+        "certificate": {
+          "title": "دریافت گواهی",
+          "description": "مدرک پایان مسیر را دریافت و وارد بازار کار شو"
+        }
+      }
+    },
+    "levels": {
+      "beginner": "مقدماتی",
+      "intermediate": "متوسط",
+      "advanced": "پیشرفته",
+      "toIntermediate": "تا متوسط",
+      "toAdvanced": "تا پیشرفته"
+    },
+    "pathDetails": {
+      "courses": "دوره",
+      "projects": "پروژه",
+      "hours": "ساعت",
+      "level": "سطح",
+      "startPath": "شروع این مسیر",
+      "learnMore": "جزئیات بیشتر"
+    },
+    "cta": {
+      "title": "هنوز <highlight>مطمئن نیستی</highlight> کدام مسیر مناسب است؟",
+      "description": "با مشاوران ما صحبت کن تا بهترین مسیر را با توجه به شرایطت پیشنهاد دهیم.",
+      "primary": "دریافت مشاوره رایگان",
+      "secondary": "مشاهده تمام دوره‌ها"
+    }
+  },
+  "dashboard": {
+    "title": "پنل کاربری",
+    "welcome": "سلام {name}",
+    "welcomeSubtitle": "خوش آمدید! به داشبورد خودتان",
+    "quickActions": "دسترسی سریع",
+    "recentActivity": "فعالیت‌های اخیر",
+    "viewAll": "مشاهده همه",
+    "activeCoursesInAccount": "{count} دوره فعال در حساب شما",
+    "defaultTeacherName": "مدرس لرنینو",
+    "enterCourse": "ورود به دوره",
+    "commentsSubtitle": "دیدگاه‌های ارسالی شما",
+    "commentsCount": "{count} نظر ثبت‌شده",
+    "commentStatus": {
+      "PENDING": "در انتظار تایید",
+      "APPROVED": "تایید شده",
+      "REJECTED": "رد شده"
+    },
+    "commentOn": "دیدگاه شما در",
+    "onCourse": "دوره",
+    "onPost": "مقاله",
+    "replies": "پاسخ",
+    "reactions": "واکنش",
+    "viewSource": "مشاهده",
+    "remove": "حذف",
+    "defaultCommentTarget": "دیدگاه آموزشی",
+    "ordersCount": "{count} سفارش ثبت شده",
+    "ordersSubtitle": "تاریخچه سفارش‌های شما",
+    "orderNumber": "شماره سفارش",
+    "filterAll": "همه",
+    "cancel": "لغو",
+    "details": "جزئیات",
+    "cancelThisOrder": "لغو این سفارش",
+    "backToOrders": "بازگشت به سفارشات",
+    "orderNotFound": "سفارش مورد نظر یافت نشد.",
+    "submittedAt": "ثبت شده در",
+    "purchasedCourses": "دوره‌های خریداری‌شده",
+    "orderSummary": "خلاصه مالی سفارش",
+    "paymentMethodLabel": "روش پرداخت",
+    "notPaidYet": "پرداخت‌نشده",
+    "subtotalLabel": "جمع کل",
+    "discountLabel": "تخفیف",
+    "discountCodeLabel": "کد تخفیف",
+    "totalAmountLabel": "مبلغ نهایی",
+    "coursesMore": "و {count} دوره دیگر",
+    "educationalOrder": "سفارش آموزشی",
+    "courseIdLabel": "شناسه دوره",
+    "itemsCount": "{count} دوره",
+    "walletSubtitle": "مدیریت موجودی و شارژ حساب",
+    "walletDescription": "از موجودی کیف پول می‌توانید برای خرید سریع تمام دوره‌ها بدون نیاز به ورود به درگاه استفاده کنید.",
+    "chargeAccount": "شارژ حساب",
+    "chargeAmountLabel": "مبلغ شارژ",
+    "chargeSubmit": "پرداخت و شارژ آنلاین",
+    "chargeMinNote": "حداقل مبلغ شارژ ۱٬۰۰۰ تومان است",
+    "transactionsHistory": "تاریخچه تراکنش‌ها",
+    "emptyTransactions": "هنوز تراکنشی ثبت نشده است",
+    "transactionRefId": "کد پیگیری",
+    "transactionCharge": "شارژ کیف پول",
+    "transactionPurchase": "خرید دوره",
+    "transactionRefund": "بازپرداخت",
+    "transactionStatusSUCCESS": "موفق",
+    "transactionStatusPENDING": "در انتظار",
+    "transactionStatusFAILED": "ناموفق",
+    "transactionStatusCANCELLED": "لغو شده",
+    "currentBalanceLabel": "موجودی فعلی",
+    "profileSubtitle": "ویرایش اطلاعات شخصی و تصویر پروفایل",
+    "personalInfo": "اطلاعات شخصی",
+    "avatarSection": "تصویر پروفایل",
+    "avatarHint": "فرمت‌های مجاز: JPG، PNG، WEBP - حداکثر ۲ مگابایت",
+    "nameLabel": "نام و نام خانوادگی",
+    "namePlaceholder": "نام کامل خود را وارد کنید",
+    "phoneLabel": "شماره موبایل",
+    "phonePlaceholder": "09121234567",
+    "emailLabel": "آدرس ایمیل",
+    "changeEmailLink": "تغییر ایمیل",
+    "emailNotEditable": "ایمیل غیرقابل ویرایش است",
+    "uploadNew": "آپلود تصویر",
+    "removeAvatarBtn": "حذف تصویر",
+    "saveChanges": "ذخیره تغییرات",
+    "discardChanges": "لغو تغییرات",
+    "noChangesToSave": "تغییری برای ذخیره وجود ندارد",
+    "memberSince": "عضو از",
+    "accountVerified": "حساب تایید شده",
+    "unsavedChanges": "تغییرات ذخیره نشده",
+    "settingsSubtitle": "مدیریت ظاهر، امنیت و اطلاعات حساب کاربری",
+    "tabAppearance": "ظاهر و منطقه",
+    "tabPassword": "رمز عبور",
+    "tabEmail": "تغییر ایمیل",
+    "themeSection": "حالت نمایش",
+    "themeDescription": "پوسته دلخواه خود را برای نمایش سایت انتخاب کنید.",
+    "languageSection": "زبان سایت",
+    "languageDescription": "سایت لرنینو در حال حاضر به دو زبان فارسی و انگلیسی در دسترس است.",
+    "currentEmailLabel": "ایمیل فعلی",
+    "otpCodeLabel": "کد تایید ۶ رقمی",
+    "passwordHint": "حداقل ۶ کاراکتر - ترکیبی از حروف بزرگ، کوچک و اعداد",
+    "showPassword": "نمایش رمز",
+    "hidePassword": "پنهان کردن رمز",
+    "sameAsCurrentEmail": "ایمیل جدید همان ایمیل فعلی است",
+    "defaultUserName": "کاربر لرنینو",
+    "menu": {
+      "overview": "داشبورد",
+      "profile": "پروفایل",
+      "myCourses": "دوره‌های من",
+      "orders": "سفارشات",
+      "wallet": "کیف پول",
+      "favorites": "علاقه‌مندی‌ها",
+      "comments": "نظرات",
+      "settings": "تنظیمات",
+      "logout": "خروج از حساب"
+    },
+    "sections": {
+      "general": "اصلی",
+      "finance": "مالی",
+      "personal": "حساب کاربری"
+    },
+    "stats": {
+      "totalCourses": "کل دوره‌ها",
+      "activeCourses": "دوره‌های فعال",
+      "totalOrders": "کل سفارشات",
+      "activeOrders": "سفارشات در انتظار",
+      "walletBalance": "موجودی کیف پول",
+      "totalComments": "کل نظرات",
+      "pendingComments": "نظرات در انتظار تایید",
+      "favoriteCourses": "دوره‌های محبوب",
+      "favoritePosts": "مقالات محبوب",
+      "cartItems": "سبد خرید",
+      "totalReactions": "کل واکنش‌ها"
+    },
+    "empty": {
+      "courses": "هنوز دوره‌ای خریداری نکرده‌اید",
+      "orders": "هنوز سفارشی ثبت نکرده‌اید",
+      "transactions": "هنوز تراکنشی ثبت نشده است",
+      "comments": "هنوز نظری ارسال نکرده‌اید",
+      "favorites": "هنوز چیزی به علاقه‌مندی‌ها اضافه نکرده‌اید",
+      "browseCourses": "مشاهده دوره‌ها"
+    },
+    "buttons": {
+      "chargeWallet": "شارژ کیف پول",
+      "continueLeraning": "ادامه یادگیری",
+      "viewOrder": "مشاهده سفارش",
+      "cancelOrder": "لغو سفارش",
+      "editProfile": "ویرایش پروفایل",
+      "uploadAvatar": "آپلود تصویر",
+      "removeAvatar": "حذف تصویر",
+      "save": "ذخیره تغییرات"
+    }
+  },
+  "admin": {
+    "defaultUserName": "کاربر ادمین",
+    "title": "پنل مدیریت لرنینو",
+    "subtitle": "کنترل کامل پلتفرم آموزشی",
+    "badge": "ادمین",
+    "welcomeMessage": "سلام {name}، به پنل مدیریت خوش آمدید",
+    "welcomeSubtitle": "همه چیز آماده است تا مدیریت پلتفرم را در دست بگیرید",
+    "roleGuard": {
+      "checking": "در حال بررسی دسترسی مدیر...",
+      "unauthorized": "شما دسترسی به این بخش را ندارید."
+    },
+    "loginPage": {
+      "brandName": "لرنینو",
+      "portalBadge": "پرتال ادمین",
+      "title": "ورود به پنل مدیریت",
+      "emailLabel": "ایمیل ادمین",
+      "emailPlaceholder": "admin@learnino.com",
+      "passwordLabel": "رمز عبور",
+      "passwordPlaceholder": "رمز عبور خود را وارد کنید",
+      "submitButton": "ورود به پنل مدیریت",
+      "submitting": "در حال ورود...",
+      "backToUserSite": "بازگشت به سایت اصلی",
+      "securityNote": "این صفحه صرفاً برای ورود مدیران سیستم است. تمامی تلاش‌های ورود ثبت و بررسی می‌شوند.",
+      "showPassword": "نمایش رمز عبور",
+      "hidePassword": "پنهان کردن رمز عبور",
+      "meta": {
+        "title": "ورود به پنل مدیریت | لرنینو",
+        "description": "صفحه ورود مدیران به پنل مدیریت پلتفرم آموزشی لرنینو"
+      }
+    },
+    "users": {
+      "pageTitle": "مدیریت کاربران",
+      "pageSubtitle": "لیست کامل کاربران ثبت‌نام شده در پلتفرم",
+      "usersRegistered": "{count} کاربر ثبت شده",
+      "banned": {
+        "pageTitle": "کاربران مسدود",
+        "pageSubtitle": "کاربران مسدود شده در سیستم",
+        "bannedCount": "{count} کاربر مسدود",
+        "noBannedUsers": "کاربر مسدودی وجود ندارد",
+        "noBannedUsersDescription": "در حال حاضر همه کاربران فعال هستند"
+      },
+      "detail": {
+        "title": "جزئیات کاربر",
+        "subtitle": "اطلاعات کامل و آمار فعالیت",
+        "back": "بازگشت به لیست",
+        "personalInfo": "اطلاعات شخصی",
+        "activityStats": "آمار فعالیت",
+        "walletInfo": "اطلاعات کیف پول",
+        "email": "ایمیل",
+        "phone": "شماره موبایل",
+        "role": "نقش",
+        "status": "وضعیت",
+        "verified": "تایید شده",
+        "unverified": "تایید نشده",
+        "banned": "مسدود",
+        "active": "فعال",
+        "createdAt": "تاریخ عضویت",
+        "lastUpdated": "آخرین بروزرسانی",
+        "noPhone": "ثبت نشده",
+        "noName": "بدون نام",
+        "userNotFound": "کاربر مورد نظر یافت نشد",
+        "bannedSince": "مسدود از",
+        "joinedAt": "عضویت"
+      },
+      "stats": {
+        "enrollments": "دوره‌ها",
+        "orders": "سفارشات",
+        "comments": "نظرات",
+        "favoriteCourses": "دوره‌های علاقه‌مند",
+        "favoritePosts": "مقالات علاقه‌مند",
+        "reactions": "واکنش‌ها",
+        "walletBalance": "موجودی کیف پول"
+      },
+      "overviewStats": {
+        "total": "کل کاربران",
+        "totalSubtitle": "{count} عادی",
+        "verified": "تایید شده",
+        "verifiedSubtitle": "{count} تایید نشده",
+        "newThisWeek": "جدید این هفته",
+        "newThisWeekSubtitle": "{count} این ماه",
+        "admins": "مدیران سیستم"
+      },
+      "table": {
+        "user": "کاربر",
+        "contact": "اطلاعات تماس",
+        "role": "نقش",
+        "status": "وضعیت",
+        "stats": "آمار",
+        "joined": "عضویت",
+        "actions": "عملیات",
+        "noUsersFound": "کاربری یافت نشد",
+        "noUsersDescription": "با تغییر فیلترها دوباره جستجو کنید"
+      },
+      "filters": {
+        "searchPlaceholder": "جستجوی نام یا ایمیل...",
+        "allRoles": "همه نقش‌ها",
+        "roleUser": "کاربر عادی",
+        "roleAdmin": "ادمین",
+        "allVerification": "همه وضعیت‌ها",
+        "verifiedOnly": "فقط تایید شده",
+        "unverifiedOnly": "فقط تایید نشده",
+        "sortDate": "تاریخ عضویت",
+        "sortName": "نام کاربر",
+        "sortEmail": "آدرس ایمیل"
+      },
+      "actions": {
+        "viewDetails": "مشاهده جزئیات",
+        "banUser": "مسدود کردن",
+        "unbanUser": "رفع مسدودیت",
+        "goToBanned": "کاربران مسدود",
+        "goToList": "لیست کاربران"
+      },
+      "confirmBan": {
+        "title": "مسدود کردن کاربر",
+        "description": "با مسدود شدن این کاربر، تمام سشن‌های فعال او پایان یافته و دسترسی به حسابش قطع می‌شود. آیا مطمئن هستید؟",
+        "confirm": "بله، مسدود کن",
+        "cancel": "انصراف"
+      },
+      "confirmUnban": {
+        "title": "رفع مسدودیت کاربر",
+        "description": "با رفع مسدودیت، کاربر مجدداً می‌تواند وارد حساب خود شود. آیا ادامه می‌دهید؟",
+        "confirm": "بله، رفع مسدودیت کن",
+        "cancel": "انصراف"
+      }
+    },
+    "sections": {
+      "main": "اصلی",
+      "content": "محتوای آموزشی",
+      "blog": "محتوا و بلاگ",
+      "financial": "مالی و فروش",
+      "users": "کاربران",
+      "management": "مدیریت"
+    },
+    "menu": {
+      "overview": "داشبورد",
+      "users": "کاربران",
+      "usersList": "لیست کاربران",
+      "usersBanned": "کاربران مسدود",
+      "courses": "دوره‌ها",
+      "coursesList": "لیست دوره‌ها",
+      "coursesCreate": "ایجاد دوره جدید",
+      "categories": "دسته‌بندی‌ها",
+      "teachers": "مدرسان",
+      "teachersList": "لیست مدرسان",
+      "teachersCreate": "افزودن مدرس جدید",
+      "posts": "مقالات",
+      "postsList": "لیست مقالات",
+      "postsCreate": "ایجاد مقاله جدید",
+      "comments": "نظرات",
+      "orders": "سفارشات",
+      "wallets": "کیف‌پول‌ها",
+      "transactions": "تراکنش‌ها",
+      "discounts": "کدهای تخفیف",
+      "settings": "تنظیمات",
+      "logout": "خروج از پنل"
+    },
+    "actions": {
+      "create": "ایجاد",
+      "createNew": "افزودن جدید",
+      "edit": "ویرایش",
+      "delete": "حذف",
+      "view": "مشاهده",
+      "save": "ذخیره",
+      "confirm": "تایید",
+      "cancel": "انصراف",
+      "back": "بازگشت",
+      "publish": "انتشار",
+      "unpublish": "لغو انتشار",
+      "approve": "تایید",
+      "reject": "رد",
+      "ban": "مسدود کردن",
+      "unban": "رفع مسدودیت",
+      "activate": "فعال‌سازی",
+      "deactivate": "غیرفعال‌سازی",
+      "download": "دانلود",
+      "upload": "آپلود",
+      "refresh": "به‌روزرسانی",
+      "filter": "فیلتر",
+      "sort": "مرتب‌سازی",
+      "search": "جستجو",
+      "export": "خروجی",
+      "close": "بستن",
+      "yes": "بله",
+      "no": "خیر",
+      "loading": "در حال بارگذاری...",
+      "processing": "در حال پردازش..."
+    },
+    "filters": {
+      "all": "همه",
+      "active": "فعال",
+      "inactive": "غیرفعال",
+      "published": "منتشر شده",
+      "draft": "پیش‌نویس",
+      "banned": "مسدود شده",
+      "verified": "تایید شده",
+      "unverified": "تایید نشده",
+      "sortNewest": "نزولی (جدیدترین)",
+      "sortOldest": "صعودی (قدیمی‌ترین)",
+      "sortName": "نام کاربر",
+      "sortEmail": "آدرس ایمیل",
+      "sortDate": "تاریخ عضویت",
+      "clearFilters": "پاکسازی فیلترها",
+      "applyFilters": "اعمال فیلترها",
+      "searchPlaceholder": "جستجو..."
+    },
+    "table": {
+      "columnsVisibility": "ستون‌های نمایشی",
+      "selectAll": "انتخاب همه",
+      "clearAll": "پاک کردن همه",
+      "searchPlaceholder": "جستجو در جدول...",
+      "showing": "نمایش",
+      "to": "تا",
+      "of": "از",
+      "items": "مورد",
+      "rowsPerPage": "تعداد در صفحه",
+      "goToPage": "برو به صفحه",
+      "previousPage": "صفحه قبلی",
+      "nextPage": "صفحه بعدی",
+      "firstPage": "اولین صفحه",
+      "lastPage": "آخرین صفحه",
+      "noData": "داده‌ای برای نمایش وجود ندارد",
+      "noDataDescription": "برای افزودن داده جدید کلیک کنید",
+      "loading": "در حال بارگذاری داده‌ها...",
+      "error": "خطا در بارگذاری داده‌ها",
+      "actions": "عملیات",
+      "id": "شناسه",
+      "createdAt": "تاریخ ایجاد",
+      "updatedAt": "تاریخ به‌روزرسانی",
+      "status": "وضعیت"
+    },
+    "breadcrumb": {
+      "admin": "پنل مدیریت",
+      "overview": "داشبورد",
+      "users": "کاربران",
+      "banned": "مسدود شده",
+      "courses": "دوره‌ها",
+      "categories": "دسته‌بندی‌ها",
+      "teachers": "مدرسان",
+      "posts": "مقالات",
+      "comments": "نظرات",
+      "orders": "سفارشات",
+      "wallets": "کیف‌پول‌ها",
+      "transactions": "تراکنش‌ها",
+      "discounts": "کدهای تخفیف",
+      "create": "ایجاد جدید",
+      "edit": "ویرایش",
+      "details": "جزئیات"
+    },
+    "userMenu": {
+      "profile": "پروفایل من",
+      "viewSite": "مشاهده وب‌سایت",
+      "userDashboard": "پنل کاربری",
+      "settings": "تنظیمات ادمین",
+      "logout": "خروج از پنل"
+    },
+    "confirmations": {
+      "deleteTitle": "آیا مطمئن هستید؟",
+      "deleteDescription": "این عمل غیرقابل بازگشت است. آیا مطمئن هستید که می‌خواهید ادامه دهید؟",
+      "banTitle": "مسدود کردن کاربر",
+      "banDescription": "با این عمل، کاربر دیگر نمی‌تواند وارد سایت شود. ادامه می‌دهید؟",
+      "publishTitle": "انتشار محتوا",
+      "publishDescription": "این محتوا برای همه کاربران قابل مشاهده خواهد شد.",
+      "unpublishTitle": "لغو انتشار",
+      "unpublishDescription": "این محتوا از دسترس کاربران خارج خواهد شد."
+    },
+    "toasts": {
+      "createSuccess": "با موفقیت ایجاد شد",
+      "updateSuccess": "با موفقیت به‌روزرسانی شد",
+      "deleteSuccess": "با موفقیت حذف شد"
+    },
+    "categories": {
+      "pageTitle": "مدیریت دسته‌بندی‌ها",
+      "pageSubtitle": "مدیریت دسته‌بندی‌های دوره‌ها و مقالات",
+      "categoriesCount": "{count} دسته‌بندی ثبت شده",
+      "createNew": "افزودن دسته‌بندی",
+      "editCategory": "ویرایش دسته‌بندی",
+      "deleteCategory": "حذف دسته‌بندی",
+      "table": {
+        "name": "نام",
+        "slug": "اسلاگ",
+        "description": "توضیحات",
+        "content": "محتوا",
+        "visibility": "وضعیت",
+        "actions": "عملیات",
+        "createdAt": "تاریخ ایجاد",
+        "noCategoriesFound": "دسته‌بندی‌ای یافت نشد",
+        "noCategoriesDescription": "با تغییر فیلترها دوباره جستجو کنید یا دسته‌بندی جدید اضافه کنید"
+      },
+      "filters": {
+        "searchPlaceholder": "جستجوی نام یا توضیحات...",
+        "allVisibility": "همه وضعیت‌ها",
+        "showOnly": "فقط فعال",
+        "hiddenOnly": "فقط غیرفعال"
+      },
+      "actions": {
+        "edit": "ویرایش دسته‌بندی",
+        "delete": "حذف دسته‌بندی",
+        "activate": "فعال‌سازی",
+        "deactivate": "غیرفعال‌سازی"
+      },
+      "form": {
+        "createTitle": "افزودن دسته‌بندی جدید",
+        "editTitle": "ویرایش دسته‌بندی",
+        "createDescription": "دسته‌بندی جدیدی برای گروه‌بندی دوره‌ها و مقالات ایجاد کنید",
+        "editDescription": "اطلاعات دسته‌بندی را ویرایش کنید. حداقل یک فیلد لازم است",
+        "nameFaLabel": "نام فارسی",
+        "nameFaPlaceholder": "نام فارسی مدرس را وارد کنید...",
+        "nameEnPlaceholder": "نام انگلیسی مدرس را وارد کنید...",
+        "bioFaPlaceholder": "توضیح مختصری درباره مدرس، تخصص‌ها و سوابق...",
+        "bioEnPlaceholder": "توضیح انگلیسی درباره مدرس...",
+        "nameEnLabel": "نام انگلیسی",
+        "descriptionFaLabel": "توضیحات فارسی (اختیاری)",
+        "descriptionFaPlaceholder": "توضیح مختصری درباره این دسته‌بندی...",
+        "descriptionEnLabel": "توضیحات انگلیسی (اختیاری)",
+        "descriptionEnPlaceholder": "Brief description of this category...",
+        "showLabel": "نمایش دسته‌بندی برای کاربران",
+        "showDescription": "با غیرفعال کردن، این دسته و محتوای وابسته از دید کاربران پنهان می‌شود",
+        "submitCreate": "ایجاد دسته‌بندی",
+        "submitEdit": "ذخیره تغییرات",
+        "cancel": "انصراف"
+      },
+      "confirmDelete": {
+        "title": "حذف دسته‌بندی",
+        "description": "آیا از حذف این دسته‌بندی مطمئن هستید؟ این عمل غیرقابل بازگشت است.",
+        "warning": "هشدار: اگر این دسته دارای دوره یا مقاله باشد، ابتدا باید به دسته‌ی دیگر منتقل شوند.",
+        "confirm": "بله، حذف کن",
+        "cancel": "انصراف"
+      },
+      "confirmToggle": {
+        "activateTitle": "فعال‌سازی دسته‌بندی",
+        "activateDescription": "با فعال کردن، این دسته برای کاربران قابل مشاهده خواهد شد.",
+        "deactivateTitle": "غیرفعال‌سازی دسته‌بندی",
+        "deactivateDescription": "با غیرفعال کردن، تمام دوره‌ها و مقالات این دسته نیز به‌طور خودکار از دید عموم پنهان می‌شوند.",
+        "confirmActivate": "بله، فعال کن",
+        "confirmDeactivate": "بله، غیرفعال کن",
+        "cancel": "انصراف"
+      },
+      "status": {
+        "active": "فعال",
+        "inactive": "غیرفعال"
+      },
+      "stats": {
+        "courses": "دوره",
+        "posts": "مقاله"
+      }
+    },
+    "teachers": {
+      "pageTitle": "مدیریت مدرسان",
+      "pageSubtitle": "مدرسان لرنینو را ایجاد، ویرایش و مدیریت کنید",
+      "teachersCount": "{count} مدرس ثبت شده",
+      "createNew": "افزودن مدرس",
+      "table": {
+        "teacher": "مدرس",
+        "bio": "بیوگرافی",
+        "courses": "دوره",
+        "visibility": "وضعیت",
+        "createdAt": "تاریخ ایجاد",
+        "actions": "عملیات",
+        "noTeachersFound": "مدرسی یافت نشد",
+        "noTeachersDescription": "با تغییر فیلترها دوباره جستجو کنید یا مدرس جدید اضافه کنید"
+      },
+      "filters": {
+        "searchPlaceholder": "جستجوی نام یا بیوگرافی...",
+        "allVisibility": "همه وضعیت‌ها",
+        "showOnly": "فقط فعال",
+        "hiddenOnly": "فقط غیرفعال"
+      },
+      "actions": {
+        "edit": "ویرایش مدرس",
+        "delete": "حذف مدرس",
+        "activate": "فعال‌سازی",
+        "deactivate": "غیرفعال‌سازی"
+      },
+      "form": {
+        "createTitle": "افزودن مدرس جدید",
+        "editTitle": "ویرایش مدرس",
+        "createDescription": "اطلاعات مدرس جدید را با هر دو زبان وارد کنید",
+        "editDescription": "اطلاعات مدرس را ویرایش کنید. حداقل یک فیلد لازم است",
+        "avatarLabel": "تصویر پروفایل مدرس",
+        "avatarHint": "JPG، PNG یا WEBP - حداکثر ۲ مگابایت",
+        "uploadAvatar": "انتخاب تصویر",
+        "removeAvatar": "حذف تصویر",
+        "nameFaLabel": "نام فارسی",
+        "nameFaPlaceholder": "مثلاً: عباس رستمی",
+        "nameEnLabel": "نام انگلیسی",
+        "nameEnPlaceholder": "e.g. Abbas Rostami",
+        "bioFaLabel": "بیوگرافی فارسی (اختیاری)",
+        "bioFaPlaceholder": "توضیح مختصری درباره مدرس، تخصص‌ها و سوابق...",
+        "bioEnLabel": "بیوگرافی انگلیسی (اختیاری)",
+        "bioEnPlaceholder": "Brief description about the instructor...",
+        "showLabel": "نمایش مدرس برای کاربران",
+        "showDescription": "با غیرفعال کردن، این مدرس و دوره‌های وابسته از دید کاربران پنهان می‌شود",
+        "submitCreate": "ایجاد مدرس",
+        "submitEdit": "ذخیره تغییرات",
+        "cancel": "انصراف"
+      },
+      "confirmDelete": {
+        "title": "حذف مدرس",
+        "description": "آیا از حذف این مدرس مطمئن هستید؟ این عمل غیرقابل بازگشت است.",
+        "warning": "هشدار: اگر این مدرس دوره‌ای داشته باشد، ابتدا باید به مدرس دیگری منتقل شوند.",
+        "confirm": "بله، حذف کن",
+        "cancel": "انصراف"
+      },
+      "confirmToggle": {
+        "activateTitle": "فعال‌سازی مدرس",
+        "activateDescription": "با فعال کردن، این مدرس برای کاربران قابل مشاهده خواهد شد.",
+        "deactivateTitle": "غیرفعال‌سازی مدرس",
+        "deactivateDescription": "با غیرفعال کردن، تمام دوره‌های منتشرشده این مدرس به‌طور خودکار از دید عموم پنهان می‌شوند.",
+        "confirmActivate": "بله، فعال کن",
+        "confirmDeactivate": "بله، غیرفعال کن",
+        "cancel": "انصراف"
+      },
+      "status": {
+        "active": "فعال",
+        "inactive": "غیرفعال"
+      }
+    },
+    "courses": {
+      "pageTitle": "مدیریت دوره‌ها",
+      "pageSubtitle": "ایجاد، ویرایش و مدیریت دوره‌های آموزشی",
+      "coursesCount": "{count} دوره ثبت شده",
+      "createNew": "افزودن دوره",
+      "table": {
+        "course": "دوره",
+        "teacher": "مدرس",
+        "category": "دسته‌بندی",
+        "price": "قیمت",
+        "level": "سطح",
+        "stats": "آمار",
+        "status": "وضعیت",
+        "createdAt": "تاریخ ایجاد",
+        "actions": "عملیات",
+        "noCoursesFound": "دوره‌ای یافت نشد",
+        "noCoursesDescription": "با تغییر فیلترها دوباره جستجو کنید یا دوره جدید اضافه کنید"
+      },
+      "filters": {
+        "searchPlaceholder": "جستجوی عنوان دوره...",
+        "allLevels": "همه سطوح",
+        "allPublish": "همه وضعیت‌ها",
+        "publishedOnly": "فقط منتشر شده",
+        "draftOnly": "فقط پیش‌نویس",
+        "sortCreatedAt": "تاریخ ایجاد",
+        "sortPrice": "قیمت",
+        "sortTitle": "عنوان"
+      },
+      "actions": {
+        "edit": "ویرایش دوره",
+        "delete": "حذف دوره",
+        "publish": "انتشار",
+        "unpublish": "لغو انتشار"
+      },
+      "form": {
+        "createTitle": "افزودن دوره جدید",
+        "editTitle": "ویرایش دوره",
+        "createDescription": "اطلاعات دوره را با هر دو زبان وارد کنید",
+        "editDescription": "اطلاعات دوره را ویرایش کنید. حداقل یک فیلد لازم است",
+        "imageLabel": "تصویر دوره",
+        "imageHint": "JPG، PNG یا WEBP - حداکثر ۵ مگابایت",
+        "uploadImage": "انتخاب تصویر",
+        "removeImage": "حذف تصویر",
+        "titleFaLabel": "عنوان فارسی",
+        "titleFaPlaceholder": "مثلاً: آموزش React پیشرفته",
+        "titleEnLabel": "عنوان انگلیسی",
+        "titleEnPlaceholder": "e.g. Advanced React Course",
+        "descriptionFaLabel": "توضیحات فارسی (اختیاری)",
+        "descriptionFaPlaceholder": "توضیح کامل درباره محتوای دوره...",
+        "descriptionEnLabel": "توضیحات انگلیسی (اختیاری)",
+        "descriptionEnPlaceholder": "Full description of the course content...",
+        "priceLabel": "قیمت (تومان)",
+        "pricePlaceholder": "0 برای رایگان",
+        "levelLabel": "سطح دوره",
+        "categoryLabel": "دسته‌بندی",
+        "categoryPlaceholder": "انتخاب دسته‌بندی",
+        "teacherLabel": "مدرس",
+        "teacherPlaceholder": "انتخاب مدرس",
+        "publishedLabel": "انتشار دوره",
+        "publishedDescription": "با فعال بودن، دوره برای کاربران قابل مشاهده و خرید است",
+        "submitCreate": "ایجاد دوره",
+        "submitEdit": "ذخیره تغییرات",
+        "cancel": "انصراف"
+      },
+      "confirmDelete": {
+        "title": "حذف دوره",
+        "description": "آیا از حذف این دوره مطمئن هستید؟ تمام داده‌های وابسته نیز حذف خواهند شد.",
+        "confirm": "بله، حذف کن",
+        "cancel": "انصراف"
+      },
+      "confirmPublish": {
+        "publishTitle": "انتشار دوره",
+        "publishDescription": "با انتشار، این دوره برای همه کاربران قابل مشاهده خواهد شد.",
+        "unpublishTitle": "لغو انتشار دوره",
+        "unpublishDescription": "با لغو انتشار، این دوره از دسترس کاربران خارج می‌شود.",
+        "confirmPublish": "بله، منتشر کن",
+        "confirmUnpublish": "بله، لغو انتشار",
+        "cancel": "انصراف"
+      },
+      "status": {
+        "published": "منتشر شده",
+        "draft": "پیش‌نویس"
+      },
+      "levels": {
+        "BEGINNER": "مقدماتی",
+        "INTERMEDIATE": "متوسط",
+        "ADVANCED": "پیشرفته"
+      },
+      "stats": {
+        "enrollments": "ثبت‌نام",
+        "comments": "نظر"
+      },
+      "free": "رایگان"
+    },
+    "comments": {
+      "pageTitle": "مدیریت نظرات",
+      "pageSubtitle": "تایید، رد و مدیریت نظرات کاربران",
+      "commentsCount": "{count} نظر ثبت شده",
+      "table": {
+        "comment": "نظر",
+        "user": "کاربر",
+        "target": "مرتبط با",
+        "stats": "آمار",
+        "status": "وضعیت",
+        "createdAt": "تاریخ",
+        "actions": "عملیات",
+        "noCommentsFound": "نظری یافت نشد",
+        "noCommentsDescription": "با تغییر فیلترها دوباره جستجو کنید",
+        "replyTo": "پاسخ به",
+        "onCourse": "دوره",
+        "onPost": "مقاله"
+      },
+      "filters": {
+        "searchPlaceholder": "جستجو در متن نظر...",
+        "allStatuses": "همه وضعیت‌ها",
+        "pendingOnly": "در انتظار تایید",
+        "approvedOnly": "تایید شده",
+        "rejectedOnly": "رد شده"
+      },
+      "actions": {
+        "approve": "تایید نظر",
+        "reject": "رد نظر",
+        "delete": "حذف نظر"
+      },
+      "confirmApprove": {
+        "title": "تایید نظر",
+        "description": "با تایید، این نظر برای همه کاربران قابل مشاهده خواهد شد.",
+        "confirm": "بله، تایید کن",
+        "cancel": "انصراف"
+      },
+      "confirmReject": {
+        "title": "رد نظر",
+        "description": "با رد کردن، این نظر از دید کاربران پنهان می‌شود.",
+        "confirm": "بله، رد کن",
+        "cancel": "انصراف"
+      },
+      "confirmDelete": {
+        "title": "حذف نظر",
+        "description": "آیا از حذف این نظر مطمئن هستید؟ تمام پاسخ‌های وابسته نیز حذف خواهند شد.",
+        "confirm": "بله، حذف کن",
+        "cancel": "انصراف"
+      },
+      "status": {
+        "PENDING": "در انتظار",
+        "APPROVED": "تایید شده",
+        "REJECTED": "رد شده"
+      },
+      "stats": {
+        "replies": "پاسخ",
+        "reactions": "واکنش"
+      }
+    },
+    "discounts": {
+      "pageTitle": "مدیریت کدهای تخفیف",
+      "pageSubtitle": "ایجاد، فعال‌سازی و مدیریت کدهای تخفیف سیستم",
+      "discountsCount": "{count} کد تخفیف ثبت شده",
+      "createNew": "افزودن کد تخفیف",
+      "table": {
+        "code": "کد تخفیف",
+        "type": "نوع",
+        "value": "مقدار",
+        "usage": "میزان استفاده",
+        "expiresAt": "تاریخ انقضا",
+        "status": "وضعیت",
+        "createdAt": "تاریخ ایجاد",
+        "actions": "عملیات",
+        "noDiscountsFound": "کد تخفیفی یافت نشد",
+        "noDiscountsDescription": "با تغییر فیلترها دوباره جستجو کنید یا کد تخفیف جدید ایجاد کنید"
+      },
+      "filters": {
+        "searchPlaceholder": "جستجوی کد تخفیف...",
+        "allActive": "همه وضعیت‌ها",
+        "activeOnly": "فقط فعال",
+        "inactiveOnly": "فقط غیرفعال"
+      },
+      "actions": {
+        "toggle": "تغییر وضعیت",
+        "delete": "حذف کد تخفیف"
+      },
+      "form": {
+        "createTitle": "افزودن کد تخفیف جدید",
+        "createDescription": "مشخصات کد تخفیف جدید را وارد کنید. کد خودکار حروف بزرگ می‌شود",
+        "codeLabel": "کد تخفیف",
+        "codePlaceholder": "مثلاً: WELCOME20",
+        "typeLabel": "نوع تخفیف",
+        "valueLabel": "مقدار تخفیف",
+        "valuePercentagePlaceholder": "درصد (۱ تا ۱۰۰)",
+        "valueAmountPlaceholder": "مبلغ به ریال (حداقل ۱,۰۰۰)",
+        "maxUsesLabel": "حداکثر تعداد استفاده",
+        "maxUsesPlaceholder": "مثلاً: 100",
+        "expiresInDaysLabel": "مدت اعتبار (روز)",
+        "expiresInDaysPlaceholder": "مثلاً: 30",
+        "submitCreate": "ایجاد کد تخفیف",
+        "cancel": "انصراف"
+      },
+      "confirmToggle": {
+        "activateTitle": "فعال‌سازی کد تخفیف",
+        "activateDescription": "با فعال‌سازی، این کد تخفیف توسط کاربران قابل استفاده خواهد بود.",
+        "deactivateTitle": "غیرفعال‌سازی کد تخفیف",
+        "deactivateDescription": "با غیرفعال‌سازی، کاربران دیگر امکان استفاده از این کد را نخواهند داشت.",
+        "confirmActivate": "بله، فعال کن",
+        "confirmDeactivate": "بله، غیرفعال کن",
+        "cancel": "انصراف"
+      },
+      "confirmDelete": {
+        "title": "حذف کد تخفیف",
+        "description": "آیا از حذف این کد تخفیف مطمئن هستید؟ این عمل غیرقابل بازگشت است.",
+        "confirm": "بله، حذف کن",
+        "cancel": "انصراف"
+      },
+      "types": {
+        "PERCENTAGE": "درصدی",
+        "AMOUNT": "مبلغی"
+      },
+      "status": {
+        "active": "فعال",
+        "inactive": "غیرفعال"
+      }
+    },
+    "wallets": {
+      "pageTitle": "مدیریت کیف‌پول‌ها",
+      "pageSubtitle": "مشاهده و مدیریت موجودی کیف‌پول کاربران",
+      "walletsCount": "{count} کیف‌پول ثبت شده",
+      "transactions": {
+        "pageTitle": "تاریخچه تراکنش‌ها",
+        "pageSubtitle": "مشاهده و پیگیری تمام تراکنش‌های مالی پلتفرم",
+        "transactionsCount": "{count} تراکنش ثبت شده"
+      },
+      "table": {
+        "user": "کاربر",
+        "email": "ایمیل",
+        "phone": "شماره موبایل",
+        "balance": "موجودی",
+        "updatedAt": "آخرین به‌روزرسانی",
+        "viewUser": "مشاهده کاربر",
+        "amount": "مبلغ",
+        "type": "نوع تراکنش",
+        "status": "وضعیت",
+        "description": "توضیحات",
+        "refId": "کد پیگیری",
+        "createdAt": "تاریخ",
+        "actions": "عملیات",
+        "noWalletsFound": "کیف‌پولی یافت نشد",
+        "noWalletsDescription": "با تغییر فیلترها دوباره جستجو کنید",
+        "noTransactionsFound": "تراکنشی یافت نشد",
+        "noTransactionsDescription": "با تغییر فیلترها دوباره جستجو کنید"
+      },
+      "filters": {
+        "searchPlaceholder": "جستجوی نام، ایمیل یا موبایل...",
+        "allTypes": "همه انواع",
+        "allStatuses": "همه وضعیت‌ها",
+        "chargeOnly": "شارژ کیف پول",
+        "purchaseOnly": "خرید دوره",
+        "refundOnly": "بازپرداخت",
+        "successOnly": "موفق",
+        "pendingOnly": "در انتظار",
+        "failedOnly": "ناموفق",
+        "cancelledOnly": "لغو شده",
+        "minBalancePlaceholder": "حداقل موجودی (ریال)",
+        "maxBalancePlaceholder": "حداکثر موجودی (ریال)"
+      },
+      "types": {
+        "CHARGE": "شارژ کیف پول",
+        "PURCHASE": "خرید دوره",
+        "REFUND": "بازپرداخت"
+      },
+      "status": {
+        "PENDING": "در انتظار",
+        "SUCCESS": "موفق",
+        "FAILED": "ناموفق",
+        "CANCELLED": "لغو شده"
+      },
+      "actions": {
+        "viewTransactions": "مشاهده تراکنش‌ها",
+        "backToWallets": "بازگشت به کیف‌پول‌ها"
+      }
+    },
+    "orders": {
+      "pageTitle": "مدیریت سفارشات",
+      "pageSubtitle": "بررسی، پیگیری و مدیریت سفارشات ثبت‌شده در پلتفرم",
+      "ordersCount": "{count} سفارش ثبت شده",
+      "table": {
+        "orderId": "شناسه سفارش",
+        "user": "کاربر",
+        "totalAmount": "مبلغ کل",
+        "status": "وضعیت",
+        "paymentMethod": "روش پرداخت",
+        "itemsCount": "تعداد آیتم‌ها",
+        "createdAt": "تاریخ ثبت",
+        "actions": "عملیات",
+        "noOrdersFound": "سفارشی یافت نشد",
+        "noOrdersDescription": "با تغییر فیلترها دوباره جستجو کنید"
+      },
+      "filters": {
+        "searchPlaceholder": "جستجوی نام یا ایمیل کاربر...",
+        "allStatuses": "همه وضعیت‌ها",
+        "pendingOnly": "در انتظار پرداخت",
+        "paidOnly": "پرداخت شده",
+        "cancelledOnly": "لغو شده"
+      },
+      "actions": {
+        "viewDetails": "مشاهده جزئیات",
+        "cancelOrder": "لغو سفارش",
+        "backToList": "بازگشت به لیست"
+      },
+      "detail": {
+        "title": "جزئیات سفارش",
+        "subtitle": "اطلاعات کامل مالی و آیتم‌های خریداری‌شده",
+        "orderInfo": "اطلاعات عمومی",
+        "userInfo": "مشخصات خریدار",
+        "financialSummary": "خلاصه مالی",
+        "purchasedItems": "آیتم‌های خریداری‌شده",
+        "orderId": "شماره سفارش",
+        "status": "وضعیت سفارش",
+        "paymentMethod": "روش پرداخت",
+        "createdAt": "تاریخ ثبت",
+        "updatedAt": "آخرین به‌روزرسانی",
+        "totalAmount": "مبلغ نهایی",
+        "subtotal": "جمع کل",
+        "discountAmount": "تخفیف",
+        "discountCode": "کد تخفیف",
+        "noItems": "آیتمی در این سفارش وجود ندارد",
+        "orderNotFound": "سفارش مورد نظر یافت نشد",
+        "viewUserProfile": "مشاهده پروفایل کاربر"
+      },
+      "confirmCancel": {
+        "title": "لغو سفارش",
+        "description": "آیا از لغو این سفارش در انتظار پرداخت مطمئن هستید؟ کاربر دیگر امکان پرداخت آن را نخواهد داشت.",
+        "confirm": "بله، لغو کن",
+        "cancel": "انصراف"
+      },
+      "statuses": {
+        "PENDING": "در انتظار پرداخت",
+        "PAID": "پرداخت شده",
+        "CANCELLED": "لغو شده"
+      },
+      "paymentMethods": {
+        "WALLET": "کیف پول",
+        "ZARINPAL": "درگاه زرین‌پال",
+        "notPaid": "پرداخت‌نشده"
+      },
+      "items": "آیتم",
+      "free": "رایگان"
+    },
+    "posts": {
+      "pageTitle": "مدیریت مقالات",
+      "pageSubtitle": "ایجاد، ویرایش و مدیریت مقالات وبلاگ",
+      "postsCount": "{count} مقاله ثبت شده",
+      "createNew": "افزودن مقاله",
+      "table": {
+        "post": "مقاله",
+        "category": "دسته‌بندی",
+        "comments": "نظرات",
+        "status": "وضعیت",
+        "createdAt": "تاریخ ایجاد",
+        "actions": "عملیات",
+        "noPostsFound": "مقاله‌ای یافت نشد",
+        "noPostsDescription": "با تغییر فیلترها دوباره جستجو کنید یا مقاله جدید ایجاد کنید"
+      },
+      "filters": {
+        "searchPlaceholder": "جستجوی عنوان مقاله...",
+        "allPublish": "همه وضعیت‌ها",
+        "publishedOnly": "فقط منتشر شده",
+        "draftOnly": "فقط پیش‌نویس",
+        "sortCreatedAt": "تاریخ ایجاد",
+        "sortTitle": "عنوان"
+      },
+      "actions": {
+        "edit": "ویرایش مقاله",
+        "delete": "حذف مقاله",
+        "publish": "انتشار",
+        "unpublish": "لغو انتشار"
+      },
+      "form": {
+        "createTitle": "افزودن مقاله جدید",
+        "editTitle": "ویرایش مقاله",
+        "createDescription": "اطلاعات مقاله را با هر دو زبان وارد کنید",
+        "editDescription": "اطلاعات مقاله را ویرایش کنید. حداقل یک فیلد لازم است",
+        "imageLabel": "تصویر شاخص مقاله",
+        "imageHint": "JPG، PNG یا WEBP - حداکثر ۵ مگابایت",
+        "uploadImage": "انتخاب تصویر",
+        "removeImage": "حذف تصویر",
+        "titleFaLabel": "عنوان فارسی",
+        "titleFaPlaceholder": "مثلاً: مقایسه React و Vue",
+        "titleEnLabel": "عنوان انگلیسی",
+        "titleEnPlaceholder": "e.g. React vs Vue Comparison",
+        "contentFaLabel": "محتوای فارسی",
+        "contentFaPlaceholder": "شروع به نوشتن محتوای مقاله کنید...",
+        "contentEnLabel": "محتوای انگلیسی",
+        "contentEnPlaceholder": "Start writing the article content...",
+        "categoryLabel": "دسته‌بندی",
+        "categoryPlaceholder": "انتخاب دسته‌بندی",
+        "publishedLabel": "انتشار مقاله",
+        "publishedDescription": "با فعال بودن، مقاله برای همه کاربران قابل مشاهده است",
+        "submitCreate": "انتشار مقاله",
+        "submitEdit": "ذخیره تغییرات",
+        "cancel": "انصراف"
+      },
+      "confirmDelete": {
+        "title": "حذف مقاله",
+        "description": "آیا از حذف این مقاله مطمئن هستید؟ این عمل غیرقابل بازگشت است.",
+        "confirm": "بله، حذف کن",
+        "cancel": "انصراف"
+      },
+      "confirmPublish": {
+        "publishTitle": "انتشار مقاله",
+        "publishDescription": "با انتشار، این مقاله برای همه کاربران قابل مشاهده خواهد شد.",
+        "unpublishTitle": "لغو انتشار مقاله",
+        "unpublishDescription": "با لغو انتشار، این مقاله از دسترس کاربران خارج می‌شود.",
+        "confirmPublish": "بله، منتشر کن",
+        "confirmUnpublish": "بله، لغو انتشار",
+        "cancel": "انصراف"
+      },
+      "status": {
+        "published": "منتشر شده",
+        "draft": "پیش‌نویس"
+      },
+      "editor": {
+        "placeholder": "شروع به نوشتن...",
+        "characters": "کاراکترها",
+        "paragraph": "پاراگراف عادی",
+        "heading": "عنوان",
+        "align": "چیدمان",
+        "alignRight": "راست‌چین",
+        "alignCenter": "وسط‌چین",
+        "alignLeft": "چپ‌چین",
+        "alignJustify": "همتراز",
+        "dirRtl": "راست به چپ",
+        "dirLtr": "چپ به راست",
+        "bold": "پررنگ",
+        "italic": "کج",
+        "underline": "زیرخط‌دار",
+        "strike": "خط خورده",
+        "subscript": "زیرنویس",
+        "superscript": "بالانویس",
+        "textColor": "رنگ متن",
+        "highlight": "هایلایت",
+        "blockquote": "نقل قول",
+        "codeBlock": "بلاک کد",
+        "hr": "خط جداکننده",
+        "clearFormat": "پاک کردن قالب",
+        "bulletList": "لیست نقطه‌ای",
+        "orderedList": "لیست شماره‌دار",
+        "taskList": "لیست کاری",
+        "table": "جدول",
+        "tableSelect": "انتخاب اندازه",
+        "addColumn": "افزودن ستون",
+        "deleteColumn": "حذف ستون",
+        "addRow": "افزودن سطر",
+        "deleteRow": "حذف سطر",
+        "deleteTable": "حذف جدول",
+        "link": "افزودن لینک",
+        "unlink": "حذف لینک",
+        "linkPrompt": "آدرس URL را وارد کنید",
+        "image": "افزودن تصویر",
+        "sourceCode": "کد منبع",
+        "fullscreen": "تمام صفحه",
+        "imageUploaded": "تصویر با موفقیت آپلود شد"
+      }
+    },
+    "overview": {
+      "pageTitle": "داشبورد مدیریت",
+      "welcomeBack": "سلام {name}، به پنل مدیریت خوش آمدید",
+      "welcomeSubtitle": "خلاصه فعالیت‌ها و عملکرد مالی پلتفرم لرنینو در یک نگاه",
+      "stats": {
+        "totalRevenue": "کل درآمد فروش",
+        "walletRevenue": "کل شارژ کیف‌پول",
+        "totalUsers": "کل کاربران",
+        "totalOrders": "کل سفارشات",
+        "totalCourses": "کل دوره‌ها",
+        "totalPosts": "کل مقالات",
+        "totalComments": "کل نظرات",
+        "totalEnrollments": "کل ثبت‌نام‌ها",
+        "totalDiscounts": "کدهای تخفیف"
+      },
+      "statsSub": {
+        "thisMonth": "این ماه: {value}",
+        "thisWeek": "این هفته: +{value}",
+        "today": "امروز: +{value}",
+        "paid": "{value} پرداخت موفق",
+        "published": "{value} منتشر شده",
+        "pending": "{value} در انتظار بررسی",
+        "active": "{value} کد فعال"
+      },
+      "revenueChart": {
+        "title": "روند درآمد و شارژ",
+        "description": "مقایسه درآمد فروش دوره‌ها و شارژ مستقیم کیف‌پول",
+        "sales": "فروش دوره",
+        "wallet": "شارژ کیف‌پول",
+        "today": "امروز",
+        "thisWeek": "این هفته",
+        "thisMonth": "این ماه",
+        "total": "مجموع کل"
+      },
+      "usersChart": {
+        "title": "ترکیب کاربران",
+        "description": "توزیع کاربران در پلتفرم",
+        "totalUsers": "کاربر",
+        "verified": "تایید شده",
+        "unverified": "تایید نشده",
+        "admins": "ادمین‌ها"
+      },
+      "ordersChart": {
+        "title": "وضعیت سفارشات",
+        "description": "نسبت موفقیت تراکنش‌ها",
+        "totalOrders": "سفارش",
+        "paid": "موفق",
+        "pending": "در انتظار",
+        "cancelled": "لغوشده"
+      },
+      "topCourses": {
+        "title": "پرمخاطب‌ترین دوره‌ها",
+        "description": "دوره‌ها با بیشترین تعداد دانشجو",
+        "enrollments": "{count} دانشجو",
+        "noCourses": "دوره‌ای یافت نشد"
+      },
+      "pendingComments": {
+        "title": "نظرات در انتظار",
+        "description": "نظرات جدید که نیاز به بررسی دارند",
+        "viewAll": "همه نظرات",
+        "noPending": "نظری در انتظار بررسی نیست"
+      },
+      "topDiscounts": {
+        "title": "کدهای تخفیف برتر",
+        "description": "پراستفاده‌ترین کدهای تخفیف",
+        "uses": "{used} از {max} استفاده",
+        "noDiscounts": "کدی یافت نشد"
+      },
+      "expiringDiscounts": {
+        "title": "کدهای در حال انقضا",
+        "description": "کدهای تخفیفی که به‌زودی منقضی می‌شوند"
+      }
     }
   }
 }

@@ -1,17 +1,159 @@
 {
   "common": {
-    "appName": "Course Shop",
+    "appName": "Learnino",
     "loading": "Loading...",
     "error": "An error occurred",
     "retry": "Retry",
     "toman": "Toman"
   },
+  "error": {
+    "notFound": {
+      "title": "Page Not Found",
+      "description": "Unfortunately, the page you are looking for does not exist or has been moved to another address.",
+      "backToHome": "Back to Home",
+      "searchCourses": "Search Courses"
+    },
+    "serverError": {
+      "title": "Something went wrong!",
+      "description": "Unfortunately, an error occurred while processing your request. This issue might be temporary.",
+      "retry": "Try Again",
+      "backToHome": "Home"
+    }
+  },
   "nav": {
-    "home": "Home",
     "courses": "Courses",
+    "learningPaths": "Learning Paths",
     "blog": "Blog",
+    "aboutUs": "About Us",
+    "contact": "Contact",
     "cart": "Cart",
-    "profile": "Profile"
+    "search": "Search",
+    "searchPlaceholder": "Search courses, posts or instructors...",
+    "loginRegister": "Login | Register",
+    "menu": "Menu",
+    "viewAllResults": "View all results for “{query}”",
+    "searching": "Searching...",
+    "noResults": "No results found for “{query}”.",
+    "coursesGroup": "Courses",
+    "postsGroup": "Posts"
+  },
+  "user": {
+    "profile": "Profile",
+    "myCourses": "My Courses",
+    "myFavorites": "Favorites",
+    "wallet": "Wallet",
+    "orders": "Orders",
+    "settings": "Settings",
+    "logout": "Logout",
+    "logoutSuccess": "Logged out successfully",
+    "myAccount": "My Account",
+    "updateSuccess": "Profile updated successfully",
+    "avatarDeleted": "Avatar deleted successfully",
+    "banSuccess": "User banned successfully",
+    "unbanSuccess": "User unbanned successfully",
+    "errorGeneral": "Something went wrong. Please try again",
+    "validation": {
+      "nameMin": "Name must be at least 2 characters",
+      "nameMax": "Name must not exceed 50 characters",
+      "phoneInvalid": "Phone must start with 09 and be 11 digits",
+      "avatarMaxSize": "Avatar size must not exceed 2 MB",
+      "avatarInvalidType": "Allowed formats: jpg, jpeg, png, webp",
+      "atLeastOneField": "At least one field is required for update",
+      "searchMaxLength": "Search must not exceed 100 characters",
+      "invalidUuid": "Invalid ID format"
+    }
+  },
+  "home": {
+    "hero": {
+      "badge": "Learning without limits",
+      "title": "Grow from the roots,",
+      "titleHighlight": "bloom beyond borders",
+      "subtitle": "Learnino paves your path from zero to real-world projects — with expert instructors and goal-driven learning paths.",
+      "primaryCta": "Browse Courses",
+      "secondaryCta": "Learning Paths",
+      "imageAlt": "Learnino — learn programming",
+      "stats": {
+        "studentsValue": "2,500+",
+        "studentsLabel": "Active students",
+        "coursesValue": "40+",
+        "coursesLabel": "Specialized courses",
+        "instructorsValue": "15+",
+        "instructorsLabel": "Expert instructors"
+      },
+      "floating": {
+        "first": "Project-based learning",
+        "firstSub": "Build a real portfolio",
+        "second": "Verified certificate",
+        "secondSub": "After each course"
+      }
+    }
+  },
+  "hero": {
+    "badge": "Learn Without Limits",
+    "titlePart1": "Grow from Zero,",
+    "titlePart2": "Bloom Beyond Limits",
+    "description": "Learnino paves your programming journey from beginner to professional projects. With expert instructors and targeted learning paths.",
+    "ctaPrimary": "Browse Courses",
+    "ctaSecondary": "Learning Paths",
+    "imageAlt": "Learnino - Programming Learning Platform",
+    "features": {
+      "certificate": "Verified Certificate",
+      "certificateDesc": "Course completion",
+      "support": "24/7 Support",
+      "supportDesc": "Always available",
+      "projects": "Project-based",
+      "projectsDesc": "Learn by doing"
+    },
+    "floatingBadge1": "React & Next.js",
+    "floatingBadge2": "Live Courses"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "toggle": "Toggle Theme"
+  },
+  "language": {
+    "toggle": "Change Language",
+    "fa": "فارسی",
+    "en": "English"
+  },
+  "footer": {
+    "description": "Specialized programming education platform. From zero to job-ready with real-world projects.",
+    "quickLinks": "Quick Links",
+    "support": "Support & Guide",
+    "suggestedCourses": "Suggested Courses",
+    "rights": "Learnino - All rights reserved.",
+    "developedBy": "Designed & Developed by",
+    "highlightTitle": "Learnino",
+    "highlightText": "Learn programming without limits — from zero to career-ready.",
+    "courseHtmlCss": "Complete HTML & CSS Course",
+    "courseJavascript": "Modern JavaScript Course",
+    "courseReactNext": "Advanced React & Next.js",
+    "coursePython": "Project-based Python Course",
+    "linkLearningPaths": "Programming Learning Paths",
+    "linkSql": "SQL Database Course",
+    "linkBlog": "Blog & Articles",
+    "linkFaq": "FAQ",
+    "newsletter": {
+      "badge": "Weekly Newsletter",
+      "title": "Stay in the loop",
+      "description": "Get the latest courses, articles and exclusive Learnino discounts delivered straight to your inbox.",
+      "emailPlaceholder": "Enter your email...",
+      "submit": "Subscribe",
+      "success": "Successfully subscribed! 🎉"
+    },
+    "stats": {
+      "students": "Active Students",
+      "courses": "Expert Courses",
+      "instructors": "Skilled Mentors",
+      "hours": "Hours of Content"
+    },
+    "brand": {
+      "tagline": "Code the world, build the future",
+      "madeWith": "Made with",
+      "loveIn": "in Iran"
+    }
   },
   "auth": {
     "login": "Login",
@@ -21,13 +163,24 @@
     "password": "Password",
     "name": "Name (Optional)",
     "namePlaceholder": "Your Name",
-    "forgotPassword": "Forgot Password",
+    "forgotPassword": "Forgot Password?",
+    "forgotPasswordTitle": "Reset Password",
+    "forgotPasswordDescription": "Enter your account email to receive a reset code",
+    "submitForgotPassword": "Send Reset Code",
+    "resetPasswordTitle": "Set New Password",
+    "resetPasswordDescription": "Enter the 6-digit code sent to {email} and your new password",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter your new password",
+    "submitResetPassword": "Change Password",
+    "resetPasswordSuccess": "Password changed successfully. Please login",
     "submitLogin": "Login to Account",
-    "submitRegister": "Register and Send Verification Code",
+    "submitRegister": "Send Verification Code",
     "hasAccount": "Already have an account?",
-    "registerTitle": "Register in Course Shop",
-    "registerDescription": "Create your account to get started",
-    "passwordDescription": "Password must be at least 6 characters",
+    "noAccount": "Don't have an account?",
+    "loginTitle": "Login to Learnino",
+    "loginDescription": "Sign in to continue your learning journey",
+    "loginSuccess": "Logged in successfully",
+    "registerTitle": "Register in Learnino",
     "sending": "Sending...",
     "verifying": "Verifying...",
     "verifyEmailTitle": "Verify Email",
@@ -36,8 +189,23 @@
     "resendCodeIn": "Resend code in: {time}",
     "resendCode": "Resend Code",
     "otpResentSuccess": "New verification code sent",
+    "backToLogin": "Back to Login",
+    "errorGeneral": "Something went wrong. Please try again",
+    "changePassword": "Change Password",
+    "changePasswordDescription": "For account security, change your password every few months.",
+    "currentPassword": "Current Password",
+    "submitChangePassword": "Change Password",
+    "passwordChanged": "Password changed successfully. Redirecting to login...",
     "changeEmail": "Change Email",
-    
+    "changeEmailDescription": "Enter your new email and current password. Verification code will be sent to the new email.",
+    "newEmail": "New Email",
+    "newEmailPlaceholder": "Enter your new email",
+    "submitChangeEmail": "Send Verification Code",
+    "verifyChangeEmailTitle": "Verify Email Change",
+    "verifyChangeEmailDescription": "Enter the 6-digit code sent to {email}",
+    "submitVerifyChangeEmail": "Verify and Change Email",
+    "emailChanged": "Email changed successfully. Redirecting to login...",
+    "cancelChangeEmail": "Cancel",
     "validation": {
       "emailRequired": "Email is required",
       "emailInvalid": "The entered email is invalid",
@@ -47,6 +215,1859 @@
       "otpLength": "Verification code must be 6 digits",
       "currentPasswordRequired": "Current password is required",
       "newPasswordSameAsCurrent": "New password must not be the same as current password"
+    }
+  },
+  "teacher": {
+    "teachers": "Instructors",
+    "teacher": "Instructor",
+    "nameFa": "Persian Name",
+    "nameEn": "English Name",
+    "bioFa": "Persian Biography",
+    "bioEn": "English Biography",
+    "visibility": "Visibility",
+    "active": "Active",
+    "inactive": "Inactive",
+    "teacherCourses": "Courses by <highlight>{name}</highlight>",
+    "noCourses": "No courses published by this instructor yet.",
+    "totalCourses": "Courses",
+    "totalStudents": "Students",
+    "socialLinks": "Social Links",
+    "createNew": "Add New Instructor",
+    "editTeacher": "Edit Instructor",
+    "deleteTeacher": "Delete Instructor",
+    "createSuccess": "Instructor created successfully",
+    "updateSuccess": "Instructor updated successfully",
+    "deleteSuccess": "Instructor deleted successfully",
+    "visibilityToggleSuccess": "Instructor visibility updated successfully",
+    "errorGeneral": "Something went wrong. Please try again",
+    "validation": {
+      "nameFaMin": "Persian name must be at least 2 characters",
+      "nameFaMax": "Persian name must not exceed 100 characters",
+      "nameEnMin": "English name must be at least 2 characters",
+      "nameEnMax": "English name must not exceed 100 characters",
+      "bioMax": "Biography must not exceed 2000 characters",
+      "avatarMaxSize": "Avatar size must not exceed 2 MB",
+      "avatarInvalidType": "Allowed formats: jpg, jpeg, png, webp",
+      "atLeastOneField": "At least one field is required for update",
+      "showRequired": "Visibility status is required",
+      "searchMaxLength": "Search must not exceed 100 characters",
+      "invalidUuid": "Invalid instructor ID",
+      "slugRequired": "Slug is required",
+      "slugMaxLength": "Slug must not exceed 100 characters"
+    }
+  },
+  "order": {
+    "orders": "Orders",
+    "myOrders": "My Orders",
+    "orderDetails": "Order Details",
+    "orderId": "Order ID",
+    "orderStatus": "Order Status",
+    "totalAmount": "Total Amount",
+    "paymentMethod": "Payment Method",
+    "createdAt": "Created At",
+    "user": "User",
+    "items": "Items",
+    "statuses": {
+      "PENDING": "Pending Payment",
+      "PAID": "Paid",
+      "CANCELLED": "Cancelled"
+    },
+    "paymentMethods": {
+      "WALLET": "Wallet",
+      "ZARINPAL": "ZarinPal Gateway"
+    },
+    "checkoutWallet": "Pay with Wallet",
+    "checkoutZarinpal": "Pay with ZarinPal",
+    "cancelOrder": "Cancel Order",
+    "viewOrder": "View Order",
+    "paymentSuccess": "Payment completed successfully",
+    "redirectingToGateway": "Redirecting to payment gateway...",
+    "cancelSuccess": "Order cancelled successfully",
+    "adminCancelSuccess": "Order cancelled by admin",
+    "errorGeneral": "Something went wrong. Please try again",
+    "confirmCancel": "Are you sure you want to cancel this order?",
+    "emptyOrders": "You have no orders yet",
+    "cannotCancelPaid": "Cannot cancel a paid order",
+    "cannotCancelCancelled": "This order is already cancelled",
+    "newBalance": "New Balance",
+    "validation": {
+      "invalidUuid": "Invalid order ID",
+      "searchMaxLength": "Search must not exceed 100 characters"
+    }
+  },
+  "favorite": {
+    "favorites": "Favorites",
+    "favoriteCourses": "My Favorite Courses",
+    "favoritePosts": "My Favorite Posts",
+    "savedAt": "Saved At",
+    "toggleSuccess": "Favorites list updated",
+    "errorGeneral": "Something went wrong. Please try again",
+    "emptyCourses": "You haven't added any courses to favorites yet",
+    "emptyPosts": "You haven't added any posts to favorites yet",
+    "browseCourses": "Browse Courses",
+    "browseBlog": "Browse Blog",
+    "loginRequired": "Please login to add to favorites",
+    "addedToFavorites": "Added to favorites",
+    "removedFromFavorites": "Removed from favorites",
+    "subtitle": "Your saved courses and articles",
+    "tabCourses": "Courses",
+    "tabPosts": "Posts",
+    "removeFromFavorites": "Remove from favorites",
+    "validation": {
+      "invalidCourseUuid": "Invalid course ID",
+      "invalidPostUuid": "Invalid post ID"
+    }
+  },
+  "enrollment": {
+    "myEnrollments": "My Courses",
+    "enrolledAt": "Enrolled At",
+    "pricePaid": "Amount Paid",
+    "startLearning": "Start Learning",
+    "continueLearning": "Continue Learning",
+    "enrollFreeCourse": "Enroll for Free",
+    "enrollSuccess": "Successfully enrolled in the course",
+    "errorGeneral": "Something went wrong. Please try again",
+    "emptyState": "You haven't enrolled in any courses yet",
+    "browseCourses": "Browse Courses",
+    "alreadyEnrolled": "You are already enrolled in this course",
+    "paidCourseError": "For paid courses, please use the shopping cart"
+  },
+  "course": {
+    "courses": "Courses",
+    "course": "Course",
+    "titleFa": "Persian Title",
+    "titleEn": "English Title",
+    "descriptionFa": "Persian Description",
+    "descriptionEn": "English Description",
+    "level": "Level",
+    "category": "Category",
+    "sectionBadge": "Latest",
+    "sectionTitle": "<highlight>Featured & New</highlight> Courses",
+    "viewAll": "All Courses",
+    "studentsCount": "{count} Students",
+    "free": "Free",
+    "price": "{price} Toman",
+    "teacher": "Instructor",
+    "image": "Course Image",
+    "published": "Published",
+    "draft": "Draft",
+    "enrollments": "Enrollments",
+    "comments": "Comments",
+    "currency": "IRT",
+    "levels": {
+      "BEGINNER": "Beginner",
+      "INTERMEDIATE": "Intermediate",
+      "ADVANCED": "Advanced"
+    },
+    "removeItem": "Remove",
+    "createNew": "Add New Course",
+    "editCourse": "Edit Course",
+    "deleteCourse": "Delete Course",
+    "togglePublish": "Publish / Unpublish",
+    "createSuccess": "Course created successfully",
+    "updateSuccess": "Course updated successfully",
+    "deleteSuccess": "Course deleted successfully",
+    "publishToggleSuccess": "Publish status updated successfully",
+    "errorGeneral": "Something went wrong. Please try again",
+    "confirmDelete": "Are you sure you want to delete this course? All related data will be permanently deleted.",
+    "cannotPublishHiddenCategory": "This course's category is hidden. Please activate the category first.",
+    "validation": {
+      "titleFaMin": "Persian title must be at least 3 characters",
+      "titleFaMax": "Persian title must not exceed 150 characters",
+      "titleEnMin": "English title must be at least 3 characters",
+      "titleEnMax": "English title must not exceed 150 characters",
+      "descriptionMax": "Description must not exceed 5000 characters",
+      "priceRequired": "Price is required",
+      "priceInvalid": "Price must be a number",
+      "priceInt": "Price must be an integer",
+      "priceMin": "Price cannot be less than 0",
+      "priceMax": "Price cannot exceed 1,000,000,000",
+      "categoryIdInvalid": "Invalid category ID",
+      "teacherIdInvalid": "Invalid teacher ID",
+      "imageMaxSize": "Image size must not exceed 5 MB",
+      "imageInvalidType": "Allowed formats: jpg, jpeg, png, webp",
+      "publishedRequired": "Publish status is required",
+      "publishedInvalid": "Publish status must be true or false",
+      "atLeastOneField": "At least one field is required for update",
+      "searchMaxLength": "Search must not exceed 100 characters",
+      "invalidUuid": "Invalid course ID",
+      "slugRequired": "Slug is required",
+      "slugMaxLength": "Slug must not exceed 200 characters"
+    },
+    "pageTitle": "All Courses",
+    "pageDescription": "Explore the complete catalog of specialized Learnino courses",
+    "pageBadge": "Learning Courses",
+    "searchPlaceholder": "Search courses...",
+    "filters": "Filters",
+    "clearFilters": "Clear Filters",
+    "filterCategories": "Categories",
+    "filterLevel": "Course Level",
+    "filterPrice": "Price Range",
+    "filterSort": "Sort By",
+    "allLevels": "All Levels",
+    "sortNewest": "Newest",
+    "sortOldest": "Oldest",
+    "sortPriceAsc": "Lowest Price",
+    "sortPriceDesc": "Highest Price",
+    "sortTitle": "By Title",
+    "priceMin": "Min Price",
+    "priceMax": "Max Price",
+    "onlyFree": "Free Courses Only",
+    "onlyPaid": "Paid Courses Only",
+    "resultsCount": "{count} courses found",
+    "noResults": "No courses found with these filters",
+    "tryDifferentFilters": "Try different filters",
+    "loadMore": "Load More",
+    "courseNotFound": "Course not found",
+    "backToCourses": "Back to Courses",
+    "addToCart": "Add to Cart",
+    "goToCart": "View Cart",
+    "buyNow": "Buy Now",
+    "enrollFree": "Enroll for Free",
+    "startLearning": "Start Learning",
+    "goToLesson": "Go to Course",
+    "alreadyOwned": "You own this course",
+    "aboutCourse": "About Course",
+    "aboutTeacher": "About Instructor",
+    "courseFeatures": "Course Features",
+    "moreCourses": "More Courses by this Instructor",
+    "relatedCourses": "Related Courses",
+    "features": {
+      "lifetime": "Lifetime Access",
+      "certificate": "Completion Certificate",
+      "support": "Instructor Support",
+      "projectBased": "Project-based Learning",
+      "updates": "Free Updates",
+      "community": "Community Access"
+    },
+    "stats": {
+      "students": "students",
+      "comments": "comments",
+      "likes": "likes"
+    },
+    "openFilters": "Open Filters",
+    "activeFilters": "{count} active filters"
+  },
+  "cart": {
+    "currency": "Toman",
+    "cart": "Cart",
+    "shoppingCart": "Your Shopping Cart",
+    "cartEmpty": "Your cart is empty",
+    "browseCourses": "Browse Courses",
+    "totalAmount": "Total Amount",
+    "totalItems": "{count} courses",
+    "checkout": "Proceed to Checkout",
+    "clearCart": "Clear Cart",
+    "applyDiscount": "Apply Code",
+    "discountCodePlaceholder": "Discount code...",
+    "discountApplied": "Discount code applied successfully",
+    "loginRequired": "Please login first to continue",
+    "discount": "Discount Code",
+    "discountPlaceholder": "Enter your discount code",
+    "discountRemoved": "Discount code removed",
+    "discountRemove": "Remove Code",
+    "paymentSection": "Payment Method",
+    "walletBalance": "Wallet Balance",
+    "insufficientBalance": "Insufficient wallet balance",
+    "subtotal": "Subtotal",
+    "discountAmount": "You saved",
+    "secureCheckout": "Secure checkout with money-back guarantee",
+    "emptyCartDescription": "You haven't added any courses to your cart yet. Explore the course catalog now.",
+    "loginRequiredCheckout": "Please login to complete checkout",
+    "loginRequiredDiscount": "Please login to apply discount code",
+    "removeItem": "Remove",
+    "paymentSuccessRedirectMessage": "Redirecting...",
+    "addSuccess": "Course added to cart successfully",
+    "removeSuccess": "Course removed from cart",
+    "clearSuccess": "Cart cleared successfully",
+    "syncSuccess": "Cart synced successfully",
+    "errorGeneral": "Something went wrong. Please try again",
+    "confirmClear": "Are you sure you want to clear your cart?",
+    "alreadyInCart": "This course is already in your cart",
+    "alreadyEnrolled": "You are already enrolled in this course",
+    "freeCourseError": "Free courses do not need to be added to the cart",
+    "validation": {
+      "invalidCourseUuid": "Invalid course ID",
+      "codeMin": "Discount code must be at least 3 characters",
+      "codeMax": "Discount code must not exceed 50 characters",
+      "codePattern": "Code can only contain letters, numbers, hyphens and underscores",
+      "courseIdsRequired": "Course IDs list is required",
+      "courseIdsArray": "Course IDs must be an array",
+      "courseIdsMin": "At least 1 course ID is required",
+      "courseIdsMax": "Maximum 50 courses can be synced at once"
+    }
+  },
+  "discount": {
+    "discounts": "Discount Codes",
+    "code": "Discount Code",
+    "type": "Type",
+    "value": "Value",
+    "maxUses": "Max Uses",
+    "usedCount": "Used Count",
+    "expiresAt": "Expires At",
+    "expiresInDays": "Expires in (Days)",
+    "active": "Active",
+    "inactive": "Inactive",
+    "types": {
+      "PERCENTAGE": "Percentage",
+      "AMOUNT": "Amount (Rial)"
+    },
+    "createNew": "Create Discount Code",
+    "deleteDiscount": "Delete Discount Code",
+    "toggleActive": "Toggle Active Status",
+    "createSuccess": "Discount code created successfully",
+    "toggleSuccess": "Discount status updated successfully",
+    "deleteSuccess": "Discount code deleted successfully",
+    "errorGeneral": "Something went wrong. Please try again",
+    "confirmDelete": "Are you sure you want to delete this discount code?",
+    "validation": {
+      "codeMin": "Discount code must be at least 3 characters",
+      "codeMax": "Discount code must not exceed 50 characters",
+      "codePattern": "Code can only contain letters, numbers, hyphens and underscores",
+      "typeRequired": "Discount type is required",
+      "valueRequired": "Value is required",
+      "valueInvalid": "Value must be a number",
+      "valuePositive": "Value must be positive",
+      "percentageRange": "Percentage must be between 1 and 100",
+      "amountMin": "Fixed amount must be at least 10,000 Rials",
+      "maxUsesRequired": "Max uses is required",
+      "maxUsesInvalid": "Max uses must be a number",
+      "maxUsesInt": "Max uses must be an integer",
+      "maxUsesMin": "Minimum max uses is 1",
+      "maxUsesMax": "Maximum max uses is 10,000",
+      "expiresInDaysRequired": "Expiration days is required",
+      "expiresInDaysInvalid": "Expiration days must be a number",
+      "expiresInDaysInt": "Expiration days must be an integer",
+      "expiresInDaysMin": "Minimum expiration is 1 day",
+      "expiresInDaysMax": "Maximum expiration is 365 days",
+      "searchMaxLength": "Search text must not exceed 50 characters",
+      "invalidUuid": "Invalid discount ID"
+    }
+  },
+  "reaction": {
+    "like": "Like",
+    "dislike": "Dislike",
+    "reactionUpdated": "Reaction updated",
+    "loginRequired": "Please login to react",
+    "errorGeneral": "Something went wrong. Please try again"
+  },
+  "wallet": {
+    "wallet": "Wallet",
+    "balance": "Wallet Balance",
+    "currentBalance": "Current Balance",
+    "chargeWallet": "Top-up Wallet",
+    "chargeAmount": "Top-up Amount (Rial)",
+    "transactions": "Transaction History",
+    "transactionDetails": "Transaction Details",
+    "refId": "Reference ID",
+    "authority": "Authority Code",
+    "description": "Description",
+    "date": "Date",
+    "type": "Type",
+    "status": "Status",
+    "redirectingToGateway": "Redirecting to ZarinPal payment gateway...",
+    "errorGeneral": "Something went wrong. Please try again",
+    "emptyTransactions": "No transactions yet",
+    "statuses": {
+      "PENDING": "Pending",
+      "SUCCESS": "Success",
+      "FAILED": "Failed",
+      "CANCELLED": "Cancelled"
+    },
+    "types": {
+      "CHARGE": "Wallet Top-up",
+      "PURCHASE": "Course Purchase",
+      "REFUND": "Refund"
+    },
+    "validation": {
+      "amountRequired": "Top-up amount is required",
+      "amountInvalid": "Amount must be a number",
+      "amountInt": "Amount must be an integer",
+      "amountMin": "Minimum top-up amount is 10,000 Rials",
+      "amountMax": "Maximum top-up amount is 500,000,000 Rials",
+      "invalidUserUuid": "Invalid user ID",
+      "searchMaxLength": "Search text must not exceed 100 characters"
+    }
+  },
+  "payment": {
+    "success": {
+      "badge": "Payment Successful",
+      "title": "Payment Completed Successfully",
+      "subtitle": "Your purchase is complete and course access has been activated. Ready to start learning? 🚀",
+      "walletTitle": "Wallet Charged Successfully",
+      "walletSubtitle": "Your wallet balance has been increased successfully. You can now purchase your desired courses.",
+      "detailsTitle": "Transaction Details",
+      "refId": "Reference ID",
+      "amount": "Amount Paid",
+      "newBalance": "New Wallet Balance",
+      "transactionId": "Transaction ID",
+      "orderId": "Order ID",
+      "dateTime": "Date & Time",
+      "myCourses": "View My Courses",
+      "backToHome": "Back to Home",
+      "viewOrder": "View Order",
+      "viewWallet": "View Wallet",
+      "nextSteps": "What's Next?",
+      "tip1": "Head to My Courses and start learning",
+      "tip2": "Payment receipt has been sent to your email",
+      "tip3": "Contact support if you encounter any issues"
+    },
+    "failed": {
+      "badge": "Payment Failed",
+      "title": "Payment Was Not Completed",
+      "subtitle": "Unfortunately, there was an issue with the payment process. No worries, you can try again.",
+      "reasonTitle": "Error Reason",
+      "defaultReason": "Payment was cancelled by user or an error occurred at the payment gateway.",
+      "authorityLabel": "Reference Code",
+      "retryPayment": "Retry Payment",
+      "backToCart": "Back to Cart",
+      "backToHome": "Back to Home",
+      "supportTitle": "Still having issues?",
+      "supportText": "If the problem persists and money has been deducted, it will be automatically refunded within 72 hours. Contact support for follow-up.",
+      "contactSupport": "Contact Support",
+      "commonIssues": "Common Issues",
+      "issue1": "Insufficient card balance",
+      "issue2": "Incorrect card second password (CVV2)",
+      "issue3": "Payment session timeout",
+      "issue4": "Temporary payment gateway downtime"
+    }
+  },
+  "category": {
+    "sectionBadge": "Learning Topics",
+    "sectionTitle": "Choose Your <highlight>Learning Path</highlight>",
+    "viewAll": "View all",
+    "viewCourses": "View courses",
+    "coursesCount": "{count} courses",
+    "postsCount": "{count} posts",
+    "validation": {
+      "nameFaMin": "Persian name must be at least 2 characters",
+      "nameFaMax": "Persian name must not exceed 50 characters",
+      "nameEnMin": "English name must be at least 2 characters",
+      "nameEnMax": "English name must not exceed 50 characters",
+      "descriptionMax": "Description must not exceed 500 characters",
+      "atLeastOneField": "At least one field is required for update",
+      "showRequired": "Visibility status is required",
+      "showInvalid": "Invalid visibility status",
+      "searchMaxLength": "Search must not exceed 100 characters",
+      "invalidUuid": "Invalid category ID",
+      "slugRequired": "Slug is required",
+      "slugMaxLength": "Slug must not exceed 100 characters"
+    }
+  },
+  "post": {
+    "editorImageUploaded": "Image uploaded successfully",
+    "createSuccess": "Article created successfully",
+    "updateSuccess": "Article updated successfully",
+    "deleteSuccess": "Article deleted successfully",
+    "publishToggleSuccess": "Publish status updated successfully",
+    "errorGeneral": "Something went wrong. Please try again",
+    "validation": {
+      "titleFaMin": "Persian title must be at least 3 characters",
+      "titleFaMax": "Persian title must not exceed 200 characters",
+      "titleEnMin": "English title must be at least 3 characters",
+      "titleEnMax": "English title must not exceed 200 characters",
+      "contentFaMin": "Persian content must have at least 10 plain-text characters",
+      "contentEnMin": "English content must have at least 10 plain-text characters",
+      "contentMax": "Content must not exceed 100,000 characters",
+      "categoryIdInvalid": "Invalid category ID",
+      "imageMaxSize": "Image size must not exceed 5 MB",
+      "imageInvalidType": "Allowed formats: jpg, jpeg, png, webp",
+      "atLeastOneField": "At least one field is required for update",
+      "searchMaxLength": "Search must not exceed 100 characters",
+      "invalidUuid": "Invalid post ID"
+    }
+  },
+  "about": {
+    "sectionBadge": "Why Learnino?",
+    "sectionTitle": "A Platform for <highlight>Limitless Learning</highlight>",
+    "sectionDescription": "Learnino paves the way to becoming a professional developer through practical, project-based learning.",
+    "features": {
+      "quality": {
+        "title": "Unmatched Quality",
+        "description": "Courses crafted by top instructors with real industry experience and real-world projects"
+      },
+      "community": {
+        "title": "Active Community",
+        "description": "Access thousands of like-minded students and a wide instructor network for better learning"
+      },
+      "certificate": {
+        "title": "Verified Certificate",
+        "description": "Get a verifiable course completion certificate that boosts your credibility in the job market"
+      },
+      "lifetime": {
+        "title": "Lifetime Access",
+        "description": "Every course you buy stays in your account forever with lifetime updates"
+      }
+    }
+  },
+  "freeCourses": {
+    "sectionBadge": "No Cost",
+    "sectionTitle": "Our <highlight>Free</highlight> Courses",
+    "viewAll": "All Free Courses"
+  },
+  "teachers": {
+    "sectionBadge": "Learnino Instructors",
+    "sectionTitle": "Learn with the <highlight>Best Instructors</highlight>",
+    "viewAll": "All Instructors",
+    "coursesCount": "{count} courses"
+  },
+  "learningPaths": {
+    "sectionBadge": "Learning Path",
+    "sectionTitle": "<highlight>Specialized Learning</highlight> Paths",
+    "sectionDescription": "Choose one of these paths for a focused, purposeful learning plan to become a specialist.",
+    "viewAll": "View all paths",
+    "steps": "{count} steps",
+    "duration": "{months} months",
+    "startPath": "Start Path",
+    "paths": {
+      "frontend": {
+        "title": "Frontend Developer",
+        "description": "From HTML & CSS to React and Next.js — become a modern web developer"
+      },
+      "backend": {
+        "title": "Backend Developer",
+        "description": "Build servers for large websites with Node.js, databases, and API design"
+      },
+      "ai": {
+        "title": "AI Specialist",
+        "description": "Enter the exciting world of AI with Python and Machine Learning"
+      },
+      "mobile": {
+        "title": "Mobile Developer",
+        "description": "Build cross-platform apps with React Native and Flutter"
+      }
+    }
+  },
+  "posts": {
+    "sectionBadge": "Blog & Articles",
+    "sectionTitle": "World of <highlight>Programming Knowledge</highlight>",
+    "viewAll": "All Articles",
+    "readMore": "Read more",
+    "readTime": "{minutes} min read"
+  },
+  "testimonials": {
+    "sectionBadge": "Student Reviews",
+    "sectionTitle": "What Our <highlight>Students Say</highlight>",
+    "sectionDescription": "Thousands of students have started their growth journey with Learnino."
+  },
+  "cta": {
+    "badge": "Ready to start?",
+    "title": "Start your <highlight>developer journey</highlight> today",
+    "description": "Join 12,000+ Learnino students and learn in-demand skills.",
+    "primary": "Sign Up Free",
+    "secondary": "View Courses"
+  },
+  "blog": {
+    "title": "Learnino Blog",
+    "description": "Latest programming articles and tutorials",
+    "searchPlaceholder": "Search articles...",
+    "allCategories": "All Categories",
+    "sortNewest": "Newest",
+    "sortTitle": "By Title",
+    "noResults": "No articles found with these filters",
+    "readMore": "Read more",
+    "sharePost": "Share",
+    "relatedPosts": "Related Posts",
+    "tableOfContents": "Table of Contents",
+    "comments": "Comments",
+    "writeComment": "Write your comment...",
+    "submitComment": "Submit Comment",
+    "replyTo": "Reply to {name}",
+    "cancelReply": "Cancel Reply",
+    "pendingApproval": "Your comment was submitted and will appear after review",
+    "loginToComment": "Please login to leave a comment",
+    "loadMoreComments": "Load More Comments",
+    "noComments": "Be the first to comment!",
+    "postNotFound": "Article not found."
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "courses": "Courses",
+    "learningPaths": "Learning Paths",
+    "blog": "Blog",
+    "about": "About Us",
+    "contact": "Contact",
+    "cart": "Cart",
+    "search": "Search",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "myCourses": "My Courses",
+    "orders": "Orders",
+    "wallet": "Wallet",
+    "favorites": "Favorites",
+    "settings": "Settings",
+    "admin": "Admin Panel",
+    "categories": "Categories",
+    "teachers": "Instructors"
+  },
+  "aboutPage": {
+    "meta": {
+      "title": "About Learnino | Our Story, Mission & Team",
+      "description": "Learnino is a specialized programming education platform. Discover our mission, values, team, and success metrics."
+    },
+    "hero": {
+      "badge": "About Learnino",
+      "title": "We believe in <highlight>learning without limits</highlight>",
+      "description": "Learnino was born in 2021 with a simple goal: making high-quality programming education accessible to everyone around the world."
+    },
+    "stats": {
+      "students": "Active Students",
+      "courses": "Specialized Courses",
+      "instructors": "Expert Instructors",
+      "hours": "Hours of Content"
+    },
+    "mission": {
+      "badge": "Our Mission",
+      "title": "Why we built <highlight>Learnino</highlight>?",
+      "description": "We noticed that many programming enthusiasts struggled with lengthy and challenging learning journeys due to the lack of coherent, up-to-date resources. Learnino is our solution.",
+      "cards": {
+        "vision": {
+          "title": "Vision",
+          "description": "To become the largest programming education ecosystem in the world"
+        },
+        "mission": {
+          "title": "Mission",
+          "description": "Empowering thousands of people to enter the global programming job market"
+        },
+        "goal": {
+          "title": "Long-term Goal",
+          "description": "Building a secure bridge between learners and international job opportunities"
+        }
+      }
+    },
+    "values": {
+      "badge": "Our Values",
+      "title": "Principles that <highlight>form Learnino's foundation</highlight>",
+      "items": {
+        "quality": {
+          "title": "Uncompromising Quality",
+          "description": "Every course is reviewed by our quality team before publication"
+        },
+        "practical": {
+          "title": "Practical Learning",
+          "description": "Real-world projects, not just dry, impractical theories"
+        },
+        "community": {
+          "title": "Active Community",
+          "description": "Group support and close interaction with instructors and peers"
+        },
+        "growth": {
+          "title": "Continuous Growth",
+          "description": "Courses are constantly updated to stay current with technology"
+        },
+        "accessible": {
+          "title": "Accessible to Everyone",
+          "description": "Multiple free courses alongside professional packages"
+        },
+        "transparent": {
+          "title": "Complete Transparency",
+          "description": "Clear pricing, no hidden fees, and money-back guarantee"
+        }
+      }
+    },
+    "story": {
+      "badge": "Our Story",
+      "title": "How <highlight>Learnino was born</highlight>",
+      "timeline": {
+        "step1": {
+          "year": "2021",
+          "title": "The Beginning of a Dream",
+          "description": "Learnino's journey began with a 3-person team and 5 small courses"
+        },
+        "step2": {
+          "year": "2022",
+          "title": "Community Growth",
+          "description": "More than 500 students joined the Learnino family"
+        },
+        "step3": {
+          "year": "2023",
+          "title": "International Expansion",
+          "description": "Adding English version and welcoming students from around the world"
+        },
+        "step4": {
+          "year": "2024",
+          "title": "Today",
+          "description": "Over 2,500 active students, 15 instructors, and 40 specialized courses"
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to start your <highlight>learning journey</highlight>?",
+      "description": "Join thousands of Learnino students and build a bright future for your career.",
+      "primary": "Start for Free",
+      "secondary": "Browse Courses"
+    }
+  },
+  "learningPathsPage": {
+    "meta": {
+      "title": "Learning Paths | Learnino",
+      "description": "Specialized programming learning paths: Frontend, Backend, AI, and Mobile Development. Choose your career path."
+    },
+    "hero": {
+      "badge": "Specialized Paths",
+      "title": "Choose your <highlight>dream career</highlight> path",
+      "description": "By selecting one of these focused paths, move step-by-step from zero to employment and become a true expert."
+    },
+    "features": {
+      "structured": {
+        "title": "Structured Program",
+        "description": "Step-by-step from beginner to advanced"
+      },
+      "projects": {
+        "title": "Real Projects",
+        "description": "5+ portfolio projects in each path"
+      },
+      "mentor": {
+        "title": "Mentor Support",
+        "description": "Direct access to a specialized mentor"
+      },
+      "certificate": {
+        "title": "Verified Certificate",
+        "description": "Path completion certificate that can be verified"
+      }
+    },
+    "pathsSection": {
+      "badge": "Our Paths",
+      "title": "Which <highlight>path</highlight> suits you best?",
+      "description": "Each path is designed with the goal of training a complete expert in that field."
+    },
+    "howItWorks": {
+      "badge": "How It Works",
+      "title": "Start in <highlight>4 simple steps</highlight>",
+      "steps": {
+        "choose": {
+          "title": "Choose a Path",
+          "description": "Select a path that aligns with your career goals"
+        },
+        "learn": {
+          "title": "Systematic Learning",
+          "description": "Follow the provided program and complete courses in order"
+        },
+        "practice": {
+          "title": "Practice & Projects",
+          "description": "Complete practical projects and build your portfolio"
+        },
+        "certificate": {
+          "title": "Get Certified",
+          "description": "Receive your completion certificate and enter the job market"
+        }
+      }
+    },
+    "levels": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "toIntermediate": "To Intermediate",
+      "toAdvanced": "To Advanced"
+    },
+    "pathDetails": {
+      "courses": "Courses",
+      "projects": "Projects",
+      "hours": "Hours",
+      "level": "Level",
+      "startPath": "Start This Path",
+      "learnMore": "Learn More"
+    },
+    "cta": {
+      "title": "Still <highlight>unsure</highlight> which path is right?",
+      "description": "Talk to our advisors and get personalized recommendations based on your situation.",
+      "primary": "Get Free Consultation",
+      "secondary": "View All Courses"
+    }
+  },
+  "dashboard": {
+    "title": "User Panel",
+    "welcome": "Hi {name}",
+    "welcomeSubtitle": "Welcome to your dashboard",
+    "quickActions": "Quick Actions",
+    "recentActivity": "Recent Activity",
+    "viewAll": "View All",
+    "activeCoursesInAccount": "{count} active courses in your account",
+    "defaultTeacherName": "Learnino Instructor",
+    "enterCourse": "Enter Course",
+    "commentsSubtitle": "Your submitted comments",
+    "commentsCount": "{count} comments submitted",
+    "commentStatus": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected"
+    },
+    "commentOn": "Your comment on",
+    "onCourse": "Course",
+    "onPost": "Article",
+    "replies": "Replies",
+    "reactions": "Reactions",
+    "viewSource": "View",
+    "remove": "Remove",
+    "defaultCommentTarget": "Educational Comment",
+    "ordersCount": "{count} orders submitted",
+    "ordersSubtitle": "Your order history",
+    "orderNumber": "Order Number",
+    "filterAll": "All",
+    "cancel": "Cancel",
+    "details": "Details",
+    "cancelThisOrder": "Cancel this order",
+    "backToOrders": "Back to Orders",
+    "orderNotFound": "Order not found.",
+    "submittedAt": "Submitted",
+    "purchasedCourses": "Purchased Courses",
+    "orderSummary": "Order Summary",
+    "paymentMethodLabel": "Payment Method",
+    "notPaidYet": "Not paid yet",
+    "subtotalLabel": "Subtotal",
+    "discountLabel": "Discount",
+    "discountCodeLabel": "Discount Code",
+    "totalAmountLabel": "Total Amount",
+    "coursesMore": "and {count} more courses",
+    "educationalOrder": "Educational Order",
+    "courseIdLabel": "Course ID",
+    "itemsCount": "{count} courses",
+    "walletSubtitle": "Manage your balance and charge account",
+    "walletDescription": "Use your wallet balance to quickly purchase courses without going through the payment gateway.",
+    "chargeAccount": "Top-up Account",
+    "chargeAmountLabel": "Charge Amount",
+    "chargeSubmit": "Pay & Charge Online",
+    "chargeMinNote": "Minimum charge amount is 1,000 Toman",
+    "transactionsHistory": "Transactions History",
+    "emptyTransactions": "No transactions yet",
+    "transactionRefId": "Ref ID",
+    "transactionCharge": "Wallet Top-up",
+    "transactionPurchase": "Course Purchase",
+    "transactionRefund": "Refund",
+    "transactionStatusSUCCESS": "Success",
+    "transactionStatusPENDING": "Pending",
+    "transactionStatusFAILED": "Failed",
+    "transactionStatusCANCELLED": "Cancelled",
+    "currentBalanceLabel": "Current Balance",
+    "profileSubtitle": "Edit personal information and profile picture",
+    "personalInfo": "Personal Information",
+    "avatarSection": "Profile Picture",
+    "avatarHint": "Allowed formats: JPG, PNG, WEBP - Max 2 MB",
+    "nameLabel": "Full Name",
+    "namePlaceholder": "Enter your full name",
+    "phoneLabel": "Mobile Number",
+    "phonePlaceholder": "09121234567",
+    "emailLabel": "Email Address",
+    "changeEmailLink": "Change email",
+    "emailNotEditable": "Email cannot be edited here",
+    "uploadNew": "Upload Photo",
+    "removeAvatarBtn": "Remove Photo",
+    "saveChanges": "Save Changes",
+    "discardChanges": "Discard",
+    "noChangesToSave": "No changes to save",
+    "memberSince": "Member since",
+    "accountVerified": "Verified Account",
+    "unsavedChanges": "Unsaved changes",
+    "settingsSubtitle": "Manage appearance, security, and account information",
+    "tabAppearance": "Appearance & Region",
+    "tabPassword": "Password",
+    "tabEmail": "Change Email",
+    "themeSection": "Display Mode",
+    "themeDescription": "Choose your preferred theme for the site.",
+    "languageSection": "Site Language",
+    "languageDescription": "Learnino is currently available in Persian and English.",
+    "currentEmailLabel": "Current Email",
+    "otpCodeLabel": "6-Digit Verification Code",
+    "passwordHint": "Minimum 6 characters - mix of uppercase, lowercase, and numbers",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "sameAsCurrentEmail": "New email is the same as current email",
+    "defaultUserName": "Learnino User",
+    "menu": {
+      "overview": "Dashboard",
+      "profile": "Profile",
+      "myCourses": "My Courses",
+      "orders": "Orders",
+      "wallet": "Wallet",
+      "favorites": "Favorites",
+      "comments": "Comments",
+      "settings": "Settings",
+      "logout": "Logout"
+    },
+    "sections": {
+      "general": "General",
+      "finance": "Finance",
+      "personal": "Account"
+    },
+    "stats": {
+      "totalCourses": "Total Courses",
+      "activeCourses": "Active Courses",
+      "totalOrders": "Total Orders",
+      "activeOrders": "Pending Orders",
+      "walletBalance": "Wallet Balance",
+      "totalComments": "Total Comments",
+      "pendingComments": "Pending Approval",
+      "favoriteCourses": "Favorite Courses",
+      "favoritePosts": "Favorite Posts",
+      "cartItems": "Cart Items",
+      "totalReactions": "Total Reactions"
+    },
+    "empty": {
+      "courses": "You haven't purchased any courses yet",
+      "orders": "You have no orders yet",
+      "transactions": "No transactions yet",
+      "comments": "You haven't posted any comments yet",
+      "favorites": "You haven't added anything to favorites yet",
+      "browseCourses": "Browse Courses"
+    },
+    "buttons": {
+      "chargeWallet": "Top-up Wallet",
+      "continueLeraning": "Continue Learning",
+      "viewOrder": "View Order",
+      "cancelOrder": "Cancel Order",
+      "editProfile": "Edit Profile",
+      "uploadAvatar": "Upload Avatar",
+      "removeAvatar": "Remove Avatar",
+      "save": "Save Changes"
+    }
+  },
+  "admin": {
+    "defaultUserName": "Admin User",
+    "title": "Learnino Admin Panel",
+    "subtitle": "Full control over the educational platform",
+    "badge": "Admin",
+    "welcomeMessage": "Hi {name}, welcome to the admin panel",
+    "welcomeSubtitle": "Everything is ready for you to manage the platform",
+    "roleGuard": {
+      "checking": "Checking administrator access...",
+      "unauthorized": "You do not have access to this section."
+    },
+    "loginPage": {
+      "brandName": "Learnino",
+      "portalBadge": "Admin Portal",
+      "title": "Sign in to Admin Panel",
+      "emailLabel": "Admin Email",
+      "emailPlaceholder": "admin@learnino.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submitButton": "Sign in to Admin Panel",
+      "submitting": "Signing in...",
+      "backToUserSite": "Back to main site",
+      "securityNote": "This page is exclusively for system administrators. All login attempts are logged and monitored.",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "meta": {
+        "title": "Admin Login | Learnino",
+        "description": "Learnino administrative portal sign-in page"
+      }
+    },
+    "users": {
+      "pageTitle": "Users Management",
+      "pageSubtitle": "Complete list of registered users",
+      "usersRegistered": "{count} users registered",
+      "banned": {
+        "pageTitle": "Banned Users",
+        "pageSubtitle": "Users banned from the system",
+        "bannedCount": "{count} banned users",
+        "noBannedUsers": "No banned users",
+        "noBannedUsersDescription": "All users are currently active"
+      },
+      "detail": {
+        "title": "User Details",
+        "subtitle": "Complete information and activity stats",
+        "back": "Back to List",
+        "personalInfo": "Personal Information",
+        "activityStats": "Activity Statistics",
+        "walletInfo": "Wallet Information",
+        "email": "Email",
+        "phone": "Phone",
+        "role": "Role",
+        "status": "Status",
+        "verified": "Verified",
+        "unverified": "Unverified",
+        "banned": "Banned",
+        "active": "Active",
+        "createdAt": "Joined At",
+        "lastUpdated": "Last Updated",
+        "noPhone": "Not provided",
+        "noName": "No name",
+        "userNotFound": "User not found",
+        "bannedSince": "Banned since",
+        "joinedAt": "Joined"
+      },
+      "stats": {
+        "enrollments": "Enrollments",
+        "orders": "Orders",
+        "comments": "Comments",
+        "favoriteCourses": "Favorite Courses",
+        "favoritePosts": "Favorite Posts",
+        "reactions": "Reactions",
+        "walletBalance": "Wallet Balance"
+      },
+      "overviewStats": {
+        "total": "Total Users",
+        "totalSubtitle": "{count} regular",
+        "verified": "Verified",
+        "verifiedSubtitle": "{count} unverified",
+        "newThisWeek": "New This Week",
+        "newThisWeekSubtitle": "{count} this month",
+        "admins": "System Admins"
+      },
+      "table": {
+        "user": "User",
+        "contact": "Contact",
+        "role": "Role",
+        "status": "Status",
+        "stats": "Stats",
+        "joined": "Joined",
+        "actions": "Actions",
+        "noUsersFound": "No users found",
+        "noUsersDescription": "Try adjusting your filters"
+      },
+      "filters": {
+        "searchPlaceholder": "Search by name or email...",
+        "allRoles": "All Roles",
+        "roleUser": "User",
+        "roleAdmin": "Admin",
+        "allVerification": "All Statuses",
+        "verifiedOnly": "Verified Only",
+        "unverifiedOnly": "Unverified Only",
+        "sortDate": "Joined Date",
+        "sortName": "User Name",
+        "sortEmail": "Email Address"
+      },
+      "actions": {
+        "viewDetails": "View Details",
+        "banUser": "Ban User",
+        "unbanUser": "Unban User",
+        "goToBanned": "Banned Users",
+        "goToList": "Users List"
+      },
+      "confirmBan": {
+        "title": "Ban User",
+        "description": "By banning this user, all active sessions will end and their account access will be revoked. Are you sure?",
+        "confirm": "Yes, Ban",
+        "cancel": "Cancel"
+      },
+      "confirmUnban": {
+        "title": "Unban User",
+        "description": "By unbanning, the user can log in again. Continue?",
+        "confirm": "Yes, Unban",
+        "cancel": "Cancel"
+      }
+    },
+    "sections": {
+      "main": "Main",
+      "content": "Learning Content",
+      "blog": "Content & Blog",
+      "financial": "Finance & Sales",
+      "users": "Users",
+      "management": "Management"
+    },
+    "menu": {
+      "overview": "Dashboard",
+      "users": "Users",
+      "usersList": "Users List",
+      "usersBanned": "Banned Users",
+      "courses": "Courses",
+      "coursesList": "Courses List",
+      "coursesCreate": "Create New Course",
+      "categories": "Categories",
+      "teachers": "Instructors",
+      "teachersList": "Instructors List",
+      "teachersCreate": "Add New Instructor",
+      "posts": "Articles",
+      "postsList": "Articles List",
+      "postsCreate": "Create New Article",
+      "comments": "Comments",
+      "orders": "Orders",
+      "wallets": "Wallets",
+      "transactions": "Transactions",
+      "discounts": "Discount Codes",
+      "settings": "Settings",
+      "logout": "Exit Admin Panel"
+    },
+    "actions": {
+      "create": "Create",
+      "createNew": "Add New",
+      "edit": "Edit",
+      "delete": "Delete",
+      "view": "View",
+      "save": "Save",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "back": "Back",
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "approve": "Approve",
+      "reject": "Reject",
+      "ban": "Ban",
+      "unban": "Unban",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "download": "Download",
+      "upload": "Upload",
+      "refresh": "Refresh",
+      "filter": "Filter",
+      "sort": "Sort",
+      "search": "Search",
+      "export": "Export",
+      "close": "Close",
+      "yes": "Yes",
+      "no": "No",
+      "loading": "Loading...",
+      "processing": "Processing..."
+    },
+    "filters": {
+      "all": "All",
+      "active": "Active",
+      "inactive": "Inactive",
+      "published": "Published",
+      "draft": "Draft",
+      "banned": "Banned",
+      "verified": "Verified",
+      "unverified": "Unverified",
+      "sortNewest": "Newest",
+      "sortOldest": "Oldest",
+      "sortName": "By Name",
+      "sortEmail": "By Email",
+      "sortDate": "By Date",
+      "clearFilters": "Clear Filters",
+      "applyFilters": "Apply Filters"
+    },
+    "table": {
+      "columnsVisibility": "Column Visibility",
+      "selectAll": "Select All",
+      "clearAll": "Clear All",
+      "searchPlaceholder": "Search in table...",
+      "showing": "Showing",
+      "to": "to",
+      "of": "of",
+      "items": "items",
+      "rowsPerPage": "Rows per page",
+      "goToPage": "Go to page",
+      "previousPage": "Previous page",
+      "nextPage": "Next page",
+      "firstPage": "First page",
+      "lastPage": "Last page",
+      "noData": "No data to display",
+      "noDataDescription": "Click to add new data",
+      "loading": "Loading data...",
+      "error": "Error loading data",
+      "actions": "Actions",
+      "id": "ID",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "status": "Status"
+    },
+    "breadcrumb": {
+      "admin": "Admin Panel",
+      "overview": "Dashboard",
+      "users": "Users",
+      "banned": "Banned",
+      "courses": "Courses",
+      "categories": "Categories",
+      "teachers": "Instructors",
+      "posts": "Articles",
+      "comments": "Comments",
+      "orders": "Orders",
+      "wallets": "Wallets",
+      "transactions": "Transactions",
+      "discounts": "Discount Codes",
+      "create": "Create New",
+      "edit": "Edit",
+      "details": "Details"
+    },
+    "userMenu": {
+      "profile": "My Profile",
+      "viewSite": "View Website",
+      "userDashboard": "User Dashboard",
+      "settings": "Admin Settings",
+      "logout": "Exit Admin Panel"
+    },
+    "confirmations": {
+      "deleteTitle": "Are you sure?",
+      "deleteDescription": "This action cannot be undone. Are you sure you want to continue?",
+      "banTitle": "Ban User",
+      "banDescription": "This user will no longer be able to access the site. Continue?",
+      "publishTitle": "Publish Content",
+      "publishDescription": "This content will be visible to all users.",
+      "unpublishTitle": "Unpublish Content",
+      "unpublishDescription": "This content will no longer be visible to users."
+    },
+    "toasts": {
+      "createSuccess": "Successfully created",
+      "updateSuccess": "Successfully updated",
+      "deleteSuccess": "Successfully deleted"
+    },
+    "categories": {
+      "pageTitle": "Categories Management",
+      "pageSubtitle": "Manage categories for courses and articles",
+      "categoriesCount": "{count} categories registered",
+      "createNew": "Add Category",
+      "editCategory": "Edit Category",
+      "deleteCategory": "Delete Category",
+      "table": {
+        "name": "Name",
+        "slug": "Slug",
+        "description": "Description",
+        "content": "Content",
+        "visibility": "Status",
+        "actions": "Actions",
+        "createdAt": "Created At",
+        "updatedAt": "updated At",
+        "noCategoriesFound": "No categories found",
+        "noCategoriesDescription": "Try adjusting your filters or add a new category"
+      },
+      "filters": {
+        "searchPlaceholder": "Search by name or description...",
+        "allVisibility": "All Statuses",
+        "showOnly": "Active Only",
+        "hiddenOnly": "Inactive Only"
+      },
+      "actions": {
+        "edit": "Edit Category",
+        "delete": "Delete Category",
+        "activate": "Activate",
+        "deactivate": "Deactivate"
+      },
+      "form": {
+        "createTitle": "Add New Category",
+        "editTitle": "Edit Category",
+        "createDescription": "Create a new category to group courses and articles",
+        "editDescription": "Edit category information. At least one field is required",
+        "nameFaLabel": "Persian Name",
+        "nameFaPlaceholder": "e.g. فرانت‌اند",
+        "nameEnLabel": "English Name",
+        "nameEnPlaceholder": "e.g. Frontend",
+        "descriptionFaLabel": "Persian Description (Optional)",
+        "descriptionFaPlaceholder": "Brief description of this category...",
+        "descriptionEnLabel": "English Description (Optional)",
+        "descriptionEnPlaceholder": "Brief description of this category...",
+        "showLabel": "Show category to users",
+        "showDescription": "When disabled, this category and its content will be hidden from users",
+        "submitCreate": "Create Category",
+        "submitEdit": "Save Changes",
+        "cancel": "Cancel"
+      },
+      "confirmDelete": {
+        "title": "Delete Category",
+        "description": "Are you sure you want to delete this category? This action cannot be undone.",
+        "warning": "Warning: If this category has any courses or articles, they must be moved to another category first.",
+        "confirm": "Yes, Delete",
+        "cancel": "Cancel"
+      },
+      "confirmToggle": {
+        "activateTitle": "Activate Category",
+        "activateDescription": "By activating, this category will be visible to users.",
+        "deactivateTitle": "Deactivate Category",
+        "deactivateDescription": "By deactivating, all courses and articles in this category will also be automatically hidden from public.",
+        "confirmActivate": "Yes, Activate",
+        "confirmDeactivate": "Yes, Deactivate",
+        "cancel": "Cancel"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "stats": {
+        "courses": "courses",
+        "posts": "posts"
+      }
+    },
+    "teachers": {
+      "pageTitle": "Instructors Management",
+      "pageSubtitle": "Create, edit and manage Learnino instructors",
+      "teachersCount": "{count} instructors registered",
+      "createNew": "Add Instructor",
+      "table": {
+        "teacher": "Instructor",
+        "bio": "Biography",
+        "courses": "Courses",
+        "visibility": "Status",
+        "createdAt": "Created At",
+        "actions": "Actions",
+        "noTeachersFound": "No instructors found",
+        "noTeachersDescription": "Try adjusting your filters or add a new instructor"
+      },
+      "filters": {
+        "searchPlaceholder": "Search by name or bio...",
+        "allVisibility": "All Statuses",
+        "showOnly": "Active Only",
+        "hiddenOnly": "Inactive Only"
+      },
+      "actions": {
+        "edit": "Edit Instructor",
+        "delete": "Delete Instructor",
+        "activate": "Activate",
+        "deactivate": "Deactivate"
+      },
+      "form": {
+        "createTitle": "Add New Instructor",
+        "editTitle": "Edit Instructor",
+        "createDescription": "Enter instructor information in both languages",
+        "editDescription": "Edit instructor information. At least one field is required",
+        "avatarLabel": "Instructor Avatar",
+        "avatarHint": "JPG, PNG or WEBP - Max 2 MB",
+        "uploadAvatar": "Select Image",
+        "removeAvatar": "Remove Image",
+        "nameFaLabel": "Persian Name",
+        "nameEnLabel": "English Name",
+        "bioFaLabel": "Persian Biography (Optional)",
+        "nameFaPlaceholder": "Enter Persian name...",
+        "nameEnPlaceholder": "Enter English name...",
+        "bioFaPlaceholder": "Brief description about instructor in Persian...",
+        "bioEnPlaceholder": "Brief description about instructor in English...",
+        "bioEnLabel": "English Biography (Optional)",
+        "showLabel": "Show instructor to users",
+        "showDescription": "When disabled, this instructor and related courses will be hidden from users",
+        "submitCreate": "Create Instructor",
+        "submitEdit": "Save Changes",
+        "cancel": "Cancel"
+      },
+      "confirmDelete": {
+        "title": "Delete Instructor",
+        "description": "Are you sure you want to delete this instructor? This action cannot be undone.",
+        "warning": "Warning: If this instructor has any courses, they must be moved to another instructor first.",
+        "confirm": "Yes, Delete",
+        "cancel": "Cancel"
+      },
+      "confirmToggle": {
+        "activateTitle": "Activate Instructor",
+        "activateDescription": "By activating, this instructor will be visible to users.",
+        "deactivateTitle": "Deactivate Instructor",
+        "deactivateDescription": "By deactivating, all published courses of this instructor will be automatically hidden from public.",
+        "confirmActivate": "Yes, Activate",
+        "confirmDeactivate": "Yes, Deactivate",
+        "cancel": "Cancel"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      }
+    },
+    "courses": {
+      "pageTitle": "Courses Management",
+      "pageSubtitle": "Create, edit and manage educational courses",
+      "coursesCount": "{count} courses registered",
+      "createNew": "Add Course",
+      "table": {
+        "course": "Course",
+        "teacher": "Instructor",
+        "category": "Category",
+        "price": "Price",
+        "level": "Level",
+        "stats": "Stats",
+        "status": "Status",
+        "createdAt": "Created At",
+        "actions": "Actions",
+        "noCoursesFound": "No courses found",
+        "noCoursesDescription": "Try adjusting your filters or add a new course"
+      },
+      "filters": {
+        "searchPlaceholder": "Search course title...",
+        "allLevels": "All Levels",
+        "allPublish": "All Statuses",
+        "publishedOnly": "Published Only",
+        "draftOnly": "Draft Only",
+        "sortCreatedAt": "Created At",
+        "sortPrice": "Price",
+        "sortTitle": "Title"
+      },
+      "actions": {
+        "edit": "Edit Course",
+        "delete": "Delete Course",
+        "publish": "Publish",
+        "unpublish": "Unpublish"
+      },
+      "form": {
+        "createTitle": "Add New Course",
+        "editTitle": "Edit Course",
+        "createDescription": "Enter course information in both languages",
+        "editDescription": "Edit course information. At least one field is required",
+        "imageLabel": "Course Image",
+        "imageHint": "JPG, PNG or WEBP - Max 5 MB",
+        "uploadImage": "Select Image",
+        "removeImage": "Remove Image",
+        "titleFaLabel": "Persian Title",
+        "titleFaPlaceholder": "e.g. آموزش React پیشرفته",
+        "titleEnLabel": "English Title",
+        "titleEnPlaceholder": "e.g. Advanced React Course",
+        "descriptionFaLabel": "Persian Description (Optional)",
+        "descriptionFaPlaceholder": "Full description of the course content...",
+        "descriptionEnLabel": "English Description (Optional)",
+        "descriptionEnPlaceholder": "Full description of the course content...",
+        "priceLabel": "Price (Toman)",
+        "pricePlaceholder": "0 for free",
+        "levelLabel": "Course Level",
+        "categoryLabel": "Category",
+        "categoryPlaceholder": "Select category",
+        "teacherLabel": "Instructor",
+        "teacherPlaceholder": "Select instructor",
+        "publishedLabel": "Publish course",
+        "publishedDescription": "When enabled, the course is visible and purchasable by users",
+        "submitCreate": "Create Course",
+        "submitEdit": "Save Changes",
+        "cancel": "Cancel"
+      },
+      "confirmDelete": {
+        "title": "Delete Course",
+        "description": "Are you sure you want to delete this course? All related data will also be deleted.",
+        "confirm": "Yes, Delete",
+        "cancel": "Cancel"
+      },
+      "confirmPublish": {
+        "publishTitle": "Publish Course",
+        "publishDescription": "By publishing, this course will be visible to all users.",
+        "unpublishTitle": "Unpublish Course",
+        "unpublishDescription": "By unpublishing, this course will no longer be available to users.",
+        "confirmPublish": "Yes, Publish",
+        "confirmUnpublish": "Yes, Unpublish",
+        "cancel": "Cancel"
+      },
+      "status": {
+        "published": "Published",
+        "draft": "Draft"
+      },
+      "levels": {
+        "BEGINNER": "Beginner",
+        "INTERMEDIATE": "Intermediate",
+        "ADVANCED": "Advanced"
+      },
+      "stats": {
+        "enrollments": "enrollments",
+        "comments": "comments"
+      },
+      "free": "Free"
+    },
+    "comments": {
+      "pageTitle": "Comments Management",
+      "pageSubtitle": "Approve, reject and manage user comments",
+      "commentsCount": "{count} comments registered",
+      "table": {
+        "comment": "Comment",
+        "user": "User",
+        "target": "Related To",
+        "stats": "Stats",
+        "status": "Status",
+        "createdAt": "Date",
+        "actions": "Actions",
+        "noCommentsFound": "No comments found",
+        "noCommentsDescription": "Try adjusting your filters",
+        "replyTo": "Reply to",
+        "onCourse": "Course",
+        "onPost": "Article"
+      },
+      "filters": {
+        "searchPlaceholder": "Search in comment content...",
+        "allStatuses": "All Statuses",
+        "pendingOnly": "Pending",
+        "approvedOnly": "Approved",
+        "rejectedOnly": "Rejected"
+      },
+      "actions": {
+        "approve": "Approve",
+        "reject": "Reject",
+        "delete": "Delete"
+      },
+      "confirmApprove": {
+        "title": "Approve Comment",
+        "description": "By approving, this comment will be visible to all users.",
+        "confirm": "Yes, Approve",
+        "cancel": "Cancel"
+      },
+      "confirmReject": {
+        "title": "Reject Comment",
+        "description": "By rejecting, this comment will be hidden from users.",
+        "confirm": "Yes, Reject",
+        "cancel": "Cancel"
+      },
+      "confirmDelete": {
+        "title": "Delete Comment",
+        "description": "Are you sure you want to delete this comment? All related replies will also be deleted.",
+        "confirm": "Yes, Delete",
+        "cancel": "Cancel"
+      },
+      "status": {
+        "PENDING": "Pending",
+        "APPROVED": "Approved",
+        "REJECTED": "Rejected"
+      },
+      "stats": {
+        "replies": "replies",
+        "reactions": "reactions"
+      }
+    },
+    "discounts": {
+      "pageTitle": "Discount Codes Management",
+      "pageSubtitle": "Create, activate and manage system discount codes",
+      "discountsCount": "{count} discount codes registered",
+      "createNew": "Add Discount Code",
+      "table": {
+        "code": "Discount Code",
+        "type": "Type",
+        "value": "Value",
+        "usage": "Usage",
+        "expiresAt": "Expires At",
+        "status": "Status",
+        "createdAt": "Created At",
+        "actions": "Actions",
+        "noDiscountsFound": "No discount codes found",
+        "noDiscountsDescription": "Try adjusting your filters or create a new discount code"
+      },
+      "filters": {
+        "searchPlaceholder": "Search discount code...",
+        "allActive": "All Statuses",
+        "activeOnly": "Active Only",
+        "inactiveOnly": "Inactive Only"
+      },
+      "actions": {
+        "toggle": "Toggle Status",
+        "delete": "Delete Discount Code"
+      },
+      "form": {
+        "createTitle": "Add New Discount Code",
+        "createDescription": "Enter details for the new discount code. Code auto-converts to uppercase",
+        "codeLabel": "Discount Code",
+        "codePlaceholder": "e.g. WELCOME20",
+        "typeLabel": "Discount Type",
+        "valueLabel": "Discount Value",
+        "valuePercentagePlaceholder": "Percentage (1 to 100)",
+        "valueAmountPlaceholder": "Amount in Rials (min 1,000)",
+        "maxUsesLabel": "Max Uses",
+        "maxUsesPlaceholder": "e.g. 100",
+        "expiresInDaysLabel": "Validity (Days)",
+        "expiresInDaysPlaceholder": "e.g. 30",
+        "submitCreate": "Create Discount Code",
+        "cancel": "Cancel"
+      },
+      "confirmToggle": {
+        "activateTitle": "Activate Discount Code",
+        "activateDescription": "By activating, users will be able to use this discount code.",
+        "deactivateTitle": "Deactivate Discount Code",
+        "deactivateDescription": "By deactivating, users will no longer be able to use this code.",
+        "confirmActivate": "Yes, Activate",
+        "confirmDeactivate": "Yes, Deactivate",
+        "cancel": "Cancel"
+      },
+      "confirmDelete": {
+        "title": "Delete Discount Code",
+        "description": "Are you sure you want to delete this discount code? This action cannot be undone.",
+        "confirm": "Yes, Delete",
+        "cancel": "Cancel"
+      },
+      "types": {
+        "PERCENTAGE": "Percentage",
+        "AMOUNT": "Amount"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      }
+    },
+    "wallets": {
+      "pageTitle": "Wallets Management",
+      "pageSubtitle": "View and manage user wallet balances",
+      "walletsCount": "{count} wallets registered",
+      "transactions": {
+        "pageTitle": "Transaction History",
+        "pageSubtitle": "Track all financial transactions across the platform",
+        "transactionsCount": "{count} transactions registered"
+      },
+      "table": {
+        "user": "User",
+        "email": "Email",
+        "phone": "Phone",
+        "balance": "Balance",
+        "updatedAt": "Last Updated",
+        "viewUser": "View User",
+        "amount": "Amount",
+        "type": "Type",
+        "status": "Status",
+        "description": "Description",
+        "refId": "Ref ID",
+        "createdAt": "Date",
+        "actions": "Actions",
+        "noWalletsFound": "No wallets found",
+        "noWalletsDescription": "Try adjusting your filters",
+        "noTransactionsFound": "No transactions found",
+        "noTransactionsDescription": "Try adjusting your filters"
+      },
+      "filters": {
+        "searchPlaceholder": "Search name, email or phone...",
+        "allTypes": "All Types",
+        "allStatuses": "All Statuses",
+        "chargeOnly": "Wallet Top-up",
+        "purchaseOnly": "Course Purchase",
+        "refundOnly": "Refund",
+        "successOnly": "Success",
+        "pendingOnly": "Pending",
+        "failedOnly": "Failed",
+        "cancelledOnly": "Cancelled",
+        "minBalancePlaceholder": "Min Balance (RLS)",
+        "maxBalancePlaceholder": "Max Balance (RLS)"
+      },
+      "types": {
+        "CHARGE": "Wallet Top-up",
+        "PURCHASE": "Course Purchase",
+        "REFUND": "Refund"
+      },
+      "status": {
+        "PENDING": "Pending",
+        "SUCCESS": "Success",
+        "FAILED": "Failed",
+        "CANCELLED": "Cancelled"
+      },
+      "actions": {
+        "viewTransactions": "View Transactions",
+        "backToWallets": "Back to Wallets"
+      }
+    },
+    "orders": {
+      "pageTitle": "Orders Management",
+      "pageSubtitle": "Review, track and manage platform orders",
+      "ordersCount": "{count} orders registered",
+      "table": {
+        "orderId": "Order ID",
+        "user": "User",
+        "totalAmount": "Total Amount",
+        "status": "Status",
+        "paymentMethod": "Payment Method",
+        "itemsCount": "Items",
+        "createdAt": "Date",
+        "actions": "Actions",
+        "noOrdersFound": "No orders found",
+        "noOrdersDescription": "Try adjusting your filters"
+      },
+      "filters": {
+        "searchPlaceholder": "Search user name or email...",
+        "allStatuses": "All Statuses",
+        "pendingOnly": "Pending Payment",
+        "paidOnly": "Paid",
+        "cancelledOnly": "Cancelled"
+      },
+      "actions": {
+        "viewDetails": "View Details",
+        "cancelOrder": "Cancel Order",
+        "backToList": "Back to List"
+      },
+      "detail": {
+        "title": "Order Details",
+        "subtitle": "Complete financial details and purchased items",
+        "orderInfo": "General Information",
+        "userInfo": "Buyer Information",
+        "financialSummary": "Financial Summary",
+        "purchasedItems": "Purchased Items",
+        "orderId": "Order ID",
+        "status": "Order Status",
+        "paymentMethod": "Payment Method",
+        "createdAt": "Date Created",
+        "updatedAt": "Last Updated",
+        "totalAmount": "Total Amount",
+        "subtotal": "Subtotal",
+        "discountAmount": "Discount",
+        "discountCode": "Discount Code",
+        "noItems": "No items in this order",
+        "orderNotFound": "Order not found",
+        "viewUserProfile": "View User Profile"
+      },
+      "confirmCancel": {
+        "title": "Cancel Order",
+        "description": "Are you sure you want to cancel this pending order? The user will no longer be able to pay for it.",
+        "confirm": "Yes, Cancel",
+        "cancel": "Cancel"
+      },
+      "statuses": {
+        "PENDING": "Pending Payment",
+        "PAID": "Paid",
+        "CANCELLED": "Cancelled"
+      },
+      "paymentMethods": {
+        "WALLET": "Wallet",
+        "ZARINPAL": "ZarinPal Gateway",
+        "notPaid": "Not Paid"
+      },
+      "items": "items",
+      "free": "Free"
+    },
+    "posts": {
+      "pageTitle": "Articles Management",
+      "pageSubtitle": "Create, edit and manage blog articles",
+      "postsCount": "{count} articles registered",
+      "createNew": "Add Article",
+      "table": {
+        "post": "Article",
+        "category": "Category",
+        "comments": "Comments",
+        "status": "Status",
+        "createdAt": "Created At",
+        "actions": "Actions",
+        "noPostsFound": "No articles found",
+        "noPostsDescription": "Try adjusting your filters or create a new article"
+      },
+      "filters": {
+        "searchPlaceholder": "Search article title...",
+        "allPublish": "All Statuses",
+        "publishedOnly": "Published Only",
+        "draftOnly": "Draft Only",
+        "sortCreatedAt": "Created At",
+        "sortTitle": "Title"
+      },
+      "actions": {
+        "edit": "Edit Article",
+        "delete": "Delete Article",
+        "publish": "Publish",
+        "unpublish": "Unpublish"
+      },
+      "form": {
+        "createTitle": "Add New Article",
+        "editTitle": "Edit Article",
+        "createDescription": "Enter article information in both languages",
+        "editDescription": "Edit article information. At least one field is required",
+        "imageLabel": "Featured Image",
+        "imageHint": "JPG, PNG or WEBP - Max 5 MB",
+        "uploadImage": "Select Image",
+        "removeImage": "Remove Image",
+        "titleFaLabel": "Persian Title",
+        "titleFaPlaceholder": "e.g. مقایسه React و Vue",
+        "titleEnLabel": "English Title",
+        "titleEnPlaceholder": "e.g. React vs Vue Comparison",
+        "contentFaLabel": "Persian Content",
+        "contentFaPlaceholder": "Start writing the article content...",
+        "contentEnLabel": "English Content",
+        "contentEnPlaceholder": "Start writing the article content...",
+        "categoryLabel": "Category",
+        "categoryPlaceholder": "Select category",
+        "publishedLabel": "Publish article",
+        "publishedDescription": "When enabled, the article is visible to all users",
+        "submitCreate": "Publish Article",
+        "submitEdit": "Save Changes",
+        "cancel": "Cancel"
+      },
+      "confirmDelete": {
+        "title": "Delete Article",
+        "description": "Are you sure you want to delete this article? This action cannot be undone.",
+        "confirm": "Yes, Delete",
+        "cancel": "Cancel"
+      },
+      "confirmPublish": {
+        "publishTitle": "Publish Article",
+        "publishDescription": "By publishing, this article will be visible to all users.",
+        "unpublishTitle": "Unpublish Article",
+        "unpublishDescription": "By unpublishing, this article will no longer be available to users.",
+        "confirmPublish": "Yes, Publish",
+        "confirmUnpublish": "Yes, Unpublish",
+        "cancel": "Cancel"
+      },
+      "status": {
+        "published": "Published",
+        "draft": "Draft"
+      },
+      "editor": {
+        "placeholder": "Start writing...",
+        "characters": "Characters",
+        "paragraph": "Normal Paragraph",
+        "heading": "Heading",
+        "align": "Alignment",
+        "alignRight": "Align Right",
+        "alignCenter": "Align Center",
+        "alignLeft": "Align Left",
+        "alignJustify": "Justify",
+        "dirRtl": "Right to Left",
+        "dirLtr": "Left to Right",
+        "bold": "Bold",
+        "italic": "Italic",
+        "underline": "Underline",
+        "strike": "Strikethrough",
+        "subscript": "Subscript",
+        "superscript": "Superscript",
+        "textColor": "Text Color",
+        "highlight": "Highlight",
+        "blockquote": "Blockquote",
+        "codeBlock": "Code Block",
+        "hr": "Horizontal Rule",
+        "clearFormat": "Clear Format",
+        "bulletList": "Bullet List",
+        "orderedList": "Ordered List",
+        "taskList": "Task List",
+        "table": "Table",
+        "tableSelect": "Select Size",
+        "addColumn": "Add Column",
+        "deleteColumn": "Delete Column",
+        "addRow": "Add Row",
+        "deleteRow": "Delete Row",
+        "deleteTable": "Delete Table",
+        "link": "Add Link",
+        "unlink": "Remove Link",
+        "linkPrompt": "Enter URL",
+        "image": "Add Image",
+        "sourceCode": "Source Code",
+        "fullscreen": "Fullscreen",
+        "imageUploaded": "Image uploaded successfully"
+      }
+    },
+    "overview": {
+      "pageTitle": "Admin Dashboard",
+      "welcomeBack": "Welcome back, {name}",
+      "welcomeSubtitle": "Overview of platform activities and financial performance",
+      "stats": {
+        "totalRevenue": "Total Sales",
+        "walletRevenue": "Wallet Top-ups",
+        "totalUsers": "Total Users",
+        "totalOrders": "Total Orders",
+        "totalCourses": "Total Courses",
+        "totalPosts": "Total Articles",
+        "totalComments": "Total Comments",
+        "totalEnrollments": "Total Enrollments",
+        "totalDiscounts": "Discount Codes"
+      },
+      "statsSub": {
+        "thisMonth": "This month: {value}",
+        "thisWeek": "This week: +{value}",
+        "today": "Today: +{value}",
+        "paid": "{value} Paid successfully",
+        "published": "{value} Published",
+        "pending": "{value} Pending review",
+        "active": "{value} Active codes"
+      },
+      "revenueChart": {
+        "title": "Revenue Trend",
+        "description": "Comparison of course sales and wallet top-ups",
+        "sales": "Course Sales",
+        "wallet": "Wallet Top-up",
+        "today": "Today",
+        "thisWeek": "This Wk",
+        "thisMonth": "This Mo",
+        "total": "Total"
+      },
+      "usersChart": {
+        "title": "User Distribution",
+        "description": "User verification status",
+        "totalUsers": "Users",
+        "verified": "Verified",
+        "unverified": "Unverified",
+        "admins": "Admins"
+      },
+      "ordersChart": {
+        "title": "Orders Status",
+        "description": "Transaction success ratio",
+        "totalOrders": "Orders",
+        "paid": "Paid",
+        "pending": "Pending",
+        "cancelled": "Cancelled"
+      },
+      "topCourses": {
+        "title": "Top Courses",
+        "description": "Courses with highest student count",
+        "enrollments": "{count} students",
+        "noCourses": "No courses found"
+      },
+      "pendingComments": {
+        "title": "Pending Comments",
+        "description": "Comments awaiting moderation",
+        "viewAll": "View all",
+        "noPending": "No pending comments"
+      },
+      "topDiscounts": {
+        "title": "Top Discounts",
+        "description": "Most used discount codes",
+        "uses": "{used} of {max} used",
+        "noDiscounts": "No discounts found"
+      },
+      "expiringDiscounts": {
+        "title": "Expiring Discounts",
+        "description": "Discounts expiring soon"
+      }
     }
   }
 }
