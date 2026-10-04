@@ -1,0 +1,16 @@
+node_modules
+.next
+.git
+.gitignore
+*.md
+cypress/
+src/__tests__/
+.env.local
+.env*.local
+.vscode/
+.idea/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
