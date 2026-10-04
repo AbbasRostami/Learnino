@@ -3,19 +3,57 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
-// 🎯 استفاده از متغیر صحیح همراه با Fallback برای جلوگیری از ۴۰۴ در لوکال
-const BACKEND_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ||
-  "https://course-shop-api.onrender.com";
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   reactCompiler: true,
+  cacheComponents: true,
+  images: {
+    qualities: [75, 85, 90],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+      { protocol: "https", hostname: "i.pravatar.cc" },
+    ],
+  },
 
   async rewrites() {
     return [
       {
         source: "/api/:path*",
-        destination: `${BACKEND_URL}/api/:path*`, // 👈 پروکسی به سرور رندر دات کام
+        destination: `${BACKEND_URL}/api/:path*`,
+      },
+    ];
+  },
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "X-Frame-Options",
+            value: "DENY",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+        ],
       },
     ];
   },
