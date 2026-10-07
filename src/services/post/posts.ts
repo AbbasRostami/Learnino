@@ -22,9 +22,7 @@ async function fetchLatestPostsData(
 
     return res.data?.items ?? [];
   } catch (error) {
-    console.warn(
-      `[Posts Cache Notice for locale: ${locale}]: Backend unavailable or timed out during build.`,
-    );
+    console.warn(`[Posts Server Fetch Warning for locale: ${locale}]`, error);
     return [];
   }
 }
@@ -57,7 +55,8 @@ async function fetchPostBySlugData(
     return res.data?.post ?? null;
   } catch (error) {
     console.warn(
-      `[Post Detail Cache Notice for slug: ${rawSlug}]: Backend unavailable.`,
+      `[Post Detail Server Fetch Warning for slug: ${rawSlug}]`,
+      error,
     );
     return null;
   }

@@ -130,7 +130,7 @@ const authenticatedFetch: typeof fetch = async (input, init) => {
 export const api = up(authenticatedFetch, () => ({
   baseUrl: API_BASE_URL,
   credentials: "include",
-  timeout: 50_000,
+  timeout: isServer ? 6000 : 50000,
   headers: {
     Accept: "application/json",
     "Accept-Language": getCurrentLocale(),
