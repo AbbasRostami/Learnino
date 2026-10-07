@@ -76,13 +76,11 @@ describe("CartSummarySidebar", () => {
     const user = userEvent.setup();
     render(<CartSummarySidebar cart={mockCart as any} />);
 
-    // انتخاب کیف پول
     const walletBtn = screen.getByRole("button", {
       name: /paymentMethods\.WALLET/i,
     });
     await user.click(walletBtn);
 
-    // پرداخت
     const checkoutBtn = screen.getByText("checkout");
     await user.click(checkoutBtn);
 
