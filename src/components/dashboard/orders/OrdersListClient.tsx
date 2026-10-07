@@ -23,7 +23,6 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { OrderListCardSkeleton } from "./OrderListCardSkeleton";
 
-// 🎨 استایل هوشمند بر اساس وضعیت
 const STATUS_STYLES = {
   PENDING: {
     borderColor: "border-amber-500/30",

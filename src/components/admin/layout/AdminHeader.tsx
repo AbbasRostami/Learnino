@@ -4,7 +4,7 @@ import { LanguageToggle } from "@/components/layout/Navbar/LanguageToggle";
 import { ThemeToggle } from "@/components/layout/Navbar/ThemeToggle";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useAdminSidebar } from "@/store/AdminSidebarContext";
+import { useAdminSidebarStore } from "@/store/AdminSidebarContext";
 import { ChevronsLeft, Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { AdminUserDropdown } from "./AdminUserDropdown";
@@ -12,7 +12,7 @@ import { AdminUserDropdown } from "./AdminUserDropdown";
 export function AdminHeader() {
   const t = useTranslations("admin");
   const { toggleSidebar, toggleMobileSidebar, isExpanded, isMobileOpen } =
-    useAdminSidebar();
+    useAdminSidebarStore();
 
   return (
     <header className="sticky top-0 z-30 bg-background/80 backdrop-blur-xl border-b border-border/50">

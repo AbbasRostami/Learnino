@@ -10,6 +10,46 @@ import { getTeacherBySlugServer } from "@/services/teacher/teachers";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+
+interface TeacherSectionProps {
+  paramsPromise: Promise<{ locale: Locale; slug: string }>;
+}
+
+async function TeacherDetailSection({ paramsPromise }: TeacherSectionProps) {
+  const { locale, slug } = await paramsPromise;
+
+  setRequestLocale(locale);
+  const tNav = await getTranslations({ locale, namespace: "nav" });
+
+  const teacher = await getTeacherBySlugServer(locale, slug);
+
+  if (!teacher || !teacher.show) {
+    notFound();
+  }
+
+  return (
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: tNav("home"), url: `/${locale}` },
+          { name: teacher.name },
+        ]}
+      />
+      <TeacherProfileClient slug={slug} initialTeacher={teacher} />
+    </>
+  );
+}
+
+function TeacherDetailFallback() {
+  return (
+    <div className="container mx-auto px-4 py-12 animate-pulse">
+      <div className="h-40 w-40 rounded-3xl bg-muted/60 mb-6" />
+      <div className="h-8 w-64 rounded-xl bg-muted/60 mb-4" />
+      <div className="h-4 w-full max-w-xl rounded-md bg-muted/40" />
+    </div>
+  );
+}
 
 export async function generateMetadata({
   params,
@@ -26,12 +66,12 @@ export async function generateMetadata({
     };
   }
 
-  const description = cleanMetaDescription(teacher?.bio || "");
+  const description = cleanMetaDescription(teacher.bio || "");
   const isFa = locale === "fa";
 
   const title = isFa
-    ? `${teacher?.name} - مدرس`
-    : `${teacher?.name} - Instructor`;
+    ? `${teacher.name} - مدرس`
+    : `${teacher.name} - Instructor`;
 
   return {
     title,
@@ -43,10 +83,10 @@ export async function generateMetadata({
       url: `/${locale}/teachers/${slug}`,
       images: [
         {
-          url: teacher?.avatar || "/logo/Main-Logo.png",
-          width: teacher?.avatar ? 400 : 1200,
-          height: teacher?.avatar ? 400 : 630,
-          alt: teacher?.name,
+          url: teacher.avatar || "/logo/Main-Logo.png",
+          width: teacher.avatar ? 400 : 1200,
+          height: teacher.avatar ? 400 : 630,
+          alt: teacher.name,
         },
       ],
       locale: isFa ? "fa_IR" : "en_US",
@@ -67,25 +107,11 @@ export default async function TeacherDetailPage({
 }: {
   params: Promise<{ locale: Locale; slug: string }>;
 }) {
-  const { locale, slug } = await params;
-  setRequestLocale(locale);
-  const tNav = await getTranslations({ locale, namespace: "nav" });
-
-  const teacher = await getTeacherBySlugServer(locale, slug);
-
-  if (!teacher || !teacher?.show) {
-    notFound();
-  }
-
   return (
     <main className="flex-1">
-      <BreadcrumbJsonLd
-        items={[
-          { name: tNav("home"), url: `/${locale}` },
-          { name: teacher?.name },
-        ]}
-      />
-      <TeacherProfileClient slug={slug} initialTeacher={teacher} />
+      <Suspense fallback={<TeacherDetailFallback />}>
+        <TeacherDetailSection paramsPromise={params} />
+      </Suspense>
     </main>
   );
 }

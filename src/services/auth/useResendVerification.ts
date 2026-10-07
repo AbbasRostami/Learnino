@@ -1,4 +1,3 @@
-// useResendVerification.ts
 import { api } from "@/hooks/upfetch";
 import {
   ApiError,

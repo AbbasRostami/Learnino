@@ -1,9 +1,13 @@
 import { api } from "@/hooks/upfetch";
-import type { GetAdminCoursesResponse, GetCourseBySlugResponse } from "@/types";
+import type {
+  Course,
+  GetAdminCoursesResponse,
+  GetCourseBySlugResponse,
+} from "@/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocale } from "next-intl";
 
-export const useCourse = (slug: string | undefined) => {
+export const useCourse = (slug: string | undefined, initialCourse?: Course) => {
   const locale = useLocale();
   const queryClient = useQueryClient();
 
@@ -19,6 +23,16 @@ export const useCourse = (slug: string | undefined) => {
     staleTime: 60 * 1000,
 
     initialData: () => {
+      if (initialCourse) {
+        return {
+          status: "success",
+          data: {
+            course:
+              initialCourse as unknown as GetCourseBySlugResponse["data"]["course"],
+          },
+        };
+      }
+
       if (!slug) return undefined;
 
       const adminQueries = queryClient.getQueriesData<GetAdminCoursesResponse>({

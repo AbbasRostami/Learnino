@@ -10,7 +10,7 @@ import {
 import { Link, usePathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useProfile } from "@/services";
-import { useAdminSidebar } from "@/store/AdminSidebarContext";
+import { useAdminSidebarStore } from "@/store/AdminSidebarContext";
 import {
   BookOpen,
   FolderTree,
@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const MENU_SECTIONS = [
   {
@@ -75,18 +76,50 @@ const MENU_SECTIONS = [
 export function AdminSidebar() {
   const t = useTranslations("admin");
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+
   const {
     isExpanded,
     isHovered,
     isMobileOpen,
+    isMobile,
     setIsHovered,
     closeMobileSidebar,
-  } = useAdminSidebar();
+    setStates,
+  } = useAdminSidebarStore();
 
   const { data, isLoading } = useProfile();
   const profile = data?.data?.profile;
+  useEffect(() => {
+    setMounted(true);
 
-  const isSidebarOpen = isExpanded || isHovered;
+    const handleResize = () => {
+      const mobile = window.innerWidth < 1024;
+      setStates({
+        isMobile: mobile,
+        ...(mobile ? { isMobileOpen: false } : {}),
+      });
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [setStates]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const currentActive =
+      pathname === "/admin" ? "overview" : pathname.split("/")[2] || null;
+    setStates({ isMobileOpen: false, activeItem: currentActive });
+  }, [pathname, mounted, setStates]);
+
+  if (!mounted) {
+    return (
+      <div className="w-22 lg:w-70 h-screen fixed top-0 inset-s-0 bg-card border-e opacity-10" />
+    );
+  }
+
+  const isSidebarOpen = isMobile ? false : isExpanded || isHovered;
 
   const userName =
     profile?.name || profile?.email?.split("@")?.[0] || t("defaultUserName");

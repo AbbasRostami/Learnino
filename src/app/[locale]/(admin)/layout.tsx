@@ -1,7 +1,7 @@
 import { AdminLayoutClient } from "@/components/admin/layout/AdminLayoutClient";
-import { AdminSidebarProvider } from "@/store/AdminSidebarContext";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 
 export async function generateMetadata({
   params,
@@ -12,15 +12,9 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "admin" });
 
   return {
-    title: {
-      template: `%s | ${t("title")}`,
-      default: t("title"),
-    },
+    title: { template: `%s | ${t("title")}`, default: t("title") },
     description: t("subtitle"),
-    robots: {
-      index: false,
-      follow: false,
-    },
+    robots: { index: false, follow: false },
   };
 }
 
@@ -35,8 +29,12 @@ export default async function AdminRootLayout({
   setRequestLocale(locale);
 
   return (
-    <AdminSidebarProvider>
+    <Suspense
+      fallback={
+        <div className="min-h-screen w-full bg-background animate-pulse opacity-50" />
+      }
+    >
       <AdminLayoutClient>{children}</AdminLayoutClient>
-    </AdminSidebarProvider>
+    </Suspense>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { stripHtml } from "@/components/shared/SafeHtml"; // ✅ اضافه شد
+import { stripHtml } from "@/components/shared/SafeHtml";
 import { Link } from "@/i18n/routing";
 import { getCategoryStyle } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";

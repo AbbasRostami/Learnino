@@ -1,7 +1,6 @@
-import { api } from "@/hooks/upfetch"; // 👈 همان فایل اصلی upfetch شما!
+import { api } from "@/hooks/upfetch";
 import type { CategoryWithCount, GetCategoriesResponse } from "@/types";
 import { cacheLife, cacheTag } from "next/cache";
-
 
 async function fetchCategoriesData(
   locale: string,
@@ -12,7 +11,7 @@ async function fetchCategoriesData(
 
   const res = await api<GetCategoriesResponse>("/categories", {
     headers: {
-      "Accept-Language": locale, 
+      "Accept-Language": locale,
     },
   });
 

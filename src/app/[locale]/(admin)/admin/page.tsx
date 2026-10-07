@@ -1,20 +1,6 @@
 import { AdminOverviewClient } from "@/components/admin/overview/AdminOverviewClient";
-import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "admin.menu" });
-
-  return {
-    title: t("overview"),
-    robots: { index: false, follow: false },
-  };
-}
+import { setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 
 export default async function AdminOverviewPage({
   params,
@@ -24,5 +10,9 @@ export default async function AdminOverviewPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <AdminOverviewClient />;
+  return (
+    <Suspense fallback={null}>
+      <AdminOverviewClient />
+    </Suspense>
+  );
 }

@@ -70,7 +70,6 @@ export function AdminFilters({
           </div>
         )}
 
-        {/* Dynamic Select Filters */}
         {filters.map((filter) => {
           const allValue = filter.allValue ?? "all";
           const currentValue = filter.value || allValue;
@@ -83,7 +82,6 @@ export function AdminFilters({
               <Select
                 items={filter.options}
                 value={currentValue}
-                // 🌟 اصلاح اصلی: با ساخت این تابع واسط، تداخل string و null برطرف می‌شود
                 onValueChange={(val) => {
                   if (filter.onChange) {
                     filter.onChange(val ?? ""); 

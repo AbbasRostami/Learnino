@@ -26,13 +26,11 @@ import { useState } from "react";
 import { TransactionSkeleton } from "./TransactionSkeleton";
 import { WalletBalanceSkeleton } from "./WalletBalanceSkeleton";
 
-// 🎯 مبالغ پیش‌فرض به تومان (مطابق آنچه کاربر می‌بیند)
 const PRESET_AMOUNTS_TOMAN = [50_000, 100_000, 300_000, 500_000];
 const MIN_AMOUNT_TOMAN = 1_000;
 const MAX_AMOUNT_TOMAN = 50_000_000;
 const STEP_AMOUNT_TOMAN = 50_000;
 
-// 🎨 استایل هوشمند وضعیت تراکنش
 const TX_STATUS_STYLES = {
   SUCCESS:
     "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30",
@@ -59,7 +57,6 @@ export function WalletClient() {
   } = useTransactions({ page, limit: 10 });
   const { mutate: chargeWallet, isPending: isCharging } = useChargeWallet();
 
-  // 🎯 موجودی از بک‌اند به ریال است، پس تقسیم بر ۱۰ برای تومان
   const balanceRial = walletData?.data?.wallet?.balance;
   const balanceToman = balanceRial !== undefined ? balanceRial / 10 : undefined;
 
@@ -76,7 +73,6 @@ export function WalletClient() {
     e.preventDefault();
     if (amountToman < MIN_AMOUNT_TOMAN) return;
 
-    // 🎯 تبدیل تومان به ریال قبل از ارسال به بک‌اند
     const amountRial = amountToman * 10;
     chargeWallet({ amount: amountRial });
   };
@@ -99,7 +95,6 @@ export function WalletClient() {
 
   return (
     <div className="flex flex-col gap-8">
-      {/* Header */}
       <div className="flex items-center gap-2.5 pb-4 border-b border-border/50">
         <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
           <Wallet className="h-5 w-5" aria-hidden="true" />
@@ -114,9 +109,7 @@ export function WalletClient() {
         </div>
       </div>
 
-      {/* Balance & Charge Section */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6">
-        {/* ══════════ Balance Card (خیره‌کننده و مدرن) ══════════ */}
         {isWalletLoading || balanceToman === undefined ? (
           <WalletBalanceSkeleton />
         ) : (
@@ -126,7 +119,6 @@ export function WalletClient() {
             transition={{ duration: 0.4 }}
             className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-linear-to-br from-emerald-500/15 via-teal-500/8 to-card p-6 sm:p-8 flex flex-col justify-between shadow-xl min-h-52"
           >
-            {/* Decorative glow */}
             <div
               className="absolute -top-20 -right-20 h-48 w-48 rounded-full bg-emerald-500/20 blur-3xl"
               aria-hidden="true"
@@ -166,7 +158,6 @@ export function WalletClient() {
           </motion.div>
         )}
 
-        {/* ══════════ Charge Form ══════════ */}
         <motion.div
           initial={prefersReducedMotion ? undefined : { opacity: 0, y: 15 }}
           animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
@@ -186,7 +177,6 @@ export function WalletClient() {
           </p>
 
           <form onSubmit={handleCharge} className="flex flex-col gap-4">
-            {/* Amount Input with +/- buttons */}
             <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="amount"
@@ -238,7 +228,6 @@ export function WalletClient() {
               </div>
             </div>
 
-            {/* Preset Amount Buttons */}
             <div className="grid grid-cols-2 gap-2">
               {PRESET_AMOUNTS_TOMAN.map((amt) => {
                 const isActive = amountToman === amt;
@@ -261,7 +250,6 @@ export function WalletClient() {
               })}
             </div>
 
-            {/* Submit Button */}
             <Button
               type="submit"
               disabled={isCharging || amountToman < MIN_AMOUNT_TOMAN}
@@ -278,7 +266,6 @@ export function WalletClient() {
         </motion.div>
       </div>
 
-      {/* ══════════ Transactions History ══════════ */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
@@ -313,7 +300,6 @@ export function WalletClient() {
               const isCharge = tx.type === "CHARGE";
               const isRefund = tx.type === "REFUND";
               const isIncoming = isCharge || isRefund;
-              // 🎯 مبالغ تراکنش‌ها هم به ریال است، پس ÷ 10
               const amountToman = tx.amount / 10;
 
               return (
@@ -400,7 +386,6 @@ export function WalletClient() {
           </div>
         )}
 
-        {/* Pagination */}
         <DashboardPagination
           currentPage={page}
           totalPages={totalPages}

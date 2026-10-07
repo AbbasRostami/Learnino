@@ -165,7 +165,7 @@ export function CoursePriceCard({ course, slug }: CoursePriceCardProps) {
           ) : (
             <Button
               size="lg"
-              data-testid="add-to-cart-btn" // 👈 این خط اضافه شد
+              data-testid="add-to-cart-btn"
               onClick={handleAddToCart}
               disabled={isAdding}
               className="w-full rounded-2xl h-12 gap-2 cursor-pointer shadow-primary/20 shadow-lg hover:shadow-xl transition-all"

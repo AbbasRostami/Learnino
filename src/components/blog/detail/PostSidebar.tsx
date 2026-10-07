@@ -1,6 +1,6 @@
 "use client";
 
-import { stripHtml } from "@/components/shared/SafeHtml"; // ✅ اضافه شد
+import { stripHtml } from "@/components/shared/SafeHtml";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "@/i18n/routing";
 import { usePosts } from "@/services";

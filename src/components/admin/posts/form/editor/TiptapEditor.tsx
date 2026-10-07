@@ -207,7 +207,6 @@ export function TiptapEditor({
   const t = useTranslations("admin.posts.editor");
   const locale = useLocale();
 
-  // 🎯 جلوگیری از SSR اجرای استفاده از TipTap در سرور
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {

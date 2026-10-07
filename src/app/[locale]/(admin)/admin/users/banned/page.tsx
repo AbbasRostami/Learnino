@@ -1,6 +1,8 @@
+import { AdminTableSkeleton } from "@/components/admin/shared";
 import { AdminBannedUsersClient } from "@/components/admin/users/banned/AdminBannedUsersClient";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 
 export async function generateMetadata({
   params,
@@ -27,5 +29,9 @@ export default async function AdminBannedUsersPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <AdminBannedUsersClient />;
+  return (
+    <Suspense fallback={<AdminTableSkeleton columnCount={8} rowCount={8} />}>
+      <AdminBannedUsersClient />
+    </Suspense>
+  );
 }

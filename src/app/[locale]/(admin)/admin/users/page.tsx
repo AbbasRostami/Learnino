@@ -1,4 +1,4 @@
-import { AdminTableSkeleton } from "@/components/admin/shared/AdminTableSkeleton"; // 🎯 مطمئن شوید مسیر ایمپورت اسکلتون شما صحیح است
+import { AdminTableSkeleton } from "@/components/admin/shared/AdminTableSkeleton";
 import { AdminUsersClient } from "@/components/admin/users/list/AdminUsersClient";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";

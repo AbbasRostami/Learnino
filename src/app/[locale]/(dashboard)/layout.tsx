@@ -1,13 +1,13 @@
 import { DashboardLayoutClient } from "@/components/dashboard/DashboardLayoutClient";
-import type { Locale } from "@/lib/seo";
-import { PRIVATE_ROBOTS } from "@/lib/seo";
+import { Locale, PRIVATE_ROBOTS } from "@/lib/seo";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
   const isFa = locale === "fa";
@@ -23,10 +23,17 @@ export default async function DashboardLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
+  const resolvedParams = await params;
+  const locale = resolvedParams.locale as Locale;
   setRequestLocale(locale);
 
-  return <DashboardLayoutClient>{children}</DashboardLayoutClient>;
+  return (
+    <Suspense
+      fallback={<div className="min-h-screen bg-background opacity-50" />}
+    >
+      <DashboardLayoutClient>{children}</DashboardLayoutClient>
+    </Suspense>
+  );
 }

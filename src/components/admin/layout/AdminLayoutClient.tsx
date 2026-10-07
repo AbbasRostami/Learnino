@@ -1,10 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useAdminSidebar } from "@/store/AdminSidebarContext";
 import { AdminBreadcrumb } from "./AdminBreadcrumb";
 import { AdminHeader } from "./AdminHeader";
 import { AdminSidebar } from "./AdminSidebar";
+import { useAdminSidebarStore } from "@/store/AdminSidebarContext";
 
 interface AdminLayoutClientProps {
   children: React.ReactNode;
@@ -12,7 +12,7 @@ interface AdminLayoutClientProps {
 
 export function AdminLayoutClient({ children }: AdminLayoutClientProps) {
   const { isExpanded, isHovered, isMobileOpen, closeMobileSidebar } =
-    useAdminSidebar();
+    useAdminSidebarStore();
 
   const sidebarWidthClass =
     isExpanded || isHovered ? "lg:ms-[280px]" : "lg:ms-[88px]";

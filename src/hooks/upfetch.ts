@@ -2,10 +2,11 @@ import { up } from "up-fetch";
 import { useAuthStore } from "../store/authStore";
 
 const isServer = typeof window === "undefined";
+const RAW_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "https://course-shop-api.onrender.com";
 
-const RAW_BASE_URL = process.env.API_BASE_URL!;
-
-const CLEAN_BASE_URL = `${RAW_BASE_URL}/api`;
+const CLEAN_BASE_URL = `${RAW_BASE_URL.replace(/\/$/, "")}/api`;
 
 const API_BASE_URL = isServer
   ? CLEAN_BASE_URL

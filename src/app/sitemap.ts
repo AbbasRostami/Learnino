@@ -1,5 +1,5 @@
 import { api } from "@/hooks/upfetch";
-import { SEO_CONFIG } from "@/lib/seo";
+import { SEO_CONFIG } from "@/lib/seo/config";
 import type { GetCoursesResponse } from "@/types/course/course.types";
 import type { GetPostsResponse } from "@/types/post/post.types";
 import type { GetTeachersResponse } from "@/types/teacher/teacher.types";
@@ -51,27 +51,39 @@ function createLocalizedEntry(
 }
 
 async function fetchAllCourses() {
-  "use cache";
-  const res = await api<GetCoursesResponse>("/courses", {
-    params: { limit: 1000 },
-  });
-  return res?.data?.items ?? [];
+  try {
+    const res = await api<GetCoursesResponse>("/courses", {
+      params: { limit: 1000 },
+    });
+    return res?.data?.items ?? [];
+  } catch (error) {
+    console.error("[Sitemap API] fetchAllCourses failed:", error);
+    return [];
+  }
 }
 
 async function fetchAllPosts() {
-  "use cache";
-  const res = await api<GetPostsResponse>("/posts", {
-    params: { limit: 1000 },
-  });
-  return res?.data?.items ?? [];
+  try {
+    const res = await api<GetPostsResponse>("/posts", {
+      params: { limit: 1000 },
+    });
+    return res?.data?.items ?? [];
+  } catch (error) {
+    console.error("[Sitemap API] fetchAllPosts failed:", error);
+    return [];
+  }
 }
 
 async function fetchAllTeachers() {
-  "use cache";
-  const res = await api<GetTeachersResponse>("/teachers", {
-    params: { limit: 100 },
-  });
-  return res?.data?.items ?? [];
+  try {
+    const res = await api<GetTeachersResponse>("/teachers", {
+      params: { limit: 100 },
+    });
+    return res?.data?.items ?? [];
+  } catch (error) {
+    console.error("[Sitemap API] fetchAllTeachers failed:", error);
+    return [];
+  }
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -87,46 +99,46 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let courseRoutes: MetadataRoute.Sitemap = [];
   try {
     const courses = await fetchAllCourses();
-    courseRoutes = courses?.flatMap((course) =>
+    courseRoutes = courses.flatMap((course) =>
       createLocalizedEntry(
-        `/courses/${encodeURIComponent(course?.slug)}`,
-        new Date(course?.updatedAt || course?.createdAt),
+        `/courses/${encodeURIComponent(course.slug)}`,
+        new Date(course.updatedAt || course.createdAt),
         "weekly",
         0.9,
       ),
     );
   } catch (error) {
-    console.error("[Sitemap] Failed to fetch courses:", error);
+    console.error("[Sitemap Generator] Processing courses failed:", error);
   }
 
   let postRoutes: MetadataRoute.Sitemap = [];
   try {
     const posts = await fetchAllPosts();
-    postRoutes = posts?.flatMap((post) =>
+    postRoutes = posts.flatMap((post) =>
       createLocalizedEntry(
-        `/blog/${encodeURIComponent(post?.slug)}`,
-        new Date(post?.updatedAt || post?.createdAt),
+        `/blog/${encodeURIComponent(post.slug)}`,
+        new Date(post.updatedAt || post.createdAt),
         "weekly",
         0.8,
       ),
     );
   } catch (error) {
-    console.error("[Sitemap] Failed to fetch posts:", error);
+    console.error("[Sitemap Generator] Processing posts failed:", error);
   }
 
   let teacherRoutes: MetadataRoute.Sitemap = [];
   try {
     const teachers = await fetchAllTeachers();
-    teacherRoutes = teachers?.flatMap((teacher) =>
+    teacherRoutes = teachers.flatMap((teacher) =>
       createLocalizedEntry(
-        `/teachers/${encodeURIComponent(teacher?.slug)}`,
-        new Date(teacher?.updatedAt || teacher?.createdAt),
+        `/teachers/${encodeURIComponent(teacher.slug)}`,
+        new Date(teacher.updatedAt || teacher.createdAt),
         "monthly",
         0.7,
       ),
     );
   } catch (error) {
-    console.error("[Sitemap] Failed to fetch teachers:", error);
+    console.error("[Sitemap Generator] Processing teachers failed:", error);
   }
 
   return [...staticRoutes, ...courseRoutes, ...postRoutes, ...teacherRoutes];

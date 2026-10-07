@@ -104,17 +104,10 @@ export type UpdateCoursePayload = {
   image?: File | null;
 };
 
-/**
- * Payload تغییر وضعیت انتشار
- */
 export type ToggleCoursePublishPayload = {
   id: string;
   published: boolean;
 };
-
-// ═══════════════════════════════════════════════════
-// 6. API Response Types
-// ═══════════════════════════════════════════════════
 
 export type GetCoursesResponse = ApiSuccessResponse<{
   items: Course[];

@@ -1,6 +1,8 @@
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import type { Metadata } from "next";
+import { AdminTableSkeleton } from "@/components/admin/shared";
 import { AdminUserDetailClient } from "@/components/admin/users/detail/AdminUserDetailClient";
+import type { Metadata } from "next";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 
 export async function generateMetadata({
   params,
@@ -24,5 +26,9 @@ export default async function AdminUserDetailPage({
   const { locale, id } = await params;
   setRequestLocale(locale);
 
-  return <AdminUserDetailClient userId={id} />;
+  return (
+    <Suspense fallback={<AdminTableSkeleton columnCount={8} rowCount={8} />}>
+      <AdminUserDetailClient userId={id} />
+    </Suspense>
+  );
 }

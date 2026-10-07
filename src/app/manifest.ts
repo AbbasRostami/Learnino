@@ -1,30 +1,16 @@
-import { SEO_CONFIG, type Locale } from "@/lib/seo";
+import { SEO_CONFIG } from "@/lib/seo";
 import type { MetadataRoute } from "next";
 
-interface Props {
-  params: Promise<{ locale: Locale }>;
-}
-
-export default async function manifest(
-  props: Props,
-): Promise<MetadataRoute.Manifest> {
-  const { locale } = await props.params;
-  const isFa = locale === "fa";
-
+export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: isFa ? "لرنینو | یادگیری بدون مرز" : "Learnino | Borderless Learning",
-
-    short_name: isFa ? "لرنینو" : "Learnino",
-
-    description: SEO_CONFIG.description[locale],
-
-    start_url: `/${locale}`,
-
+    name: "لرنینو | Learnino",
+    short_name: "Learnino",
+    description: SEO_CONFIG.description.fa,
+    start_url: "/",
     display: "standalone",
     orientation: "portrait",
     theme_color: "#4f46e5",
     background_color: "#0B1120",
-
     icons: [
       {
         src: "/web-app-manifest-192x192.png",

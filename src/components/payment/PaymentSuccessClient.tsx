@@ -41,7 +41,6 @@ export function PaymentSuccessClient({
   const prefersReducedMotion = useReducedMotion();
   const [showConfetti, setShowConfetti] = useState(false);
 
-  // 🎯 تشخیص نوع پرداخت (شارژ کیف پول vs خرید دوره)
   const isWalletCharge = !!newBalance && !orderId;
 
   useEffect(() => {

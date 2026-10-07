@@ -45,7 +45,6 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
     "ZARINPAL",
   );
 
-  // 🎯 هوک کیف‌پول فقط زمانی اجرا می‌شود که کاربر لاگین باشد
   const { data: walletData } = useWallet();
   const walletBalance = walletData?.data?.wallet?.balance ?? 0;
 
