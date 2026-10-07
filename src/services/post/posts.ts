@@ -10,28 +10,30 @@ async function fetchLatestPostsData(
   cacheLife("hours");
   cacheTag("posts", "latest-posts");
 
-  const res = await api<GetPostsResponse>("/posts", {
-    params: {
-      limit,
-      sortBy: "createdAt",
-      order: "desc",
-    },
-    headers: { "Accept-Language": locale },
-  });
+  try {
+    const res = await api<GetPostsResponse>("/posts", {
+      params: {
+        limit,
+        sortBy: "createdAt",
+        order: "desc",
+      },
+      headers: { "Accept-Language": locale },
+    });
 
-  return res.data?.items ?? [];
+    return res.data?.items ?? [];
+  } catch (error) {
+    console.warn(
+      `[Posts Cache Notice for locale: ${locale}]: Backend unavailable or timed out during build.`,
+    );
+    return [];
+  }
 }
 
 export async function getLatestPostsServer(
   locale: string = "fa",
   limit: number = 3,
 ): Promise<Post[]> {
-  try {
-    return await fetchLatestPostsData(locale, limit);
-  } catch (error) {
-    console.error(`[Posts Server Fetch Error for locale: ${locale}]`, error);
-    return [];
-  }
+  return await fetchLatestPostsData(locale, limit);
 }
 
 async function fetchPostBySlugData(
@@ -44,24 +46,26 @@ async function fetchPostBySlugData(
   const decodedSlug = decodeURIComponent(rawSlug);
   cacheTag("posts", `post-${decodedSlug}`);
 
-  const res = await api<GetPostBySlugResponse>(
-    `/posts/${encodeURIComponent(decodedSlug)}`,
-    {
-      headers: { "Accept-Language": locale },
-    },
-  );
+  try {
+    const res = await api<GetPostBySlugResponse>(
+      `/posts/${encodeURIComponent(decodedSlug)}`,
+      {
+        headers: { "Accept-Language": locale },
+      },
+    );
 
-  return res.data?.post ?? null;
+    return res.data?.post ?? null;
+  } catch (error) {
+    console.warn(
+      `[Post Detail Cache Notice for slug: ${rawSlug}]: Backend unavailable.`,
+    );
+    return null;
+  }
 }
 
 export async function getPostBySlugServer(
   locale: string = "fa",
   slug: string,
 ): Promise<Post | null> {
-  try {
-    return await fetchPostBySlugData(locale, slug);
-  } catch (error) {
-    console.error(`[Post Detail Server Fetch Error for slug: ${slug}]`, error);
-    return null;
-  }
+  return await fetchPostBySlugData(locale, slug);
 }

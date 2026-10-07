@@ -6,6 +6,19 @@ import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 
+interface BlogSectionProps {
+  paramsPromise: Promise<{ locale: Locale }>;
+}
+
+async function BlogListSection({ paramsPromise }: BlogSectionProps) {
+  const { locale } = await paramsPromise;
+  setRequestLocale(locale);
+
+  const initialPosts = await getLatestPostsServer(locale, 9);
+
+  return <BlogPageClient initialPosts={initialPosts} locale={locale} />;
+}
+
 export async function generateMetadata({
   params,
   searchParams,
@@ -17,8 +30,7 @@ export async function generateMetadata({
   const sp = await searchParams;
   const isFa = locale === "fa";
 
-  const currentPage = sp.page ? parseInt(sp.page, 10) : 1;
-
+  const currentPage = sp?.page ? parseInt(sp.page, 10) : 1;
   const baseTitle = isFa ? "بلاگ آموزشی" : "Educational Blog";
 
   const title =
@@ -57,7 +69,6 @@ export async function generateMetadata({
       description,
     },
     alternates: getAlternates("/blog", locale),
-
     robots:
       currentPage > 1
         ? { index: false, follow: true }
@@ -70,14 +81,11 @@ export default async function BlogPage({
 }: {
   params: Promise<{ locale: Locale }>;
 }) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-
-  const initialPosts = await getLatestPostsServer(locale, 9);
-
   return (
-    <Suspense fallback={<PostsGridSkeleton count={6} />}>
-      <BlogPageClient initialPosts={initialPosts} locale={locale} />
-    </Suspense>
+    <main className="flex-1">
+      <Suspense fallback={<PostsGridSkeleton count={6} />}>
+        <BlogListSection paramsPromise={params} />
+      </Suspense>
+    </main>
   );
 }
