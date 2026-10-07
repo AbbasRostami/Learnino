@@ -1,91 +1,44 @@
 "use client";
 
-import { usePathname } from "@/i18n/routing";
-import { createContext, useContext, useEffect, useState } from "react";
+import { create } from "zustand";
 
-type AdminSidebarContextType = {
+type AdminSidebarState = {
   isExpanded: boolean;
   isHovered: boolean;
   isMobileOpen: boolean;
+  isMobile: boolean;
   activeItem: string | null;
+  setIsHovered: (isHovered: boolean) => void;
+  setStates: (
+    states: Partial<
+      Omit<
+        AdminSidebarState,
+        | "setIsHovered"
+        | "toggleSidebar"
+        | "toggleMobileSidebar"
+        | "closeMobileSidebar"
+        | "setStates"
+      >
+    >,
+  ) => void;
   toggleSidebar: () => void;
   toggleMobileSidebar: () => void;
-  setIsHovered: (isHovered: boolean) => void;
   closeMobileSidebar: () => void;
 };
 
-const AdminSidebarContext = createContext<AdminSidebarContextType | undefined>(
-  undefined,
-);
+export const useAdminSidebarStore = create<AdminSidebarState>((set) => ({
+  isExpanded: true,
+  isHovered: false,
+  isMobileOpen: false,
+  isMobile: false,
+  activeItem: null,
 
-export const useAdminSidebar = () => {
-  const context = useContext(AdminSidebarContext);
-  if (!context) {
-    throw new Error(
-      "useAdminSidebar must be used within an AdminSidebarProvider",
-    );
-  }
-  return context;
-};
+  setIsHovered: (isHovered) => set({ isHovered }),
+  setStates: (states) => set((state) => ({ ...state, ...states })),
 
-export const AdminSidebarProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const [isExpanded, setIsExpanded] = useState(true);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  const pathname = usePathname();
-
-  useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < 1024;
-      setIsMobile(mobile);
-      if (!mobile) {
-        setIsMobileOpen(false);
-      }
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    setIsMobileOpen(false);
-  }, [pathname]);
-
-  const toggleSidebar = () => {
-    setIsExpanded((prev) => !prev);
-    setIsHovered(false);
-  };
-
-  const toggleMobileSidebar = () => {
-    setIsMobileOpen((prev) => !prev);
-  };
-
-  const closeMobileSidebar = () => {
-    setIsMobileOpen(false);
-  };
-
-  const activeItem =
-    pathname === "/admin" ? "overview" : pathname.split("/")[2] || null;
-
-  return (
-    <AdminSidebarContext.Provider
-      value={{
-        isExpanded: isMobile ? false : isExpanded,
-        isMobileOpen,
-        isHovered: isExpanded ? isHovered : false,
-        activeItem,
-        toggleSidebar,
-        toggleMobileSidebar,
-        setIsHovered,
-        closeMobileSidebar,
-      }}
-    >
-      {children}
-    </AdminSidebarContext.Provider>
-  );
-};
+  toggleSidebar: () =>
+    set((state) => ({ isExpanded: !state.isExpanded, isHovered: false })),
+  toggleMobileSidebar: () =>
+    set((state) => ({ isMobileOpen: !state.isMobileOpen })),
+  closeMobileSidebar: () => set({ isMobileOpen: false }),
+}));
