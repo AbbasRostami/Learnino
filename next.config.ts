@@ -8,7 +8,7 @@ const BACKEND_URL =
   "https://course-shop-api.onrender.com";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  ...(process.env.DOCKER_BUILD ? { output: "standalone" } : {}),
   reactCompiler: true,
   cacheComponents: true,
   images: {
