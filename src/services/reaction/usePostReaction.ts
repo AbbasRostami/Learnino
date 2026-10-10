@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
-export const usePostReaction = (slug?: string) => {
+export const usePostReaction = () => {
   const t = useTranslations("reaction");
   const queryClient = useQueryClient();
 
@@ -22,10 +22,7 @@ export const usePostReaction = (slug?: string) => {
     onSuccess: (response) => {
       toast.success(response.data.message || t("reactionUpdated"));
 
-      if (slug) {
-        queryClient.invalidateQueries({ queryKey: ["posts", "detail", slug] });
-      }
-      queryClient.invalidateQueries({ queryKey: ["posts", "public"] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
       queryClient.invalidateQueries({
         queryKey: ["user", "profile", "overview"],
       });

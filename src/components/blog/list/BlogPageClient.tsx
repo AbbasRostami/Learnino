@@ -1,33 +1,46 @@
 "use client";
 
+import { AppBreadcrumb } from "@/components/shared/AppBreadcrumb";
 import { PostsGridSkeleton } from "@/components/skeleton/PostsGridSkeleton";
 import { Button } from "@/components/ui/button";
+import { useDebouncedParam } from "@/hooks/useDebouncedParam";
 import { usePosts } from "@/services";
 import type { Post } from "@/types";
-import { FileText, Loader2, Sparkles } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { parseAsInteger, parseAsString, useQueryStates } from "nuqs";
 import { useState } from "react";
 import { BlogFilters } from "./BlogFilters";
 import { BlogPostCard } from "./BlogPostCard";
-import { AppBreadcrumb } from "@/components/shared/AppBreadcrumb";
+import { EmptyBlogState } from "./EmptyBlogState";
 
 interface BlogPageClientProps {
   initialPosts?: Post[];
   locale: string;
 }
 
-export function BlogPageClient({ initialPosts = [] }: BlogPageClientProps) {
+export function BlogPageClient({
+  initialPosts = [],
+  locale,
+}: BlogPageClientProps) {
   const t = useTranslations("blog");
   const [allPosts, setAllPosts] = useState<Post[]>(initialPosts);
   const [hasLoadedMore, setHasLoadedMore] = useState(false);
 
-  const [params] = useQueryStates({
-    page: parseAsInteger.withDefault(1),
-    search: parseAsString.withDefault(""),
-    category: parseAsString.withDefault(""),
-    sortBy: parseAsString.withDefault("createdAt"),
-  });
+  const [params, setParams] = useQueryStates(
+    {
+      page: parseAsInteger.withDefault(1),
+      search: parseAsString.withDefault(""),
+      category: parseAsString.withDefault(""),
+      sortBy: parseAsString.withDefault("createdAt"),
+    },
+    { shallow: true },
+  );
+
+  const [searchTerm, setSearchTerm] = useDebouncedParam(
+    params.search,
+    (search) => setParams({ search, page: 1 }),
+  );
 
   const { data, isLoading, isFetching } = usePosts({
     page: hasLoadedMore ? undefined : params.page,
@@ -40,9 +53,10 @@ export function BlogPageClient({ initialPosts = [] }: BlogPageClientProps) {
 
   const posts = hasLoadedMore
     ? allPosts
-    : initialPosts.length > 0
+    : initialPosts.length > 0 && !params.search && !params.category
       ? initialPosts
       : (data?.data?.items ?? []);
+
   const pagination = data?.data?.pagination;
   const totalPages = pagination
     ? Math.ceil(pagination.total / pagination.limit)
@@ -68,39 +82,19 @@ export function BlogPageClient({ initialPosts = [] }: BlogPageClientProps) {
             <span className="relative z-10 bg-linear-to-r from-primary via-primary to-brand-accent bg-clip-text text-transparent">
               {t("title")}
             </span>
-            <svg
-              className="absolute -bottom-2 inset-s-0 w-full text-brand-accent/40"
-              viewBox="0 0 300 12"
-              fill="none"
-              aria-hidden="true"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M2 8 Q75 2 150 8 T298 6"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-            </svg>
           </span>
         </h1>
-
-        <p className="text-muted-foreground text-base leading-relaxed">
+        <p className="text-muted-foreground text-sm sm:text-base font-medium leading-relaxed max-w-xl">
           {t("description")}
         </p>
       </div>
 
-      <BlogFilters />
+      <BlogFilters searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
-      {isLoading && posts?.length === 0 ? (
+      {isLoading ? (
         <PostsGridSkeleton count={6} showHeader={false} />
       ) : posts?.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 text-center gap-4">
-          <FileText className="h-16 w-16 text-muted-foreground/30" />
-          <p className="text-lg font-bold text-muted-foreground">
-            {t("noResults")}
-          </p>
-        </div>
+        <EmptyBlogState />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts?.map((post, index) => (
@@ -109,6 +103,7 @@ export function BlogPageClient({ initialPosts = [] }: BlogPageClientProps) {
               post={post}
               priority={index < 3}
               index={index}
+              locale={locale}
             />
           ))}
         </div>
@@ -121,7 +116,7 @@ export function BlogPageClient({ initialPosts = [] }: BlogPageClientProps) {
             size="lg"
             onClick={handleLoadMore}
             disabled={isFetching}
-            className="rounded-full px-8 cursor-pointer gap-2"
+            className="rounded-full px-8 cursor-pointer gap-2 shadow-sm font-bold"
           >
             {isFetching ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
             <span>{t("loadMoreComments")}</span>

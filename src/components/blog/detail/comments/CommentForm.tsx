@@ -2,8 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { getCreateCommentSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Send } from "lucide-react";
-import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 interface CommentFormProps {
   onSubmit: (content: string) => void;
@@ -16,46 +20,74 @@ interface CommentFormProps {
 export function CommentForm({
   onSubmit,
   isSubmitting,
-  placeholder = "نظر خود را بنویسید...",
-  submitLabel = "ارسال",
+  placeholder,
+  submitLabel,
   autoFocus = false,
 }: CommentFormProps) {
-  const [content, setContent] = useState("");
+  const t = useTranslations("comment");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!content.trim() || content.trim().length < 2) return;
-    onSubmit(content.trim());
-    setContent("");
+  const schema = getCreateCommentSchema(t);
+  const formSchema = z.object({ content: schema.shape.content });
+
+  type FormValues = z.infer<typeof formSchema>;
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { content: "" },
+  });
+
+  const contentValue = watch("content") || "";
+
+  const handleFormSubmit = (data: FormValues) => {
+    onSubmit(data.content);
+    reset();
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-      <Textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder={placeholder}
-        className="min-h-24 rounded-2xl resize-none"
-        disabled={isSubmitting}
-        autoFocus={autoFocus}
-        maxLength={1000}
-      />
+    <form
+      onSubmit={handleSubmit(handleFormSubmit)}
+      className="flex flex-col gap-3"
+    >
+      <div className="relative">
+        <Textarea
+          {...register("content")}
+          placeholder={placeholder || t("validation.contentMin")}
+          className="min-h-28 rounded-2xl resize-none p-4 bg-background/50 focus:bg-background transition-colors"
+          disabled={isSubmitting}
+          autoFocus={autoFocus}
+          maxLength={1000}
+        />
+        {errors?.content && (
+          <p className="text-[10px] text-rose-500 font-bold mt-1 px-1">
+            {errors?.content?.message}
+          </p>
+        )}
+      </div>
+
       <div className="flex items-center justify-between">
-        <span className="text-xs text-muted-foreground">
-          {content.length}/1000
+        <span className="text-[10px] font-mono text-muted-foreground/70">
+          {contentValue?.length}/1000
         </span>
         <Button
           type="submit"
-          disabled={isSubmitting || content.trim().length < 2}
-          className="rounded-full cursor-pointer gap-2"
+          disabled={
+            isSubmitting || !!errors?.content || contentValue.trim().length < 2
+          }
+          className="rounded-full cursor-pointer px-6 gap-2 shadow-md hover:shadow-lg transition-all bg-primary text-primary-foreground"
           size="sm"
         >
           {isSubmitting ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
-            <Send className="h-4 w-4" />
+            <Send className="h-4 w-4 rtl:-scale-x-100" />
           )}
-          <span>{submitLabel}</span>
+          <span className="font-bold">{submitLabel || "ارسال"}</span>
         </Button>
       </div>
     </form>

@@ -39,7 +39,7 @@ export function PostShareButton({ title, slug }: PostShareButtonProps) {
           ? "bg-emerald-100 border-emerald-300/60 text-emerald-600 dark:bg-emerald-500/15 dark:border-emerald-500/30 dark:text-emerald-400"
           : "bg-muted/50 dark:bg-muted/30 border-border/40 text-muted-foreground hover:bg-background dark:hover:bg-card hover:text-primary hover:border-primary/30",
       )}
-      aria-label="اشتراک‌گذاری"
+      aria-label="اشتراک‌ گذاری"
     >
       {copied ? <Check className="h-4 w-4" /> : <Share2 className="h-4 w-4" />}
     </button>

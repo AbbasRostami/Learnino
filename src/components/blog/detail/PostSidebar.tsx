@@ -1,6 +1,5 @@
 "use client";
 
-import { stripHtml } from "@/components/shared/SafeHtml";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "@/i18n/routing";
 import { usePosts } from "@/services";
@@ -55,30 +54,27 @@ export function PostSidebar({ categorySlug }: PostSidebarProps) {
             <Link
               key={post?.id}
               href={`/blog/${post?.slug}`}
-              className="group flex gap-3 p-2.5 rounded-2xl hover:bg-muted/60 dark:hover:bg-muted/30 transition-colors border border-transparent hover:border-border/40"
+              className="group flex gap-3 p-3 rounded-2xl bg-card border border-border/50 shadow-xs hover:shadow-md hover:border-primary/40 transition-all"
             >
-              <div className="relative h-16 w-20 shrink-0 overflow-hidden rounded-xl border border-border/40 bg-muted/50 shadow-xs">
+              <div className="relative h-16 w-20 shrink-0 overflow-hidden rounded-xl bg-muted">
                 {post?.imageUrl ? (
                   <Image
                     src={post?.imageUrl}
                     alt={post?.title}
                     fill
                     sizes="80px"
-                    className="object-cover"
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 ) : (
-                  <div className="flex h-full items-center justify-center">
-                    <FileText className="h-4 w-4 text-muted-foreground/40" />
+                  <div className="flex h-full items-center justify-center bg-primary/5">
+                    <FileText className="h-6 w-6 text-primary/40" />
                   </div>
                 )}
               </div>
-              <div className="flex-1 min-w-0">
-                <h4 className="text-xs font-bold text-foreground line-clamp-2 group-hover:text-primary transition-colors leading-snug">
+              <div className="flex-1 min-w-0 flex flex-col justify-center">
+                <h4 className="text-sm font-bold text-foreground line-clamp-2 group-hover:text-primary transition-colors leading-snug">
                   {post?.title}
                 </h4>
-                <p className="text-[10px] text-muted-foreground mt-1 line-clamp-1">
-                  {stripHtml(post?.content, 60)}
-                </p>
               </div>
             </Link>
           ))}

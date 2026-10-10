@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { usePost } from "@/services";
 import type { Post } from "@/types";
 import { formatRelativeTime } from "@/utils/formatters";
-import { Calendar, Tag } from "lucide-react";
+import { Calendar, FileText, Tag } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { CommentsSection } from "./comments/CommentsSection";
@@ -23,7 +23,6 @@ interface PostDetailClientProps {
 }
 
 export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
-  const t = useTranslations("blog");
   const tNav = useTranslations("nav");
   const locale = useLocale();
 
@@ -36,8 +35,8 @@ export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
     ...(post?.category
       ? [
           {
-            label: post.category.name,
-            href: `/blog?category=${post.category.slug}`,
+            label: post?.category?.name,
+            href: `/blog?category=${post?.category?.slug}`,
           },
         ]
       : []),
@@ -51,6 +50,7 @@ export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
       itemType="https://schema.org/BlogPosting"
     >
       <AppBreadcrumb items={breadcrumbItems} className="mb-6" />
+
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-12">
         <div className="min-w-0">
           <header className="mb-8">
@@ -68,13 +68,13 @@ export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
             )}
 
             <h1
-              className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight leading-tight mb-4"
+              className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight leading-tight mb-4 wrap-break-word"
               itemProp="headline"
             >
               {post?.title}
             </h1>
 
-            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground border-b border-border/40 pb-6 mb-6">
               <div className="flex items-center gap-1.5">
                 <Calendar className="h-4 w-4" aria-hidden="true" />
                 <time dateTime={post?.createdAt} itemProp="datePublished">
@@ -97,8 +97,8 @@ export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
             </div>
           </header>
 
-          {post?.imageUrl && (
-            <div className="relative aspect-video w-full overflow-hidden rounded-3xl mb-10 border border-border/50 shadow-lg">
+          <div className="relative aspect-video w-full overflow-hidden rounded-3xl mb-10 border border-border/50 shadow-lg bg-muted">
+            {post?.imageUrl ? (
               <Image
                 src={post?.imageUrl}
                 alt={post?.title}
@@ -109,22 +109,29 @@ export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
                 className="object-cover"
                 itemProp="image"
               />
-            </div>
-          )}
+            ) : (
+              <div className="flex flex-col h-full w-full items-center justify-center bg-linear-to-br from-primary/10 via-brand-accent/5 to-transparent">
+                <FileText className="h-20 w-20 text-muted-foreground/30 mb-4" />
+                <span className="text-xl font-black text-muted-foreground/40">
+                  {post?.title}
+                </span>
+              </div>
+            )}
+          </div>
 
           <SafeHtml
             html={post?.content}
             itemProp="articleBody"
-            className="prose prose-lg dark:prose-invert max-w-none mb-12
-              prose-headings:font-black prose-headings:tracking-tight
-              prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-              prose-img:rounded-2xl prose-img:shadow-lg
-              prose-blockquote:border-primary/40
-              prose-blockquote:bg-primary/5 dark:prose-blockquote:bg-primary/10
-              prose-blockquote:rounded-e-2xl prose-blockquote:py-1
-              prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5
-              prose-code:rounded-md prose-code:text-sm
-              prose-pre:rounded-2xl prose-pre:shadow-lg"
+            className={cn(
+              "prose prose-lg dark:prose-invert max-w-none mb-12 wrap-break-word overflow-hidden",
+              "prose-headings:font-black prose-headings:tracking-tight",
+              "prose-a:text-primary prose-a:no-underline hover:prose-a:underline",
+              "prose-img:rounded-2xl prose-img:shadow-lg",
+              "prose-blockquote:border-primary/40 prose-blockquote:bg-primary/5 dark:prose-blockquote:bg-primary/10",
+              "prose-blockquote:rounded-e-2xl prose-blockquote:py-1",
+              "prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm",
+              "prose-pre:rounded-2xl prose-pre:shadow-lg",
+            )}
           />
 
           <hr className="border-dashed border-border/60 my-12" />
