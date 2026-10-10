@@ -21,25 +21,13 @@ async function BlogListSection({ paramsPromise }: BlogSectionProps) {
 
 export async function generateMetadata({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: Locale }>;
-  searchParams: Promise<{ page?: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const sp = await searchParams;
   const isFa = locale === "fa";
 
-  const currentPage = sp?.page ? parseInt(sp.page, 10) : 1;
-  const baseTitle = isFa ? "بلاگ آموزشی" : "Educational Blog";
-
-  const title =
-    currentPage > 1
-      ? isFa
-        ? `${baseTitle} - صفحه ${currentPage}`
-        : `${baseTitle} - Page ${currentPage}`
-      : baseTitle;
-
+  const title = isFa ? "بلاگ آموزشی" : "Educational Blog";
   const description = isFa
     ? "آخرین مقالات آموزشی لرنینو در زمینه برنامه‌نویسی، توسعه وب و فناوری."
     : "Latest educational articles on programming, web development, and technology.";
@@ -69,10 +57,6 @@ export async function generateMetadata({
       description,
     },
     alternates: getAlternates("/blog", locale),
-    robots:
-      currentPage > 1
-        ? { index: false, follow: true }
-        : { index: true, follow: true },
   };
 }
 
@@ -83,7 +67,7 @@ export default async function BlogPage({
 }) {
   return (
     <main className="flex-1">
-      <Suspense fallback={<PostsGridSkeleton count={6} />}>
+      <Suspense fallback={<PostsGridSkeleton count={9} showHeader={false} />}>
         <BlogListSection paramsPromise={params} />
       </Suspense>
     </main>

@@ -4,10 +4,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ═══════════════════════════════════════════════════════════
-   ۱. THEME TOKENS MAPPING (مطابق داکیومنت رسمی shadcn)
-   ═══════════════════════════════════════════════════════════ */
 @theme inline {
+  --font-dana: var(--font-dana), sans-serif;
+  --font-inter: var(--font-inter), sans-serif;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -44,7 +44,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Radius Scale (دقیقاً فرمول داکیومنت shadcn) */
+  /* Radius Scale */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -53,15 +53,11 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* 🌸 اضافه کردن توکن‌های اختصاصی (با رعایت فرمت shadcn) */
   --color-brand-accent: var(--brand-accent);
   --color-brand-accent-foreground: var(--brand-accent-foreground);
   --color-brand-cyan: var(--brand-cyan);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   ۲. LIGHT MODE (بر پایه Slate + Indigo لرنینو)
-   ═══════════════════════════════════════════════════════════ */
 :root {
   --radius: 0.75rem;
 
@@ -75,7 +71,7 @@
   --popover: oklch(100% 0 0);
   --popover-foreground: oklch(20.8% 0.042 265.755);
 
-  /* Primary (دکمه‌های اصلی، برند و CTA) -> Indigo-600 */
+  /* Primary -> Indigo-600 */
   --primary: oklch(51.1% 0.262 276.966); /* indigo-600 */
   --primary-foreground: oklch(98.4% 0.003 247.858); /* slate-50 */
 
@@ -87,7 +83,7 @@
   --muted: oklch(96.8% 0.007 247.896); /* slate-100 */
   --muted-foreground: oklch(55.4% 0.046 257.417); /* slate-500 */
 
-  /* Accent (Hover ها و آیتم‌های انتخابی) -> Violet ملایم */
+  /* Accent -> Violet */
   --accent: oklch(96.9% 0.016 293.756); /* violet-50 */
   --accent-foreground: oklch(54.1% 0.281 293.009); /* violet-600 */
 
@@ -99,8 +95,8 @@
   --input: oklch(92.9% 0.013 255.508); /* slate-200 */
   --ring: oklch(58.5% 0.233 277.117); /* indigo-500 */
 
-  /* 🌸 Extra Custom Tokens (طیف‌های لوکوی لرنینو) */
-  --brand-accent: oklch(54.1% 0.281 293.009); /* violet-600 (لیلیوم) */
+  /* 🌸 Extra Custom Tokens */
+  --brand-accent: oklch(54.1% 0.281 293.009); /* violet-600  */
   --brand-accent-foreground: oklch(100% 0 0);
   --brand-cyan: oklch(74.6% 0.16 232.661); /* sky-400 */
 
@@ -122,23 +118,17 @@
   --sidebar-ring: oklch(58.5% 0.233 277.117);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   ۳. DARK MODE (سرمه‌ای تیره + Indigo/Violet درخشان)
-   ═══════════════════════════════════════════════════════════ */
 .dark {
-  /* App Surface -> سرمه‌ای عمیق لوگو لرنینو (#0B1120) */
   --background: oklch(15% 0.035 265);
   --foreground: oklch(96.8% 0.007 247.896); /* slate-100 */
 
-  /* Cards & Popovers */
   --card: oklch(20.8% 0.042 265.755); /* slate-900 */
   --card-foreground: oklch(96.8% 0.007 247.896); /* slate-100 */
   --popover: oklch(20.8% 0.042 265.755); /* slate-900 */
   --popover-foreground: oklch(96.8% 0.007 247.896);
 
-  /* Primary -> Indigo روشن‌تر در دارک مود */
   --primary: oklch(67.3% 0.182 276.935); /* indigo-400 */
-  --primary-foreground: oklch(15% 0.035 265); /* سرمه‌ای تیره */
+  --primary-foreground: oklch(15% 0.035 265);
 
   /* Secondary */
   --secondary: oklch(27.9% 0.041 260.031); /* slate-800 */
@@ -183,9 +173,6 @@
   --sidebar-ring: oklch(67.3% 0.182 276.935);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   ۴. BASE STYLES
-   ═══════════════════════════════════════════════════════════ */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -201,15 +188,16 @@
   --animate-float-delayed: float 7s ease-in-out 1.5s infinite;
 
   @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
   }
 }
 
-
-/* ✅ فقط اگر واقعاً نیاز داشتید، این‌ها را نگه دارید */
-
-/* اسکرول‌بار نامرئی */
 @utility no-scrollbar {
   &::-webkit-scrollbar {
     display: none;
@@ -218,7 +206,6 @@
   scrollbar-width: none;
 }
 
-/* اسکرول‌بار سفارشی با تم لرنینو */
 @utility custom-scrollbar {
   &::-webkit-scrollbar {
     @apply size-1.5;

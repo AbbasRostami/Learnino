@@ -1,5 +1,6 @@
 import { PostDetailClient } from "@/components/blog/detail";
 import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/seo";
+import { PostDetailSkeleton } from "@/components/skeleton";
 import {
   cleanMetaDescription,
   getAlternates,
@@ -41,21 +42,6 @@ async function PostDetailSection({ paramsPromise }: PostSectionProps) {
 
       <PostDetailClient slug={slug} initialPost={post} />
     </>
-  );
-}
-
-function PostDetailFallback() {
-  return (
-    <div className="container mx-auto px-4 py-12 animate-pulse">
-      <div className="h-8 w-3/4 rounded-xl bg-muted/60 mb-6" />
-      <div className="h-4 w-40 rounded-md bg-muted/40 mb-10" />
-      <div className="aspect-video w-full rounded-3xl bg-muted/60 mb-10" />
-      <div className="space-y-4">
-        <div className="h-4 w-full rounded-md bg-muted/40" />
-        <div className="h-4 w-11/12 rounded-md bg-muted/40" />
-        <div className="h-4 w-10/12 rounded-md bg-muted/40" />
-      </div>
-    </div>
   );
 }
 
@@ -121,7 +107,7 @@ export default async function PostDetailPage({
 }) {
   return (
     <main className="flex-1">
-      <Suspense fallback={<PostDetailFallback />}>
+      <Suspense fallback={<PostDetailSkeleton />}>
         <PostDetailSection paramsPromise={params} />
       </Suspense>
     </main>

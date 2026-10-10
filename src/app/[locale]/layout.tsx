@@ -15,6 +15,7 @@ import {
 import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
+import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
@@ -23,6 +24,13 @@ import { ReactNode } from "react";
 const danaFont = localFont({
   src: "./../../../public/fonts/Dana.ttf",
   variable: "--font-dana",
+  display: "swap",
+});
+
+const interFont = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 type Props = {
@@ -85,7 +93,7 @@ export async function generateMetadata({
       telephone: false,
     },
 
-    manifest: `/${locale}/manifest.webmanifest`,
+    manifest: "/manifest.webmanifest",
   };
 }
 
@@ -115,7 +123,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html
       lang={locale}
       dir={direction}
-      className={danaFont.variable}
+      className={`${danaFont.variable} ${interFont.variable}`}
       suppressHydrationWarning
     >
       <head>
