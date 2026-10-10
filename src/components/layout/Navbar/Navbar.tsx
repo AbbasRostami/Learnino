@@ -16,26 +16,28 @@ export function Navbar() {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-xl supports-backdrop-filter:bg-background/60 shadow-xs">
+    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-xl supports-backdrop-filter:bg-background/60 shadow-xs overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between gap-4">
-          <div className="flex items-center gap-6">
+        <div className="flex h-16 md:h-20 items-center justify-between gap-2 md:gap-4">
+          <div className="flex items-center gap-2 md:gap-4 lg:gap-6 shrink-0">
             <MobileNav />
-            <Logo />
+            <div className="hidden lg:flex">
+              <Logo />
+            </div>
             <DesktopNav />
           </div>
 
-          <div className="hidden md:flex flex-1 justify-center max-w-sm">
+          <div className="hidden md:flex flex-1 justify-center max-w-50 lg:max-w-sm shrink">
             <Suspense
               fallback={
-                <div className="h-10 w-full max-w-xs bg-muted/30 rounded-full animate-pulse" />
+                <div className="h-10 w-full bg-muted/30 rounded-full animate-pulse" />
               }
             >
               <SearchInput />
             </Suspense>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
             <LanguageToggle />
             <ThemeToggle />
             <CartButton />

@@ -55,7 +55,7 @@ export function SearchInput() {
     e.preventDefault();
     if (!q.trim()) return;
     setIsOpen(false);
-    router.push(`/search?q=${encodeURIComponent(q.trim())}`);
+    router.push(`/courses?search=${encodeURIComponent(q.trim())}`);
   };
 
   return (
@@ -88,9 +88,9 @@ export function SearchInput() {
       </form>
 
       {isOpen && q.trim().length >= 2 && (
-        <div className="absolute top-full left-0 right-0 mt-2 rounded-2xl border border-border/80 bg-popover/95 backdrop-blur-xl shadow-2xl p-3 z-50 animate-in fade-in-50 zoom-in-95 duration-200 max-h-[80vh] overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 mt-2 rounded-2xl border border-border/80 bg-popover/95 backdrop-blur-xl shadow-2xl p-3 z-50 animate-in fade-in-50 zoom-in-95 duration-200 max-h-[80vh] overflow-y-auto w-70 md:w-full">
           <Link
-            href={`/search?q=${encodeURIComponent(q.trim())}`}
+            href={`/courses?search=${encodeURIComponent(q.trim())}`}
             onClick={() => setIsOpen(false)}
             className="flex items-center justify-between p-2.5 rounded-xl hover:bg-accent text-sm font-semibold text-primary transition-colors group mb-2"
           >

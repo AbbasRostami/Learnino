@@ -1,11 +1,11 @@
 "use client";
 
 import { Link, usePathname } from "@/i18n/routing";
-import { Menu } from "lucide-react";
+import { LogIn, Menu } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
@@ -15,6 +15,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { useAuthStore } from "@/store/authStore";
 import { Logo } from "./Logo";
 
 const navLinks = [
@@ -22,7 +23,6 @@ const navLinks = [
   { key: "learningPaths", href: "/learning-paths" },
   { key: "blog", href: "/blog" },
   { key: "aboutUs", href: "/about" },
-  { key: "contact", href: "/contact" },
 ] as const;
 
 export function MobileNav() {
@@ -31,6 +31,7 @@ export function MobileNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [year, setYear] = useState<number | null>(null);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
   useEffect(() => {
     setYear(new Date().getFullYear());
@@ -56,7 +57,7 @@ export function MobileNav() {
         side={sheetSide}
         className="w-80 p-0 flex flex-col [&>button]:hidden"
       >
-        <SheetHeader className="p-4 border-b">
+        <SheetHeader className="w-full flex justify-center p-4 border-b">
           <SheetTitle>
             <Logo />
           </SheetTitle>
@@ -83,6 +84,25 @@ export function MobileNav() {
             );
           })}
         </nav>
+
+        {!isAuthenticated && (
+          <div className="p-4">
+            <Link
+              href="/login"
+              onClick={() => setOpen(false)}
+              className={cn(
+                buttonVariants({
+                  size: "lg",
+                  className:
+                    "w-full rounded-lg bg-linear-to-r from-primary via-primary to-brand-accent",
+                }),
+              )}
+            >
+              <LogIn className="mr-2 h-5 w-5" />
+              {t("loginRegister")}
+            </Link>
+          </div>
+        )}
 
         <Separator />
 

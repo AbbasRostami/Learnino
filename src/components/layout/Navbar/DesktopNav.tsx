@@ -17,7 +17,7 @@ export function DesktopNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="hidden lg:flex items-center gap-1">
+    <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
       {navLinks.map((link) => {
         const isActive = pathname.startsWith(link.href);
 
@@ -26,7 +26,7 @@ export function DesktopNav() {
             key={link.key}
             href={link.href}
             className={cn(
-              "relative px-4 py-2 text-base font-medium rounded-full transition-all duration-200",
+              "relative px-2 xl:px-4 py-2 text-sm xl:text-base font-medium rounded-full transition-all duration-200 whitespace-nowrap",
               isActive
                 ? "text-primary font-bold"
                 : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
