@@ -4,6 +4,7 @@ export * from "./CommentSkeleton";
 export * from "./CourseCardSkeleton";
 export * from "./CoursesGridSkeleton";
 export * from "./PostCardSkeleton";
+export * from "./PostDetailSkeleton";
 export * from "./PostsGridSkeleton";
 export * from "./ProfileSkeleton";
 export * from "./SectionHeaderSkeleton";

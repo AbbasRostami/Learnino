@@ -2,50 +2,67 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function CartItemSkeleton() {
   return (
-    <div
-      className="flex items-center gap-4 p-4 rounded-2xl border border-border/40 bg-card/40"
-      aria-hidden="true"
-    >
-      <Skeleton className="h-20 w-24 rounded-xl shrink-0" />
+    <div className="flex flex-col sm:flex-row items-center gap-4 p-4 rounded-3xl border border-border/50 bg-card/60 backdrop-blur-md shadow-xs">
+      <Skeleton className="aspect-16/10 w-full sm:w-40 shrink-0 rounded-2xl" />
 
-      <div className="flex-1 flex flex-col gap-2 min-w-0">
-        <Skeleton className="h-5 w-3/4 rounded-lg" />
-        <Skeleton className="h-3 w-1/2 rounded" />
-        <Skeleton className="h-4 w-24 rounded" />
+      <div className="flex flex-1 flex-col justify-between min-w-0 w-full gap-4">
+        <div className="space-y-3">
+          <div className="flex items-center justify-between gap-2">
+            <Skeleton className="h-5 w-16 rounded-full" />
+            <Skeleton className="h-5 w-16 rounded-full" />
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="h-5 w-3/4 rounded-md" />
+            <Skeleton className="h-5 w-1/2 rounded-md" />
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between pt-3 border-t border-dashed border-border/60 mt-2">
+          <Skeleton className="h-4 w-16 rounded-md" />
+          <div className="flex flex-col items-end gap-1">
+            <Skeleton className="h-6 w-24 rounded-md" />
+          </div>
+        </div>
       </div>
-
-      <Skeleton className="h-9 w-9 rounded-full shrink-0" />
     </div>
   );
 }
 
-interface CartSkeletonProps {
-  count?: number;
-}
-
-export function CartSkeleton({ count = 3 }: CartSkeletonProps) {
+export function CartSidebarSkeleton() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6" aria-hidden="true">
-      <div className="lg:col-span-2 flex flex-col gap-3">
-        {Array.from({ length: count }).map((_, idx) => (
-          <CartItemSkeleton key={idx} />
-        ))}
+    <div className="flex flex-col gap-6 p-6 rounded-3xl border border-border/50 bg-card/80 backdrop-blur-xl shadow-xl">
+      <div className="space-y-2.5">
+        <Skeleton className="h-4 w-20 rounded-md" />
+        <Skeleton className="h-11 w-full rounded-2xl" />
       </div>
 
-      <div className="flex flex-col gap-4 p-6 rounded-2xl border border-border/50 bg-card/40 h-fit">
-        <Skeleton className="h-6 w-32 rounded-lg" />
+      <hr className="border-dashed border-border/60" />
 
-        <div className="flex flex-col gap-3 pt-2">
-          {Array.from({ length: 3 }).map((_, idx) => (
-            <div key={idx} className="flex items-center justify-between">
-              <Skeleton className="h-3 w-20 rounded" />
-              <Skeleton className="h-4 w-16 rounded" />
-            </div>
-          ))}
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-24 rounded-md" />
+        <div className="grid grid-cols-2 gap-2">
+          <Skeleton className="h-16 rounded-2xl" />
+          <Skeleton className="h-16 rounded-2xl" />
         </div>
+      </div>
 
-        <Skeleton className="h-11 w-full rounded-xl mt-3" />
-        <Skeleton className="h-11 w-full rounded-xl" />
+      <hr className="border-dashed border-border/60" />
+
+      <div className="flex flex-col gap-3">
+        <div className="flex justify-between items-center">
+          <Skeleton className="h-4 w-16 rounded-md" />
+          <Skeleton className="h-4 w-24 rounded-md" />
+        </div>
+        <div className="flex justify-between items-center pt-2 border-t border-border/40 mt-1">
+          <Skeleton className="h-5 w-20 rounded-md" />
+          <Skeleton className="h-7 w-32 rounded-md" />
+        </div>
+      </div>
+
+      <Skeleton className="h-12 w-full rounded-2xl mt-1" />
+
+      <div className="flex justify-center">
+        <Skeleton className="h-3 w-40 rounded-md" />
       </div>
     </div>
   );
