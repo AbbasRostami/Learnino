@@ -1,13 +1,11 @@
 import { api } from "@/hooks/upfetch";
-import type { ApiError } from "@/types";
+import type { ApiError, CheckoutWalletResponse } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
-type CheckoutWalletData = any["data"];
-
 interface UseCheckoutWalletOptions {
-  onSuccessCallback?: (data: CheckoutWalletData) => void;
+  onSuccessCallback?: (data: CheckoutWalletResponse["data"]) => void;
 }
 
 export const useCheckoutWallet = ({
@@ -16,9 +14,9 @@ export const useCheckoutWallet = ({
   const t = useTranslations("order");
   const queryClient = useQueryClient();
 
-  return useMutation<any, ApiError, void>({
+  return useMutation<CheckoutWalletResponse, ApiError, void>({
     mutationFn: () =>
-      api<any>("/orders/checkout/wallet", {
+      api<CheckoutWalletResponse>("/orders/checkout/wallet", {
         method: "POST",
       }),
 

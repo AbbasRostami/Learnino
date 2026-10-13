@@ -1,37 +1,20 @@
 "use client";
 
-import { AdminConfirmDialog } from "@/components/admin/shared/AdminConfirmDialog";
+import { AdminDateCell, AdminSortableHeader } from "@/components/admin/shared";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { useAdminCancelOrder } from "@/services";
 import type { AdminOrderListItem } from "@/types";
+import { formatNumber } from "@/utils/formatters";
+import type { ColumnDef } from "@tanstack/react-table";
 import {
-  formatNumber,
-  formatRelativeTime,
-  formatShortDate,
-} from "@/utils/formatters";
-import type { Column, ColumnDef } from "@tanstack/react-table";
-import {
-  ArrowDown,
-  ArrowUp,
-  ArrowUpDown,
   CheckCircle2,
   Clock,
   CreditCard,
-  Eye,
-  MoreVertical,
   Package,
   Wallet,
   XCircle,
 } from "lucide-react";
-import { useState } from "react";
+import { OrderActionsCell } from "./OrderActionsCell";
 
 interface ColumnsProps {
   t: (key: string) => string;
@@ -39,59 +22,6 @@ interface ColumnsProps {
   page?: number;
   limit?: number;
   onViewDetails: (orderId: string) => void;
-}
-
-function SortableHeader<TData>({
-  column,
-  label,
-}: {
-  column: Column<TData, unknown>;
-  label: string;
-}) {
-  const sorted = column.getIsSorted();
-  return (
-    <button
-      type="button"
-      onClick={() => column.toggleSorting(sorted === "asc")}
-      className="inline-flex items-center gap-1.5 hover:text-foreground cursor-pointer font-bold select-none"
-    >
-      <span>{label}</span>
-      {sorted === "asc" ? (
-        <ArrowUp className="h-3 w-3 text-primary" />
-      ) : sorted === "desc" ? (
-        <ArrowDown className="h-3 w-3 text-primary" />
-      ) : (
-        <ArrowUpDown className="h-3 w-3 text-muted-foreground/60" />
-      )}
-    </button>
-  );
-}
-
-function DateCell({
-  dateStr,
-  locale,
-}: {
-  dateStr?: string | null;
-  locale: string;
-}) {
-  if (!dateStr) return <span className="text-xs text-muted-foreground">—</span>;
-
-  return (
-    <div className="flex flex-col gap-0.5">
-      <span
-        className="text-xs font-semibold text-foreground"
-        suppressHydrationWarning
-      >
-        {formatRelativeTime(dateStr, locale)}
-      </span>
-      <span
-        className="text-[10px] text-muted-foreground font-mono"
-        suppressHydrationWarning
-      >
-        {formatShortDate(dateStr, locale)}
-      </span>
-    </div>
-  );
 }
 
 export const getOrdersColumns = ({
@@ -106,12 +36,10 @@ export const getOrdersColumns = ({
       id: "rowNumber",
       enableSorting: false,
       header: () => (
-        <span className="w-4 text-center block text-muted-foreground font-mono">
-          #
-        </span>
+        <span className="w-4 text-center block text-muted-foreground">#</span>
       ),
       cell: ({ row }) => (
-        <span className="text-xs font-mono font-bold text-muted-foreground/80 w-4 text-center block">
+        <span className="text-xs font-bold text-muted-foreground/80 w-4 text-center block">
           {formatNumber((page - 1) * limit + row.index + 1, locale)}
         </span>
       ),
@@ -121,10 +49,10 @@ export const getOrdersColumns = ({
       accessorKey: "id",
       enableSorting: true,
       header: ({ column }) => (
-        <SortableHeader column={column} label={t("table.orderId")} />
+        <AdminSortableHeader column={column} label={t("table.orderId")} />
       ),
       cell: ({ row }) => (
-        <span className="text-xs font-mono font-bold text-foreground" dir="ltr">
+        <span className="text-xs font-bold text-foreground" dir="ltr">
           #{row.original?.id?.slice(0, 8)}
         </span>
       ),
@@ -134,7 +62,7 @@ export const getOrdersColumns = ({
       accessorKey: "user.name",
       enableSorting: true,
       header: ({ column }) => (
-        <SortableHeader column={column} label={t("table.user")} />
+        <AdminSortableHeader column={column} label={t("table.user")} />
       ),
       cell: ({ row }) => {
         const u = row.original?.user;
@@ -154,7 +82,7 @@ export const getOrdersColumns = ({
                 {displayName}
               </span>
               <span
-                className="text-[10px] text-muted-foreground font-mono truncate"
+                className="text-xs text-muted-foreground truncate"
                 dir="ltr"
               >
                 {u?.email}
@@ -169,11 +97,12 @@ export const getOrdersColumns = ({
       accessorKey: "totalAmount",
       enableSorting: true,
       header: ({ column }) => (
-        <SortableHeader column={column} label={t("table.totalAmount")} />
+        <AdminSortableHeader column={column} label={t("table.totalAmount")} />
       ),
       cell: ({ row }) => (
-        <span className="text-xs font-black font-mono text-emerald-600 dark:text-emerald-400">
-          {formatNumber(row.original?.totalAmount ?? 0, locale)} RLS
+        <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">
+          {formatNumber(row.original?.totalAmount ?? 0, locale)}{" "}
+          {locale === "fa" ? "تومان" : "Toman"}
         </span>
       ),
     },
@@ -182,7 +111,7 @@ export const getOrdersColumns = ({
       accessorKey: "status",
       enableSorting: true,
       header: ({ column }) => (
-        <SortableHeader column={column} label={t("table.status")} />
+        <AdminSortableHeader column={column} label={t("table.status")} />
       ),
       cell: ({ row }) => {
         const status = row.original?.status;
@@ -203,7 +132,7 @@ export const getOrdersColumns = ({
         return (
           <span
             className={cn(
-              "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black border",
+              "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-black border",
               styles[status ?? "PENDING"] ||
                 "bg-muted text-muted-foreground border-border",
             )}
@@ -246,7 +175,7 @@ export const getOrdersColumns = ({
       enableSorting: false,
       header: () => <span>{t("table.itemsCount")}</span>,
       cell: ({ row }) => (
-        <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-muted text-muted-foreground border border-border text-[10px] font-black">
+        <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-muted text-muted-foreground border border-border text-xs font-black">
           <Package className="h-3 w-3" />
           <span>
             {formatNumber(row.original?.items?.length ?? 0, locale)}{" "}
@@ -260,10 +189,10 @@ export const getOrdersColumns = ({
       accessorKey: "createdAt",
       enableSorting: true,
       header: ({ column }) => (
-        <SortableHeader column={column} label={t("table.createdAt")} />
+        <AdminSortableHeader column={column} label={t("table.createdAt")} />
       ),
       cell: ({ row }) => (
-        <DateCell dateStr={row.original?.createdAt} locale={locale} />
+        <AdminDateCell dateStr={row.original?.createdAt} locale={locale} />
       ),
     },
     {
@@ -280,75 +209,3 @@ export const getOrdersColumns = ({
     },
   ];
 };
-
-function OrderActionsCell({
-  order,
-  t,
-  onViewDetails,
-}: {
-  order: AdminOrderListItem;
-  t: (key: string) => string;
-  onViewDetails: (orderId: string) => void;
-}) {
-  const [cancelOpen, setCancelOpen] = useState(false);
-  const isPending = order?.status === "PENDING";
-
-  const { mutate: cancelOrder, isPending: isCancelling } = useAdminCancelOrder({
-    onSuccessCallback: () => setCancelOpen(false),
-  });
-
-  return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger className="inline-flex h-8 w-8 items-center justify-center rounded-lg hover:bg-muted cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
-          <MoreVertical className="h-4 w-4 text-muted-foreground" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent
-          align="end"
-          className="w-52 rounded-2xl p-1.5 z-50"
-        >
-          <DropdownMenuItem
-            onClick={() => onViewDetails(order?.id)}
-            className="cursor-pointer gap-2 py-2 rounded-xl text-xs font-bold"
-          >
-            <Eye className="h-4 w-4 text-primary" />
-            <span>{t("actions.viewDetails")}</span>
-          </DropdownMenuItem>
-
-          {isPending && (
-            <>
-              <DropdownMenuSeparator className="my-1" />
-              <DropdownMenuItem
-                onClick={() => setCancelOpen(true)}
-                className="cursor-pointer gap-2 py-2 rounded-xl text-xs font-bold text-rose-600 focus:text-rose-600 focus:bg-rose-500/10"
-              >
-                <XCircle className="h-4 w-4" />
-                <span>{t("actions.cancelOrder")}</span>
-              </DropdownMenuItem>
-            </>
-          )}
-        </DropdownMenuContent>
-      </DropdownMenu>
-
-      <AdminConfirmDialog
-        open={cancelOpen}
-        onOpenChange={setCancelOpen}
-        variant="destructive"
-        icon={XCircle}
-        title={t("confirmCancel.title")}
-        confirmLabel={t("confirmCancel.confirm")}
-        cancelLabel={t("confirmCancel.cancel")}
-        isPending={isCancelling}
-        onConfirm={() => cancelOrder(order?.id)}
-        description={
-          <>
-            {t("confirmCancel.description")}
-            <span className="block mt-2 p-2 rounded-lg bg-muted text-foreground font-mono font-bold text-xs">
-              #{order?.id}
-            </span>
-          </>
-        }
-      />
-    </>
-  );
-}

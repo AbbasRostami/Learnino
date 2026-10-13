@@ -1,12 +1,12 @@
 import { api } from "@/hooks/upfetch";
-import type { ApiError } from "@/types/api/error.types";
+import type { ApiError, CheckoutZarinpalResponse } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
 interface UseCheckoutZarinpalOptions {
   autoRedirect?: boolean;
-  onSuccessCallback?: (data: { orderId: string; paymentUrl: string }) => void;
+  onSuccessCallback?: (data: CheckoutZarinpalResponse["data"]) => void;
 }
 
 export const useCheckoutZarinpal = ({
@@ -15,9 +15,9 @@ export const useCheckoutZarinpal = ({
 }: UseCheckoutZarinpalOptions = {}) => {
   const t = useTranslations("order");
 
-  return useMutation<any, ApiError, void>({
+  return useMutation<CheckoutZarinpalResponse, ApiError, void>({
     mutationFn: () =>
-      api<any>("/orders/checkout/zarinpal", {
+      api<CheckoutZarinpalResponse>("/orders/checkout/zarinpal", {
         method: "POST",
       }),
 

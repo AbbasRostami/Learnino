@@ -4,9 +4,10 @@ import type {
   PaginationSearchParams,
 } from "../common";
 
-export type OrderStatus = "PENDING" | "PAID" | "CANCELLED";
-
 export type PaymentMethod = "WALLET" | "ZARINPAL";
+
+export const ORDER_STATUSES = ["PENDING", "PAID", "CANCELLED"] as const;
+export type OrderStatus = (typeof ORDER_STATUSES)[number];
 
 export type OrderItem = {
   id: string;
@@ -93,4 +94,15 @@ export type CancelOrderResponse = ApiSuccessResponse<{
 export type AdminCancelOrderResponse = ApiSuccessResponse<{
   message: string;
   order: AdminOrder;
+}>;
+
+export type CheckoutZarinpalResponse = ApiSuccessResponse<{
+  orderId: string;
+  paymentUrl: string;
+}>;
+
+export type CheckoutWalletResponse = ApiSuccessResponse<{
+  message: string;
+  order: Order;
+  newBalance: number;
 }>;

@@ -8,10 +8,7 @@ export const useOrder = (orderId: string | undefined) => {
 
   return useQuery<GetOrderResponse>({
     queryKey: ["orders", "detail", locale, orderId],
-    queryFn: () =>
-      api<GetOrderResponse>(`/orders/${orderId}`, {
-        headers: { "Accept-Language": locale },
-      }),
+    queryFn: () => api<GetOrderResponse>(`/orders/${orderId}`),
     enabled: Boolean(orderId),
     staleTime: 60 * 1000,
   });
