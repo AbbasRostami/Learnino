@@ -11,16 +11,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  getCreateDiscountSchema,
-  type CreateDiscountFormValues,
-} from "@/schemas";
-import { useCreateDiscount } from "@/services";
-import type { DiscountType } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
+import { useDiscountForm } from "./useDiscountForm";
 
 interface DiscountFormProps {
   onSuccess: () => void;
@@ -29,59 +23,18 @@ interface DiscountFormProps {
 
 export function DiscountForm({ onSuccess, onCancel }: DiscountFormProps) {
   const t = useTranslations("admin.discounts.form");
-  const tTypes = useTranslations("admin.discounts.types");
-  const tDiscount = useTranslations("discount");
 
-  const schema = getCreateDiscountSchema(tDiscount);
+  const { form, selectedType, typeOptions, isPending, onSubmit, tDiscount } =
+    useDiscountForm({ onSuccess });
 
   const {
     register,
-    handleSubmit,
     control,
-    watch,
-    reset,
     formState: { errors },
-  } = useForm<CreateDiscountFormValues>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      code: "",
-      type: "PERCENTAGE",
-      value: 10,
-      maxUses: 100,
-      expiresInDays: 30,
-    },
-  });
-
-  const selectedType = watch("type");
-
-  const { mutate: createDiscount, isPending } = useCreateDiscount({
-    onSuccessCallback: () => {
-      onSuccess();
-      reset();
-    },
-  });
-
-  const onSubmit = (data: CreateDiscountFormValues) => {
-    createDiscount({
-      code: data.code.toUpperCase().trim(),
-      type: data.type as DiscountType,
-      value: data.value,
-      maxUses: data.maxUses,
-      expiresInDays: data.expiresInDays,
-    });
-  };
-
-  const typeOptions: { value: DiscountType; label: string }[] = [
-    { value: "PERCENTAGE", label: tTypes("PERCENTAGE") },
-    { value: "AMOUNT", label: tTypes("AMOUNT") },
-  ];
+  } = form;
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 py-2"
-      noValidate
-    >
+    <form onSubmit={onSubmit} className="flex flex-col gap-4 py-2" noValidate>
       <div className="space-y-1.5">
         <Label htmlFor="code" className="text-xs font-bold">
           {t("codeLabel")}
@@ -90,13 +43,13 @@ export function DiscountForm({ onSuccess, onCancel }: DiscountFormProps) {
           id="code"
           {...register("code")}
           placeholder={t("codePlaceholder")}
-          className="h-11 rounded-xl text-xs font-black font-mono bg-background border-border/60 uppercase tracking-wider"
+          className="h-11 rounded-xl text-xs font-black bg-background border-border/60 uppercase tracking-wider"
           dir="ltr"
           disabled={isPending}
-          aria-invalid={!!errors.code}
+          aria-invalid={!!errors?.code}
         />
-        {errors.code?.message && (
-          <span className="text-[10px] font-bold text-rose-500">
+        {errors?.code?.message && (
+          <span className="text-xs font-bold text-rose-500">
             {errors.code.message}
           </span>
         )}
@@ -140,7 +93,8 @@ export function DiscountForm({ onSuccess, onCancel }: DiscountFormProps) {
 
         <div className="space-y-1.5">
           <Label htmlFor="value" className="text-xs font-bold">
-            {t("valueLabel")} {selectedType === "AMOUNT" && "(ریال / RLS)"}
+            {t("valueLabel")}{" "}
+            {selectedType === "AMOUNT" && `(${tDiscount("currency")})`}
           </Label>
           <Input
             id="value"
@@ -152,13 +106,13 @@ export function DiscountForm({ onSuccess, onCancel }: DiscountFormProps) {
                 ? t("valuePercentagePlaceholder")
                 : t("valueAmountPlaceholder")
             }
-            className="h-11 rounded-xl text-xs font-bold font-mono bg-background border-border/60"
+            className="h-11 py-0 rounded-xl text-xs font-bold bg-background border-border/60 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             dir="ltr"
             disabled={isPending}
-            aria-invalid={!!errors.value}
+            aria-invalid={!!errors?.value}
           />
-          {errors.value?.message && (
-            <span className="text-[10px] font-bold text-rose-500">
+          {errors?.value?.message && (
+            <span className="text-xs font-bold text-rose-500">
               {errors.value.message}
             </span>
           )}
@@ -177,13 +131,13 @@ export function DiscountForm({ onSuccess, onCancel }: DiscountFormProps) {
             max={10000}
             {...register("maxUses", { valueAsNumber: true })}
             placeholder={t("maxUsesPlaceholder")}
-            className="h-11 rounded-xl text-xs font-bold font-mono bg-background border-border/60"
+            className="h-11 rounded-xl text-xs font-bold bg-background border-border/60"
             dir="ltr"
             disabled={isPending}
-            aria-invalid={!!errors.maxUses}
+            aria-invalid={!!errors?.maxUses}
           />
-          {errors.maxUses?.message && (
-            <span className="text-[10px] font-bold text-rose-500">
+          {errors?.maxUses?.message && (
+            <span className="text-xs font-bold text-rose-500">
               {errors.maxUses.message}
             </span>
           )}
@@ -200,13 +154,13 @@ export function DiscountForm({ onSuccess, onCancel }: DiscountFormProps) {
             max={365}
             {...register("expiresInDays", { valueAsNumber: true })}
             placeholder={t("expiresInDaysPlaceholder")}
-            className="h-11 rounded-xl text-xs font-bold font-mono bg-background border-border/60"
+            className="h-11 rounded-xl text-xs font-bold bg-background border-border/60"
             dir="ltr"
             disabled={isPending}
-            aria-invalid={!!errors.expiresInDays}
+            aria-invalid={!!errors?.expiresInDays}
           />
-          {errors.expiresInDays?.message && (
-            <span className="text-[10px] font-bold text-rose-500">
+          {errors?.expiresInDays?.message && (
+            <span className="text-xs font-bold text-rose-500">
               {errors.expiresInDays.message}
             </span>
           )}

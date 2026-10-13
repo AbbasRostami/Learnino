@@ -6,7 +6,8 @@ import type {
 
 export type DiscountType = "PERCENTAGE" | "AMOUNT";
 
-export type DiscountActiveFilter = "true" | "false";
+export const DISCOUNT_ACTIVE = ["true", "false"] as const;
+export type DiscountActiveFilter = (typeof DISCOUNT_ACTIVE)[number];
 
 export type Discount = {
   id: string;
