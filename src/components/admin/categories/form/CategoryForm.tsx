@@ -4,19 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import {
-  getCreateCategorySchema,
-  getUpdateCategorySchema,
-  type CreateCategoryFormValues,
-  type UpdateCategoryFormValues,
-} from "@/schemas";
-import { useCreateCategory, useUpdateCategory } from "@/services";
+import { Textarea } from "@/components/ui/textarea";
 import type { CategoryWithCount } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
+import { useCategoryForm } from "./useCategoryForm";
 
 interface CategoryFormProps {
   category?: CategoryWithCount | null;
@@ -30,83 +23,18 @@ export function CategoryForm({
   onCancel,
 }: CategoryFormProps) {
   const t = useTranslations("admin.categories.form");
-  const tCategory = useTranslations("category");
-  const isEdit = Boolean(category);
 
-  const schema = isEdit
-    ? getUpdateCategorySchema(tCategory)
-    : getCreateCategorySchema(tCategory);
+  const { form, isEdit, isPending, onSubmit } = useCategoryForm({
+    category,
+    onSuccess,
+  });
 
   const {
     register,
     handleSubmit,
     control,
-    reset,
     formState: { errors },
-  } = useForm<CreateCategoryFormValues | UpdateCategoryFormValues>({
-    resolver: zodResolver(schema),
-    mode: "onChange",
-    defaultValues: {
-      nameFa: "",
-      nameEn: "",
-      descriptionFa: "",
-      descriptionEn: "",
-      ...(isEdit ? {} : { show: true }),
-    },
-  });
-
-  const { mutate: createCategory, isPending: isCreating } = useCreateCategory({
-    onSuccessCallback: () => {
-      onSuccess();
-      reset();
-    },
-  });
-
-  const { mutate: updateCategory, isPending: isUpdating } = useUpdateCategory({
-    onSuccessCallback: () => {
-      onSuccess();
-      reset();
-    },
-  });
-
-  const isPending = isCreating || isUpdating;
-
-  useEffect(() => {
-    if (category) {
-      reset({
-        nameFa: category?.name || "",
-        nameEn: category?.name || "",
-        descriptionFa: category?.description || "",
-        descriptionEn: category?.description || "",
-      });
-    }
-  }, [category, reset]);
-
-  const onSubmit = (
-    data: CreateCategoryFormValues | UpdateCategoryFormValues,
-  ) => {
-    const trimOrUndef = (v?: string | null) =>
-      v && typeof v === "string" && v.trim().length > 0 ? v.trim() : undefined;
-
-    if (isEdit && category) {
-      updateCategory({
-        id: category?.id,
-        nameFa: trimOrUndef(data.nameFa),
-        nameEn: trimOrUndef(data.nameEn),
-        descriptionFa: trimOrUndef(data.descriptionFa),
-        descriptionEn: trimOrUndef(data.descriptionEn),
-      });
-    } else {
-      const createData = data as CreateCategoryFormValues;
-      createCategory({
-        nameFa: createData?.nameFa.trim(),
-        nameEn: createData?.nameEn.trim(),
-        descriptionFa: trimOrUndef(createData?.descriptionFa),
-        descriptionEn: trimOrUndef(createData?.descriptionEn),
-        show: createData?.show ?? true,
-      });
-    }
-  };
+  } = form;
 
   return (
     <form
@@ -130,8 +58,8 @@ export function CategoryForm({
             aria-invalid={!!errors?.nameFa}
           />
           {errors?.nameFa?.message && (
-            <span className="text-[10px] font-bold text-rose-500">
-              {errors?.nameFa?.message as string}
+            <span className="text-xs font-bold text-rose-500">
+              {errors?.nameFa?.message}
             </span>
           )}
         </div>
@@ -145,14 +73,14 @@ export function CategoryForm({
             id="nameEn"
             {...register("nameEn")}
             placeholder={t("nameEnPlaceholder")}
-            className="h-11 rounded-xl text-xs font-semibold font-mono bg-background border-border/60"
+            className="h-11 rounded-xl text-xs font-semibold bg-background border-border/60"
             dir="ltr"
             disabled={isPending}
             aria-invalid={!!errors?.nameEn}
           />
           {errors?.nameEn?.message && (
-            <span className="text-[10px] font-bold text-rose-500">
-              {errors?.nameEn?.message as string}
+            <span className="text-xs font-bold text-rose-500">
+              {errors.nameEn.message}
             </span>
           )}
         </div>
@@ -162,18 +90,18 @@ export function CategoryForm({
         <Label htmlFor="descriptionFa" className="text-xs font-bold">
           {t("descriptionFaLabel")}
         </Label>
-        <textarea
+        <Textarea
           id="descriptionFa"
           {...register("descriptionFa")}
           placeholder={t("descriptionFaPlaceholder")}
           rows={3}
-          className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2 resize-none focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2 resize-none"
           dir="rtl"
           disabled={isPending}
         />
         {errors?.descriptionFa?.message && (
-          <span className="text-[10px] font-bold text-rose-500">
-            {errors.descriptionFa.message as string}
+          <span className="text-xs font-bold text-rose-500">
+            {errors.descriptionFa.message}
           </span>
         )}
       </div>
@@ -182,18 +110,18 @@ export function CategoryForm({
         <Label htmlFor="descriptionEn" className="text-xs font-bold">
           {t("descriptionEnLabel")}
         </Label>
-        <textarea
+        <Textarea
           id="descriptionEn"
           {...register("descriptionEn")}
           placeholder={t("descriptionEnPlaceholder")}
           rows={3}
-          className="w-full rounded-xl text-xs font-semibold font-mono bg-background border border-border/60 px-3 py-2 resize-none focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2 resize-none"
           dir="ltr"
           disabled={isPending}
         />
         {errors?.descriptionEn?.message && (
-          <span className="text-[10px] font-bold text-rose-500">
-            {errors.descriptionEn.message as string}
+          <span className="text-xs font-bold text-rose-500">
+            {errors?.descriptionEn?.message}
           </span>
         )}
       </div>
@@ -216,7 +144,7 @@ export function CategoryForm({
             <Label htmlFor="show" className="text-xs font-bold cursor-pointer">
               {t("showLabel")}
             </Label>
-            <p className="text-[10px] text-muted-foreground font-semibold leading-relaxed">
+            <p className="text-xs text-muted-foreground font-semibold leading-relaxed">
               {t("showDescription")}
             </p>
           </div>

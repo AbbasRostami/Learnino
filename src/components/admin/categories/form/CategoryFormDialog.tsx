@@ -1,6 +1,6 @@
 "use client";
 
-import { AdminResponsiveDialog } from "@/components/admin/shared/AdminResponsiveDialog";
+import { AdminResponsiveDialog } from "@/components/admin/shared";
 import type { CategoryWithCount } from "@/types";
 import { Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
