@@ -1,6 +1,6 @@
 "use client";
 
-import { AdminSearchInput } from "@/components/admin/shared/AdminSearchInput";
+import { AdminSearchInput } from "@/components/admin/shared";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { RotateCcw } from "lucide-react";
@@ -49,7 +49,7 @@ export function WalletsFilters({
               onMinBalanceChange(e.target.value ? Number(e.target.value) : null)
             }
             placeholder={t("minBalancePlaceholder")}
-            className="h-11 rounded-xl text-xs font-bold font-mono bg-background border-border/60"
+            className="h-11 rounded-xl text-xs font-bold bg-background border-border/60"
             dir="ltr"
           />
         </div>
@@ -63,7 +63,7 @@ export function WalletsFilters({
               onMaxBalanceChange(e.target.value ? Number(e.target.value) : null)
             }
             placeholder={t("maxBalancePlaceholder")}
-            className="h-11 rounded-xl text-xs font-bold font-mono bg-background border-border/60"
+            className="h-11 rounded-xl text-xs font-bold bg-background border-border/60"
             dir="ltr"
           />
         </div>

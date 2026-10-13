@@ -1,4 +1,4 @@
-import { AdminTableSkeleton } from "@/components/admin/shared/AdminTableSkeleton";
+import { AdminTableSkeleton } from "@/components/admin/shared";
 import { AdminWalletsClient } from "@/components/admin/wallets/list/AdminWalletsClient";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -14,7 +14,6 @@ export async function generateMetadata({
 
   return {
     title: t("pageTitle"),
-    robots: { index: false, follow: false },
   };
 }
 

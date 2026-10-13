@@ -5,9 +5,17 @@ import type {
   PaginationSearchParams,
 } from "../common";
 
-export type TransactionStatus = "PENDING" | "SUCCESS" | "FAILED" | "CANCELLED";
+export const TX_STATUSES = [
+  "PENDING",
+  "SUCCESS",
+  "FAILED",
+  "CANCELLED",
+] as const;
 
-export type TransactionType = "CHARGE" | "PURCHASE" | "REFUND";
+export type TransactionStatus = (typeof TX_STATUSES)[number];
+
+export const TX_TYPES = ["CHARGE", "PURCHASE", "REFUND"] as const;
+export type TransactionType = (typeof TX_TYPES)[number];
 
 export type Wallet = {
   id: string;

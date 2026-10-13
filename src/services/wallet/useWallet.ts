@@ -10,10 +10,7 @@ export const useWallet = () => {
 
   return useQuery<GetWalletResponse>({
     queryKey: ["wallet", locale],
-    queryFn: () =>
-      api<GetWalletResponse>("/wallet", {
-        headers: { "Accept-Language": locale },
-      }),
+    queryFn: () => api<GetWalletResponse>("/wallet"),
     enabled: isAuthenticated,
     staleTime: 30 * 1000,
   });

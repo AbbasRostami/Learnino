@@ -8,8 +8,8 @@ export const getChargeWalletSchema = (t: WalletT) =>
     amount: z.coerce
       .number({ message: t("validation.amountInvalid") })
       .int(t("validation.amountInt"))
-      .min(10000, t("validation.amountMin"))
-      .max(500_000_000, t("validation.amountMax")),
+      .min(1000, t("validation.amountMin"))
+      .max(50_000_000, t("validation.amountMax")),
   });
 
 export const getTransactionsQuerySchema = () =>
