@@ -14,7 +14,6 @@ export async function generateMetadata({
 
   return {
     title: t("createTitle"),
-    robots: { index: false, follow: false },
   };
 }
 

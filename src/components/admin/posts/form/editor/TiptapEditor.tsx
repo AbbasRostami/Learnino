@@ -142,7 +142,7 @@ const TableSelector = ({ onSelect, tableRef, label }: TableSelectorProps) => {
           />
         ))}
       </div>
-      <div className="mt-2 text-center text-[10px] font-bold text-muted-foreground">
+      <div className="mt-2 text-center text-xs font-bold text-muted-foreground">
         {hovered.r > 0 ? `${hovered.r} × ${hovered.c}` : label}
       </div>
     </div>
@@ -412,7 +412,7 @@ export function TiptapEditor({
                   3: "text-base font-bold",
                   4: "text-sm font-semibold",
                   5: "text-xs font-semibold",
-                  6: "text-[11px] font-medium",
+                  6: "text-xs font-medium",
                 };
                 return (
                   <button
@@ -433,7 +433,7 @@ export function TiptapEditor({
                     <span>
                       {t("heading")} {level}
                     </span>
-                    <span className="text-[9px] font-mono text-muted-foreground/60 bg-muted px-1 py-0.5 rounded border border-border">
+                    <span className="text-xs text-muted-foreground/60 bg-muted px-1 py-0.5 rounded border border-border">
                       H{level}
                     </span>
                   </button>
@@ -787,7 +787,7 @@ export function TiptapEditor({
       <div className="flex-1 overflow-y-auto bg-background relative flex">
         {showSource ? (
           <textarea
-            className="w-full flex-1 p-4 font-mono text-xs border-0 outline-none resize-none bg-neutral-900 text-emerald-400"
+            className="w-full flex-1 p-4 text-xs border-0 outline-none resize-none bg-neutral-900 text-emerald-400"
             value={editor.getHTML()}
             onChange={(e) =>
               editor.commands.setContent(e.target.value, { emitUpdate: true })
@@ -801,9 +801,9 @@ export function TiptapEditor({
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between px-4 py-1.5 border-t border-border bg-muted/40 rounded-b-2xl text-[10px] text-muted-foreground select-none">
+      <div className="flex items-center justify-between px-4 py-1.5 border-t border-border bg-muted/40 rounded-b-2xl text-xs text-muted-foreground select-none">
         <span>
-          {t("characters")}: <b className="font-mono">{formattedCount}</b>
+          {t("characters")}: <b>{formattedCount}</b>
         </span>
       </div>
 

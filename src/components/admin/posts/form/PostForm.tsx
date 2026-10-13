@@ -13,22 +13,14 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getCreatePostSchema, getUpdatePostSchema } from "@/schemas";
-import {
-  useAdminCategories,
-  useCreatePost,
-  useUpdatePost,
-  useUploadEditorImage,
-} from "@/services";
+import { useAdminCategories } from "@/services";
 import type { Post } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Languages, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
-import type { z } from "zod";
+import { Controller } from "react-hook-form";
 import { TiptapEditor } from "./editor/TiptapEditor";
 import { PostImageField } from "./PostImageField";
+import { usePostForm } from "./usePostForm";
 
 interface PostFormProps {
   post?: Post | null;
@@ -38,138 +30,37 @@ interface PostFormProps {
 
 export function PostForm({ post, onSuccess, onCancel }: PostFormProps) {
   const t = useTranslations("admin.posts.form");
-  const tPost = useTranslations("post");
-  const isEdit = Boolean(post);
 
-  const schema = isEdit
-    ? getUpdatePostSchema(tPost)
-    : getCreatePostSchema(tPost);
-
-  type FormValues = z.infer<typeof schema>;
-
-  const { data: categoriesData } = useAdminCategories({ limit: 100 });
-  const categories = categoriesData?.data?.items ?? [];
-  const categoryOptions = categories.map((c) => ({
-    value: c.id,
-    label: c.name,
-  }));
+  const { form, isEdit, isPending, onSubmit, editorUploadFn } = usePostForm({
+    post,
+    onSuccess,
+  });
 
   const {
     register,
-    handleSubmit,
     control,
-    reset,
     formState: { errors },
-  } = useForm<FormValues>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      titleFa: "",
-      titleEn: "",
-      contentFa: "",
-      contentEn: "",
-      categoryId: "",
-      published: false,
-      image: null,
-    } as FormValues,
-  });
+  } = form;
 
-  const { mutateAsync: uploadEditorImage } = useUploadEditorImage({});
-
-  const editorUploadFn = async (file: File): Promise<string | null> => {
-    try {
-      const result = await uploadEditorImage({ image: file });
-      return result?.data?.url ?? null;
-    } catch {
-      return null;
-    }
-  };
-
-  const { mutate: createPost, isPending: isCreating } = useCreatePost({
-    onSuccessCallback: () => {
-      onSuccess();
-      reset();
-    },
-  });
-
-  const { mutate: updatePost, isPending: isUpdating } = useUpdatePost({
-    onSuccessCallback: () => {
-      onSuccess();
-      reset();
-    },
-  });
-
-  const isPending = isCreating || isUpdating;
-
-  useEffect(() => {
-    if (post) {
-      reset({
-        titleFa: post.title || "",
-        titleEn: post.title || "",
-        contentFa: post.content || "",
-        contentEn: post.content || "",
-        categoryId: post.category?.id || "",
-        published: post.published,
-        image: null,
-      } as FormValues);
-    } else {
-      reset({
-        titleFa: "",
-        titleEn: "",
-        contentFa: "",
-        contentEn: "",
-        categoryId: "",
-        published: false,
-        image: null,
-      } as FormValues);
-    }
-  }, [post, reset]);
-
-  const onSubmit = (data: FormValues) => {
-    const trimOrUndef = (v?: string | null) =>
-      v && typeof v === "string" && v.trim().length > 0 ? v.trim() : undefined;
-
-    if (isEdit && post) {
-      updatePost({
-        id: post.id,
-        titleFa: trimOrUndef(data.titleFa),
-        titleEn: trimOrUndef(data.titleEn),
-        contentFa: trimOrUndef(data.contentFa as string | undefined),
-        contentEn: trimOrUndef(data.contentEn as string | undefined),
-        categoryId: data.categoryId || undefined,
-        published:
-          typeof data.published === "boolean" ? data.published : undefined,
-        image: data.image instanceof File ? data.image : undefined,
-      });
-    } else {
-      const d = data as z.infer<ReturnType<typeof getCreatePostSchema>>;
-      createPost({
-        titleFa: d.titleFa.trim(),
-        titleEn: d.titleEn.trim(),
-        contentFa: d.contentFa,
-        contentEn: d.contentEn,
-        categoryId: d.categoryId,
-        published: d.published ?? false,
-        image: d.image instanceof File ? d.image : undefined,
-      });
-    }
-  };
+  const { data: categoriesData } = useAdminCategories({ limit: 100 });
+  const categories = categoriesData?.data?.items ?? [];
+  const categoryOptions = categories?.map((c) => ({
+    value: c?.id,
+    label: c?.name,
+  }));
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 py-2"
-      noValidate
-    >
+    <form onSubmit={onSubmit} className="flex flex-col gap-4 py-2" noValidate>
       <Controller
         control={control}
-        name={"image" as keyof FormValues}
+        name="image"
         render={({ field }) => (
           <PostImageField
             currentImageUrl={post?.imageUrl}
             value={(field.value as File | null) ?? null}
             onChange={field.onChange}
             disabled={isPending}
-            error={errors.image?.message as string}
+            error={errors.image?.message}
           />
         )}
       />
@@ -178,19 +69,19 @@ export function PostForm({ post, onSuccess, onCancel }: PostFormProps) {
         <Label className="text-xs font-bold">{t("categoryLabel")}</Label>
         <Controller
           control={control}
-          name={"categoryId" as keyof FormValues}
+          name="categoryId"
           render={({ field }) => (
             <Select
               items={[
                 { value: "", label: t("categoryPlaceholder") },
                 ...categoryOptions,
               ]}
-              value={(field.value as string) || ""}
+              value={field?.value || ""}
               onValueChange={field.onChange}
             >
               <SelectTrigger
                 className="h-11 w-full rounded-xl text-xs font-bold bg-background border-border/60"
-                aria-invalid={!!errors.categoryId}
+                aria-invalid={!!errors?.categoryId}
               >
                 <SelectValue placeholder={t("categoryPlaceholder")} />
               </SelectTrigger>
@@ -199,13 +90,13 @@ export function PostForm({ post, onSuccess, onCancel }: PostFormProps) {
                 className="rounded-xl"
               >
                 <SelectGroup>
-                  {categoryOptions.map((opt) => (
+                  {categoryOptions?.map((opt) => (
                     <SelectItem
-                      key={opt.value}
-                      value={opt.value}
+                      key={opt?.value}
+                      value={opt?.value}
                       className="text-xs font-bold cursor-pointer"
                     >
-                      {opt.label}
+                      {opt?.label}
                     </SelectItem>
                   ))}
                 </SelectGroup>
@@ -213,9 +104,9 @@ export function PostForm({ post, onSuccess, onCancel }: PostFormProps) {
             </Select>
           )}
         />
-        {errors.categoryId && (
-          <span className="text-[10px] font-bold text-rose-500">
-            {errors.categoryId.message as string}
+        {errors?.categoryId && (
+          <span className="text-xs font-bold text-rose-500">
+            {errors?.categoryId?.message}
           </span>
         )}
       </div>
@@ -250,11 +141,11 @@ export function PostForm({ post, onSuccess, onCancel }: PostFormProps) {
               className="h-11 rounded-xl text-xs font-semibold bg-background border-border/60"
               dir="rtl"
               disabled={isPending}
-              aria-invalid={!!errors.titleFa}
+              aria-invalid={!!errors?.titleFa}
             />
-            {errors.titleFa && (
-              <span className="text-[10px] font-bold text-rose-500">
-                {errors.titleFa.message as string}
+            {errors?.titleFa && (
+              <span className="text-xs font-bold text-rose-500">
+                {errors?.titleFa?.message}
               </span>
             )}
           </div>
@@ -263,10 +154,10 @@ export function PostForm({ post, onSuccess, onCancel }: PostFormProps) {
             <Label className="text-xs font-bold">{t("contentFaLabel")}</Label>
             <Controller
               control={control}
-              name={"contentFa" as keyof FormValues}
+              name="contentFa"
               render={({ field }) => (
                 <TiptapEditor
-                  value={(field.value as string) || ""}
+                  value={field.value || ""}
                   onChange={field.onChange}
                   uploadFn={editorUploadFn}
                   placeholder={t("contentFaPlaceholder")}
@@ -274,9 +165,9 @@ export function PostForm({ post, onSuccess, onCancel }: PostFormProps) {
                 />
               )}
             />
-            {errors.contentFa && (
-              <span className="text-[10px] font-bold text-rose-500">
-                {errors.contentFa.message as string}
+            {errors?.contentFa && (
+              <span className="text-xs font-bold text-rose-500">
+                {errors?.contentFa?.message}
               </span>
             )}
           </div>
@@ -291,14 +182,14 @@ export function PostForm({ post, onSuccess, onCancel }: PostFormProps) {
               id="titleEn"
               {...register("titleEn")}
               placeholder={t("titleEnPlaceholder")}
-              className="h-11 rounded-xl text-xs font-semibold font-mono bg-background border-border/60"
+              className="h-11 rounded-xl text-xs font-semibold bg-background border-border/60"
               dir="ltr"
               disabled={isPending}
-              aria-invalid={!!errors.titleEn}
+              aria-invalid={!!errors?.titleEn}
             />
-            {errors.titleEn && (
-              <span className="text-[10px] font-bold text-rose-500">
-                {errors.titleEn.message as string}
+            {errors?.titleEn && (
+              <span className="text-xs font-bold text-rose-500">
+                {errors?.titleEn?.message}
               </span>
             )}
           </div>
@@ -307,10 +198,10 @@ export function PostForm({ post, onSuccess, onCancel }: PostFormProps) {
             <Label className="text-xs font-bold">{t("contentEnLabel")}</Label>
             <Controller
               control={control}
-              name={"contentEn" as keyof FormValues}
+              name="contentEn"
               render={({ field }) => (
                 <TiptapEditor
-                  value={(field.value as string) || ""}
+                  value={field.value || ""}
                   onChange={field.onChange}
                   uploadFn={editorUploadFn}
                   placeholder={t("contentEnPlaceholder")}
@@ -318,9 +209,9 @@ export function PostForm({ post, onSuccess, onCancel }: PostFormProps) {
                 />
               )}
             />
-            {errors.contentEn && (
-              <span className="text-[10px] font-bold text-rose-500">
-                {errors.contentEn.message as string}
+            {errors?.contentEn && (
+              <span className="text-xs font-bold text-rose-500">
+                {errors?.contentEn?.message}
               </span>
             )}
           </div>
@@ -330,7 +221,7 @@ export function PostForm({ post, onSuccess, onCancel }: PostFormProps) {
       <div className="flex items-start gap-3 p-3 rounded-2xl border border-border/50 bg-muted/30">
         <Controller
           control={control}
-          name={"published" as keyof FormValues}
+          name="published"
           render={({ field }) => (
             <Switch
               id="published"
@@ -347,7 +238,7 @@ export function PostForm({ post, onSuccess, onCancel }: PostFormProps) {
           >
             {t("publishedLabel")}
           </Label>
-          <p className="text-[10px] text-muted-foreground font-semibold leading-relaxed">
+          <p className="text-xs text-muted-foreground font-semibold leading-relaxed">
             {t("publishedDescription")}
           </p>
         </div>

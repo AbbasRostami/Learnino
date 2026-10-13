@@ -10,10 +10,7 @@ export const usePost = (slug: string | undefined, initialPost?: Post) => {
 
   return useQuery<GetPostBySlugResponse>({
     queryKey: ["posts", "detail", locale, slug, isAuthenticated],
-    queryFn: () =>
-      api<GetPostBySlugResponse>(`/posts/${slug!}`, {
-        headers: { "Accept-Language": locale },
-      }),
+    queryFn: () => api<GetPostBySlugResponse>(`/posts/${slug!}`),
     enabled: Boolean(slug),
     staleTime: isAuthenticated ? 0 : 60 * 1000,
 

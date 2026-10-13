@@ -110,3 +110,9 @@ export const getUpdatePostSchema = (t: PostT) =>
         path: ["titleFa"],
       },
     );
+
+export type CreatePostSchemaType = ReturnType<typeof getCreatePostSchema>;
+export type CreatePostFormValues = z.infer<CreatePostSchemaType>;
+
+export type UpdatePostSchemaType = ReturnType<typeof getUpdatePostSchema>;
+export type UpdatePostFormValues = z.infer<UpdatePostSchemaType>;
