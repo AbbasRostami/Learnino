@@ -1,6 +1,6 @@
 "use client";
 
-import { AdminResponsiveDialog } from "@/components/admin/shared/AdminResponsiveDialog";
+import { AdminResponsiveDialog } from "@/components/admin/shared";
 import type { TeacherListItem } from "@/types";
 import { GraduationCap } from "lucide-react";
 import { useTranslations } from "next-intl";

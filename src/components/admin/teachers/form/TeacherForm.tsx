@@ -4,20 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import {
-  getCreateTeacherSchema,
-  getUpdateTeacherSchema,
-  type CreateTeacherFormValues,
-  type UpdateTeacherFormValues,
-} from "@/schemas";
-import { useCreateTeacher, useUpdateTeacher } from "@/services";
+import { Textarea } from "@/components/ui/textarea";
 import type { TeacherListItem } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { TeacherAvatarField } from "./TeacherAvatarField";
+import { useTeacherForm } from "./useTeacherForm";
 
 interface TeacherFormProps {
   teacher?: TeacherListItem | null;
@@ -31,95 +24,18 @@ export function TeacherForm({
   onCancel,
 }: TeacherFormProps) {
   const t = useTranslations("admin.teachers.form");
-  const tTeacher = useTranslations("teacher");
-  const isEdit = Boolean(teacher);
 
-  const schema = isEdit
-    ? getUpdateTeacherSchema(tTeacher)
-    : getCreateTeacherSchema(tTeacher);
+  const { form, isEdit, isPending, onSubmit } = useTeacherForm({
+    teacher,
+    onSuccess,
+  });
 
   const {
     register,
-    handleSubmit,
     control,
-    reset,
+    handleSubmit,
     formState: { errors },
-  } = useForm<CreateTeacherFormValues | UpdateTeacherFormValues>({
-    resolver: zodResolver(schema),
-    mode: "onChange",
-    defaultValues: {
-      nameFa: "",
-      nameEn: "",
-      bioFa: "",
-      bioEn: "",
-      avatar: null,
-      ...(isEdit ? {} : { show: true }),
-    },
-  });
-
-  const { mutate: createTeacher, isPending: isCreating } = useCreateTeacher({
-    onSuccessCallback: () => {
-      onSuccess?.();
-      reset();
-    },
-  });
-
-  const { mutate: updateTeacher, isPending: isUpdating } = useUpdateTeacher({
-    onSuccessCallback: () => {
-      onSuccess?.();
-      reset();
-    },
-  });
-
-  const isPending = isCreating || isUpdating;
-  useEffect(() => {
-    if (teacher) {
-      reset({
-        nameFa: teacher.name || "",
-        nameEn: teacher.name || "",
-        bioFa: teacher.bio || "",
-        bioEn: teacher.bio || "",
-        avatar: null,
-      });
-    } else {
-      reset({
-        nameFa: "",
-        nameEn: "",
-        bioFa: "",
-        bioEn: "",
-        avatar: null,
-        show: true,
-      });
-    }
-  }, [teacher?.id]);
-
-  const onSubmit = (
-    data: CreateTeacherFormValues | UpdateTeacherFormValues,
-  ) => {
-    const trimOrUndef = (v?: string | null) =>
-      v && typeof v === "string" && v.trim().length > 0 ? v.trim() : undefined;
-
-    if (isEdit && teacher) {
-      updateTeacher({
-        id: teacher.id,
-        nameFa: trimOrUndef(data?.nameFa),
-        nameEn: trimOrUndef(data?.nameEn),
-        bioFa: trimOrUndef(data?.bioFa as string | undefined),
-        bioEn: trimOrUndef(data?.bioEn as string | undefined),
-        avatar: data?.avatar instanceof File ? data.avatar : undefined,
-      });
-    } else {
-      const d = data as CreateTeacherFormValues;
-      createTeacher({
-        nameFa: (d?.nameFa ?? "").trim(),
-        nameEn: (d?.nameEn ?? "").trim(),
-        bioFa: trimOrUndef(d?.bioFa),
-        bioEn: trimOrUndef(d?.bioEn),
-        show: d?.show ?? true,
-        avatar: d?.avatar instanceof File ? d.avatar : undefined,
-      });
-    }
-  };
+  } = form;
 
   return (
     <form
@@ -137,7 +53,7 @@ export function TeacherForm({
             value={(field.value as File | null) ?? null}
             onChange={field.onChange}
             disabled={isPending}
-            error={errors?.avatar?.message as string}
+            error={errors?.avatar?.message}
           />
         )}
       />
@@ -158,8 +74,8 @@ export function TeacherForm({
             aria-invalid={!!errors?.nameFa}
           />
           {errors?.nameFa?.message && (
-            <span className="text-[10px] font-bold text-rose-500">
-              {errors?.nameFa?.message as string}
+            <span className="text-xs font-bold text-rose-500">
+              {errors.nameFa.message}
             </span>
           )}
         </div>
@@ -173,14 +89,14 @@ export function TeacherForm({
             id="nameEn"
             {...register("nameEn")}
             placeholder={t("nameEnPlaceholder")}
-            className="h-11 rounded-xl text-xs font-semibold font-mono bg-background border-border/60"
+            className="h-11 rounded-xl text-xs font-semibold bg-background border-border/60"
             dir="ltr"
             disabled={isPending}
             aria-invalid={!!errors?.nameEn}
           />
           {errors?.nameEn?.message && (
-            <span className="text-[10px] font-bold text-rose-500">
-              {errors?.nameEn?.message as string}
+            <span className="text-xs font-bold text-rose-500">
+              {errors.nameEn.message}
             </span>
           )}
         </div>
@@ -190,18 +106,18 @@ export function TeacherForm({
         <Label htmlFor="bioFa" className="text-xs font-bold">
           {t("bioFaLabel")}
         </Label>
-        <textarea
+        <Textarea
           id="bioFa"
           {...register("bioFa")}
           placeholder={t("bioFaPlaceholder")}
           rows={3}
-          className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2 resize-none focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2 resize-none"
           dir="rtl"
           disabled={isPending}
         />
         {errors?.bioFa?.message && (
-          <span className="text-[10px] font-bold text-rose-500">
-            {errors.bioFa.message as string}
+          <span className="text-xs font-bold text-rose-500">
+            {errors?.bioFa?.message}
           </span>
         )}
       </div>
@@ -210,18 +126,18 @@ export function TeacherForm({
         <Label htmlFor="bioEn" className="text-xs font-bold">
           {t("bioEnLabel")}
         </Label>
-        <textarea
+        <Textarea
           id="bioEn"
           {...register("bioEn")}
           placeholder={t("bioEnPlaceholder")}
           rows={3}
-          className="w-full rounded-xl text-xs font-semibold font-mono bg-background border border-border/60 px-3 py-2 resize-none focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2 resize-none"
           dir="ltr"
           disabled={isPending}
         />
         {errors?.bioEn?.message && (
-          <span className="text-[10px] font-bold text-rose-500">
-            {errors.bioEn.message as string}
+          <span className="text-xs font-bold text-rose-500">
+            {errors?.bioEn?.message}
           </span>
         )}
       </div>
@@ -244,7 +160,7 @@ export function TeacherForm({
             <Label htmlFor="show" className="text-xs font-bold cursor-pointer">
               {t("showLabel")}
             </Label>
-            <p className="text-[10px] text-muted-foreground font-semibold leading-relaxed">
+            <p className="text-xs text-muted-foreground font-semibold leading-relaxed">
               {t("showDescription")}
             </p>
           </div>

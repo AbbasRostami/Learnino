@@ -1,10 +1,11 @@
 import { api } from "@/hooks/upfetch";
-import type { GetTeachersResponse, TeacherListItem } from "@/types";
+import type {
+  GetTeacherBySlugResponse,
+  GetTeachersResponse,
+  TeacherListItem,
+} from "@/types";
 import { cacheLife, cacheTag } from "next/cache";
 
-/**
- * ⚡ تابع کش‌شونده سروری دریافت مدرسان با up-fetch
- */
 async function fetchTopTeachersData(
   locale: string,
   limit: number,
@@ -21,7 +22,6 @@ async function fetchTopTeachersData(
   return res.data?.items ?? [];
 }
 
-
 export async function getTopTeachersServer(
   locale: string = "fa",
   limit: number = 8,
@@ -34,9 +34,6 @@ export async function getTopTeachersServer(
   }
 }
 
-import type { GetTeacherBySlugResponse } from "@/types";
-
-
 async function fetchTeacherBySlugData(
   locale: string,
   rawSlug: string,
@@ -47,9 +44,12 @@ async function fetchTeacherBySlugData(
   const decodedSlug = decodeURIComponent(rawSlug);
   cacheTag("teachers", `teacher-${decodedSlug}`);
 
-  const res = await api<GetTeacherBySlugResponse>(`/teachers/${decodedSlug}`, {
-    headers: { "Accept-Language": locale },
-  });
+  const res = await api<GetTeacherBySlugResponse>(
+    `/teachers/${encodeURIComponent(decodedSlug)}`,
+    {
+      headers: { "Accept-Language": locale },
+    },
+  );
 
   return res.data?.teacher ?? null;
 }

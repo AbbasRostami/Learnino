@@ -95,7 +95,7 @@ export function TeacherAvatarField({
             )}
           </div>
 
-          <p className="text-[10px] text-muted-foreground font-semibold">
+          <p className="text-xs text-muted-foreground font-semibold">
             {t("avatarHint")}
           </p>
         </div>
@@ -114,9 +114,7 @@ export function TeacherAvatarField({
       </div>
 
       {error && (
-        <span className={cn("text-[10px] font-bold text-rose-500")}>
-          {error}
-        </span>
+        <span className={cn("text-xs font-bold text-rose-500")}>{error}</span>
       )}
     </div>
   );
