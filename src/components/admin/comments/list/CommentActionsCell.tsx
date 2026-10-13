@@ -1,6 +1,6 @@
 "use client";
 
-import { AdminConfirmDialog } from "@/components/admin/shared/AdminConfirmDialog";
+import { AdminConfirmDialog } from "@/components/admin/shared";
 import {
   DropdownMenu,
   DropdownMenuContent,

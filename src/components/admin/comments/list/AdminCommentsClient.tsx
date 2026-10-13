@@ -1,12 +1,12 @@
 "use client";
 
-import { AdminDataTable } from "@/components/admin/shared/AdminDataTable";
-import { AdminPagination } from "@/components/admin/shared/AdminPagination";
+import { AdminDataTable, AdminPageHeader, AdminPagination } from "@/components/admin/shared";
+import { useAdminTableParams } from "@/hooks/useAdminTableParams";
 import { useAdminComments } from "@/services";
-import type { CommentStatus } from "@/types";
+import { COMMENT_STATUSES, GetAdminCommentsParams } from "@/types";
 import { MessageSquare } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { parseAsInteger, parseAsString, useQueryStates } from "nuqs";
+import { parseAsStringEnum } from "nuqs";
 import { getCommentsColumns } from "./columns";
 import { CommentsFilters } from "./CommentsFilters";
 
@@ -14,19 +14,21 @@ export function AdminCommentsClient() {
   const t = useTranslations("admin.comments");
   const locale = useLocale();
 
-  const [params, setParams] = useQueryStates({
-    page: parseAsInteger.withDefault(1),
-    limit: parseAsInteger.withDefault(20),
-    search: parseAsString.withDefault(""),
-    status: parseAsString.withDefault(""),
+  const {
+    params,
+    apiParams,
+    setPage,
+    setLimit,
+    setSearch,
+    setFilter,
+    resetFilters,
+  } = useAdminTableParams<GetAdminCommentsParams>({
+    customParsers: {
+      status: parseAsStringEnum([...COMMENT_STATUSES]),
+    },
   });
 
-  const { data, isLoading, isFetching } = useAdminComments({
-    page: params.page,
-    limit: params.limit,
-    search: params.search || undefined,
-    status: (params.status as CommentStatus) || undefined,
-  });
+  const { data, isLoading, isFetching } = useAdminComments(apiParams);
 
   const comments = data?.data?.items ?? [];
   const pagination = data?.data?.pagination;
@@ -38,38 +40,24 @@ export function AdminCommentsClient() {
     limit: params.limit,
   });
 
-  const handleResetFilters = () => {
-    setParams({ search: null, status: null, page: 1 });
-  };
-
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-4 border-b border-border/50">
-        <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-xs">
-            <MessageSquare className="h-6 w-6" aria-hidden="true" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-black text-foreground">
-              {t("pageTitle")}
-            </h1>
-            <p className="text-xs text-muted-foreground mt-1">
-              {pagination?.total
-                ? t("commentsCount", { count: pagination.total })
-                : t("pageSubtitle")}
-            </p>
-          </div>
-        </div>
-      </div>
+      <AdminPageHeader
+        title={t("pageTitle")}
+        subtitle={
+          pagination?.total
+            ? t("commentsCount", { count: pagination.total })
+            : t("pageSubtitle")
+        }
+        icon={MessageSquare}
+      />
 
       <CommentsFilters
         search={params.search}
-        status={params.status}
-        onSearchChange={(v) => setParams({ search: v || null, page: 1 })}
-        onStatusChange={(v) =>
-          setParams({ status: v === "all" ? null : v, page: 1 })
-        }
-        onResetFilters={handleResetFilters}
+        status={params.status ?? ""}
+        onSearchChange={setSearch}
+        onStatusChange={(v) => setFilter("status", v)}
+        onResetFilters={resetFilters}
       />
 
       <AdminDataTable
@@ -85,8 +73,8 @@ export function AdminCommentsClient() {
           currentPage={params.page}
           limit={params.limit}
           totalCount={pagination.total}
-          onPageChange={(page) => setParams({ page })}
-          onLimitChange={(limit) => setParams({ limit, page: 1 })}
+          onPageChange={setPage}
+          onLimitChange={setLimit}
           isLoading={isFetching}
         />
       )}

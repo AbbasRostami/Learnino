@@ -8,7 +8,8 @@ import type {
   UserReactionType,
 } from "../reaction/reaction.types";
 
-export type CommentStatus = "PENDING" | "APPROVED" | "REJECTED";
+export const COMMENT_STATUSES = ["PENDING", "APPROVED", "REJECTED"] as const;
+export type CommentStatus = (typeof COMMENT_STATUSES)[number];
 
 export type CommentUser = {
   id: string;

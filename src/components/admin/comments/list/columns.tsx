@@ -9,7 +9,6 @@ import {
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import type { FlatCommentItem } from "@/types";
-import { formatRelativeTime } from "@/utils/formatters";
 import type { ColumnDef } from "@tanstack/react-table";
 import {
   BookOpen,
@@ -21,6 +20,7 @@ import {
   ThumbsUp,
   XCircle,
 } from "lucide-react";
+import { AdminDateCell } from "../../shared";
 import { CommentActionsCell } from "./CommentActionsCell";
 
 interface ColumnsProps {
@@ -28,41 +28,6 @@ interface ColumnsProps {
   locale?: string;
   page?: number;
   limit?: number;
-}
-
-function DateCell({
-  dateStr,
-  locale,
-}: {
-  dateStr: string | null | undefined;
-  locale: string;
-}) {
-  if (!dateStr) return <span className="text-xs text-muted-foreground">—</span>;
-
-  const date = new Date(dateStr);
-  const relative = formatRelativeTime(dateStr, locale);
-  const exact = new Intl.DateTimeFormat(locale === "fa" ? "fa-IR" : "en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(date);
-
-  return (
-    <div className="flex flex-col gap-0.5">
-      <span
-        className="text-xs font-semibold text-foreground"
-        suppressHydrationWarning
-      >
-        {relative}
-      </span>
-      <span
-        className="text-[10px] text-muted-foreground font-mono"
-        suppressHydrationWarning
-      >
-        {exact}
-      </span>
-    </div>
-  );
 }
 
 export const getCommentsColumns = ({
@@ -79,12 +44,10 @@ export const getCommentsColumns = ({
       id: "rowNumber",
       enableSorting: false,
       header: () => (
-        <span className="w-4 text-center block text-muted-foreground font-mono">
-          #
-        </span>
+        <span className="w-4 text-center block text-muted-foreground">#</span>
       ),
       cell: ({ row }) => (
-        <span className="text-xs font-mono font-bold text-muted-foreground/80 w-4 text-center block">
+        <span className="text-xs font-bold text-muted-foreground/80 w-4 text-center block">
           {fmt((page - 1) * limit + row.index + 1)}
         </span>
       ),
@@ -94,7 +57,7 @@ export const getCommentsColumns = ({
       enableSorting: false,
       header: () => <span>{t("table.user")}</span>,
       cell: ({ row }) => {
-        const user = row.original?.user;
+        const user = row?.original?.user;
         const displayName = user?.name || "—";
         const initial = displayName.charAt(0).toUpperCase();
 
@@ -102,7 +65,7 @@ export const getCommentsColumns = ({
           <div className="flex items-center gap-3 min-w-40">
             <Avatar className="h-9 w-9 border border-border shadow-xs">
               <AvatarImage src={user?.avatar || ""} alt={displayName} />
-              <AvatarFallback className="bg-linear-to-br from-primary to-brand-accent text-white font-black text-[10px]">
+              <AvatarFallback className="bg-linear-to-br from-primary to-brand-accent text-white font-black text-xs">
                 {initial}
               </AvatarFallback>
             </Avatar>
@@ -118,7 +81,7 @@ export const getCommentsColumns = ({
       enableSorting: false,
       header: () => <span>{t("table.comment")}</span>,
       cell: ({ row }) => {
-        const comment = row.original;
+        const comment = row?.original;
         const isLong = (comment?.content?.length ?? 0) > 80;
 
         return (
@@ -146,10 +109,10 @@ export const getCommentsColumns = ({
             )}
 
             {comment?.parent && (
-              <span className="inline-flex items-center gap-1 text-[10px] text-muted-foreground font-bold">
+              <span className="inline-flex items-center gap-1 text-xs text-muted-foreground font-bold">
                 <Reply className="h-3 w-3 shrink-0" />
                 <span className="truncate max-w-44">
-                  {t("table.replyTo")}: {comment.parent.content}
+                  {t("table.replyTo")}: {comment?.parent?.content}
                 </span>
               </span>
             )}
@@ -162,22 +125,22 @@ export const getCommentsColumns = ({
       enableSorting: false,
       header: () => <span>{t("table.target")}</span>,
       cell: ({ row }) => {
-        const course = row.original?.course;
-        const post = row.original?.post;
+        const course = row?.original?.course;
+        const post = row?.original?.post;
 
         if (course) {
           return (
             <div className="flex flex-col gap-1 min-w-36">
-              <span className="inline-flex items-center gap-1 text-[10px] font-black text-primary">
+              <span className="inline-flex items-center gap-1 text-xs font-black text-primary">
                 <BookOpen className="h-3 w-3" />
                 <span>{t("table.onCourse")}</span>
               </span>
               <Link
-                href={`/courses/${course.slug}`}
+                href={`/courses/${course?.slug}`}
                 target="_blank"
                 className="group inline-flex items-center gap-1 text-xs font-bold text-foreground hover:text-primary transition-colors max-w-44"
               >
-                <span className="truncate">{course.title}</span>
+                <span className="truncate">{course?.title}</span>
                 <ExternalLink className="h-3 w-3 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
               </Link>
             </div>
@@ -187,16 +150,16 @@ export const getCommentsColumns = ({
         if (post) {
           return (
             <div className="flex flex-col gap-1 min-w-36">
-              <span className="inline-flex items-center gap-1 text-[10px] font-black text-brand-accent">
+              <span className="inline-flex items-center gap-1 text-xs font-black text-brand-accent">
                 <FileText className="h-3 w-3" />
                 <span>{t("table.onPost")}</span>
               </span>
               <Link
-                href={`/blog/${post.slug}`}
+                href={`/blog/${post?.slug}`}
                 target="_blank"
                 className="group inline-flex items-center gap-1 text-xs font-bold text-foreground hover:text-brand-accent transition-colors max-w-44"
               >
-                <span className="truncate">{post.title}</span>
+                <span className="truncate">{post?.title}</span>
                 <ExternalLink className="h-3 w-3 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
               </Link>
             </div>
@@ -213,7 +176,7 @@ export const getCommentsColumns = ({
       cell: ({ row }) => {
         const stats = row.original?.stats;
         return (
-          <div className="flex items-center gap-3 text-[11px] text-muted-foreground font-bold">
+          <div className="flex items-center gap-3 text-xs text-muted-foreground font-bold">
             <span
               className="flex items-center gap-1"
               title={t("stats.replies")}
@@ -256,7 +219,7 @@ export const getCommentsColumns = ({
         return (
           <span
             className={cn(
-              "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black border",
+              "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-black border",
               styles[status] || "bg-muted text-muted-foreground border-border",
             )}
           >
@@ -271,14 +234,14 @@ export const getCommentsColumns = ({
       enableSorting: false,
       header: () => <span>{t("table.createdAt")}</span>,
       cell: ({ row }) => (
-        <DateCell dateStr={row.original?.createdAt} locale={locale} />
+        <AdminDateCell dateStr={row.original?.createdAt} locale={locale} />
       ),
     },
     {
       id: "actions",
       enableSorting: false,
       header: () => <span className="sr-only">{t("table.actions")}</span>,
-      cell: ({ row }) => <CommentActionsCell comment={row.original} t={t} />,
+      cell: ({ row }) => <CommentActionsCell comment={row?.original} t={t} />,
     },
   ];
 };

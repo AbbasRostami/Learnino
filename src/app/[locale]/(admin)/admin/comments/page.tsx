@@ -1,5 +1,5 @@
 import { AdminCommentsClient } from "@/components/admin/comments/list/AdminCommentsClient";
-import { AdminTableSkeleton } from "@/components/admin/shared/AdminTableSkeleton";
+import { AdminTableSkeleton } from "@/components/admin/shared";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
@@ -14,7 +14,6 @@ export async function generateMetadata({
 
   return {
     title: t("pageTitle"),
-    robots: { index: false, follow: false },
   };
 }
 
