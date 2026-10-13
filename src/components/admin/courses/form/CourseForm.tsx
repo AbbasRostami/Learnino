@@ -12,25 +12,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import {
-  getCreateCourseSchema,
-  getUpdateCourseSchema,
-  type CreateCourseFormValues,
-  type UpdateCourseFormValues,
-} from "@/schemas";
-import {
-  useAdminCategories,
-  useAdminTeachers,
-  useCreateCourse,
-  useUpdateCourse,
-} from "@/services";
-import type { Course, CourseLevel } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Textarea } from "@/components/ui/textarea";
+import type { Course } from "@/types";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { CourseImageField } from "./CourseImageField";
+import { useCourseForm } from "./useCourseForm";
 
 interface CourseFormProps {
   course?: Course | null;
@@ -40,124 +28,23 @@ interface CourseFormProps {
 
 export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
   const t = useTranslations("admin.courses.form");
-  const tCourse = useTranslations("course");
-  const tLevels = useTranslations("admin.courses.levels");
-  const isEdit = Boolean(course);
 
-  const schema = isEdit
-    ? getUpdateCourseSchema(tCourse)
-    : getCreateCourseSchema(tCourse);
-
-  const { data: categoriesData } = useAdminCategories({ limit: 100 });
-  const { data: teachersData } = useAdminTeachers({ limit: 100 });
-
-  const categories = categoriesData?.data?.items ?? [];
-  const teachers = teachersData?.data?.items ?? [];
-
-  const categoryOptions = categories.map((c) => ({
-    value: c.id,
-    label: c.name,
-  }));
-  const teacherOptions = teachers.map((t) => ({
-    value: t.id,
-    label: t.name,
-  }));
-  const levelOptions = [
-    { value: "BEGINNER", label: tLevels("BEGINNER") },
-    { value: "INTERMEDIATE", label: tLevels("INTERMEDIATE") },
-    { value: "ADVANCED", label: tLevels("ADVANCED") },
-  ];
+  const {
+    form,
+    isEdit,
+    isPending,
+    onSubmit,
+    categoryOptions,
+    teacherOptions,
+    levelOptions,
+  } = useCourseForm({ course, onSuccess });
 
   const {
     register,
     handleSubmit,
     control,
-    reset,
     formState: { errors },
-  } = useForm<CreateCourseFormValues | UpdateCourseFormValues>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      titleFa: "",
-      titleEn: "",
-      descriptionFa: "",
-      descriptionEn: "",
-      price: 0,
-      level: "BEGINNER",
-      categoryId: "",
-      teacherId: "",
-      published: false,
-      image: null,
-    },
-  });
-
-  useEffect(() => {
-    if (course) {
-      reset({
-        titleFa: course?.title || "",
-        titleEn: course?.title || "",
-        descriptionFa: course?.description || "",
-        descriptionEn: course?.description || "",
-        price: course?.price ?? 0,
-        level: course?.level || "BEGINNER",
-        categoryId: course?.category?.id || "",
-        teacherId: course?.teacher?.id || "",
-        published: course?.published ?? false,
-        image: null,
-      });
-    }
-  }, [course, reset]);
-
-  const { mutate: createCourse, isPending: isCreating } = useCreateCourse({
-    onSuccessCallback: () => {
-      onSuccess?.();
-    },
-  });
-
-  const { mutate: updateCourse, isPending: isUpdating } = useUpdateCourse({
-    onSuccessCallback: () => {
-      onSuccess?.();
-    },
-  });
-
-  const isPending = isCreating || isUpdating;
-
-  const onSubmit = (
-    data: CreateCourseFormValues | UpdateCourseFormValues
-  ) => {
-    const trimOrUndef = (v?: string | null) =>
-      v && typeof v === "string" && v.trim().length > 0 ? v.trim() : undefined;
-
-    if (isEdit && course) {
-      updateCourse({
-        id: course.id,
-        titleFa: trimOrUndef(data?.titleFa),
-        titleEn: trimOrUndef(data?.titleEn),
-        descriptionFa: trimOrUndef(data?.descriptionFa),
-        descriptionEn: trimOrUndef(data?.descriptionEn),
-        price: typeof data?.price === "number" ? data.price : undefined,
-        level: data?.level as CourseLevel | undefined,
-        categoryId: data?.categoryId || undefined,
-        teacherId: data?.teacherId || undefined,
-        published:
-          typeof data?.published === "boolean" ? data.published : undefined,
-        image: data?.image instanceof File ? data.image : undefined,
-      });
-    } else {
-      const d = data as CreateCourseFormValues;
-      createCourse({
-        titleFa: (d?.titleFa ?? "").trim(),
-        titleEn: (d?.titleEn ?? "").trim(),
-        descriptionFa: trimOrUndef(d?.descriptionFa),
-        descriptionEn: trimOrUndef(d?.descriptionEn),
-        price: d?.price ?? 0,
-        level: (d?.level as CourseLevel) ?? "BEGINNER",
-        categoryId: d?.categoryId ?? "",
-        teacherId: d?.teacherId ?? "",
-        published: d?.published ?? false,
-        image: d?.image instanceof File ? d.image : undefined,
-      });
-    }
-  };
+  } = form;
 
   return (
     <form
@@ -174,7 +61,7 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
             value={(field.value as File | null) ?? null}
             onChange={field.onChange}
             disabled={isPending}
-            error={errors?.image?.message as string}
+            error={errors?.image?.message}
           />
         )}
       />
@@ -195,8 +82,8 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
             aria-invalid={!!errors?.titleFa}
           />
           {errors?.titleFa?.message && (
-            <span className="text-[10px] font-bold text-rose-500">
-              {errors.titleFa.message as string}
+            <span className="text-xs font-bold text-rose-500">
+              {errors?.titleFa?.message}
             </span>
           )}
         </div>
@@ -210,14 +97,14 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
             id="titleEn"
             {...register("titleEn")}
             placeholder={t("titleEnPlaceholder")}
-            className="h-11 rounded-xl text-xs font-semibold font-mono bg-background border-border/60"
+            className="h-11 rounded-xl text-xs font-semibold bg-background border-border/60"
             dir="ltr"
             disabled={isPending}
             aria-invalid={!!errors?.titleEn}
           />
           {errors?.titleEn?.message && (
-            <span className="text-[10px] font-bold text-rose-500">
-              {errors.titleEn.message as string}
+            <span className="text-xs font-bold text-rose-500">
+              {errors?.titleEn?.message}
             </span>
           )}
         </div>
@@ -227,18 +114,18 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
         <Label htmlFor="descriptionFa" className="text-xs font-bold">
           {t("descriptionFaLabel")}
         </Label>
-        <textarea
+        <Textarea
           id="descriptionFa"
           {...register("descriptionFa")}
           placeholder={t("descriptionFaPlaceholder")}
           rows={3}
-          className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2 resize-none focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2"
           dir="rtl"
           disabled={isPending}
         />
         {errors?.descriptionFa?.message && (
-          <span className="text-[10px] font-bold text-rose-500">
-            {errors.descriptionFa.message as string}
+          <span className="text-xs font-bold text-rose-500">
+            {errors?.descriptionFa?.message}
           </span>
         )}
       </div>
@@ -247,18 +134,18 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
         <Label htmlFor="descriptionEn" className="text-xs font-bold">
           {t("descriptionEnLabel")}
         </Label>
-        <textarea
+        <Textarea
           id="descriptionEn"
           {...register("descriptionEn")}
           placeholder={t("descriptionEnPlaceholder")}
           rows={3}
-          className="w-full rounded-xl text-xs font-semibold font-mono bg-background border border-border/60 px-3 py-2 resize-none focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2"
           dir="ltr"
           disabled={isPending}
         />
         {errors?.descriptionEn?.message && (
-          <span className="text-[10px] font-bold text-rose-500">
-            {errors.descriptionEn.message as string}
+          <span className="text-xs font-bold text-rose-500">
+            {errors?.descriptionEn?.message}
           </span>
         )}
       </div>
@@ -272,17 +159,17 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
             id="price"
             type="number"
             min={0}
-            step={1000}
+            step={10000}
             {...register("price", { valueAsNumber: true })}
             placeholder={t("pricePlaceholder")}
-            className="h-11 rounded-xl text-xs font-bold font-mono bg-background border-border/60"
+            className="h-11 py-0 rounded-xl text-xs font-bold bg-background border-border/60 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             dir="ltr"
             disabled={isPending}
             aria-invalid={!!errors?.price}
           />
           {errors?.price?.message && (
-            <span className="text-[10px] font-bold text-rose-500">
-              {errors.price.message as string}
+            <span className="text-xs font-bold text-rose-500">
+              {errors?.price?.message}
             </span>
           )}
         </div>
@@ -295,21 +182,24 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
             render={({ field }) => (
               <Select
                 items={levelOptions}
-                value={(field.value as string) || "BEGINNER"}
+                value={field.value || "BEGINNER"}
                 onValueChange={field.onChange}
               >
                 <SelectTrigger className="h-11 w-full rounded-xl text-xs font-bold bg-background border-border/60">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent alignItemWithTrigger={false} className="rounded-xl">
+                <SelectContent
+                  alignItemWithTrigger={false}
+                  className="rounded-xl"
+                >
                   <SelectGroup>
-                    {levelOptions.map((opt) => (
+                    {levelOptions?.map((opt) => (
                       <SelectItem
-                        key={opt.value}
-                        value={opt.value}
+                        key={opt?.value}
+                        value={opt?.value}
                         className="text-xs font-bold cursor-pointer"
                       >
-                        {opt.label}
+                        {opt?.label}
                       </SelectItem>
                     ))}
                   </SelectGroup>
@@ -335,7 +225,7 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
                   { value: "", label: t("categoryPlaceholder") },
                   ...categoryOptions,
                 ]}
-                value={(field.value as string) || ""}
+                value={field.value || ""}
                 onValueChange={field.onChange}
               >
                 <SelectTrigger
@@ -344,15 +234,18 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
                 >
                   <SelectValue placeholder={t("categoryPlaceholder")} />
                 </SelectTrigger>
-                <SelectContent alignItemWithTrigger={false} className="rounded-xl">
+                <SelectContent
+                  alignItemWithTrigger={false}
+                  className="rounded-xl"
+                >
                   <SelectGroup>
-                    {categoryOptions.map((opt) => (
+                    {categoryOptions?.map((opt) => (
                       <SelectItem
-                        key={opt.value}
-                        value={opt.value}
+                        key={opt?.value}
+                        value={opt?.value}
                         className="text-xs font-bold cursor-pointer"
                       >
-                        {opt.label}
+                        {opt?.label}
                       </SelectItem>
                     ))}
                   </SelectGroup>
@@ -361,8 +254,8 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
             )}
           />
           {errors?.categoryId?.message && (
-            <span className="text-[10px] font-bold text-rose-500">
-              {errors.categoryId.message as string}
+            <span className="text-xs font-bold text-rose-500">
+              {errors.categoryId.message}
             </span>
           )}
         </div>
@@ -381,7 +274,7 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
                   { value: "", label: t("teacherPlaceholder") },
                   ...teacherOptions,
                 ]}
-                value={(field.value as string) || ""}
+                value={field.value || ""}
                 onValueChange={field.onChange}
               >
                 <SelectTrigger
@@ -390,7 +283,10 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
                 >
                   <SelectValue placeholder={t("teacherPlaceholder")} />
                 </SelectTrigger>
-                <SelectContent alignItemWithTrigger={false} className="rounded-xl">
+                <SelectContent
+                  alignItemWithTrigger={false}
+                  className="rounded-xl"
+                >
                   <SelectGroup>
                     {teacherOptions.map((opt) => (
                       <SelectItem
@@ -407,8 +303,8 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
             )}
           />
           {errors?.teacherId?.message && (
-            <span className="text-[10px] font-bold text-rose-500">
-              {errors.teacherId.message as string}
+            <span className="text-xs font-bold text-rose-500">
+              {errors?.teacherId?.message}
             </span>
           )}
         </div>
@@ -434,7 +330,7 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
           >
             {t("publishedLabel")}
           </Label>
-          <p className="text-[10px] text-muted-foreground font-semibold leading-relaxed">
+          <p className="text-xs text-muted-foreground font-semibold leading-relaxed">
             {t("publishedDescription")}
           </p>
         </div>

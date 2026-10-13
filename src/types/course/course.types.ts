@@ -4,11 +4,13 @@ import type {
   PaginationSearchParams,
 } from "../common";
 
-export type CourseLevel = "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
-
 export type CourseSortBy = "createdAt" | "price" | "titleFa" | "titleEn";
 
-export type CoursePublishedFilter = "true" | "false";
+export const COURSE_LEVELS = ["BEGINNER", "INTERMEDIATE", "ADVANCED"] as const;
+export type CourseLevel = (typeof COURSE_LEVELS)[number];
+
+export const COURSE_PUBLISHED = ["true", "false"] as const;
+export type CoursePublishedFilter = (typeof COURSE_PUBLISHED)[number];
 
 export type ReactionType = "LIKE" | "DISLIKE" | null;
 
@@ -22,7 +24,7 @@ export type CourseTeacherRef = {
   id: string;
   name: string;
   slug: string;
-  avatar: string | null;
+  avatar?: string | null;
 };
 
 export type CourseStats = {
@@ -58,6 +60,10 @@ export type Course = {
   reactions: CourseReactions;
   isEnrolled: boolean;
   isFavorite: boolean;
+  titleFa?: string;
+  titleEn?: string;
+  descriptionFa?: string | null;
+  descriptionEn?: string | null;
 };
 
 export type CourseDetail = Course & {

@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { BookOpen, ImagePlus, Trash2, Upload } from "lucide-react";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 interface CourseImageFieldProps {
@@ -100,7 +100,7 @@ export function CourseImageField({
               </Button>
             )}
           </div>
-          <p className="text-[10px] text-muted-foreground font-semibold">
+          <p className="text-xs text-muted-foreground font-semibold">
             {t("imageHint")}
           </p>
         </div>
@@ -119,9 +119,7 @@ export function CourseImageField({
       </div>
 
       {error && (
-        <span className={cn("text-[10px] font-bold text-rose-500")}>
-          {error}
-        </span>
+        <span className={cn("text-xs font-bold text-rose-500")}>{error}</span>
       )}
     </div>
   );

@@ -3,7 +3,7 @@
 import {
   AdminFilters,
   type FilterSelectConfig,
-} from "@/components/admin/shared/AdminFilters";
+} from "@/components/admin/shared";
 import { useTranslations } from "next-intl";
 
 interface CoursesFiltersProps {

@@ -1,4 +1,5 @@
 import { api } from "@/hooks/upfetch";
+import { useAuthStore } from "@/store/authStore";
 import type {
   Course,
   GetAdminCoursesResponse,
@@ -10,20 +11,16 @@ import { useLocale } from "next-intl";
 export const useCourse = (slug: string | undefined, initialCourse?: Course) => {
   const locale = useLocale();
   const queryClient = useQueryClient();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
   return useQuery<GetCourseBySlugResponse>({
-    queryKey: ["courses", "detail", locale, slug],
-    queryFn: () =>
-      api<GetCourseBySlugResponse>(`/courses/${slug!}`, {
-        headers: {
-          "Accept-Language": locale,
-        },
-      }),
+    queryKey: ["courses", "detail", locale, slug, isAuthenticated],
+    queryFn: () => api<GetCourseBySlugResponse>(`/courses/${slug!}`),
     enabled: Boolean(slug),
-    staleTime: 60 * 1000,
+    staleTime: isAuthenticated ? 0 : 60 * 1000,
 
     initialData: () => {
-      if (initialCourse) {
+      if (initialCourse && !isAuthenticated) {
         return {
           status: "success",
           data: {

@@ -14,18 +14,25 @@ export async function generateMetadata({
 
   return {
     title: t("editTitle"),
-    robots: { index: false, follow: false },
   };
 }
 
-export default async function AdminEditCoursePage({
+async function AdminEditCourseSection({
+  paramsPromise,
+}: {
+  paramsPromise: Promise<{ locale: string; id: string }>;
+}) {
+  const { locale, id } = await paramsPromise;
+  setRequestLocale(locale);
+
+  return <AdminEditCourseClient slug={id} />;
+}
+
+export default function AdminEditCoursePage({
   params,
 }: {
   params: Promise<{ locale: string; id: string }>;
 }) {
-  const { locale, id } = await params;
-  setRequestLocale(locale);
-
   return (
     <Suspense
       fallback={
@@ -35,7 +42,7 @@ export default async function AdminEditCoursePage({
         </div>
       }
     >
-      <AdminEditCourseClient slug={id} />
+      <AdminEditCourseSection paramsPromise={params} />
     </Suspense>
   );
 }

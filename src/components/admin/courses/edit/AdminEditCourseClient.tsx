@@ -4,7 +4,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link, useRouter } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
-import { useCourse } from "@/services";
+import { useAdminCourseDetails } from "@/services";
 import { ArrowLeft, Edit3 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { CourseForm } from "../form/CourseForm";
@@ -17,7 +17,7 @@ export function AdminEditCourseClient({ slug }: AdminEditCourseClientProps) {
   const t = useTranslations("admin.courses.form");
   const router = useRouter();
 
-  const { data, isLoading } = useCourse(slug);
+  const { data, isLoading } = useAdminCourseDetails(slug);
   const course = data?.data?.course;
 
   return (
@@ -41,7 +41,7 @@ export function AdminEditCourseClient({ slug }: AdminEditCourseClientProps) {
           href="/admin/courses"
           className={cn(
             buttonVariants({ variant: "outline" }),
-            "rounded-xl h-11 gap-2 cursor-pointer shadow-xs"
+            "rounded-xl h-11 gap-2 cursor-pointer shadow-xs",
           )}
         >
           <ArrowLeft className="h-4 w-4 rtl:rotate-180" />
