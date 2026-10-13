@@ -7,7 +7,6 @@ export function UserDetailSkeleton() {
     <div className="flex flex-col gap-6">
       <Skeleton className="h-9 w-32 rounded-xl bg-primary/15" />
 
-      {/* Hero Card */}
       <div className="rounded-3xl border border-border/50 bg-card/60 p-6 sm:p-8">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
           <Skeleton className="h-28 w-28 rounded-3xl bg-primary/25 shrink-0" />
@@ -16,17 +15,13 @@ export function UserDetailSkeleton() {
             <Skeleton className="h-3 w-64 rounded-md bg-muted" />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
               {Array.from({ length: 4 }).map((_, i) => (
-                <Skeleton
-                  key={i}
-                  className="h-10 rounded-xl bg-muted/60"
-                />
+                <Skeleton key={i} className="h-10 rounded-xl bg-muted/60" />
               ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Stats Grid */}
       <div className="space-y-3">
         <Skeleton className="h-5 w-40 rounded-lg" />
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">

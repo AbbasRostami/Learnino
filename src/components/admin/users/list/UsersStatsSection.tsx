@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  AdminStatsGrid,
-  type StatCardConfig,
-} from "@/components/admin/shared/AdminStatsGrid";
+import { AdminStatsGrid, type StatCardConfig } from "@/components/admin/shared";
 import { useAdminUsersStats } from "@/services";
 import { Shield, UserCheck, UserPlus, Users } from "lucide-react";
 import { useTranslations } from "next-intl";

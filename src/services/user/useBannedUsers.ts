@@ -8,16 +8,10 @@ export const useBannedUsers = (params: BannedUsersParams = {}) => {
 
   return useQuery<BannedUsersResponse>({
     queryKey: ["admin", "users", "blacklist", locale, params],
-    queryFn: () => {
-      const searchParams = new URLSearchParams();
-      if (params.page) searchParams.append("page", String(params.page));
-      if (params.limit) searchParams.append("limit", String(params.limit));
-
-      const qs = searchParams.toString();
-      return api<BannedUsersResponse>(`/users/blacklist${qs ? `?${qs}` : ""}`, {
-        headers: { "Accept-Language": locale },
-      });
-    },
+    queryFn: () =>
+      api<BannedUsersResponse>("/users/blacklist", {
+        params,
+      }),
     staleTime: 30 * 1000,
   });
 };

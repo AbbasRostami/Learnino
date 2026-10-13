@@ -1,5 +1,5 @@
-import { AdminTableSkeleton } from "@/components/admin/shared";
 import { AdminUserDetailClient } from "@/components/admin/users/detail/AdminUserDetailClient";
+import { UserDetailSkeleton } from "@/components/admin/users/detail/UserDetailSkeleton";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
@@ -7,28 +7,37 @@ import { Suspense } from "react";
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: string; id: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "admin.users.detail" });
+  const t = await getTranslations({ locale, namespace: "admin.users" });
 
   return {
-    title: t("title"),
-    robots: { index: false, follow: false },
+    title: t("detail.title"),
   };
 }
 
-export default async function AdminUserDetailPage({
+interface UserDetailSectionProps {
+  paramsPromise: Promise<{ locale: string; id: string }>;
+}
+
+async function AdminUserDetailSection({
+  paramsPromise,
+}: UserDetailSectionProps) {
+  const { locale, id } = await paramsPromise;
+  setRequestLocale(locale);
+
+  return <AdminUserDetailClient userId={id} />;
+}
+
+export default function AdminUserDetailPage({
   params,
 }: {
   params: Promise<{ locale: string; id: string }>;
 }) {
-  const { locale, id } = await params;
-  setRequestLocale(locale);
-
   return (
-    <Suspense fallback={<AdminTableSkeleton columnCount={8} rowCount={8} />}>
-      <AdminUserDetailClient userId={id} />
+    <Suspense fallback={<UserDetailSkeleton />}>
+      <AdminUserDetailSection paramsPromise={params} />
     </Suspense>
   );
 }

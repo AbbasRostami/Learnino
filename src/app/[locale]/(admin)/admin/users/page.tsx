@@ -1,4 +1,4 @@
-import { AdminTableSkeleton } from "@/components/admin/shared/AdminTableSkeleton";
+import { AdminTableSkeleton } from "@/components/admin/shared";
 import { AdminUsersClient } from "@/components/admin/users/list/AdminUsersClient";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -14,7 +14,6 @@ export async function generateMetadata({
 
   return {
     title: t("pageTitle"),
-    robots: { index: false, follow: false },
   };
 }
 
@@ -27,19 +26,7 @@ export default async function AdminUsersPage({
   setRequestLocale(locale);
 
   return (
-    <Suspense
-      fallback={
-        <div className="rounded-2xl border border-border/50 overflow-hidden bg-card">
-          <div className="w-full overflow-x-auto">
-            <table className="w-full border-collapse">
-              <tbody>
-                <AdminTableSkeleton columnCount={5} rowCount={8} />
-              </tbody>
-            </table>
-          </div>
-        </div>
-      }
-    >
+    <Suspense fallback={<AdminTableSkeleton columnCount={7} rowCount={8} />}>
       <AdminUsersClient />
     </Suspense>
   );

@@ -1,10 +1,10 @@
 "use client";
 
-import { AdminConfirmDialog } from "@/components/admin/shared/AdminConfirmDialog";
 import {
+  AdminConfirmDialog,
   AdminStatsGrid,
   type StatCardConfig,
-} from "@/components/admin/shared/AdminStatsGrid";
+} from "@/components/admin/shared";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useLocale } from "@/hooks/useLocale";
@@ -176,28 +176,25 @@ export function AdminUserDetailClient({ userId }: AdminUserDetailClientProps) {
                 {displayName}
               </h1>
               {user?.role === "ADMIN" && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/30 text-[10px] font-black">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/30 text-xs font-black">
                   <ShieldCheck className="h-3 w-3" />
                   <span>ADMIN</span>
                 </span>
               )}
               {user?.isVerified ? (
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[10px] font-black">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs font-black">
                   <UserCheck className="h-3 w-3" />
                   <span>{t("detail.verified")}</span>
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-[10px] font-black">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-xs font-black">
                   <UserX className="h-3 w-3" />
                   <span>{t("detail.unverified")}</span>
                 </span>
               )}
             </div>
 
-            <p
-              className="text-xs text-muted-foreground mb-4 font-mono"
-              dir="ltr"
-            >
+            <p className="text-xs text-muted-foreground mb-4" dir="ltr">
               #{user?.id}
             </p>
 
@@ -213,16 +210,13 @@ export function AdminUserDetailClient({ userId }: AdminUserDetailClientProps) {
               </div>
               <div className="flex items-center gap-2 p-2 rounded-xl bg-background/60 border border-border/40">
                 <Phone className="h-4 w-4 text-brand-accent shrink-0" />
-                <span className="font-mono text-foreground" dir="ltr">
+                <span className="text-foreground" dir="ltr">
                   {user?.phone || t("detail.noPhone")}
                 </span>
               </div>
               <div className="flex items-center gap-2 p-2 rounded-xl bg-background/60 border border-border/40">
                 <Calendar className="h-4 w-4 text-brand-cyan shrink-0" />
-                <span
-                  className="font-semibold text-foreground"
-                  suppressHydrationWarning
-                >
+                <span className="font-semibold text-foreground">
                   {t("detail.createdAt")}: {formatRelativeTime(user.createdAt)}
                 </span>
               </div>

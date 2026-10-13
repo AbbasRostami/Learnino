@@ -5,11 +5,13 @@ import type {
   PaginationSearchParams,
 } from "../common/pagination.types";
 
-export type UserRole = "USER" | "ADMIN";
-
 export type SortByUser = "createdAt" | "name" | "email";
 
-export type VerificationFilter = "true" | "false";
+export const USER_ROLES = ["USER", "ADMIN"] as const;
+export type UserRole = (typeof USER_ROLES)[number];
+
+export const VERIFICATION_STATUSES = ["true", "false"] as const;
+export type VerificationFilter = (typeof VERIFICATION_STATUSES)[number];
 
 export type UserProfile = {
   id: string;

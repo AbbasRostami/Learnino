@@ -10,10 +10,7 @@ export const useProfile = () => {
 
   return useQuery<UserProfileResponse>({
     queryKey: ["user", "profile", locale],
-    queryFn: () =>
-      api<UserProfileResponse>("/users/profile", {
-        headers: { "Accept-Language": locale },
-      }),
+    queryFn: () => api<UserProfileResponse>("/users/profile"),
     enabled: isAuthenticated,
     staleTime: 5 * 60 * 1000,
   });

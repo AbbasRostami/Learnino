@@ -1,7 +1,6 @@
 "use client";
 
-import { AdminDataTable } from "@/components/admin/shared/AdminDataTable";
-import { AdminPagination } from "@/components/admin/shared/AdminPagination";
+import { AdminDataTable, AdminPagination } from "@/components/admin/shared";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
@@ -37,10 +36,28 @@ export function AdminBannedUsersClient() {
 
   const columns: ColumnDef<BannedUser>[] = [
     {
+      id: "rowNumber",
+      header: () => (
+        <span className="w-4 text-center block text-muted-foreground">#</span>
+      ),
+      cell: ({ row }) => {
+        const rowNum = (params.page - 1) * params.limit + row.index + 1;
+        const formattedNum = new Intl.NumberFormat(
+          locale === "fa" ? "fa-IR" : "en-US",
+        ).format(rowNum);
+
+        return (
+          <span className="text-xs font-bold text-muted-foreground/80 w-4 text-center block">
+            {formattedNum}
+          </span>
+        );
+      },
+    },
+    {
       id: "user",
       header: () => <span>{t("table.user")}</span>,
       cell: ({ row }) => {
-        const user = row.original;
+        const user = row?.original;
         const displayName =
           user?.name || user?.email?.split("@")?.[0] || t("detail.noName");
         const avatarInitial = (user?.name || user?.email || "?")
@@ -60,7 +77,7 @@ export function AdminBannedUsersClient() {
                 {displayName}
               </span>
               <span
-                className="text-[10px] text-muted-foreground font-mono truncate"
+                className="text-xs text-muted-foreground truncate"
                 dir="ltr"
               >
                 #{user?.id.slice(0, 8)}
@@ -77,7 +94,7 @@ export function AdminBannedUsersClient() {
         <div className="flex items-center gap-1.5 text-xs text-foreground font-semibold">
           <Mail className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
           <span className="truncate" dir="ltr">
-            {row.original.email}
+            {row?.original?.email}
           </span>
         </div>
       ),
@@ -91,10 +108,7 @@ export function AdminBannedUsersClient() {
             <ShieldOff className="h-3.5 w-3.5" />
             <span>{t("detail.banned")}</span>
           </span>
-          <span
-            className="text-[10px] text-muted-foreground"
-            suppressHydrationWarning
-          >
+          <span className="text-xs text-muted-foreground">
             {t("detail.bannedSince")}{" "}
             {formatRelativeTime(row?.original?.bannedAt, locale)}
           </span>
@@ -105,10 +119,7 @@ export function AdminBannedUsersClient() {
       id: "createdAt",
       header: () => <span>{t("table.joined")}</span>,
       cell: ({ row }) => (
-        <div
-          className="flex items-center gap-1 text-xs text-muted-foreground font-semibold"
-          suppressHydrationWarning
-        >
+        <div className="flex items-center gap-1 text-xs text-muted-foreground font-semibold">
           <Calendar className="h-3.5 w-3.5 text-muted-foreground/70" />
           <span>{formatRelativeTime(row?.original?.createdAt, locale)}</span>
         </div>
