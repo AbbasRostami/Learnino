@@ -64,7 +64,7 @@ export function AdminResponsiveDialog({
                   {title}
                 </SheetTitle>
                 {description && (
-                  <SheetDescription className="text-[11px] leading-relaxed text-muted-foreground font-semibold">
+                  <SheetDescription className="text-xs leading-relaxed text-muted-foreground font-semibold">
                     {description}
                   </SheetDescription>
                 )}
@@ -97,7 +97,7 @@ export function AdminResponsiveDialog({
                 {title}
               </DialogTitle>
               {description && (
-                <DialogDescription className="text-[11px] leading-relaxed text-muted-foreground font-semibold">
+                <DialogDescription className="text-xs leading-relaxed text-muted-foreground font-semibold">
                   {description}
                 </DialogDescription>
               )}

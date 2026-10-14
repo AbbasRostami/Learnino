@@ -85,14 +85,14 @@ export function AdminStatsGrid({
 
           <div className="relative flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
-              <div className="text-[10px] font-bold text-muted-foreground mb-1.5 truncate uppercase tracking-wide">
+              <div className="text-xs font-bold text-muted-foreground mb-1.5 truncate uppercase tracking-wide">
                 {stat.label}
               </div>
               <div className="text-2xl sm:text-3xl font-black text-foreground mb-1">
                 {formatNumber(stat.value)}
               </div>
               {stat.subLabel && (
-                <div className="text-[10px] font-semibold text-muted-foreground truncate">
+                <div className="text-xs font-semibold text-muted-foreground truncate">
                   {stat.subLabel}
                 </div>
               )}

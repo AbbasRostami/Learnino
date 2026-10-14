@@ -104,7 +104,7 @@ export function AdminPagination({
             }}
             disabled={isLoading}
           >
-            <SelectTrigger className="h-8 w-16 text-xs rounded-lg border-border/60 bg-card font-mono">
+            <SelectTrigger className="h-8 w-16 text-xs rounded-lg border-border/60 bg-card">
               <SelectValue />
             </SelectTrigger>
             <SelectContent
@@ -116,7 +116,7 @@ export function AdminPagination({
                   <SelectItem
                     key={opt.value}
                     value={opt.value}
-                    className="text-xs font-mono cursor-pointer"
+                    className="text-xs cursor-pointer"
                   >
                     {formatNumber(Number(opt.value))}
                   </SelectItem>
@@ -143,7 +143,7 @@ export function AdminPagination({
           )}
         </Button>
 
-        <div className="flex items-center gap-1 font-mono">
+        <div className="flex items-center gap-1">
           {getPageNumbers().map((page, index) => {
             if (page === "ellipsis") {
               return (

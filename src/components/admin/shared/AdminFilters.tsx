@@ -1,6 +1,6 @@
 "use client";
 
-import { AdminSearchInput } from "@/components/admin/shared/AdminSearchInput";
+import { AdminSearchInput } from "@/components/admin/shared";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -84,7 +84,7 @@ export function AdminFilters({
                 value={currentValue}
                 onValueChange={(val) => {
                   if (filter.onChange) {
-                    filter.onChange(val ?? ""); 
+                    filter.onChange(val ?? "");
                   }
                 }}
               >
@@ -116,7 +116,6 @@ export function AdminFilters({
         })}
       </div>
 
-      {/* ── Reset Button ── */}
       {hasActiveFilters && onReset && (
         <div className="flex items-center justify-end border-t border-border/40 pt-3">
           <Button
