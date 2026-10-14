@@ -3,7 +3,6 @@ import { useCreatePost, useUpdatePost, useUploadEditorImage } from "@/services";
 import type { Post } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
 import { useForm, type Resolver } from "react-hook-form";
 
 interface UsePostFormProps {
@@ -19,30 +18,17 @@ export function usePostForm({ post, onSuccess }: UsePostFormProps) {
 
   const form = useForm<CreatePostFormValues>({
     resolver: zodResolver(schema) as Resolver<CreatePostFormValues>,
-    defaultValues: {
-      titleFa: "",
-      titleEn: "",
-      contentFa: "",
-      contentEn: "",
-      categoryId: "",
-      published: false,
+    mode: "onChange",
+    values: {
+      titleFa: post?.title || "",
+      titleEn: post?.title || "",
+      contentFa: post?.content || "",
+      contentEn: post?.content || "",
+      categoryId: post?.category?.id || "",
+      published: post?.published ?? false,
       image: null,
     },
   });
-
-  useEffect(() => {
-    if (post?.id) {
-      form.reset({
-        titleFa: post?.title || "",
-        titleEn: post?.title || "",
-        contentFa: post?.content || "",
-        contentEn: post?.content || "",
-        categoryId: post?.category?.id || "",
-        published: post?.published ?? false,
-        image: null,
-      });
-    }
-  }, [post?.id, form]);
 
   const { mutateAsync: uploadEditorImage } = useUploadEditorImage({});
 

@@ -8,7 +8,6 @@ import {
 import type { Course } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
 import { useForm, type Resolver } from "react-hook-form";
 
 interface UseCourseFormProps {
@@ -47,36 +46,20 @@ export function useCourseForm({ course, onSuccess }: UseCourseFormProps) {
 
   const form = useForm<CreateCourseFormValues>({
     resolver: zodResolver(schema) as Resolver<CreateCourseFormValues>,
-    defaultValues: {
-      titleFa: "",
-      titleEn: "",
-      descriptionFa: "",
-      descriptionEn: "",
-      price: 0,
-      level: "BEGINNER",
-      categoryId: "",
-      teacherId: "",
-      published: false,
+    mode: "onChange",
+    values: {
+      titleFa: course?.titleFa || "",
+      titleEn: course?.titleEn || "",
+      descriptionFa: course?.descriptionFa || "",
+      descriptionEn: course?.descriptionEn || "",
+      price: course?.price ?? 0,
+      level: course?.level || "BEGINNER",
+      categoryId: course?.category?.id || "",
+      teacherId: course?.teacher?.id || "",
+      published: course?.published ?? false,
       image: null,
     },
   });
-
-  useEffect(() => {
-    if (course?.id) {
-      form.reset({
-        titleFa: course?.titleFa || course?.title || "",
-        titleEn: course?.titleEn || course?.title || "",
-        descriptionFa: course?.descriptionFa || course?.description || "",
-        descriptionEn: course?.descriptionEn || course?.description || "",
-        price: course?.price ?? 0,
-        level: course?.level || "BEGINNER",
-        categoryId: course?.category?.id || "",
-        teacherId: course?.teacher?.id || "",
-        published: course?.published ?? false,
-        image: null,
-      });
-    }
-  }, [course?.id, form]);
 
   const { mutate: createCourse, isPending: isCreating } = useCreateCourse({
     onSuccessCallback: () => {

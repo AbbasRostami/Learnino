@@ -1,3 +1,4 @@
+// src/components/admin/teachers/form/useTeacherForm.ts
 import {
   getCreateTeacherSchema,
   type CreateTeacherFormValues,
@@ -6,7 +7,6 @@ import { useCreateTeacher, useUpdateTeacher } from "@/services";
 import type { TeacherListItem } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
 import { useForm, type Resolver } from "react-hook-form";
 
 interface UseTeacherFormProps {
@@ -23,28 +23,15 @@ export function useTeacherForm({ teacher, onSuccess }: UseTeacherFormProps) {
   const form = useForm<CreateTeacherFormValues>({
     resolver: zodResolver(schema) as Resolver<CreateTeacherFormValues>,
     mode: "onChange",
-    defaultValues: {
-      nameFa: "",
-      nameEn: "",
-      bioFa: "",
-      bioEn: "",
+    values: {
+      nameFa: teacher?.name || "",
+      nameEn: teacher?.name || "",
+      bioFa: teacher?.bio || "",
+      bioEn: teacher?.bio || "",
       avatar: null,
-      show: true,
+      show: teacher?.show ?? true,
     },
   });
-
-  useEffect(() => {
-    if (teacher?.id) {
-      form.reset({
-        nameFa: teacher?.name || "",
-        nameEn: teacher?.name || "",
-        bioFa: teacher?.bio || "",
-        bioEn: teacher?.bio || "",
-        avatar: null,
-        show: teacher?.show ?? true,
-      });
-    }
-  }, [teacher?.id, form]);
 
   const { mutate: createTeacher, isPending: isCreating } = useCreateTeacher({
     onSuccessCallback: () => {

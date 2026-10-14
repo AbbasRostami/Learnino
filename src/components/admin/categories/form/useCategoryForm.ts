@@ -6,7 +6,6 @@ import { useCreateCategory, useUpdateCategory } from "@/services";
 import type { CategoryWithCount } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
 import { useForm, type Resolver } from "react-hook-form";
 
 interface UseCategoryFormProps {
@@ -23,26 +22,14 @@ export function useCategoryForm({ category, onSuccess }: UseCategoryFormProps) {
   const form = useForm<CreateCategoryFormValues>({
     resolver: zodResolver(schema) as Resolver<CreateCategoryFormValues>,
     mode: "onChange",
-    defaultValues: {
-      nameFa: "",
-      nameEn: "",
-      descriptionFa: "",
-      descriptionEn: "",
-      show: true,
+    values: {
+      nameFa: category?.name || "",
+      nameEn: category?.name || "",
+      descriptionFa: category?.description || "",
+      descriptionEn: category?.description || "",
+      show: category?.show ?? true,
     },
   });
-
-  useEffect(() => {
-    if (category?.id) {
-      form.reset({
-        nameFa: category?.name || "",
-        nameEn: category?.name || "",
-        descriptionFa: category?.description || "",
-        descriptionEn: category?.description || "",
-        show: category?.show ?? true,
-      });
-    }
-  }, [category?.id, form]);
 
   const { mutate: createCategory, isPending: isCreating } = useCreateCategory({
     onSuccessCallback: () => {
