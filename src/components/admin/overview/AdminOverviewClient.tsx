@@ -1,8 +1,8 @@
 "use client";
 
 import { useAdminOverview, useProfile } from "@/services";
-import { Sparkles } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { ReadOnlyBanner } from "../shared";
 import { AdminOverviewSkeleton } from "./AdminOverviewSkeleton";
 import { OverviewExpiringDiscounts } from "./OverviewExpiringDiscounts";
 import { OverviewOrdersChart } from "./OverviewOrdersChart";
@@ -12,10 +12,10 @@ import { OverviewStatsGrid } from "./OverviewStatsGrid";
 import { OverviewTopCourses } from "./OverviewTopCourses";
 import { OverviewTopDiscounts } from "./OverviewTopDiscounts";
 import { OverviewUsersChart } from "./OverviewUsersChart";
+import { OverviewWelcomeBanner } from "./OverviewWelcomeBanner";
 
 export function AdminOverviewClient() {
   const t = useTranslations("admin.overview");
-  const tAdmin = useTranslations("admin");
   const locale = useLocale();
 
   const { data: profileData } = useProfile();
@@ -31,22 +31,12 @@ export function AdminOverviewClient() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="relative overflow-hidden rounded-3xl border border-primary/20 bg-linear-to-br from-primary/10 via-brand-accent/10 to-brand-cyan/5 p-6 sm:p-8 shadow-lg">
-        <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/20 blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-brand-accent/20 blur-3xl" />
-        <div className="relative flex flex-col items-start gap-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-[10px] font-black">
-            <Sparkles className="h-3 w-3" />
-            <span>{tAdmin("badge")}</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-foreground">
-            {t("welcomeBack", { name: userName })}
-          </h1>
-          <p className="text-xs text-muted-foreground leading-relaxed max-w-2xl">
-            {t("welcomeSubtitle")}
-          </p>
-        </div>
-      </div>
+      <ReadOnlyBanner />
+
+      <OverviewWelcomeBanner
+        title={t("welcomeBack", { name: userName })}
+        subtitle={t("welcomeSubtitle")}
+      />
 
       <OverviewStatsGrid
         revenue={data?.revenue}

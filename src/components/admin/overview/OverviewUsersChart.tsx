@@ -88,14 +88,14 @@ export function OverviewUsersChart({
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-foreground text-2xl font-black font-mono"
+                          className="fill-foreground text-2xl font-black"
                         >
                           {formatNumber(user.total, locale)}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 20}
-                          className="fill-muted-foreground text-[10px] font-bold"
+                          className="fill-muted-foreground text-xs font-bold"
                         >
                           {t("usersChart.totalUsers")}
                         </tspan>

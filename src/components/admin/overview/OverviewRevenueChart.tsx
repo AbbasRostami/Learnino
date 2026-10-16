@@ -84,7 +84,7 @@ export function OverviewRevenueChart({
         >
           <BarChart
             data={chartData}
-            margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+            margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
           >
             <CartesianGrid vertical={false} strokeDasharray="3 3" />
             <XAxis
@@ -98,7 +98,7 @@ export function OverviewRevenueChart({
               tickLine={false}
               axisLine={false}
               tickMargin={10}
-              className="text-[10px] font-mono"
+              className="text-xs"
               tickFormatter={(val) => `${val / 1000000}M`}
             />
             <ChartTooltip

@@ -40,7 +40,7 @@ export function OverviewPendingComments({
             <MessageSquare className="h-4 w-4 text-amber-500" />
             <span>{t("pendingComments.title")}</span>
           </CardTitle>
-          <CardDescription className="text-[11px] mt-0.5">
+          <CardDescription className="text-xs mt-0.5">
             {t("pendingComments.description")}
           </CardDescription>
         </div>
@@ -49,7 +49,7 @@ export function OverviewPendingComments({
           href="/admin/comments"
           className={cn(
             buttonVariants({ variant: "ghost", size: "sm" }),
-            "rounded-xl h-8 text-[11px] font-bold text-primary hover:bg-primary/10 cursor-pointer gap-1",
+            "rounded-xl h-8 text-xs font-bold text-primary hover:bg-primary/10 cursor-pointer gap-1",
           )}
         >
           <span>{t("pendingComments.viewAll")}</span>
@@ -100,10 +100,7 @@ function PendingCommentItem({
           <span className="text-xs font-black text-foreground truncate">
             {comment?.user?.name || comment?.user?.email?.split("@")?.[0]}
           </span>
-          <span
-            className="text-[10px] text-muted-foreground"
-            suppressHydrationWarning
-          >
+          <span className="text-xs text-muted-foreground">
             {formatRelativeTime(comment?.createdAt, locale)}
           </span>
         </div>

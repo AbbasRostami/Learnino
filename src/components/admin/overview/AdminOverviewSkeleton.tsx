@@ -32,7 +32,6 @@ export function AdminOverviewSkeleton() {
       </div>
 
       <div className="flex flex-col gap-5">
-        {/* ── 2. Main Stats Skeleton (4 cols) ── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           {mainColors.map((color, i) => (
             <div
@@ -44,12 +43,13 @@ export function AdminOverviewSkeleton() {
                 <Skeleton className="h-8 w-full rounded-xl bg-foreground/10" />
                 <Skeleton className="h-2 w-1/2 rounded-full bg-muted-foreground/20" />
               </div>
-              <Skeleton className={cn("h-14 w-14 rounded-2xl shrink-0", color)} />
+              <Skeleton
+                className={cn("h-14 w-14 rounded-2xl shrink-0", color)}
+              />
             </div>
           ))}
         </div>
 
-        {/* ── 3. Content Stats Skeleton (5 cols) ── */}
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-4">
           {secondaryColors.map((color, i) => (
             <div
@@ -67,7 +67,6 @@ export function AdminOverviewSkeleton() {
         </div>
       </div>
 
-      {/* ── 4. Charts Skeleton ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 rounded-[2rem] border border-border/50 bg-card/60 backdrop-blur-md shadow-xs p-6 flex flex-col gap-6">
           <div className="flex items-center justify-between">

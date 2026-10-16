@@ -30,7 +30,7 @@ export function OverviewTopDiscounts({
           <Tag className="h-4 w-4 text-fuchsia-500" />
           <span>{t("topDiscounts.title")}</span>
         </CardTitle>
-        <CardDescription className="text-[11px] mt-0.5">
+        <CardDescription className="text-xs mt-0.5">
           {t("topDiscounts.description")}
         </CardDescription>
       </CardHeader>
@@ -49,10 +49,10 @@ export function OverviewTopDiscounts({
                   className="flex flex-col gap-2 p-3 rounded-2xl border border-border/40 bg-background/80"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono font-black text-primary text-xs tracking-wider">
+                    <span className="font-black text-primary text-xs tracking-wider">
                       {d?.code}
                     </span>
-                    <span className="text-[10px] text-muted-foreground font-bold">
+                    <span className="text-xs text-muted-foreground font-bold">
                       {t("topDiscounts.uses", {
                         used: formatNumber(d?.usedCount, locale),
                         max: formatNumber(d?.maxUses, locale),

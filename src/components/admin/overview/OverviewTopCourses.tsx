@@ -33,7 +33,7 @@ export function OverviewTopCourses({
           <BookOpen className="h-4 w-4 text-primary" />
           <span>{t("topCourses.title")}</span>
         </CardTitle>
-        <CardDescription className="text-[11px] mt-0.5">
+        <CardDescription className="text-xs mt-0.5">
           {t("topCourses.description")}
         </CardDescription>
       </CardHeader>
@@ -67,7 +67,7 @@ export function OverviewTopCourses({
                   </span>
                 </div>
 
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-[10px] font-black shrink-0">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-black shrink-0">
                   <GraduationCap className="h-3 w-3" />
                   <span>
                     {t("topCourses.enrollments", {

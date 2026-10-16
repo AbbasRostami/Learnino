@@ -52,22 +52,23 @@ export function OverviewStatsGrid({
   locale,
   t,
 }: OverviewStatsGridProps) {
+  const currencyText = locale === "fa" ? "تومان" : "Toman";
   const mainCards = [
     {
       icon: DollarSign,
       title: t("stats.totalRevenue"),
-      value: `${formatNumber(revenue?.sales?.total, locale)} RLS`,
+      value: `${formatNumber(revenue?.sales?.total, locale)} ${currencyText}`,
       subText: t("statsSub.thisMonth", {
-        value: `${formatNumber(revenue?.sales?.thisMonth, locale)} RLS`,
+        value: `${formatNumber(revenue?.sales?.thisMonth, locale)} ${currencyText}`,
       }),
       color: "from-emerald-500 to-teal-600 shadow-emerald-500/20",
     },
     {
       icon: Wallet,
       title: t("stats.walletRevenue"),
-      value: `${formatNumber(revenue?.walletCharges?.total, locale)} RLS`,
+      value: `${formatNumber(revenue?.walletCharges?.total, locale)} ${currencyText}`,
       subText: t("statsSub.thisMonth", {
-        value: `${formatNumber(revenue?.walletCharges?.thisMonth, locale)} RLS`,
+        value: `${formatNumber(revenue?.walletCharges?.thisMonth, locale)} ${currencyText}`,
       }),
       color: "from-amber-500 to-orange-600 shadow-amber-500/20",
     },
@@ -155,13 +156,13 @@ export function OverviewStatsGrid({
             />
             <div className="relative flex items-center justify-between">
               <div className="space-y-1">
-                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">
+                <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">
                   {c.title}
                 </p>
-                <h3 className="text-2xl font-black text-foreground font-mono tracking-tight">
+                <h3 className="text-2xl font-black text-foreground tracking-tight">
                   {c.value}
                 </h3>
-                <p className="text-[10px] font-bold text-muted-foreground/80">
+                <p className="text-xs font-bold text-muted-foreground/80">
                   {c.subText}
                 </p>
               </div>
@@ -193,13 +194,11 @@ export function OverviewStatsGrid({
               <c.icon className="h-5 w-5" />
             </div>
             <div className="space-y-0.5">
-              <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">
+              <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                 {c.title}
               </p>
-              <h4 className="text-lg font-black text-foreground font-mono">
-                {c.value}
-              </h4>
-              <p className="text-[9px] font-bold text-muted-foreground/70">
+              <h4 className="text-lg font-black text-foreground">{c.value}</h4>
+              <p className="text-xs font-bold text-muted-foreground/70">
                 {c.subText}
               </p>
             </div>
