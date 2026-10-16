@@ -7,7 +7,7 @@ import type {
 
 export type SortByUser = "createdAt" | "name" | "email";
 
-export const USER_ROLES = ["USER", "ADMIN"] as const;
+export const USER_ROLES = ["USER", "ADMIN", "SUPER_ADMIN"] as const;
 export type UserRole = (typeof USER_ROLES)[number];
 
 export const VERIFICATION_STATUSES = ["true", "false"] as const;

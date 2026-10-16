@@ -67,7 +67,7 @@ export const getListUsersSchema = (t: UserT) =>
       .trim()
       .max(100, t("validation.searchMaxLength"))
       .optional(),
-    role: z.enum(["USER", "ADMIN"]).optional(),
+    role: z.enum(["USER", "ADMIN", "SUPER_ADMIN"]).optional(),
     isVerified: z.enum(["true", "false"]).optional(),
     sortBy: z
       .enum(["createdAt", "name", "email"])

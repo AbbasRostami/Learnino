@@ -1,12 +1,22 @@
 // src/components/admin/users/list/columns.tsx
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AdminUserListItem } from "@/types";
 import { formatNumber } from "@/utils/formatters";
 import { ColumnDef } from "@tanstack/react-table";
-import { AdminDateCell, AdminSortableHeader } from "../../shared";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { BookOpen, Mail, MessageCircle, Package, Phone, ShieldCheck, User, UserCheck, UserX } from "lucide-react";
 import { cn } from "cn";
+import {
+  BookOpen,
+  Mail,
+  MessageCircle,
+  Package,
+  Phone,
+  ShieldCheck,
+  User,
+  UserCheck,
+  UserX,
+} from "lucide-react";
+import { AdminDateCell, AdminSortableHeader } from "../../shared";
 import { UserActionsCell } from "./UserActionsCell";
 
 interface ColumnsProps {
@@ -67,12 +77,6 @@ export const getUsersColumns = ({
               <span className="text-sm font-black text-foreground truncate">
                 {displayName}
               </span>
-              <span
-                className="text-xs text-muted-foreground truncate"
-                dir="ltr"
-              >
-                #{user?.id?.slice(0, 8)}
-              </span>
             </div>
           </div>
         );
@@ -112,24 +116,46 @@ export const getUsersColumns = ({
       header: () => <span>{t("table.role")}</span>,
       cell: ({ row }) => {
         const role = row?.original?.role;
+        const isSuper = role === "SUPER_ADMIN";
         const isAdmin = role === "ADMIN";
+
+        const config = isSuper
+          ? {
+              bg: "bg-purple-500/10",
+              text: "text-purple-600 dark:text-purple-400",
+              border: "border-purple-500/30",
+              icon: ShieldCheck,
+              label: t("filters.roleSuperAdmin"),
+            }
+          : isAdmin
+            ? {
+                bg: "bg-primary/10",
+                text: "text-primary",
+                border: "border-primary/30",
+                icon: ShieldCheck,
+                label: t("filters.roleAdmin"),
+              }
+            : {
+                bg: "bg-muted",
+                text: "text-muted-foreground",
+                border: "border-border",
+                icon: User,
+                label: t("filters.roleUser"),
+              };
+
+        const Icon = config.icon;
+
         return (
           <span
             className={cn(
               "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-black border",
-              isAdmin
-                ? "bg-primary/10 text-primary border-primary/30"
-                : "bg-muted text-muted-foreground border-border",
+              config.bg,
+              config.text,
+              config.border,
             )}
           >
-            {isAdmin ? (
-              <ShieldCheck className="h-3 w-3" />
-            ) : (
-              <User className="h-3 w-3" />
-            )}
-            <span>
-              {isAdmin ? t("filters.roleAdmin") : t("filters.roleUser")}
-            </span>
+            <Icon className="h-3 w-3" />
+            <span>{config.label}</span>
           </span>
         );
       },

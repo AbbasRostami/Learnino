@@ -29,7 +29,6 @@ export function AdminUsersClient() {
     setLimit,
     setSearch,
     setFilter,
-    setSort,
     resetFilters,
   } = useAdminTableParams<ListUsersParams>({
     customParsers: {
