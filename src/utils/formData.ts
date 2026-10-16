@@ -11,15 +11,12 @@ export function objectToFormData(data: Record<string, unknown>): FormData {
       return;
     }
 
-    if (typeof value === "boolean") {
-      formData.append(
-        key,
-        new Blob([JSON.stringify(value)], { type: "application/json" }),
-      );
+    if (Array.isArray(value)) {
+      value.forEach((item) => formData.append(key, String(item)));
       return;
     }
 
-    formData.append(key, String(value).trim());
+    formData.append(key, String(value));
   });
 
   return formData;
