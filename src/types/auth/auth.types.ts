@@ -46,7 +46,7 @@ export type LoginResponse = ApiSuccessResponse<{
     id: string;
     email: string;
     name: string | null;
-    role: "USER" | "ADMIN";
+    role: "USER" | "ADMIN" | "SUPER_ADMIN";
   };
 }>;
 
