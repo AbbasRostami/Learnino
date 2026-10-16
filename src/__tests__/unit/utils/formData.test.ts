@@ -14,9 +14,9 @@ describe("objectToFormData", () => {
     expect(result.get("city")).toBe("Tehran");
   });
 
-  it("should trim string values", () => {
+  it("should append string values as provided", () => {
     const result = objectToFormData({ name: "  Ali  " });
-    expect(result.get("name")).toBe("Ali");
+    expect(result.get("name")).toBe("  Ali  ");
   });
 
   it("should append number values as strings", () => {
@@ -59,20 +59,14 @@ describe("objectToFormData", () => {
     expect(result.get("file")).toBeInstanceOf(Blob);
   });
 
-  it("should convert boolean true to JSON blob", () => {
+  it("should convert boolean true to string 'true'", () => {
     const result = objectToFormData({ published: true });
-    const value = result.get("published") as Blob;
-
-    expect(value).toBeInstanceOf(Blob);
-    expect(value.type).toBe("application/json");
+    expect(result.get("published")).toBe("true");
   });
 
-  it("should convert boolean false to JSON blob", () => {
+  it("should convert boolean false to string 'false'", () => {
     const result = objectToFormData({ active: false });
-    const value = result.get("active") as Blob;
-
-    expect(value).toBeInstanceOf(Blob);
-    expect(value.type).toBe("application/json");
+    expect(result.get("active")).toBe("false");
   });
 
   it("should handle mixed types correctly in one object", () => {
@@ -88,7 +82,7 @@ describe("objectToFormData", () => {
 
     expect(result.get("name")).toBe("Course Name");
     expect(result.get("price")).toBe("500000");
-    expect(result.get("published")).toBeInstanceOf(Blob);
+    expect(result.get("published")).toBe("true");
     expect(result.get("image")).toBeInstanceOf(File);
     expect(result.get("description")).toBeNull();
     expect(result.get("tags")).toBeNull();

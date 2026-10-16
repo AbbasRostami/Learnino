@@ -1,6 +1,9 @@
 import { useAuthStore } from "@/store/authStore";
 import { act } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+// 🎯 برداشته شدن ماک استور برای تست پیاده‌سازی واقعی Zustand
+vi.unmock("@/store/authStore");
 
 describe("useAuthStore", () => {
   beforeEach(() => {

@@ -6,6 +6,8 @@ import {
 } from "@/utils/formatters";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+vi.unmock("@/utils/formatters");
+
 describe("formatNumber", () => {
   it("should return dash '-' when input is null", () => {
     expect(formatNumber(null)).toBe("-");

@@ -30,7 +30,7 @@ describe("CommentsSection", () => {
     render(<CommentsSection postSlug="react-course" postId="p-1" />);
 
     expect(screen.getByText("loginToComment")).toBeInTheDocument();
-    expect(screen.getByText("ورود به حساب")).toBeInTheDocument();
+    expect(screen.getByText(/ورود به حساب/)).toBeInTheDocument();
   });
 
   it("should show comment form when user is authenticated", () => {

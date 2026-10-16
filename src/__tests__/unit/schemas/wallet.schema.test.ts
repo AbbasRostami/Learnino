@@ -27,28 +27,28 @@ describe("getChargeWalletSchema", () => {
     }
   });
 
-  it("should accept the minimum allowed amount (10,000)", () => {
-    const result = schema.safeParse({ amount: 10000 });
+  it("should accept the minimum allowed amount (1,000)", () => {
+    const result = schema.safeParse({ amount: 1000 });
     expect(result.success).toBe(true);
   });
 
-  it("should accept the maximum allowed amount (500,000,000)", () => {
-    const result = schema.safeParse({ amount: 500_000_000 });
+  it("should accept the maximum allowed amount (50,000,000)", () => {
+    const result = schema.safeParse({ amount: 50_000_000 });
     expect(result.success).toBe(true);
   });
 
-  it("should fail when amount is below minimum (10,000)", () => {
-    const result = schema.safeParse({ amount: 9999 });
+  it("should fail when amount is below minimum (1,000)", () => {
+    const result = schema.safeParse({ amount: 999 });
     expect(result.success).toBe(false);
   });
 
-  it("should fail when amount exceeds maximum (500,000,000)", () => {
-    const result = schema.safeParse({ amount: 500_000_001 });
+  it("should fail when amount exceeds maximum (50,000,000)", () => {
+    const result = schema.safeParse({ amount: 50_000_001 });
     expect(result.success).toBe(false);
   });
 
   it("should fail when amount is a decimal number", () => {
-    const result = schema.safeParse({ amount: 10000.5 });
+    const result = schema.safeParse({ amount: 1000.5 });
     expect(result.success).toBe(false);
   });
 
