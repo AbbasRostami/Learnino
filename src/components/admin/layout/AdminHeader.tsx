@@ -2,11 +2,12 @@
 
 import { LanguageToggle } from "@/components/layout/Navbar/LanguageToggle";
 import { ThemeToggle } from "@/components/layout/Navbar/ThemeToggle";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAdminSidebarStore } from "@/store/AdminSidebarContext";
 import { ChevronsLeft, Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { ReadOnlyBadge } from "../shared";
 import { AdminUserDropdown } from "./AdminUserDropdown";
 
 export function AdminHeader() {
@@ -31,11 +32,11 @@ export function AdminHeader() {
             <Menu className="h-4 w-4" aria-hidden="true" />
           </button>
 
-          <button
+          <Button
             type="button"
             onClick={toggleSidebar}
             className={cn(
-              buttonVariants({ variant: "outline", size: "icon" }),
+              buttonVariants({ variant: "secondary", size: "icon" }),
               "hidden lg:flex rounded-xl shrink-0 cursor-pointer hover:bg-primary/10 hover:text-primary transition-all",
             )}
             aria-label="Toggle sidebar"
@@ -49,12 +50,13 @@ export function AdminHeader() {
               )}
               aria-hidden="true"
             />
-          </button>
+          </Button>
         </div>
 
         <div className="flex-1" />
 
         <div className="flex items-center gap-2 shrink-0">
+          <ReadOnlyBadge className="hidden sm:inline-flex" />
           <ThemeToggle />
           <LanguageToggle />
           <div className="w-px h-6 bg-border mx-1" aria-hidden="true" />

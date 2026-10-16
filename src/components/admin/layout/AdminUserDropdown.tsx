@@ -22,6 +22,7 @@ import {
   User,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { ReadOnlyBadge } from "../shared";
 
 export function AdminUserDropdown() {
   const t = useTranslations("admin.userMenu");
@@ -87,14 +88,13 @@ export function AdminUserDropdown() {
                 {displayName}
               </span>
               <span
-                className="text-[10px] text-muted-foreground truncate font-mono"
+                className="text-xs text-muted-foreground truncate"
                 dir="ltr"
               >
                 {profile?.email}
               </span>
-              <div className="inline-flex items-center gap-1 mt-1 px-1.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-[9px] font-black w-fit">
-                <ShieldCheck className="h-2.5 w-2.5" />
-                <span>ADMIN</span>
+              <div className="mt-1">
+                <ReadOnlyBadge className="text-[10px] px-2 py-0.5" />
               </div>
             </div>
           </div>

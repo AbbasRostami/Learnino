@@ -1,10 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useAdminSidebarStore } from "@/store/AdminSidebarContext";
 import { AdminBreadcrumb } from "./AdminBreadcrumb";
 import { AdminHeader } from "./AdminHeader";
 import { AdminSidebar } from "./AdminSidebar";
-import { useAdminSidebarStore } from "@/store/AdminSidebarContext";
 
 interface AdminLayoutClientProps {
   children: React.ReactNode;
@@ -18,7 +18,7 @@ export function AdminLayoutClient({ children }: AdminLayoutClientProps) {
     isExpanded || isHovered ? "lg:ms-[280px]" : "lg:ms-[88px]";
 
   return (
-    <div className="relative min-h-screen bg-background">
+    <div className="relative min-h-screen bg-background overflow-x-hidden">
       <div
         className="fixed top-0 inset-x-0 h-96 bg-linear-to-b from-primary/5 via-primary/2 to-transparent -z-10 pointer-events-none"
         aria-hidden="true"
@@ -36,13 +36,14 @@ export function AdminLayoutClient({ children }: AdminLayoutClientProps) {
 
       <div
         className={cn(
-          "flex flex-col min-h-screen transition-all duration-300 ease-in-out will-change-transform",
+          "flex flex-col min-h-screen min-w-0 transition-all duration-300 ease-in-out will-change-transform",
           sidebarWidthClass,
         )}
       >
         <AdminHeader />
 
-        <main className="flex-1 p-4 md:p-6 lg:p-8 max-w-[1600px] mx-auto w-full">
+        <main className="flex-1 min-w-0 p-4 md:p-6 max-w-[1600px] mx-auto w-full">
+          {" "}
           <div className="mb-6">
             <AdminBreadcrumb />
           </div>
