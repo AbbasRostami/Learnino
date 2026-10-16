@@ -17,17 +17,25 @@ export async function generateMetadata({
   };
 }
 
-export default async function AdminOrderDetailPage({
+async function AdminOrderDetailSection({
+  paramsPromise,
+}: {
+  paramsPromise: Promise<{ locale: string; id: string }>;
+}) {
+  const { locale, id } = await paramsPromise;
+  setRequestLocale(locale);
+
+  return <AdminOrderDetailClient orderId={id} />;
+}
+
+export default function AdminOrderDetailPage({
   params,
 }: {
   params: Promise<{ locale: string; id: string }>;
 }) {
-  const { locale, id } = await params;
-  setRequestLocale(locale);
-
   return (
     <Suspense fallback={<AdminTableSkeleton columnCount={8} rowCount={8} />}>
-      <AdminOrderDetailClient orderId={id} />
+      <AdminOrderDetailSection paramsPromise={params} />
     </Suspense>
   );
 }

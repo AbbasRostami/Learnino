@@ -89,7 +89,6 @@ export function AdminOrderDetailClient({
 
   return (
     <div className="flex flex-col gap-6 max-w-6xl mx-auto w-full">
-      {/* هدر صفحه */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-border/50">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-xs">
@@ -129,10 +128,8 @@ export function AdminOrderDetailClient({
         </div>
       </div>
 
-      {/* کارت‌های خلاصه وضعیت ۴گانه */}
       <OrderInfoCards order={order} t={t} locale={locale} />
 
-      {/* مشخصات کاربر و خلاصه مالی */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="p-5 rounded-3xl border border-border/50 bg-card/60 backdrop-blur-md shadow-xs">
           <div className="flex items-center gap-2 text-sm font-black text-foreground border-b border-border/40 pb-3 mb-4">
@@ -231,7 +228,6 @@ export function AdminOrderDetailClient({
         </div>
       </div>
 
-      {/* آیتم‌های خریداری‌شده */}
       <div className="p-5 rounded-3xl border border-border/50 bg-card/60 backdrop-blur-md shadow-xs">
         <div className="flex items-center gap-2 text-sm font-black text-foreground border-b border-border/40 pb-3 mb-4">
           <Package className="h-4 w-4 text-primary" />
