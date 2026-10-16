@@ -147,7 +147,7 @@ export function AdminDataTable<TData, TValue>({
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
                         key={cell.id}
-                        className="p-4 align-middle text-sm font-medium"
+                        className="p-2.5 align-middle text-sm font-medium"
                       >
                         {flexRender(
                           cell.column.columnDef.cell,

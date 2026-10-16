@@ -10,3 +10,5 @@ export * from "./AdminSearchInput";
 export * from "./AdminSortableHeader";
 export * from "./AdminStatsGrid";
 export * from "./AdminTableSkeleton";
+export * from "./ReadOnlyBadge";
+export * from "./ReadOnlyBanner";

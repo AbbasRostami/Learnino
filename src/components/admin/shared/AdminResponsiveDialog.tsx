@@ -81,7 +81,7 @@ export function AdminResponsiveDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={cn(
-          "rounded-3xl border border-border/50 bg-card/95 backdrop-blur-md shadow-2xl max-h-[90vh] overflow-y-auto p-6 sm:max-w-2xl",
+          "rounded-3xl border border-border/50 bg-card/95 backdrop-blur-md shadow-2xl max-h-[90vh] overflow-y-auto p-6 sm:max-w-2xl no-scrollbar",
           className,
         )}
       >

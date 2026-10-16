@@ -19,7 +19,7 @@ export function AdminDateCell({ dateStr, locale = "fa" }: AdminDateCellProps) {
       <span className="text-xs font-semibold text-foreground truncate">
         {formatRelativeTime(dateStr, locale)}
       </span>
-      <span className="text-xs text-muted-foreground font-mono truncate">
+      <span className="text-xs text-muted-foreground truncate">
         {formatShortDate(dateStr, locale)}
       </span>
     </div>
