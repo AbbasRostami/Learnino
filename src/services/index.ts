@@ -57,6 +57,7 @@ export * from "./order/useMyOrders";
 export * from "./order/useOrder";
 
 // 📚 Course Services
+export * from "./course/useAdminCourseDetails";
 export * from "./course/useAdminCourses";
 export * from "./course/useCourse";
 export * from "./course/useCourses";

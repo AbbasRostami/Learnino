@@ -8,10 +8,7 @@ export const useAdminUsersStats = () => {
 
   return useQuery<GetAdminUsersStatsResponse>({
     queryKey: ["admin", "overview", "users", locale],
-    queryFn: () =>
-      api<GetAdminUsersStatsResponse>("/overview/admin/users", {
-        headers: { "Accept-Language": locale },
-      }),
+    queryFn: () => api<GetAdminUsersStatsResponse>("/overview/admin/users"),
     staleTime: 60 * 1000,
   });
 };
