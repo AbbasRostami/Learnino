@@ -26,6 +26,7 @@ export function WalletsFilters({
   onResetFilters,
 }: WalletsFiltersProps) {
   const t = useTranslations("admin.wallets.filters");
+  const tCommon = useTranslations("admin.filters");
 
   const hasActiveFilters = Boolean(search) || minBalance > 0 || maxBalance > 0;
 
@@ -79,7 +80,7 @@ export function WalletsFilters({
             className="h-8 rounded-xl text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 gap-1.5 cursor-pointer px-3"
           >
             <RotateCcw className="h-3.5 w-3.5" />
-            <span>{t("clearFilters")}</span>
+            <span>{tCommon("clearFilters")}</span>
           </Button>
         </div>
       )}

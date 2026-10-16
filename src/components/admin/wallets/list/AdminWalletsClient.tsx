@@ -27,8 +27,8 @@ export function AdminWalletsClient() {
     resetFilters,
   } = useAdminTableParams<GetAdminWalletsParams>({
     customParsers: {
-      minBalance: parseAsInteger.withDefault(0),
-      maxBalance: parseAsInteger.withDefault(0),
+      minBalance: parseAsInteger,
+      maxBalance: parseAsInteger,
     },
   });
 

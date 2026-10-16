@@ -26,9 +26,9 @@ import { useForm } from "react-hook-form";
 export function AdminLoginClient() {
   const t = useTranslations("admin.loginPage");
   const tAuth = useTranslations("auth");
-const { mutate: adminLogin, isPending } = useAdminLogin({
-  redirectTo: "/admin",
-});
+  const { mutate: adminLogin, isPending } = useAdminLogin({
+    redirectTo: "/admin",
+  });
   const [showPassword, setShowPassword] = useState(false);
   const [currentYear, setCurrentYear] = useState<string>("2025");
 
@@ -62,7 +62,6 @@ const { mutate: adminLogin, isPending } = useAdminLogin({
         "bg-linear-to-br from-background via-background to-primary/5",
       )}
     >
-      {/* ── Animated Background Blobs ── */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -inset-e-40 h-96 w-96 rounded-full bg-primary/20 blur-3xl animate-pulse" />
         <div
@@ -75,7 +74,6 @@ const { mutate: adminLogin, isPending } = useAdminLogin({
         />
       </div>
 
-      {/* ── Grid Pattern Overlay ── */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.02] dark:opacity-[0.05]"
         style={{
@@ -85,9 +83,7 @@ const { mutate: adminLogin, isPending } = useAdminLogin({
         }}
       />
 
-      {/* ── Main Content ── */}
       <div className="relative z-10 w-full max-w-md">
-        {/* Back to Site Link */}
         <Link
           href="/"
           className={cn(
@@ -100,7 +96,6 @@ const { mutate: adminLogin, isPending } = useAdminLogin({
           <span>{t("backToUserSite")}</span>
         </Link>
 
-        {/* Card */}
         <Card
           className={cn(
             "relative border-border/60 shadow-2xl shadow-primary/10",
@@ -108,22 +103,17 @@ const { mutate: adminLogin, isPending } = useAdminLogin({
             "overflow-hidden",
           )}
         >
-          {/* Card Top Gradient Border */}
           <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-primary via-brand-accent to-primary" />
 
-          {/* Sparkle Decoration */}
           <div className="absolute top-4 inset-e-4 opacity-20">
             <Sparkles className="h-16 w-16 text-primary" />
           </div>
 
           <CardHeader className="space-y-4 pt-8">
-            {/* Logo & Brand */}
             <div className="flex flex-col items-center gap-4">
               <div className="relative">
-                {/* Glow effect */}
                 <div className="absolute inset-0 bg-primary/40 blur-2xl rounded-full" />
 
-                {/* Logo Container */}
                 <div
                   className={cn(
                     "relative flex h-20 w-20 items-center justify-center",
@@ -143,7 +133,6 @@ const { mutate: adminLogin, isPending } = useAdminLogin({
                   </div>
                 </div>
 
-                {/* Shield Badge */}
                 <div
                   className={cn(
                     "absolute -bottom-1 -inset-e-1",
@@ -155,7 +144,6 @@ const { mutate: adminLogin, isPending } = useAdminLogin({
                 </div>
               </div>
 
-              {/* Brand Name */}
               <div className="flex flex-col items-center gap-1.5">
                 <h1 className="text-2xl font-black text-foreground tracking-tight">
                   {t("brandName")}
@@ -164,7 +152,7 @@ const { mutate: adminLogin, isPending } = useAdminLogin({
                   className={cn(
                     "inline-flex items-center gap-1.5 px-3 py-1 rounded-full",
                     "bg-primary/10 border border-primary/20",
-                    "text-[10px] font-black text-primary uppercase tracking-widest",
+                    "text-xs font-black text-primary uppercase tracking-widest",
                   )}
                 >
                   <ShieldCheck className="h-3 w-3" />
@@ -180,7 +168,6 @@ const { mutate: adminLogin, isPending } = useAdminLogin({
               className="space-y-4"
               noValidate
             >
-              {/* Email Field */}
               <div className="space-y-2">
                 <Label
                   htmlFor="email"
@@ -219,14 +206,13 @@ const { mutate: adminLogin, isPending } = useAdminLogin({
                   />
                 </div>
                 {errors.email && (
-                  <p className="text-[11px] font-bold text-destructive flex items-center gap-1 animate-in fade-in slide-in-from-top-1">
+                  <p className="text-xs font-bold text-destructive flex items-center gap-1 animate-in fade-in slide-in-from-top-1">
                     <span className="inline-block h-1 w-1 rounded-full bg-destructive" />
                     {errors.email.message}
                   </p>
                 )}
               </div>
 
-              {/* Password Field */}
               <div className="space-y-2">
                 <Label
                   htmlFor="password"
@@ -283,14 +269,13 @@ const { mutate: adminLogin, isPending } = useAdminLogin({
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-[11px] font-bold text-destructive flex items-center gap-1 animate-in fade-in slide-in-from-top-1">
+                  <p className="text-xs font-bold text-destructive flex items-center gap-1 animate-in fade-in slide-in-from-top-1">
                     <span className="inline-block h-1 w-1 rounded-full bg-destructive" />
                     {errors.password.message}
                   </p>
                 )}
               </div>
 
-              {/* Submit Button */}
               <Button
                 type="submit"
                 disabled={isPending}
@@ -317,7 +302,6 @@ const { mutate: adminLogin, isPending } = useAdminLogin({
               </Button>
             </form>
 
-            {/* Security Note */}
             <div
               className={cn(
                 "relative p-3 rounded-xl overflow-hidden",
@@ -331,7 +315,7 @@ const { mutate: adminLogin, isPending } = useAdminLogin({
                     <ShieldCheck className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
                   </div>
                 </div>
-                <p className="text-[11px] leading-relaxed text-amber-800 dark:text-amber-200/90 font-medium">
+                <p className="text-xs leading-relaxed text-amber-800 dark:text-amber-200/90 font-medium">
                   {t("securityNote")}
                 </p>
               </div>
@@ -339,8 +323,7 @@ const { mutate: adminLogin, isPending } = useAdminLogin({
           </CardContent>
         </Card>
 
-        {/* Bottom Decoration */}
-        <div className="mt-6 flex items-center justify-center gap-2 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
+        <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground font-bold uppercase tracking-widest">
           <div className="h-px w-8 bg-linear-to-r from-transparent to-border" />
           <Sparkles className="h-3 w-3 text-primary" />
           <span>Learnino © {currentYear}</span>

@@ -50,7 +50,7 @@ export const getTeachersColumns = ({
         const initial = displayName.charAt(0).toUpperCase();
 
         return (
-          <div className="flex items-center gap-3 min-w-55">
+          <div className="flex items-center gap-3">
             <Avatar className="h-10 w-10 border border-border shadow-xs shrink-0">
               <AvatarImage src={teacher?.avatar || ""} alt={displayName} />
               <AvatarFallback className="bg-linear-to-br from-primary to-brand-accent text-white font-black text-xs">
