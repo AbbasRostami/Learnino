@@ -53,6 +53,7 @@ export const getPostsColumns = ({
                   fill
                   className="object-cover"
                   sizes="64px"
+                  quality={85}
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center">
@@ -80,7 +81,7 @@ export const getPostsColumns = ({
       enableSorting: false,
       header: () => <span>{t("table.category")}</span>,
       cell: ({ row }) => (
-        <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-muted text-muted-foreground border border-border text-xs font-black truncate min-w-28 max-w-48">
+        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-black truncate min-w-28 max-w-48">
           {row?.original?.category?.name || "—"}
         </span>
       ),

@@ -17,14 +17,24 @@ export async function generateMetadata({
   };
 }
 
-export default async function AdminEditPostPage({
+interface AdminEditPostSectionProps {
+  paramsPromise: Promise<{ locale: string; id: string }>;
+}
+
+async function AdminEditPostSection({
+  paramsPromise,
+}: AdminEditPostSectionProps) {
+  const { locale, id } = await paramsPromise;
+  setRequestLocale(locale);
+
+  return <AdminEditPostClient postId={id} />;
+}
+
+export default function AdminEditPostPage({
   params,
 }: {
   params: Promise<{ locale: string; id: string }>;
 }) {
-  const { locale, id } = await params;
-  setRequestLocale(locale);
-
   return (
     <Suspense
       fallback={
@@ -34,7 +44,7 @@ export default async function AdminEditPostPage({
         </div>
       }
     >
-      <AdminEditPostClient postId={id} />
+      <AdminEditPostSection paramsPromise={params} />
     </Suspense>
   );
 }
