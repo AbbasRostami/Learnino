@@ -5,6 +5,7 @@ import { Link } from "@/i18n/routing";
 import { getCategoryStyle } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";
 import type { Course } from "@/types";
+import { formatNumber } from "@/utils/formatters";
 import { BookOpen, Heart, MessageCircle, Users } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
@@ -48,8 +49,8 @@ export function CoursesListCard({
       >
         {course?.imageUrl ? (
           <Image
-            src={course.imageUrl}
-            alt={course.title}
+            src={course?.imageUrl}
+            alt={course?.title}
             fill
             priority={priority}
             quality={70}
@@ -176,9 +177,7 @@ export function CoursesListCard({
                   className="text-base font-black leading-tight text-foreground"
                   dir="ltr"
                 >
-                  {new Intl.NumberFormat(
-                    locale === "fa" ? "fa-IR" : "en-US",
-                  ).format(course?.price)}
+                  {formatNumber(course?.price)}
                 </span>
                 <span className="text-xs text-muted-foreground -mt-0.5">
                   {t("currency")}

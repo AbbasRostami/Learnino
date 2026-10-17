@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { useAddToCart, useEnrollFreeCourse } from "@/services";
 import { useAuthStore } from "@/store/authStore";
 import type { Course } from "@/types";
+import { formatNumber } from "@/utils/formatters";
 import {
   Award,
   BookOpen,
@@ -121,9 +122,7 @@ export function CoursePriceCard({
           ) : (
             <div className="flex items-baseline gap-2" dir="ltr">
               <span className="text-4xl font-black text-foreground">
-                {new Intl.NumberFormat(
-                  locale === "fa" ? "fa-IR" : "en-US",
-                ).format(course.price)}
+                {formatNumber(course?.price)}
               </span>
               <span className="text-sm font-semibold text-muted-foreground">
                 {t("currency")}

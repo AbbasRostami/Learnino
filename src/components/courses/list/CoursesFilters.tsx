@@ -131,13 +131,14 @@ export function CoursesFilters({
           </Label>
         </div>
         <div className="flex flex-col gap-1.5 max-h-64 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-border">
-          {categoriesList.map((cat) => {
-            const isActive = selectedCategories.includes(cat.slug);
+          {categoriesList?.map((cat) => {
+            const isActive = selectedCategories.includes(cat?.slug);
             return (
               <Button
-                key={cat.id}
+                variant="outline"
+                key={cat?.id}
                 type="button"
-                onClick={() => toggleCategory(cat.slug)}
+                onClick={() => toggleCategory(cat?.slug)}
                 className={cn(
                   "flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-start transition-all cursor-pointer",
                   isActive
@@ -146,7 +147,7 @@ export function CoursesFilters({
                 )}
                 aria-pressed={isActive}
               >
-                <span className="truncate">{cat.name}</span>
+                <span className="truncate">{cat?.name}</span>
                 {isActive && (
                   <span className="shrink-0 h-1.5 w-1.5 rounded-full bg-primary" />
                 )}

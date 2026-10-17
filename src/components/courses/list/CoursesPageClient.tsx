@@ -15,6 +15,7 @@ import { CoursesFilters } from "./CoursesFilters";
 import { CoursesFiltersMobile } from "./CoursesFiltersMobile";
 import { CoursesListCard } from "./CoursesListCard";
 import { CoursesToolbar } from "./CoursesToolbar";
+import { EmptyCoursesState } from "./EmptyCoursesState";
 
 interface CoursesPageClientProps {
   initialData?: GetCoursesResponse["data"];
@@ -57,6 +58,16 @@ export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
   const hasMore = pagination ? params.page < totalPages : false;
 
   const showSkeleton = isLoading && !initialData;
+
+  const isEmpty = !showSkeleton && courses?.length === 0;
+
+  const hasActiveFilters = Boolean(
+    (params.categories && params.categories.length > 0) ||
+    params.level ||
+    params.minPrice != null ||
+    params.maxPrice != null ||
+    (searchValue && searchValue.trim().length > 0),
+  );
 
   const handleLoadMore = () => {
     setHasLoadedMore(true);
@@ -126,11 +137,16 @@ export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
 
           {showSkeleton ? (
             <CourseCardSkeleton count={6} />
+          ) : isEmpty ? (
+            <EmptyCoursesState
+              hasActiveFilters={hasActiveFilters}
+              onResetFilters={resetFilters}
+            />
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
-              {courses.map((course, index) => (
+              {courses?.map((course, index) => (
                 <CoursesListCard
-                  key={course.id}
+                  key={course?.id}
                   course={course}
                   priority={index < 3}
                   index={index}
@@ -139,7 +155,7 @@ export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
             </div>
           )}
 
-          {hasMore && !showSkeleton && (
+          {hasMore && !showSkeleton && !isEmpty && (
             <div className="mt-10 flex justify-center">
               <Button
                 variant="outline"

@@ -6,7 +6,7 @@ import { getCategoryStyle } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";
 import { useCourse } from "@/services";
 import type { Course } from "@/types";
-import { formatRelativeTime } from "@/utils/formatters";
+import { formatNumber, formatRelativeTime } from "@/utils/formatters";
 import { BarChart3, Calendar, Tag, Users } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
@@ -84,9 +84,7 @@ export function CourseDetailClient({
               <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-card/80 border border-border/50 text-foreground font-bold shadow-sm backdrop-blur-md">
                 <Users className="h-4 w-4 text-primary" aria-hidden="true" />
                 <span className="font-bold">
-                  {new Intl.NumberFormat(
-                    locale === "fa" ? "fa-IR" : "en-US",
-                  ).format(course?.stats?.enrollments ?? 0)}{" "}
+                  {formatNumber(course?.stats?.enrollments ?? 0)}{" "}
                   {t("stats.students")}
                 </span>
               </div>
