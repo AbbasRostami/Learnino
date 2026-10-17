@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { formatNumber } from "@/utils/formatters";
 import CharacterCount from "@tiptap/extension-character-count";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import { Color } from "@tiptap/extension-color";
@@ -359,9 +360,6 @@ export function TiptapEditor({
   };
 
   const charCount = editor?.storage?.characterCount?.characters?.() ?? 0;
-  const formattedCount = new Intl.NumberFormat(
-    locale === "fa" ? "fa-IR" : "en-US",
-  ).format(charCount);
 
   if (!editor) return null;
 
@@ -803,7 +801,7 @@ export function TiptapEditor({
       {/* Footer */}
       <div className="flex items-center justify-between px-4 py-1.5 border-t border-border bg-muted/40 rounded-b-2xl text-xs text-muted-foreground select-none">
         <span>
-          {t("characters")}: <b>{formattedCount}</b>
+          {t("characters")}: <b>{formatNumber(charCount, locale)}</b>
         </span>
       </div>
 

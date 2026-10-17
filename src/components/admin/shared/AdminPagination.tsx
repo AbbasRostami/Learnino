@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { useLocale } from "@/hooks/useLocale";
 import { cn } from "@/lib/utils";
+import { formatNumber } from "@/utils/formatters";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -45,9 +46,6 @@ export function AdminPagination({
   const isRtl = locale === "fa";
 
   if (totalCount === 0) return null;
-
-  const formatNumber = (num: number) =>
-    new Intl.NumberFormat(isRtl ? "fa-IR" : "en-US").format(num);
 
   const startItem = (currentPage - 1) * limit + 1;
   const endItem = Math.min(currentPage * limit, totalCount);
@@ -86,9 +84,9 @@ export function AdminPagination({
     <div className="flex flex-col md:flex-row items-center justify-between gap-4 mt-6 px-2 text-xs">
       <div className="flex flex-wrap items-center gap-3 text-muted-foreground font-semibold">
         <span>
-          {t("showing")} {formatNumber(startItem)} {t("to")}{" "}
-          {formatNumber(endItem)} {t("of")} {formatNumber(totalCount)}{" "}
-          {t("items")}
+          {t("showing")} {formatNumber(startItem, locale)} {t("to")}{" "}
+          {formatNumber(endItem, locale)} {t("of")}{" "}
+          {formatNumber(totalCount, locale)} {t("items")}
         </span>
 
         <div className="h-4 w-px bg-border/60 hidden sm:block" />

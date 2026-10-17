@@ -2,6 +2,7 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import { formatNumber } from "@/utils/formatters";
 import type { LucideIcon } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useLocale } from "next-intl";
@@ -37,13 +38,6 @@ export function AdminStatsGrid({
     5: "grid-cols-2 lg:grid-cols-5",
     6: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-6",
   }[columns];
-
-  const formatNumber = (value: number | string) => {
-    if (typeof value === "string") return value;
-    return new Intl.NumberFormat(locale === "fa" ? "fa-IR" : "en-US").format(
-      value,
-    );
-  };
 
   if (isLoading) {
     return (
@@ -89,7 +83,7 @@ export function AdminStatsGrid({
                 {stat.label}
               </div>
               <div className="text-2xl sm:text-3xl font-black text-foreground mb-1">
-                {formatNumber(stat.value)}
+                {formatNumber(stat.value, locale)}
               </div>
               {stat.subLabel && (
                 <div className="text-xs font-semibold text-muted-foreground truncate">

@@ -7,7 +7,7 @@ import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useBannedUsers } from "@/services";
 import { BannedUser } from "@/types";
-import { formatRelativeTime } from "@/utils/formatters";
+import { formatNumber, formatRelativeTime } from "@/utils/formatters";
 import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowLeft, Calendar, Mail, ShieldOff, UserCheck } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -42,13 +42,10 @@ export function AdminBannedUsersClient() {
       ),
       cell: ({ row }) => {
         const rowNum = (params.page - 1) * params.limit + row.index + 1;
-        const formattedNum = new Intl.NumberFormat(
-          locale === "fa" ? "fa-IR" : "en-US",
-        ).format(rowNum);
 
         return (
           <span className="text-xs font-bold text-muted-foreground/80 w-4 text-center block">
-            {formattedNum}
+            {formatNumber(rowNum, locale)}
           </span>
         );
       },

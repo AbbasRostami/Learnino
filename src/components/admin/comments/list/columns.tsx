@@ -9,6 +9,7 @@ import {
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import type { FlatCommentItem } from "@/types";
+import { formatNumber } from "@/utils/formatters";
 import type { ColumnDef } from "@tanstack/react-table";
 import {
   BookOpen,
@@ -36,9 +37,6 @@ export const getCommentsColumns = ({
   page = 1,
   limit = 20,
 }: ColumnsProps): ColumnDef<FlatCommentItem>[] => {
-  const fmt = (n: number) =>
-    new Intl.NumberFormat(locale === "fa" ? "fa-IR" : "en-US").format(n);
-
   return [
     {
       id: "rowNumber",
@@ -48,7 +46,7 @@ export const getCommentsColumns = ({
       ),
       cell: ({ row }) => (
         <span className="text-xs font-bold text-muted-foreground/80 w-4 text-center block">
-          {fmt((page - 1) * limit + row.index + 1)}
+          {formatNumber((page - 1) * limit + row.index + 1, locale)}
         </span>
       ),
     },
@@ -182,14 +180,14 @@ export const getCommentsColumns = ({
               title={t("stats.replies")}
             >
               <MessageCircle className="h-3 w-3 text-brand-cyan" />
-              <span>{fmt(stats?.replies ?? 0)}</span>
+              <span>{formatNumber(stats?.replies ?? 0, locale)}</span>
             </span>
             <span
               className="flex items-center gap-1"
               title={t("stats.reactions")}
             >
               <ThumbsUp className="h-3 w-3 text-primary" />
-              <span>{fmt(stats?.reactions ?? 0)}</span>
+              <span>{formatNumber(stats?.reactions ?? 0, locale)}</span>
             </span>
           </div>
         );

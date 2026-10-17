@@ -11,7 +11,7 @@ import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useBanUser, useUserDetails } from "@/services";
-import { formatRelativeTime } from "@/utils/formatters";
+import { formatNumber, formatRelativeTime } from "@/utils/formatters";
 import {
   ArrowLeft,
   BookOpen,
@@ -70,9 +70,6 @@ export function AdminUserDetailClient({ userId }: AdminUserDetailClientProps) {
   const avatarInitial = (user?.name || user?.email || "?")
     .charAt(0)
     ?.toUpperCase();
-
-  const formatPrice = (value: number) =>
-    new Intl.NumberFormat(locale === "fa" ? "fa-IR" : "en-US").format(value);
 
   const statsCards: StatCardConfig[] = [
     {
@@ -223,7 +220,7 @@ export function AdminUserDetailClient({ userId }: AdminUserDetailClientProps) {
               <div className="flex items-center gap-2 p-2 rounded-xl bg-background/60 border border-border/40">
                 <Wallet className="h-4 w-4 text-emerald-500 shrink-0" />
                 <span className="font-black text-foreground" dir="ltr">
-                  {formatPrice(user?.walletBalance ?? 0)}
+                  {formatNumber(user?.walletBalance ?? 0, locale)}
                 </span>
               </div>
             </div>
