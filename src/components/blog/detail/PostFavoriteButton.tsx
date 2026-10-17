@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useTogglePostFavorite } from "@/services";
 import { useAuthStore } from "@/store/authStore";
@@ -29,7 +30,8 @@ export function PostFavoriteButton({
   };
 
   return (
-    <button
+    <Button
+      variant="ghost"
       type="button"
       onClick={handleClick}
       disabled={isPending}
@@ -46,6 +48,6 @@ export function PostFavoriteButton({
       ) : (
         <Bookmark className={cn("h-4 w-4", isFavorite && "fill-current")} />
       )}
-    </button>
+    </Button>
   );
 }

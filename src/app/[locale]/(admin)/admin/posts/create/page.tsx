@@ -1,4 +1,4 @@
-import { AdminCreatePostClient } from "@/components/admin/posts/form/create/AdminCreatePostClient";
+import { AdminCreatePostClient } from "@/components/admin/posts/create/AdminCreatePostClient";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";

@@ -64,14 +64,14 @@ export function CommentForm({
           maxLength={1000}
         />
         {errors?.content && (
-          <p className="text-[10px] text-rose-500 font-bold mt-1 px-1">
+          <p className="text-xs text-rose-500 font-bold mt-1 px-1">
             {errors?.content?.message}
           </p>
         )}
       </div>
 
       <div className="flex items-center justify-between">
-        <span className="text-[10px] font-mono text-muted-foreground/70">
+        <span className="text-xs text-muted-foreground/70">
           {contentValue?.length}/1000
         </span>
         <Button

@@ -1,7 +1,6 @@
 "use client";
 
 import { AppBreadcrumb } from "@/components/shared/AppBreadcrumb";
-import { SafeHtml } from "@/components/shared/SafeHtml";
 import { Link } from "@/i18n/routing";
 import { getCategoryStyle } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";
@@ -12,6 +11,7 @@ import { Calendar, FileText, Tag } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { CommentsSection } from "./comments/CommentsSection";
+import { PostContent } from "./PostContent";
 import { PostFavoriteButton } from "./PostFavoriteButton";
 import { PostReactions } from "./PostReactions";
 import { PostShareButton } from "./PostShareButton";
@@ -67,10 +67,7 @@ export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
               </Link>
             )}
 
-            <h1
-              className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight leading-tight mb-4 wrap-break-word"
-              itemProp="headline"
-            >
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight leading-tight mb-4 wrap-break-word">
               {post?.title}
             </h1>
 
@@ -119,20 +116,7 @@ export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
             )}
           </div>
 
-          <SafeHtml
-            html={post?.content}
-            itemProp="articleBody"
-            className={cn(
-              "prose prose-lg dark:prose-invert max-w-none mb-12 wrap-break-word overflow-hidden",
-              "prose-headings:font-black prose-headings:tracking-tight",
-              "prose-a:text-primary prose-a:no-underline hover:prose-a:underline",
-              "prose-img:rounded-2xl prose-img:shadow-lg",
-              "prose-blockquote:border-primary/40 prose-blockquote:bg-primary/5 dark:prose-blockquote:bg-primary/10",
-              "prose-blockquote:rounded-e-2xl prose-blockquote:py-1",
-              "prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm",
-              "prose-pre:rounded-2xl prose-pre:shadow-lg",
-            )}
-          />
+          <PostContent content={post?.content ?? ""} />
 
           <hr className="border-dashed border-border/60 my-12" />
 

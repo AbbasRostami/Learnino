@@ -35,9 +35,6 @@ export function BlogPostCard({
   const style = post?.category ? getCategoryStyle(post?.category?.slug) : null;
   const excerpt = stripHtml(post.content, 120);
 
-  const formatNumber = (num: number) =>
-    new Intl.NumberFormat(locale === "fa" ? "fa-IR" : "en-US").format(num);
-
   return (
     <motion.article
       initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
@@ -84,7 +81,7 @@ export function BlogPostCard({
           {post?.category && style && (
             <span
               className={cn(
-                "text-[10px] font-black px-3 py-1 rounded-full border border-current/20 shadow-sm",
+                "text-xs font-black px-3 py-1 rounded-full border border-current/20 shadow-sm",
                 style.badgeColor,
               )}
             >
@@ -93,11 +90,7 @@ export function BlogPostCard({
           )}
           <div className="flex items-center gap-1.5 text-xs font-bold text-muted-foreground bg-muted/50 px-2.5 py-1 rounded-full">
             <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
-            <time
-              dateTime={post?.createdAt}
-              itemProp="datePublished"
-              suppressHydrationWarning
-            >
+            <time dateTime={post?.createdAt} itemProp="datePublished">
               {formatRelativeTime(post?.createdAt, locale)}
             </time>
           </div>
@@ -121,17 +114,13 @@ export function BlogPostCard({
             {post?.reactions && (
               <div className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-rose-500 transition-colors">
                 <Heart className="h-4 w-4" aria-hidden="true" />
-                <span className="font-bold">
-                  {formatNumber(post?.reactions?.likes ?? 0)}
-                </span>
+                <span className="font-bold">{post?.reactions?.likes ?? 0}</span>
               </div>
             )}
             {post?.stats && (
               <div className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-brand-cyan transition-colors">
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
-                <span className="font-bold">
-                  {formatNumber(post?.stats?.comments ?? 0)}
-                </span>
+                <span className="font-bold">{post?.stats?.comments ?? 0}</span>
               </div>
             )}
           </div>

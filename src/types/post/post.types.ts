@@ -31,7 +31,14 @@ export type Post = {
   title: string;
   slug: string;
   content: string;
-  imageUrl: string | null;
+
+  titleFa?: string;
+  titleEn?: string;
+  contentFa?: string;
+  contentEn?: string;
+
+  imageUrl?: string | null;
+
   published: boolean;
   createdAt: string;
   updatedAt: string;

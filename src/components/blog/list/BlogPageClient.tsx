@@ -1,14 +1,14 @@
 "use client";
 
 import { AppBreadcrumb } from "@/components/shared/AppBreadcrumb";
-import { PostsGridSkeleton } from "@/components/skeleton/PostsGridSkeleton";
+import { PostsGridSkeleton } from "@/components/skeleton";
 import { Button } from "@/components/ui/button";
-import { useDebouncedParam } from "@/hooks/useDebouncedParam";
+import { useAdminTableParams } from "@/hooks/useAdminTableParams";
 import { usePosts } from "@/services";
-import type { Post } from "@/types";
+import type { GetPostsParams, Post } from "@/types";
 import { Loader2, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { parseAsInteger, parseAsString, useQueryStates } from "nuqs";
+import { parseAsString } from "nuqs";
 import { useState } from "react";
 import { BlogFilters } from "./BlogFilters";
 import { BlogPostCard } from "./BlogPostCard";
@@ -27,28 +27,17 @@ export function BlogPageClient({
   const [allPosts, setAllPosts] = useState<Post[]>(initialPosts);
   const [hasLoadedMore, setHasLoadedMore] = useState(false);
 
-  const [params, setParams] = useQueryStates(
-    {
-      page: parseAsInteger.withDefault(1),
-      search: parseAsString.withDefault(""),
-      category: parseAsString.withDefault(""),
-      sortBy: parseAsString.withDefault("createdAt"),
-    },
-    { shallow: true },
-  );
-
-  const [searchTerm, setSearchTerm] = useDebouncedParam(
-    params.search,
-    (search) => setParams({ search, page: 1 }),
-  );
+  const { params, apiParams, searchValue, setSearch, setFilter } =
+    useAdminTableParams<GetPostsParams>({
+      defaultLimit: 9,
+      customParsers: {
+        category: parseAsString.withDefault(""),
+      },
+    });
 
   const { data, isLoading, isFetching } = usePosts({
+    ...apiParams,
     page: hasLoadedMore ? undefined : params.page,
-    limit: 9,
-    search: params?.search || undefined,
-    category: params?.category || undefined,
-    sortBy: (params?.sortBy as "createdAt" | "title") || "createdAt",
-    order: "desc",
   });
 
   const posts = hasLoadedMore
@@ -63,7 +52,7 @@ export function BlogPageClient({
     : 1;
   const hasMore = pagination ? params.page < totalPages : false;
 
-  const handleLoadMore = async () => {
+  const handleLoadMore = () => {
     setHasLoadedMore(true);
     setAllPosts([...posts, ...(data?.data?.items ?? [])]);
   };
@@ -89,7 +78,19 @@ export function BlogPageClient({
         </p>
       </div>
 
-      <BlogFilters searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+      <BlogFilters
+        searchTerm={searchValue}
+        selectedCategory={params.category ?? ""}
+        sortBy={params.sortBy}
+        onSearchChange={setSearch}
+        onCategoryChange={(cat) => setFilter("category", cat)}
+        onSortToggle={() =>
+          setFilter(
+            "sortBy",
+            params.sortBy === "createdAt" ? "title" : "createdAt",
+          )
+        }
+      />
 
       {isLoading ? (
         <PostsGridSkeleton count={6} showHeader={false} />

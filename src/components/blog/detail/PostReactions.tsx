@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePostReaction } from "@/services";
 import { useAuthStore } from "@/store/authStore";
@@ -41,7 +42,8 @@ export function PostReactions({
 
   return (
     <div className="flex items-center gap-1.5 rounded-full p-1 bg-muted/50 dark:bg-muted/30 border border-border/40 shadow-xs">
-      <button
+      <Button
+        variant="ghost"
         type="button"
         onClick={() => handleReaction("LIKE")}
         disabled={isPending}
@@ -63,9 +65,10 @@ export function PostReactions({
           />
         )}
         <span>{reactions?.likes}</span>
-      </button>
+      </Button>
 
-      <button
+      <Button
+      variant="ghost"
         type="button"
         onClick={() => handleReaction("DISLIKE")}
         disabled={isPending}
@@ -87,7 +90,7 @@ export function PostReactions({
           />
         )}
         <span>{reactions?.dislikes}</span>
-      </button>
+      </Button>
     </div>
   );
 }

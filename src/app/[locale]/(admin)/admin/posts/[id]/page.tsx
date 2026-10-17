@@ -1,4 +1,4 @@
-import { AdminEditPostClient } from "@/components/admin/posts/form/edit/AdminEditPostClient";
+import { AdminEditPostClient } from "@/components/admin/posts/edit/AdminEditPostClient";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -18,22 +18,22 @@ export async function generateMetadata({
 }
 
 interface AdminEditPostSectionProps {
-  paramsPromise: Promise<{ locale: string; id: string }>;
+  paramsPromise: Promise<{ locale: string; slug: string }>;
 }
 
 async function AdminEditPostSection({
   paramsPromise,
 }: AdminEditPostSectionProps) {
-  const { locale, id } = await paramsPromise;
+  const { locale, slug } = await paramsPromise;
   setRequestLocale(locale);
 
-  return <AdminEditPostClient postId={id} />;
+  return <AdminEditPostClient slug={slug} />;
 }
 
 export default function AdminEditPostPage({
   params,
 }: {
-  params: Promise<{ locale: string; id: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
   return (
     <Suspense
