@@ -24,6 +24,7 @@ export function AdminDiscountsClient() {
 
   const {
     params,
+    searchValue,
     apiParams,
     setPage,
     setLimit,
@@ -70,7 +71,7 @@ export function AdminDiscountsClient() {
       />
 
       <DiscountsFilters
-        search={params.search}
+        search={searchValue}
         active={params.active}
         onSearchChange={setSearch}
         onActiveChange={(v) => setFilter("active", v)}

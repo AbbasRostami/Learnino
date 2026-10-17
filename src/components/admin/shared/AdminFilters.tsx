@@ -41,7 +41,7 @@ export interface AdminFiltersProps {
 }
 
 export function AdminFilters({
-  search,
+  search = "",
   onSearchChange,
   searchPlaceholder,
   filters = [],
@@ -63,7 +63,7 @@ export function AdminFilters({
         {onSearchChange !== undefined && (
           <div className="flex-1 min-w-60 sm:min-w-70">
             <AdminSearchInput
-              value={search ?? ""}
+              value={search}
               onChange={onSearchChange}
               placeholder={searchPlaceholder ?? t("searchPlaceholder")}
             />

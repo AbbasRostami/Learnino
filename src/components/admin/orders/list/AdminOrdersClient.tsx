@@ -22,6 +22,7 @@ export function AdminOrdersClient() {
 
   const {
     params,
+    searchValue,
     apiParams,
     setPage,
     setLimit,
@@ -59,7 +60,7 @@ export function AdminOrdersClient() {
         icon={ShoppingBag}
       />
       <OrdersFilters
-        search={params.search}
+        search={searchValue}
         status={params.status}
         onSearchChange={setSearch}
         onStatusChange={(v) => setFilter("status", v)}

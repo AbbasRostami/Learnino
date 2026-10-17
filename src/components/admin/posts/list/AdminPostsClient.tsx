@@ -28,6 +28,7 @@ export function AdminPostsClient() {
 
   const {
     params,
+    searchValue,
     apiParams,
     setPage,
     setLimit,
@@ -49,7 +50,8 @@ export function AdminPostsClient() {
     locale,
     page: params.page,
     limit: params.limit,
-    onEdit: (post: Post) => router.push(`/admin/posts/${post?.slug || post?.id}`),
+    onEdit: (post: Post) =>
+      router.push(`/admin/posts/${post?.slug || post?.id}`),
   });
 
   return (
@@ -77,7 +79,7 @@ export function AdminPostsClient() {
       />
 
       <PostsFilters
-        search={params.search}
+        search={searchValue}
         published={params.published}
         sortBy={params.sortBy}
         order={params.order}

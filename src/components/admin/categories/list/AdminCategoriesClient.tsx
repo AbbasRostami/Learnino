@@ -29,6 +29,7 @@ export function AdminCategoriesClient() {
 
   const {
     params,
+    searchValue,
     apiParams,
     setPage,
     setLimit,
@@ -86,7 +87,7 @@ export function AdminCategoriesClient() {
       />
 
       <CategoriesFilters
-        search={params.search}
+        search={searchValue}
         show={params.show}
         onSearchChange={setSearch}
         onShowChange={(v) => setFilter("show", v)}

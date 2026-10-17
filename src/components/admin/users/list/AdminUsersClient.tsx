@@ -24,6 +24,7 @@ export function AdminUsersClient() {
 
   const {
     params,
+    searchValue,
     apiParams,
     setPage,
     setLimit,
@@ -75,7 +76,7 @@ export function AdminUsersClient() {
       <UsersStatsSection />
 
       <UsersFilters
-        search={params.search}
+        search={searchValue}
         role={params.role}
         isVerified={params.isVerified}
         sortBy={params.sortBy}

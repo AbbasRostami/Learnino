@@ -1,6 +1,10 @@
 "use client";
 
-import { AdminDataTable, AdminPageHeader, AdminPagination } from "@/components/admin/shared";
+import {
+  AdminDataTable,
+  AdminPageHeader,
+  AdminPagination,
+} from "@/components/admin/shared";
 import { buttonVariants } from "@/components/ui/button";
 import { useAdminTableParams } from "@/hooks/useAdminTableParams";
 import { Link } from "@/i18n/routing";
@@ -19,6 +23,7 @@ export function AdminWalletsClient() {
 
   const {
     params,
+    searchValue,
     apiParams,
     setPage,
     setLimit,
@@ -69,7 +74,7 @@ export function AdminWalletsClient() {
       />
 
       <WalletsFilters
-        search={params.search}
+        search={searchValue}
         minBalance={params.minBalance}
         maxBalance={params.maxBalance}
         onSearchChange={setSearch}

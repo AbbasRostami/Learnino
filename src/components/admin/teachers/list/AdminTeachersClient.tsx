@@ -29,6 +29,7 @@ export function AdminTeachersClient() {
 
   const {
     params,
+    searchValue,
     apiParams,
     setPage,
     setLimit,
@@ -84,7 +85,7 @@ export function AdminTeachersClient() {
         }
       />
       <TeachersFilters
-        search={params.search}
+        search={searchValue}
         show={params.show}
         onSearchChange={setSearch}
         onShowChange={(v) => setFilter("show", v)}

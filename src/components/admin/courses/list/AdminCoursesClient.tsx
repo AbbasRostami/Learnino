@@ -29,6 +29,7 @@ export function AdminCoursesClient() {
 
   const {
     params,
+    searchValue,
     apiParams,
     setPage,
     setLimit,
@@ -81,7 +82,7 @@ export function AdminCoursesClient() {
       />
 
       <CoursesFilters
-        search={params.search}
+        search={searchValue}
         level={params.level}
         published={params.published}
         sortBy={params.sortBy}

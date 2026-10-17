@@ -1,6 +1,10 @@
 "use client";
 
-import { AdminDataTable, AdminPageHeader, AdminPagination } from "@/components/admin/shared";
+import {
+  AdminDataTable,
+  AdminPageHeader,
+  AdminPagination,
+} from "@/components/admin/shared";
 import { useAdminTableParams } from "@/hooks/useAdminTableParams";
 import { useAdminComments } from "@/services";
 import { COMMENT_STATUSES, GetAdminCommentsParams } from "@/types";
@@ -16,6 +20,7 @@ export function AdminCommentsClient() {
 
   const {
     params,
+    searchValue,
     apiParams,
     setPage,
     setLimit,
@@ -53,7 +58,7 @@ export function AdminCommentsClient() {
       />
 
       <CommentsFilters
-        search={params.search}
+        search={searchValue}
         status={params.status ?? ""}
         onSearchChange={setSearch}
         onStatusChange={(v) => setFilter("status", v)}
