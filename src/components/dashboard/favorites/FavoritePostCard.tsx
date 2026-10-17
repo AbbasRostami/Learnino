@@ -3,13 +3,14 @@
 import { Link } from "@/i18n/routing";
 import { getCategoryStyle } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";
+import { FavoritePost } from "@/types";
 import { FileText, Loader2, MessageCircle, Trash2 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 interface FavoritePostCardProps {
-  postData: any;
+  postData: FavoritePost;
   onRemove: () => void;
   isRemoving: boolean;
   index: number;
@@ -75,7 +76,7 @@ export function FavoritePostCard({
             <Link
               href={`/blog?category=${postData?.category?.slug}`}
               className={cn(
-                "px-2 py-0.5 rounded-md text-[10px] font-bold hover:opacity-80 transition-opacity",
+                "px-2 py-0.5 rounded-md text-xs font-bold hover:opacity-80 transition-opacity",
                 style.badgeColor,
               )}
             >
@@ -89,14 +90,14 @@ export function FavoritePostCard({
         </h3>
 
         <div className="mt-auto pt-3 border-t border-dashed border-border/60 flex items-center justify-between">
-          <div className="flex items-center gap-1 text-[10px] text-muted-foreground font-bold">
+          <div className="flex items-center gap-1 text-xs text-muted-foreground font-bold">
             <MessageCircle className="h-3 w-3" />
             <span>{postData?.stats?.comments ?? 0}</span>
           </div>
 
           <Link
             href={`/blog/${postData?.slug}`}
-            className="text-[10px] font-bold text-primary hover:underline underline-offset-4"
+            className="text-xs font-bold text-primary hover:underline underline-offset-4"
           >
             {t("readMore")} ←
           </Link>

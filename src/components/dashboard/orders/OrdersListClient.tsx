@@ -182,11 +182,11 @@ export function OrdersListClient() {
                       <StatusIcon className="h-4 w-4" aria-hidden="true" />
                     </div>
                     <div className="flex flex-col min-w-0">
-                      <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                      <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                         {t("orderNumber")}
                       </span>
                       <span
-                        className="text-xs sm:text-sm font-mono font-black text-foreground"
+                        className="text-xs sm:text-sm font-black text-foreground"
                         dir="ltr"
                       >
                         #{order.id.slice(0, 8)}
@@ -196,7 +196,7 @@ export function OrdersListClient() {
 
                   <div
                     className={cn(
-                      "shrink-0 inline-flex items-center gap-1 text-[10px] font-black px-2.5 py-1 rounded-full border",
+                      "shrink-0 inline-flex items-center gap-1 text-xs font-black px-2.5 py-1 rounded-full border",
                       style.badgeColor,
                     )}
                   >
@@ -209,18 +209,15 @@ export function OrdersListClient() {
                   <p className="text-sm font-bold text-foreground line-clamp-1">
                     {order?.items?.[0]?.courseTitle || t("educationalOrder")}
                     {order?.items && order.items.length > 1 && (
-                      <span className="text-[11px] text-muted-foreground font-semibold ms-1">
+                      <span className="text-xs text-muted-foreground font-semibold ms-1">
                         ({t("coursesMore", { count: order?.items?.length - 1 })}
                         )
                       </span>
                     )}
                   </p>
 
-                  <div className="flex items-center gap-3 text-[10px] text-muted-foreground font-semibold">
-                    <span
-                      className="flex items-center gap-1"
-                      suppressHydrationWarning
-                    >
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground font-semibold">
+                    <span className="flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
                       {formatRelativeTime(order?.createdAt, locale)}
                     </span>
@@ -228,10 +225,10 @@ export function OrdersListClient() {
                       <Package className="h-3 w-3" />
                       {t("itemsCount", { count: order?.items?.length ?? 0 })}
                     </span>
-                    {(order as any).discountCode && (
+                    {order.discountCode && (
                       <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold">
                         <Tag className="h-3 w-3" />
-                        {(order as any).discountCode}
+                        {order.discountCode}
                       </span>
                     )}
                   </div>
@@ -239,21 +236,20 @@ export function OrdersListClient() {
 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-3 border-t border-dashed border-border/60 bg-muted/20">
                   <div className="flex items-baseline gap-2">
-                    {(order as any).subtotal &&
-                      (order as any).discountAmount > 0 && (
-                        <span
-                          className="text-[10px] text-muted-foreground line-through"
-                          dir="ltr"
-                        >
-                          {formatPrice((order as any).subtotal)}
-                        </span>
-                      )}
+                    {order.subtotal && order.discountAmount > 0 && (
+                      <span
+                        className="text-xs text-muted-foreground line-through"
+                        dir="ltr"
+                      >
+                        {formatPrice(order.subtotal)}
+                      </span>
+                    )}
                     <span
                       className="text-base font-black text-foreground"
                       dir="ltr"
                     >
                       {formatPrice(order.totalAmount)}
-                      <span className="text-[10px] text-muted-foreground ms-1 font-semibold">
+                      <span className="text-xs text-muted-foreground ms-1 font-semibold">
                         {tCart("currency")}
                       </span>
                     </span>

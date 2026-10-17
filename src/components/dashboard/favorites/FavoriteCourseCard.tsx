@@ -31,6 +31,7 @@ export function FavoriteCourseCard({
 }: FavoriteCourseCardProps) {
   const t = useTranslations("course");
   const tCart = useTranslations("cart");
+  const tDashboard = useTranslations("dashboard");
   const locale = useLocale();
   const prefersReducedMotion = useReducedMotion();
 
@@ -119,7 +120,9 @@ export function FavoriteCourseCard({
 
         <div className="mt-auto pt-3 border-t border-dashed border-border/60 flex items-center justify-between">
           <span className="text-[10px] font-bold text-muted-foreground hover:text-primary transition-colors">
-            <Link href={`/courses/${courseData?.slug}`}>مشاهده جزئیات ←</Link>
+            <Link href={`/courses/${courseData?.slug}`}>
+              {tDashboard("details")}
+            </Link>
           </span>
 
           <div className="text-end font-black" dir="ltr">

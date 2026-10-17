@@ -28,7 +28,7 @@ export function OverviewRecentCourses() {
         </h2>
         <Link
           href="/dashboard/my-courses"
-          className="text-[10px] font-bold text-primary flex items-center gap-1 hover:gap-2 transition-all"
+          className="text-xs font-bold text-primary flex items-center gap-1 hover:gap-2 transition-all"
         >
           <span>{t("viewAll")}</span>
           <ArrowLeft className="h-3 w-3 rtl:rotate-180" aria-hidden="true" />
@@ -73,7 +73,7 @@ export function OverviewRecentCourses() {
                 <h3 className="text-xs font-bold text-foreground line-clamp-2 group-hover:text-primary transition-colors">
                   {enrollment?.course?.title}
                 </h3>
-                <p className="text-[10px] text-muted-foreground truncate mt-0.5">
+                <p className="text-xs text-muted-foreground truncate mt-0.5">
                   {enrollment?.course?.teacher?.name}
                 </p>
               </div>

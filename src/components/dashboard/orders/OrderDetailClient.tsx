@@ -76,9 +76,9 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
   const style = STATUS_STYLES[order.status];
   const StatusIcon = style.Icon;
 
-  const subtotal = (order as any).subtotal ?? order.totalAmount;
-  const discountAmount = (order as any).discountAmount ?? 0;
-  const discountCode = (order as any).discountCode;
+  const subtotal = order.subtotal ?? order.totalAmount;
+  const discountAmount = order.discountAmount ?? 0;
+  const discountCode = order.discountCode;
   const hasDiscount = discountAmount > 0;
 
   const formatPrice = (value: number) =>
@@ -99,15 +99,12 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
           </Button>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h1
-                className="text-lg font-black text-foreground font-mono"
-                dir="ltr"
-              >
+              <h1 className="text-lg font-black text-foreground" dir="ltr">
                 #{order.id.slice(0, 8)}
               </h1>
               <span
                 className={cn(
-                  "inline-flex items-center gap-1 text-[10px] font-black px-2.5 py-1 rounded-full border",
+                  "inline-flex items-center gap-1 text-xs font-black px-2.5 py-1 rounded-full border",
                   style.badgeColor,
                 )}
               >
@@ -115,10 +112,7 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
                 {tOrder(`statuses.${order.status}`)}
               </span>
             </div>
-            <p
-              className="text-xs text-muted-foreground mt-1"
-              suppressHydrationWarning
-            >
+            <p className="text-xs text-muted-foreground mt-1">
               {t("submittedAt")} {formatRelativeTime(order?.createdAt, locale)}
             </p>
           </div>
@@ -188,7 +182,7 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
                   )}
                 </h3>
                 <span
-                  className="text-[10px] text-muted-foreground mt-1 inline-block font-mono"
+                  className="text-xs text-muted-foreground mt-1 inline-block"
                   dir="ltr"
                 >
                   {t("courseIdLabel")}: {item?.courseId?.slice(0, 8)}...
@@ -198,7 +192,7 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
                 <span className="text-base font-black text-foreground">
                   {formatPrice(item?.price)}
                 </span>
-                <span className="text-[10px] text-muted-foreground ms-1">
+                <span className="text-xs text-muted-foreground ms-1">
                   {tCart("currency")}
                 </span>
               </div>
@@ -225,7 +219,6 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
 
           <hr className="border-dashed border-border/60" />
 
-          {/* Subtotal */}
           <div className="flex justify-between items-center text-xs">
             <span className="text-muted-foreground font-semibold">
               {t("subtotalLabel")}
@@ -256,7 +249,7 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
                     <Tag className="h-3 w-3" />
                     {t("discountCodeLabel")}
                   </span>
-                  <span className="font-black text-emerald-600 dark:text-emerald-400 font-mono text-[10px] bg-emerald-500/10 px-2 py-0.5 rounded-md">
+                  <span className="font-black text-emerald-600 dark:text-emerald-400 text-xs bg-emerald-500/10 px-2 py-0.5 rounded-md">
                     {discountCode}
                   </span>
                 </div>

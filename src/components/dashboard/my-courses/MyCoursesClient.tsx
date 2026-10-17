@@ -58,7 +58,7 @@ export function MyCoursesClient() {
             <MyCoursesCardSkeleton key={i} />
           ))}
         </div>
-      ) : items.length === 0 ? (
+      ) : items?.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center gap-4 rounded-3xl border border-dashed border-border/60 bg-card/40">
           <BookOpen className="h-12 w-12 text-muted-foreground/30" />
           <p className="text-sm font-bold text-muted-foreground">
@@ -114,15 +114,15 @@ export function MyCoursesClient() {
                     {course?.category && (
                       <Link
                         href={`/courses?categories=${course?.category?.slug}`}
-                        className="inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+                        className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
                       >
                         <Tag className="h-2.5 w-2.5" aria-hidden="true" />
                         <span>{course?.category?.name}</span>
                       </Link>
                     )}
-                    <span className="text-[10px] text-muted-foreground flex items-center gap-1 shrink-0">
+                    <span className="text-xs text-muted-foreground flex items-center gap-1 shrink-0">
                       <Calendar className="h-3 w-3" />
-                      <span suppressHydrationWarning>
+                      <span>
                         {formatRelativeTime(enrollment?.enrolledAt, locale)}
                       </span>
                     </span>

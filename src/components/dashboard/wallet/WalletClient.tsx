@@ -57,8 +57,7 @@ export function WalletClient() {
   } = useTransactions({ page, limit: 10 });
   const { mutate: chargeWallet, isPending: isCharging } = useChargeWallet();
 
-  const balanceRial = walletData?.data?.wallet?.balance;
-  const balanceToman = balanceRial !== undefined ? balanceRial / 10 : undefined;
+  const balanceToman = walletData?.data?.wallet?.balance;
 
   const transactions = txData?.data?.items ?? [];
   const pagination = txData?.data?.pagination;
@@ -73,8 +72,7 @@ export function WalletClient() {
     e.preventDefault();
     if (amountToman < MIN_AMOUNT_TOMAN) return;
 
-    const amountRial = amountToman * 10;
-    chargeWallet({ amount: amountRial });
+    chargeWallet({ amount: amountToman });
   };
 
   const handleAmountChange = (value: number) => {
@@ -151,7 +149,7 @@ export function WalletClient() {
 
             <div className="relative flex items-start gap-2 p-3 rounded-2xl bg-background/50 border border-emerald-500/20 backdrop-blur-sm">
               <ShieldCheck className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400 mt-0.5" />
-              <p className="text-[11px] text-muted-foreground leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 {t("walletDescription")}
               </p>
             </div>
@@ -172,7 +170,7 @@ export function WalletClient() {
               {t("chargeAccount")}
             </h2>
           </div>
-          <p className="text-[11px] text-muted-foreground mb-4">
+          <p className="text-xs text-muted-foreground mb-4">
             {t("chargeMinNote")}
           </p>
 
@@ -185,14 +183,6 @@ export function WalletClient() {
                 <span>
                   {t("chargeAmountLabel")} ({tCart("currency")})
                 </span>
-                {amountToman > 0 && (
-                  <span
-                    className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400"
-                    dir="ltr"
-                  >
-                    ≈ {formatPrice(amountToman * 10)} Rial
-                  </span>
-                )}
               </label>
 
               <div className="relative flex items-center gap-1.5 rounded-2xl border border-border/60 bg-background focus-within:border-emerald-500/50 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all overflow-hidden shadow-xs">
@@ -275,7 +265,7 @@ export function WalletClient() {
             {t("transactionsHistory")}
           </h2>
           {pagination?.total ? (
-            <span className="text-[10px] font-bold text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-full">
+            <span className="text-xs font-bold text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-full">
               {pagination.total}
             </span>
           ) : null}
@@ -300,7 +290,7 @@ export function WalletClient() {
               const isCharge = tx.type === "CHARGE";
               const isRefund = tx.type === "REFUND";
               const isIncoming = isCharge || isRefund;
-              const amountToman = tx.amount / 10;
+              const amountToman = tx.amount;
 
               return (
                 <motion.div
@@ -340,7 +330,7 @@ export function WalletClient() {
                         </span>
                         <span
                           className={cn(
-                            "text-[9px] font-black px-2 py-0.5 rounded-full border",
+                            "text-xs font-black px-2 py-0.5 rounded-full border",
                             TX_STATUS_STYLES[tx.status] ||
                               TX_STATUS_STYLES.CANCELLED,
                           )}
@@ -348,13 +338,11 @@ export function WalletClient() {
                           {t(`transactionStatus${tx.status}`)}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-                        <span suppressHydrationWarning>
-                          {formatRelativeTime(tx.createdAt, locale)}
-                        </span>
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                        <span>{formatRelativeTime(tx.createdAt, locale)}</span>
                         {tx.refId && (
                           <span
-                            className="font-mono bg-muted/40 px-1.5 py-0.5 rounded"
+                            className="bg-muted/40 px-1.5 py-0.5 rounded"
                             dir="ltr"
                           >
                             {t("transactionRefId")}: {tx.refId}
@@ -376,7 +364,7 @@ export function WalletClient() {
                       {isIncoming ? "+" : "-"}
                       {formatPrice(amountToman)}
                     </span>
-                    <span className="text-[9px] text-muted-foreground ms-1 font-semibold">
+                    <span className="text-xs text-muted-foreground ms-1 font-semibold">
                       {tCart("currency")}
                     </span>
                   </div>

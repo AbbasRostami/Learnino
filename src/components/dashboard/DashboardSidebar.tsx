@@ -109,7 +109,7 @@ export function DashboardSidebar({ onNavigate }: DashboardSidebarProps) {
                 {userName}
               </span>
               <span
-                className="text-[10px] text-muted-foreground truncate"
+                className="text-xs text-muted-foreground truncate"
                 dir="ltr"
               >
                 {profile?.email}
@@ -121,7 +121,7 @@ export function DashboardSidebar({ onNavigate }: DashboardSidebarProps) {
 
       {MENU_SECTIONS?.map((section) => (
         <div key={section?.key} className="flex flex-col gap-1">
-          <span className="text-[10px] font-black text-muted-foreground uppercase tracking-wider px-3 mb-1">
+          <span className="text-xs font-black text-muted-foreground uppercase tracking-wider px-3 mb-1">
             {t(`sections.${section?.key}`)}
           </span>
 

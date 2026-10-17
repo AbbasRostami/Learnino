@@ -115,11 +115,11 @@ export function OverviewStatsGrid({
 
           <div className="relative flex items-start justify-between gap-2">
             <div className="min-w-0 flex-1">
-              <div className="text-[10px] font-bold text-muted-foreground mb-2 truncate">
+              <div className="text-xs font-bold text-muted-foreground mb-2 truncate">
                 {t(stat?.key)}
               </div>
               <div className="text-2xl sm:text-3xl font-black text-foreground">
-                {stat?.value.toLocaleString()}
+                {stat?.value}
               </div>
             </div>
 

@@ -86,7 +86,7 @@ export function OverviewQuickActions() {
               >
                 <action.icon className="h-5 w-5" aria-hidden="true" />
               </div>
-              <span className="text-[10px] font-bold text-foreground text-center truncate w-full">
+              <span className="text-xs font-bold text-foreground text-center truncate w-full">
                 {action?.key === "cart"
                   ? tNav("cart")
                   : t(`menu.${action?.key}`)}

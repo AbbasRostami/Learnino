@@ -55,7 +55,7 @@ export function OverviewGreeting({
 
       <div className="relative flex items-start justify-between gap-4">
         <div className="w-full">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold mb-3">
             <Sparkles className="h-3 w-3" aria-hidden="true" />
             <span>{timeGreeting}</span>
           </div>

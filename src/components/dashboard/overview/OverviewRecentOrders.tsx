@@ -38,7 +38,7 @@ export function OverviewRecentOrders() {
         </h2>
         <Link
           href="/dashboard/orders"
-          className="text-[10px] font-bold text-primary flex items-center gap-1 hover:gap-2 transition-all"
+          className="text-xs font-bold text-primary flex items-center gap-1 hover:gap-2 transition-all"
         >
           <span>{t("viewAll")}</span>
           <ArrowLeft className="h-3 w-3 rtl:rotate-180" aria-hidden="true" />
@@ -67,14 +67,14 @@ export function OverviewRecentOrders() {
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <span
-                    className="text-[10px] font-mono text-muted-foreground truncate"
+                    className="text-xs text-muted-foreground truncate"
                     dir="ltr"
                   >
                     #{order?.id?.slice(0, 8)}
                   </span>
                   <span
                     className={cn(
-                      "text-[9px] font-bold px-2 py-0.5 rounded-full border",
+                      "text-xs font-bold px-2 py-0.5 rounded-full border",
                       STATUS_COLORS[order?.status],
                     )}
                   >
@@ -96,7 +96,7 @@ export function OverviewRecentOrders() {
                     locale === "fa" ? "fa-IR" : "en-US",
                   ).format(order?.totalAmount)}
                 </span>
-                <span className="text-[9px] text-muted-foreground ms-1">
+                <span className="text-xs text-muted-foreground ms-1">
                   {tCart("currency")}
                 </span>
               </div>

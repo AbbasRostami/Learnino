@@ -82,7 +82,7 @@ export function FavoritesClient() {
               <BookOpen className="h-4 w-4" aria-hidden="true" />
               <span>{tFav("tabCourses")}</span>
               {coursesCountReady ? (
-                <span className="bg-background  cursor-pointer px-2 py-0.5 rounded-full text-[10px] shadow-sm ml-1 rtl:mr-1">
+                <span className="bg-background  cursor-pointer px-2 py-0.5 rounded-full text-xs shadow-sm ml-1 rtl:mr-1">
                   {coursesPagination?.total ?? 0}
                 </span>
               ) : (
@@ -97,7 +97,7 @@ export function FavoritesClient() {
               <FileText className="h-4 w-4" aria-hidden="true" />
               <span>{tFav("tabPosts")}</span>
               {postsCountReady ? (
-                <span className="bg-background cursor-pointer px-2 py-0.5 rounded-full text-[10px] shadow-sm ml-1 rtl:mr-1">
+                <span className="bg-background cursor-pointer px-2 py-0.5 rounded-full text-xs shadow-sm ml-1 rtl:mr-1">
                   {postsPagination?.total ?? 0}
                 </span>
               ) : (
