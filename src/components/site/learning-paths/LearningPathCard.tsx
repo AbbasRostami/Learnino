@@ -41,7 +41,7 @@ export function LearningPathCard({ path, index }: LearningPathCardProps) {
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
       <Link
-        href={`/learning-paths/${path.slug}`}
+        href={`/learning-paths`}
         className="group relative flex flex-col justify-between p-6 rounded-3xl h-full border border-border/60 bg-card/60 backdrop-blur-md hover:-translate-y-1 hover:shadow-xl hover:border-primary/40 transition-all duration-300 overflow-hidden motion-reduce:transition-none motion-reduce:hover:transform-none"
       >
         <div

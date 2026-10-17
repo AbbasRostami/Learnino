@@ -38,8 +38,8 @@ export function HeroSection() {
                 alt={t("imageAlt")}
                 fill
                 priority
-                quality={85}
-                sizes="128px"
+                quality={80}
+                sizes="(max-width: 640px) 96px, 128px"
                 className="object-contain drop-shadow-xl relative z-10"
               />
             </div>
@@ -152,8 +152,8 @@ export function HeroSection() {
                   alt={t("imageAlt")}
                   fill
                   priority
-                  quality={90}
-                  sizes="(max-width: 1024px) 0px, 500px"
+                  quality={85}
+                  sizes="(max-width: 1024px) 0px, (max-width: 1280px) 450px, 500px"
                   className="object-contain drop-shadow-2xl transition-transform duration-500 hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100"
                 />
               </div>

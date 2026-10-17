@@ -142,7 +142,7 @@ export function AboutSection() {
             className="relative w-full max-w-md lg:max-w-lg aspect-square"
           >
             <Image
-              src="/logo/LERNINO.png"
+              src="/logo/LEARNINO.png"
               alt="درباره لرنینو"
               fill
               className="object-contain drop-shadow-2xl"

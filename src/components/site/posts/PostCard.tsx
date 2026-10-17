@@ -64,7 +64,7 @@ export function PostCard({ post, priority = false }: PostCardProps) {
           {post?.category && style && (
             <span
               className={cn(
-                "text-[10px] font-bold px-2.5 py-1 rounded-full",
+                "text-xs font-bold px-2.5 py-1 rounded-full",
                 style.badgeColor,
               )}
             >
@@ -87,11 +87,7 @@ export function PostCard({ post, priority = false }: PostCardProps) {
           </div>
         </div>
 
-        {/* Title */}
-        <h3
-          className="mb-3 line-clamp-2 text-base md:text-[17px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors min-h-12"
-          itemProp="headline"
-        >
+        <h3 className="mb-3 line-clamp-2 text-base md:text-[17px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors min-h-12">
           <Link
             href={`/blog/${post?.slug}`}
             className="hover:underline underline-offset-2"
@@ -105,18 +101,14 @@ export function PostCard({ post, priority = false }: PostCardProps) {
             {post?.reactions && (
               <div className="flex items-center gap-1 text-xs text-muted-foreground">
                 <Heart className="h-3.5 w-3.5" aria-hidden="true" />
-                <span className="font-semibold">
-                  {post?.reactions?.likes.toLocaleString()}
-                </span>
+                <span className="font-semibold">{post?.reactions?.likes}</span>
               </div>
             )}
 
             {post?.stats && (
               <div className="flex items-center gap-1 text-xs text-muted-foreground">
                 <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
-                <span className="font-semibold">
-                  {post?.stats?.comments.toLocaleString()}
-                </span>
+                <span className="font-semibold">{post?.stats?.comments}</span>
               </div>
             )}
           </div>

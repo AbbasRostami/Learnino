@@ -39,7 +39,7 @@ export function TeacherCard({ teacher }: TeacherCardProps) {
           )}
         </div>
 
-        <div className="absolute -bottom-1 -inset-e-1 flex items-center gap-1 rounded-full bg-primary text-primary-foreground text-[10px] font-bold px-2.5 py-1 shadow-lg">
+        <div className="absolute -bottom-1 -inset-e-1 flex items-center gap-1 rounded-full bg-primary text-primary-foreground text-xs font-bold px-2.5 py-1 shadow-lg">
           <BookOpen className="h-3 w-3" aria-hidden="true" />
           <span>{teacher?.coursesCount}</span>
         </div>
