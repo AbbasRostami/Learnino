@@ -15,6 +15,7 @@ import { parseAsString, useQueryState } from "nuqs";
 import { useEffect, useRef, useState } from "react";
 
 import { Input } from "@/components/ui/input";
+import { useDebouncedParam } from "@/hooks/useDebouncedParam";
 import { useSearch } from "@/services";
 
 export function SearchInput() {
@@ -27,8 +28,13 @@ export function SearchInput() {
     "q",
     parseAsString.withDefault("").withOptions({
       shallow: true,
-      throttleMs: 300,
     }),
+  );
+
+  const [inputValue, setInputValue] = useDebouncedParam(
+    q,
+    (val) => setQ(val || null),
+    350,
   );
 
   const { data, isLoading } = useSearch(q);
@@ -53,48 +59,60 @@ export function SearchInput() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!q.trim()) return;
+    if (!inputValue.trim()) return;
     setIsOpen(false);
-    router.push(`/courses?search=${encodeURIComponent(q.trim())}`);
+    router.push(`/courses?search=${encodeURIComponent(inputValue.trim())}`);
   };
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-xs lg:max-w-md">
-      <form onSubmit={handleSubmit} className="relative flex items-center">
+    <div
+      ref={containerRef}
+      className="relative w-full max-w-xs lg:max-w-md z-50"
+    >
+      <form
+        onSubmit={handleSubmit}
+        role="search"
+        className="relative flex items-center"
+      >
         <Search className="absolute right-3.5 ltr:right-auto ltr:left-3.5 h-4 w-4 text-muted-foreground pointer-events-none" />
         <Input
-          type="search"
-          value={q}
+          type="text"
+          inputMode="search"
+          value={inputValue}
+          aria-label={t("searchPlaceholder")}
           onFocus={() => setIsOpen(true)}
           onChange={(e) => {
-            setQ(e.target.value);
+            setInputValue(e.target.value);
             setIsOpen(true);
           }}
           placeholder={t("searchPlaceholder")}
           className="h-10 text-sm rounded-full bg-muted/50 border-border/60 pr-10 ltr:pr-8 ltr:pl-10 focus-visible:bg-background focus-visible:ring-primary/40 transition-all"
         />
-        {q && (
+        {inputValue && (
           <button
             type="button"
+            aria-label={t("clearSearch")}
             onClick={() => {
-              setQ("");
+              setInputValue("");
+              setQ(null);
               setIsOpen(false);
             }}
             className="absolute left-3 ltr:left-auto ltr:right-3 text-muted-foreground hover:text-foreground p-0.5 cursor-pointer"
           >
-            <X className="h-3.5 w-3.5" />
+            <X className="h-3.5 w-3.5" aria-hidden="true" />
+            <span className="sr-only">{t("clearSearch")}</span>
           </button>
         )}
       </form>
 
-      {isOpen && q.trim().length >= 2 && (
-        <div className="absolute top-full left-0 right-0 mt-2 rounded-2xl border border-border/80 bg-popover/95 backdrop-blur-xl shadow-2xl p-3 z-50 animate-in fade-in-50 zoom-in-95 duration-200 max-h-[80vh] overflow-y-auto w-70 md:w-full">
+      {isOpen && inputValue.trim().length >= 2 && (
+        <div className="absolute top-full left-0 right-0 mt-2 rounded-2xl border border-border/80 bg-popover/95 backdrop-blur-xl shadow-2xl p-3 animate-in fade-in-50 zoom-in-95 duration-200 max-h-[80vh] overflow-y-auto w-70 md:w-full no-scrollbar">
           <Link
-            href={`/courses?search=${encodeURIComponent(q.trim())}`}
+            href={`/courses?search=${encodeURIComponent(inputValue.trim())}`}
             onClick={() => setIsOpen(false)}
             className="flex items-center justify-between p-2.5 rounded-xl hover:bg-accent text-sm font-semibold text-primary transition-colors group mb-2"
           >
-            <span>{t("viewAllResults", { query: q })}</span>
+            <span>{t("viewAllResults", { query: inputValue })}</span>
             <ArrowUpLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 rtl:rotate-90" />
           </Link>
 
@@ -107,7 +125,7 @@ export function SearchInput() {
 
           {!isLoading && !hasResults && (
             <div className="py-8 text-center text-sm text-muted-foreground">
-              {t("noResults", { query: q })}
+              {t("noResults", { query: inputValue })}
             </div>
           )}
 
@@ -133,6 +151,8 @@ export function SearchInput() {
                               src={course?.imageUrl}
                               alt={course?.title}
                               fill
+                              sizes="64px"
+                              quality={75}
                               className="object-cover"
                             />
                           )}
@@ -171,6 +191,8 @@ export function SearchInput() {
                               src={post?.imageUrl}
                               alt={post?.title}
                               fill
+                              sizes="48px"
+                              quality={75}
                               className="object-cover"
                             />
                           )}

@@ -66,7 +66,7 @@ export function CartButton() {
             "absolute -top-1 -inset-e-1",
             "flex h-5 min-w-5 items-center justify-center rounded-full px-1",
             "bg-brand-accent text-brand-accent-foreground",
-            "text-[10px] font-bold shadow-md animate-in zoom-in-50 duration-200",
+            "text-xs font-bold shadow-md animate-in zoom-in-50 duration-200",
           )}
         >
           {cartCount > 99 ? "99+" : cartCount}
