@@ -21,6 +21,7 @@
     }
   },
   "nav": {
+    "home": "Home",
     "courses": "Courses",
     "learningPaths": "Learning Paths",
     "blog": "Blog",
@@ -256,6 +257,25 @@
       "slugMaxLength": "Slug must not exceed 100 characters"
     }
   },
+  "comment": {
+    "comments": "Comments",
+    "writeComment": "Write your comment...",
+    "submitComment": "Submit Comment",
+    "replyTo": "Reply to {name}",
+    "cancelReply": "Cancel Reply",
+    "loginToComment": "Please login to leave a comment",
+    "noComments": "Be the first to comment!",
+    "loadMoreComments": "Load More Comments",
+    "validation": {
+      "contentMin": "Comment must be at least 2 characters",
+      "contentMax": "Comment must not exceed 1000 characters",
+      "invalidCourseUuid": "Invalid course ID",
+      "invalidPostUuid": "Invalid post ID",
+      "invalidParentUuid": "Invalid parent comment ID",
+      "targetRequired": "Either course or post is required",
+      "bothTargetsProvided": "Only one of course or post can be selected"
+    }
+  },
   "order": {
     "orders": "Orders",
     "myOrders": "My Orders",
@@ -353,7 +373,7 @@
     "draft": "Draft",
     "enrollments": "Enrollments",
     "comments": "Comments",
-    "currency": "IRT",
+    "currency": "Toman",
     "levels": {
       "BEGINNER": "Beginner",
       "INTERMEDIATE": "Intermediate",
@@ -395,7 +415,6 @@
       "slugMaxLength": "Slug must not exceed 200 characters"
     },
     "pageTitle": "All Courses",
-    "pageDescription": "Explore the complete catalog of specialized Learnino courses",
     "pageBadge": "Learning Courses",
     "searchPlaceholder": "Search courses...",
     "filters": "Filters",
@@ -414,7 +433,7 @@
     "priceMax": "Max Price",
     "onlyFree": "Free Courses Only",
     "onlyPaid": "Paid Courses Only",
-    "resultsCount": "{count} courses found",
+    "resultsCount": "{count} courses",
     "noResults": "No courses found with these filters",
     "tryDifferentFilters": "Try different filters",
     "loadMore": "Load More",
@@ -472,7 +491,7 @@
     "subtotal": "Subtotal",
     "discountAmount": "You saved",
     "secureCheckout": "Secure checkout with money-back guarantee",
-    "emptyCartDescription": "You haven't added any courses to your cart yet. Explore the course catalog now.",
+    "emptyCartDescription": "You haven't added any courses to your cart yet.",
     "loginRequiredCheckout": "Please login to complete checkout",
     "loginRequiredDiscount": "Please login to apply discount code",
     "removeItem": "Remove",
@@ -510,7 +529,7 @@
     "inactive": "Inactive",
     "types": {
       "PERCENTAGE": "Percentage",
-      "AMOUNT": "Amount (Rial)"
+      "AMOUNT": "Amount (Toman)"
     },
     "createNew": "Create Discount Code",
     "deleteDiscount": "Delete Discount Code",
@@ -529,7 +548,7 @@
       "valueInvalid": "Value must be a number",
       "valuePositive": "Value must be positive",
       "percentageRange": "Percentage must be between 1 and 100",
-      "amountMin": "Fixed amount must be at least 10,000 Rials",
+      "amountMin": "Fixed amount must be at least 1,000 Tomans",
       "maxUsesRequired": "Max uses is required",
       "maxUsesInvalid": "Max uses must be a number",
       "maxUsesInt": "Max uses must be an integer",
@@ -556,7 +575,7 @@
     "balance": "Wallet Balance",
     "currentBalance": "Current Balance",
     "chargeWallet": "Top-up Wallet",
-    "chargeAmount": "Top-up Amount (Rial)",
+    "chargeAmount": "Top-up Amount (Toman)",
     "transactions": "Transaction History",
     "transactionDetails": "Transaction Details",
     "refId": "Reference ID",
@@ -583,8 +602,8 @@
       "amountRequired": "Top-up amount is required",
       "amountInvalid": "Amount must be a number",
       "amountInt": "Amount must be an integer",
-      "amountMin": "Minimum top-up amount is 10,000 Rials",
-      "amountMax": "Maximum top-up amount is 500,000,000 Rials",
+      "amountMin": "Minimum top-up amount is 1,000 Tomans",
+      "amountMax": "Maximum top-up amount is 50,000,000 Tomans",
       "invalidUserUuid": "Invalid user ID",
       "searchMaxLength": "Search text must not exceed 100 characters"
     }
@@ -593,7 +612,7 @@
     "success": {
       "badge": "Payment Successful",
       "title": "Payment Completed Successfully",
-      "subtitle": "Your purchase is complete and course access has been activated. Ready to start learning? 🚀",
+      "subtitle": "Your purchase is complete and course access has been activated.",
       "walletTitle": "Wallet Charged Successfully",
       "walletSubtitle": "Your wallet balance has been increased successfully. You can now purchase your desired courses.",
       "detailsTitle": "Transaction Details",
@@ -609,22 +628,16 @@
       "viewWallet": "View Wallet",
       "nextSteps": "What's Next?",
       "tip1": "Head to My Courses and start learning",
-      "tip2": "Payment receipt has been sent to your email",
       "tip3": "Contact support if you encounter any issues"
     },
     "failed": {
       "badge": "Payment Failed",
       "title": "Payment Was Not Completed",
-      "subtitle": "Unfortunately, there was an issue with the payment process. No worries, you can try again.",
       "reasonTitle": "Error Reason",
       "defaultReason": "Payment was cancelled by user or an error occurred at the payment gateway.",
       "authorityLabel": "Reference Code",
       "retryPayment": "Retry Payment",
       "backToCart": "Back to Cart",
-      "backToHome": "Back to Home",
-      "supportTitle": "Still having issues?",
-      "supportText": "If the problem persists and money has been deducted, it will be automatically refunded within 72 hours. Contact support for follow-up.",
-      "contactSupport": "Contact Support",
       "commonIssues": "Common Issues",
       "issue1": "Insufficient card balance",
       "issue2": "Incorrect card second password (CVV2)",
@@ -993,6 +1006,7 @@
       "REJECTED": "Rejected"
     },
     "commentOn": "Your comment on",
+    "codeExpired": "Verification code expired",
     "onCourse": "Course",
     "onPost": "Article",
     "replies": "Replies",
@@ -1132,6 +1146,14 @@
       "checking": "Checking administrator access...",
       "unauthorized": "You do not have access to this section."
     },
+    "permission": {
+      "superAdmin": "Super Admin",
+      "readOnlyAdmin": "Demo Admin",
+      "demoMode": {
+        "title": "Demo Mode (View-Only)",
+        "description": "You are logged in with a demo admin account. You can view all sections, but creating, editing, or deleting requires SUPER_ADMIN access. This restriction is applied solely to protect demo data."
+      }
+    },
     "loginPage": {
       "brandName": "Learnino",
       "portalBadge": "Admin Portal",
@@ -1219,6 +1241,7 @@
         "allRoles": "All Roles",
         "roleUser": "User",
         "roleAdmin": "Admin",
+        "roleSuperAdmin": "Super Admin",
         "allVerification": "All Statuses",
         "verifiedOnly": "Verified Only",
         "unverifiedOnly": "Unverified Only",
@@ -1571,6 +1594,7 @@
         "unpublish": "Unpublish"
       },
       "form": {
+        "courseNotFound": "Course not found",
         "createTitle": "Add New Course",
         "editTitle": "Edit Course",
         "createDescription": "Enter course information in both languages",
@@ -1794,8 +1818,8 @@
         "pendingOnly": "Pending",
         "failedOnly": "Failed",
         "cancelledOnly": "Cancelled",
-        "minBalancePlaceholder": "Min Balance (RLS)",
-        "maxBalancePlaceholder": "Max Balance (RLS)"
+        "minBalancePlaceholder": "Min Balance (Toman)",
+        "maxBalancePlaceholder": "Max Balance (Toman)"
       },
       "types": {
         "CHARGE": "Wallet Top-up",
