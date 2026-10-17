@@ -5,7 +5,7 @@ export function formatNumber(
   if (num === null || num === undefined || num === "") return "-";
 
   const parsedNum = typeof num === "string" ? Number(num) : num;
-  if (isNaN(parsedNum)) return "-";
+  if (Number.isNaN(parsedNum)) return "-";
 
   const targetLocale =
     locale === "en" || locale === "en-US" ? "en-US" : "fa-IR";
@@ -19,7 +19,7 @@ export const formatFullDate = (
 ): string => {
   if (!date) return "-";
   const d = new Date(date);
-  if (isNaN(d.getTime())) return "-";
+  if (Number.isNaN(d.getTime())) return "-";
 
   return new Intl.DateTimeFormat(locale === "fa" ? "fa-IR" : "en-US", {
     year: "numeric",
@@ -30,18 +30,13 @@ export const formatFullDate = (
   }).format(d);
 };
 
-/**
- * 🎯 فرمت کوتاه تاریخ (سال/ماه/روز)
- * - fa: 1404/06/20
- * - en: 2025/09/20
- */
 export const formatShortDate = (
   date?: string | Date | null,
   locale = "fa",
 ): string => {
   if (!date) return "-";
   const d = new Date(date);
-  if (isNaN(d.getTime())) return "-";
+  if (Number.isNaN(d.getTime())) return "-";
 
   return new Intl.DateTimeFormat(locale === "fa" ? "fa-IR" : "en-US", {
     year: "numeric",
@@ -57,11 +52,10 @@ export const formatRelativeTime = (
   if (!date) return "-";
 
   const d = new Date(date).getTime();
-  if (isNaN(d)) return "-";
+  if (Number.isNaN(d)) return "-";
 
   const now = Date.now();
   const diffInSeconds = Math.floor((d - now) / 1000);
-
   const absDiff = Math.abs(diffInSeconds);
 
   if (absDiff < 60) {
