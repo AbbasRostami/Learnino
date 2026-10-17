@@ -1,16 +1,14 @@
 import "@/app/globals.css";
 import { QueryProvider } from "@/components/providers/QueryProviders";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { DirectionProvider } from "@/components/ui/direction";
 import { Toaster } from "@/components/ui/sonner";
-import { routing } from "@/i18n/routing";
+import { routing, type Locale } from "@/i18n/routing";
 import {
-  getAlternates,
   getDefaultOpenGraph,
   getDefaultTwitter,
   PUBLIC_ROBOTS,
   SEO_CONFIG,
-  type Locale,
 } from "@/lib/seo";
 import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
@@ -19,7 +17,7 @@ import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 const danaFont = localFont({
   src: "./../../../public/fonts/Dana.ttf",
@@ -50,8 +48,15 @@ export async function generateMetadata({
   const resolvedParams = await params;
   const locale = resolvedParams.locale as Locale;
 
+  const currentLocale: Locale = SEO_CONFIG.locales.includes(locale as Locale)
+    ? (locale as Locale)
+    : SEO_CONFIG.defaultLocale;
+
+  const keywordsList = SEO_CONFIG.keywords[currentLocale];
+  const baseUrl = SEO_CONFIG.baseUrl || "https://learnino.vercel.app";
+
   return {
-    metadataBase: new URL(SEO_CONFIG.baseUrl),
+    metadataBase: new URL(baseUrl),
 
     title: {
       default: `${SEO_CONFIG.siteName[locale]} | ${SEO_CONFIG.tagline[locale]}`,
@@ -59,7 +64,7 @@ export async function generateMetadata({
     },
 
     description: SEO_CONFIG.description[locale],
-    keywords: [...SEO_CONFIG.keywords[locale]],
+    keywords: Array.isArray(keywordsList) ? [...keywordsList] : [],
 
     authors: [SEO_CONFIG.author],
     creator: SEO_CONFIG.author.name,
@@ -77,7 +82,14 @@ export async function generateMetadata({
 
     twitter: getDefaultTwitter(locale),
 
-    alternates: getAlternates("", locale),
+    alternates: {
+      canonical: `${baseUrl}/${locale}`,
+      languages: {
+        fa: `${baseUrl}/fa`,
+        en: `${baseUrl}/en`,
+        "x-default": `${baseUrl}/fa`,
+      },
+    },
 
     robots: PUBLIC_ROBOTS,
 
@@ -111,7 +123,7 @@ export const viewport: Viewport = {
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale as Locale)) {
     notFound();
   }
 
@@ -126,11 +138,6 @@ export default async function LocaleLayout({ children, params }: Props) {
       className={`${danaFont.variable} ${interFont.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <link rel="preconnect" href="https://res.cloudinary.com" />
-        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
-        <link rel="preconnect" href={process.env.NEXT_PUBLIC_API_BASE_URL!} />
-      </head>
       <body className={locale === "fa" ? "font-dana" : "font-inter"}>
         <QueryProvider>
           <NextIntlClientProvider messages={messages}>

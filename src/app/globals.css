@@ -206,14 +206,54 @@
   scrollbar-width: none;
 }
 
-@utility custom-scrollbar {
-  &::-webkit-scrollbar {
-    @apply size-1.5;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-  &::-webkit-scrollbar-track {
-    @apply rounded-full bg-transparent;
+  body {
+    @apply bg-background text-foreground antialiased;
   }
-  &::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-primary/40 hover:bg-primary/60;
+
+  /* Firefox */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) transparent;
+  }
+
+  /* Chrome, Edge, Safari, Opera */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklch, var(--primary) 40%, transparent);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    transition: background 0.2s ease-in-out;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklch, var(--primary) 70%, transparent);
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklch, var(--primary) 50%, transparent);
+    background-clip: content-box;
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklch, var(--primary) 80%, transparent);
+    background-clip: content-box;
   }
 }

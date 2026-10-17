@@ -1,5 +1,5 @@
-import { api } from "@/hooks/upfetch";
 import { SEO_CONFIG } from "@/lib/seo/config";
+import { api } from "@/lib/upfetch";
 import type { GetCoursesResponse } from "@/types/course/course.types";
 import type { GetPostsResponse } from "@/types/post/post.types";
 import type { GetTeachersResponse } from "@/types/teacher/teacher.types";

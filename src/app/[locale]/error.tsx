@@ -37,7 +37,7 @@ export default function Error({
 
       {error.digest && (
         <p
-          className="text-xs text-muted-foreground/60 font-mono mb-8"
+          className="text-xs text-muted-foreground/60 mb-8"
           dir="ltr"
         >
           Error ID: {error.digest}
