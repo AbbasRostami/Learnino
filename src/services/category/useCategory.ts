@@ -1,7 +1,6 @@
-import { api } from "@/hooks/upfetch";
+import { api } from "@/lib/upfetch";
 import type { GetCategoryBySlugResponse } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-
 
 export const useCategory = (slug: string | undefined) => {
   return useQuery<GetCategoryBySlugResponse>({

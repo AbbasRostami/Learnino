@@ -1,4 +1,4 @@
-import { api } from "@/hooks/upfetch";
+import { api } from "@/lib/upfetch";
 import type { ApiError, CheckoutZarinpalResponse } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";

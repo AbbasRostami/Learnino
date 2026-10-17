@@ -1,4 +1,4 @@
-import { api } from "@/hooks/upfetch";
+import { api } from "@/lib/upfetch";
 import type { ApiError, CreatePostPayload, CreatePostResponse } from "@/types";
 import { objectToFormData } from "@/utils/formData";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

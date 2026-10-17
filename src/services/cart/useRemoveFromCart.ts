@@ -1,4 +1,4 @@
-import { api } from "@/hooks/upfetch";
+import { api } from "@/lib/upfetch";
 import type { ApiError, RemoveFromCartResponse } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -7,7 +7,6 @@ import { toast } from "sonner";
 interface UseRemoveFromCartOptions {
   onSuccessCallback?: () => void;
 }
-
 
 export const useRemoveFromCart = ({
   onSuccessCallback,

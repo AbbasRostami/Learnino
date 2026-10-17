@@ -1,4 +1,4 @@
-import { api } from "@/hooks/upfetch";
+import { api } from "@/lib/upfetch";
 import type { GetPostBySlugResponse } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { useLocale } from "next-intl";

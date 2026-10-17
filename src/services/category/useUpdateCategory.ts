@@ -1,4 +1,4 @@
-import { api } from "@/hooks/upfetch";
+import { api } from "@/lib/upfetch";
 import {
   ApiError,
   UpdateCategoryPayload,
@@ -12,7 +12,6 @@ import { toast } from "sonner";
 interface UseUpdateCategoryOptions {
   onSuccessCallback?: () => void;
 }
-
 
 export const useUpdateCategory = ({
   onSuccessCallback,

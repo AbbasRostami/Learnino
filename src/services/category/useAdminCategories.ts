@@ -1,4 +1,4 @@
-import { api } from "@/hooks/upfetch";
+import { api } from "@/lib/upfetch";
 import type { AdminCategoriesParams, AdminCategoriesResponse } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 

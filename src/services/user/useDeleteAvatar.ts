@@ -1,8 +1,8 @@
+import { api } from "@/lib/upfetch";
+import { ApiError, DeleteAvatarResponse } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { api } from "@/hooks/upfetch";
-import { ApiError, DeleteAvatarResponse } from "@/types";
 
 export const useDeleteAvatar = () => {
   const t = useTranslations("user");

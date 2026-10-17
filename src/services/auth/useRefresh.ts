@@ -1,4 +1,4 @@
-import { api } from "@/hooks/upfetch";
+import { api } from "@/lib/upfetch";
 import { RefreshResponse } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 

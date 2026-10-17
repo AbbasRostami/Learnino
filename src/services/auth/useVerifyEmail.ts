@@ -1,5 +1,5 @@
-import { api } from "@/hooks/upfetch";
 import { useRouter } from "@/i18n/routing";
+import { api } from "@/lib/upfetch";
 import { useSyncCart } from "@/services";
 import { useAuthStore } from "@/store/authStore";
 import { ApiError, VerifyEmailPayload, VerifyEmailResponse } from "@/types";

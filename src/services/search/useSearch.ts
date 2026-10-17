@@ -1,4 +1,4 @@
-import { api } from "@/hooks/upfetch";
+import { api } from "@/lib/upfetch";
 import { SearchResponse } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 

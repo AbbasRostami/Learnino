@@ -1,4 +1,4 @@
-import { api } from "@/hooks/upfetch";
+import { api } from "@/lib/upfetch";
 import type { EnrollFreeCourseResponse } from "@/types";
 import type { ApiError } from "@/types/api/error.types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

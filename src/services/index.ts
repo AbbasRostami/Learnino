@@ -109,6 +109,7 @@ export * from "./comment/usePostComments";
 export * from "./comment/useRejectComment";
 
 // 📝 Post Services (Blog)
+export * from "./post/useAdminPostDetails";
 export * from "./post/useAdminPosts";
 export * from "./post/useCreatePost";
 export * from "./post/useDeletePost";
@@ -125,9 +126,11 @@ export * from "./wallet/useChargeWallet";
 export * from "./wallet/useTransactions";
 export * from "./wallet/useWallet";
 
+// 🛒 Cart Services
 export * from "./cart/useAddToCart";
 export * from "./cart/useApplyDiscount";
 export * from "./cart/useCart";
 export * from "./cart/useClearCart";
+export * from "./cart/useRemoveDiscount";
 export * from "./cart/useRemoveFromCart";
 export * from "./cart/useSyncCart";

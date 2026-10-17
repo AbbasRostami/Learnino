@@ -1,4 +1,4 @@
-import { api } from "@/hooks/upfetch";
+import { api } from "@/lib/upfetch";
 import type {
   ApiError,
   ToggleReactionPayload,
@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
-export const usePostReaction = () => {
+export const usePostReaction = (postSlug?: string) => {
   const t = useTranslations("reaction");
   const queryClient = useQueryClient();
 
@@ -23,6 +23,10 @@ export const usePostReaction = () => {
       toast.success(response.data.message || t("reactionUpdated"));
 
       queryClient.invalidateQueries({ queryKey: ["posts"] });
+      if (postSlug) {
+        queryClient.invalidateQueries({ queryKey: ["posts", postSlug] });
+        queryClient.invalidateQueries({ queryKey: ["post", postSlug] });
+      }
       queryClient.invalidateQueries({
         queryKey: ["user", "profile", "overview"],
       });

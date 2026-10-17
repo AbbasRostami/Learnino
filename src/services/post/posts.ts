@@ -1,4 +1,4 @@
-import { api } from "@/hooks/upfetch";
+import { api } from "@/lib/upfetch";
 import type { GetPostBySlugResponse, GetPostsResponse, Post } from "@/types";
 import { cacheLife, cacheTag } from "next/cache";
 

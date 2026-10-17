@@ -1,4 +1,4 @@
-import { api } from "@/hooks/upfetch";
+import { api } from "@/lib/upfetch";
 import { ApiError } from "@/types";
 import {
   ChargeWalletPayload,

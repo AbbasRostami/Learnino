@@ -1,5 +1,5 @@
-import { api } from "@/hooks/upfetch";
 import { useRouter } from "@/i18n/routing";
+import { api } from "@/lib/upfetch";
 import { ApiError, ResetPasswordPayload, ResetPasswordResponse } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
