@@ -1,20 +1,27 @@
-
 FROM node:20-alpine AS deps
+
+RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
-RUN pnpm install --frozen-lockfile
+RUN corepack enable && corepack prepare pnpm@9 --activate
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
-
 COPY . .
+
+RUN corepack enable && corepack prepare pnpm@9 --activate
+
+ARG NEXT_PUBLIC_APP_URL
+ARG NEXT_PUBLIC_API_BASE_URL
+ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
+ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
@@ -39,6 +46,7 @@ USER nextjs
 
 EXPOSE 3000
 
+ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 CMD ["node", "server.js"]

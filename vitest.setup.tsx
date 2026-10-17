@@ -7,9 +7,10 @@ afterEach(() => {
   cleanup();
 });
 
+// 🌐 Mock next-intl
 vi.mock("next-intl", () => ({
   useTranslations: () => {
-    const t = (key: string, params?: any) => {
+    const t = (key: string, params?: Record<string, unknown>) => {
       if (params) return `${key}`;
       return key;
     };
@@ -23,6 +24,7 @@ vi.mock("next-intl", () => ({
 const mockPush = vi.fn();
 const mockReplace = vi.fn();
 
+// 🧭 Mock next/navigation
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
     push: mockPush,
@@ -36,6 +38,7 @@ vi.mock("next/navigation", () => ({
   useSearchParams: () => new URLSearchParams(),
 }));
 
+// 🧭 Mock @/i18n/routing
 vi.mock("@/i18n/routing", () => ({
   useRouter: () => ({
     push: mockPush,
@@ -53,7 +56,7 @@ vi.mock("@/i18n/routing", () => ({
   }: {
     children: React.ReactNode;
     href: string;
-    [key: string]: any;
+    [key: string]: unknown;
   }) => (
     <a href={href} {...props}>
       {children}
@@ -62,6 +65,7 @@ vi.mock("@/i18n/routing", () => ({
   redirect: vi.fn(),
 }));
 
+// 🔗 Mock nuqs
 vi.mock("nuqs", () => ({
   useQueryState: vi.fn(() => {
     const [val, setVal] = React.useState("");
@@ -81,16 +85,24 @@ vi.mock("nuqs", () => ({
   },
 }));
 
+// 🖼️ Mock next/image
 vi.mock("next/image", () => ({
-  default: (props: any) => {
-    const { fill, sizes, priority, quality, ...rest } = props;
+  default: (
+    props: React.ImgHTMLAttributes<HTMLImageElement> & {
+      fill?: boolean;
+      priority?: boolean;
+      quality?: number;
+    },
+  ) => {
+    const { fill, priority, quality, ...rest } = props;
     return <img {...rest} alt={props.alt || ""} />;
   },
 }));
 
+// 🎭 Mock motion/react
 vi.mock("motion/react", () => {
-  const mockComponent = (props: any) => {
-    const { animate, initial, exit, transition, ...rest } = props;
+  const mockComponent = (props: React.HTMLAttributes<HTMLElement>) => {
+    const { ...rest } = props;
     return <div {...rest} />;
   };
 
@@ -109,6 +121,7 @@ vi.mock("motion/react", () => {
   };
 });
 
+// 🔔 Mock sonner
 vi.mock("sonner", () => ({
   toast: {
     success: vi.fn(),
@@ -118,47 +131,83 @@ vi.mock("sonner", () => ({
   },
 }));
 
+// 🔑 Mock authStore
+interface AuthStoreState {
+  isAuthenticated: boolean;
+  setAuthenticated: (value: boolean) => void;
+  resetAuth: () => void;
+}
+
+const mockResetAuth = vi.fn();
+const mockSetAuthenticated = vi.fn();
+
 vi.mock("@/store/authStore", () => ({
-  useAuthStore: vi.fn((selector?: any) => {
-    const state = {
-      isAuthenticated: false,
-      setAuthenticated: vi.fn(),
-      resetAuth: vi.fn(),
-    };
-    return selector ? selector(state) : state;
-  }),
+  useAuthStore: Object.assign(
+    vi.fn((selector?: (state: AuthStoreState) => unknown) => {
+      const state: AuthStoreState = {
+        isAuthenticated: false,
+        setAuthenticated: mockSetAuthenticated,
+        resetAuth: mockResetAuth,
+      };
+      return selector ? selector(state) : state;
+    }),
+    {
+      getState: () => ({
+        isAuthenticated: false,
+        setAuthenticated: mockSetAuthenticated,
+        resetAuth: mockResetAuth,
+      }),
+    },
+  ),
 }));
 
+// ⚙️ Mock UNIFIED @/services
 vi.mock("@/services", () => ({
+  // Auth
   useLogin: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
+  useAdminLogin: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
   useRegister: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
   useVerifyEmail: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
   useResendVerification: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
+  useForgotPassword: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
+  useResetPassword: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
+
+  // Comments & Reactions
   useCreateComment: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
   usePostComments: vi.fn(() => ({ data: undefined, isLoading: false })),
+  useCourseComments: vi.fn(() => ({ data: undefined, isLoading: false })),
   useCommentReaction: vi.fn(() => ({
     mutate: vi.fn(),
     isPending: false,
     variables: null,
   })),
+
+  // Search
   useSearch: vi.fn(() => ({ data: undefined, isLoading: false })),
+
+  // Cart & Orders
   useCart: vi.fn(() => ({ data: undefined, isLoading: false })),
   useClearCart: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
   useRemoveFromCart: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
   useSyncCart: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
   useApplyDiscount: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
+  useRemoveDiscount: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
   useCheckoutWallet: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
   useCheckoutZarinpal: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
   useWallet: vi.fn(() => ({ data: undefined })),
+
+  // Content & Categories
   useCategories: vi.fn(() => ({ data: undefined })),
   usePost: vi.fn(() => ({ data: undefined })),
   usePosts: vi.fn(() => ({ data: undefined, isLoading: false })),
+  useCourses: vi.fn(() => ({ data: undefined, isLoading: false })),
+  useCourse: vi.fn(() => ({ data: undefined, isLoading: false })),
+
+  // Profile
+  useProfile: vi.fn(() => ({ data: undefined, isLoading: false })),
 }));
 
-vi.mock("@/services/cart/useRemoveDiscount", () => ({
-  useRemoveDiscount: vi.fn(() => ({ mutate: vi.fn(), isPending: false })),
-}));
-
+// 🛠️ Mock formatters & helpers
 vi.mock("@/utils/formatters", () => ({
   formatRelativeTime: () => "2 ساعت پیش",
   formatNumber: (n: number) => String(n),
@@ -174,7 +223,8 @@ vi.mock("@/lib/category-icons", () => ({
 }));
 
 vi.mock("@/lib/utils", () => ({
-  cn: (...classes: any[]) => classes.filter(Boolean).join(" "),
+  cn: (...classes: (string | undefined | null | false)[]) =>
+    classes.filter(Boolean).join(" "),
 }));
 
 vi.mock("@/hooks/useLocale", () => ({
