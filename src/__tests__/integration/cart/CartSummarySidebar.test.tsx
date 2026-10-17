@@ -3,9 +3,9 @@ import {
   useApplyDiscount,
   useCheckoutWallet,
   useCheckoutZarinpal,
+  useRemoveDiscount,
   useWallet,
 } from "@/services";
-import { useRemoveDiscount } from "@/services/cart/useRemoveDiscount";
 import { useAuthStore } from "@/store/authStore";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -24,7 +24,7 @@ const mockCart = {
 describe("CartSummarySidebar", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(useAuthStore).mockReturnValue(true as any); // پیش‌فرض لاگین شده
+    vi.mocked(useAuthStore).mockReturnValue(true as any);
     vi.mocked(useWallet).mockReturnValue({
       data: { data: { wallet: { balance: 2000000 } } },
     } as any);
