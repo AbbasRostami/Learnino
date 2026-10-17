@@ -102,11 +102,11 @@ export function ProfileHeroCard({
           </p>
 
           <div className="flex items-center gap-2 flex-wrap mt-1">
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-[10px] font-black">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs font-black">
               <BadgeCheck className="h-3 w-3" aria-hidden="true" />
               {t("accountVerified")}
             </span>
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-[10px] font-black">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-black">
               <Calendar className="h-3 w-3" aria-hidden="true" />
               {t("memberSince")} {memberSinceDate}
             </span>

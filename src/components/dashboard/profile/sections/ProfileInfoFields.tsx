@@ -16,7 +16,7 @@ import { Controller, type Control } from "react-hook-form";
 import type { ProfileFormValues } from "../hooks/useProfileForm";
 
 interface ProfileInfoFieldsProps {
-  control: Control<ProfileFormValues>; 
+  control: Control<ProfileFormValues>;
   profile: UserProfile;
 }
 
@@ -93,7 +93,7 @@ export function ProfileInfoFields({
           </FieldLabel>
           <Link
             href="/dashboard/settings"
-            className="text-[11px] font-bold text-primary hover:underline inline-flex items-center gap-1"
+            className="text-xs font-bold text-primary hover:underline inline-flex items-center gap-1"
           >
             <span>{t("changeEmailLink")}</span>
             <ArrowLeft className="h-3 w-3 rtl:rotate-180" aria-hidden="true" />

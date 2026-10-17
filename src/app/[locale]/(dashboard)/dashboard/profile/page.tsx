@@ -1,6 +1,6 @@
 import { ProfileClient } from "@/components/dashboard/profile/ProfileClient";
-import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export async function generateMetadata({
   params,
@@ -13,7 +13,6 @@ export async function generateMetadata({
 
   return {
     title: `${t("profile")} | ${tCommon("appName")}`,
-    robots: { index: false, follow: false },
   };
 }
 

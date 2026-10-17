@@ -52,7 +52,7 @@ export function ProfileFormActions({
       )}
 
       {isDirty && (
-        <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1 ms-auto">
+        <span className="text-xs font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1 ms-auto">
           <Sparkles className="h-3 w-3" aria-hidden="true" />
           <span>{t("unsavedChanges")}</span>
         </span>
