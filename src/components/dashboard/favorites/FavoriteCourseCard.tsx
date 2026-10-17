@@ -4,6 +4,7 @@ import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { getCategoryStyle } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";
+import { formatNumber } from "@/utils/formatters";
 import {
   BookOpen,
   Loader2,
@@ -133,9 +134,7 @@ export function FavoriteCourseCard({
             ) : (
               <div>
                 <span className="text-sm text-foreground">
-                  {new Intl.NumberFormat(
-                    locale === "fa" ? "fa-IR" : "en-US",
-                  ).format(courseData?.price)}
+                  {formatNumber(courseData?.price)}
                 </span>
                 <span className="text-[9px] text-muted-foreground ms-1">
                   {tCart("currency")}

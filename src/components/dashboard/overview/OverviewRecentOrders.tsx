@@ -5,6 +5,7 @@ import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useMyOrders } from "@/services";
+import { formatNumber } from "@/utils/formatters";
 import { ArrowLeft, Package } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -92,9 +93,7 @@ export function OverviewRecentOrders() {
               </div>
               <div className="text-end shrink-0" dir="ltr">
                 <span className="text-sm font-black text-foreground">
-                  {new Intl.NumberFormat(
-                    locale === "fa" ? "fa-IR" : "en-US",
-                  ).format(order?.totalAmount)}
+                  {formatNumber(order?.totalAmount, locale)}
                 </span>
                 <span className="text-xs text-muted-foreground ms-1">
                   {tCart("currency")}

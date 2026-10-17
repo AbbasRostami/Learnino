@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useLocale } from "@/hooks/useLocale";
 import { cn } from "@/lib/utils";
 import { useChargeWallet, useTransactions, useWallet } from "@/services";
-import { formatRelativeTime } from "@/utils/formatters";
+import { formatNumber, formatRelativeTime } from "@/utils/formatters";
 import {
   ArrowDownLeft,
   ArrowUpRight,
@@ -64,9 +64,6 @@ export function WalletClient() {
   const totalPages = pagination
     ? Math.ceil(pagination.total / pagination.limit)
     : 1;
-
-  const formatPrice = (value: number) =>
-    new Intl.NumberFormat(locale === "fa" ? "fa-IR" : "en-US").format(value);
 
   const handleCharge = (e: React.FormEvent) => {
     e.preventDefault();
@@ -136,7 +133,7 @@ export function WalletClient() {
                   className="text-3xl sm:text-5xl font-black text-foreground"
                   dir="ltr"
                 >
-                  {formatPrice(balanceToman)}
+                  {formatNumber(balanceToman, locale)}
                   <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 ms-2">
                     {tCart("currency")}
                   </span>
@@ -234,7 +231,7 @@ export function WalletClient() {
                     )}
                   >
                     <Plus className="h-3 w-3" />
-                    <span dir="ltr">{formatPrice(amt)}</span>
+                    <span dir="ltr">{formatNumber(amt, locale)}</span>
                   </button>
                 );
               })}
@@ -362,7 +359,7 @@ export function WalletClient() {
                       )}
                     >
                       {isIncoming ? "+" : "-"}
-                      {formatPrice(amountToman)}
+                      {formatNumber(amountToman, locale)}
                     </span>
                     <span className="text-xs text-muted-foreground ms-1 font-semibold">
                       {tCart("currency")}

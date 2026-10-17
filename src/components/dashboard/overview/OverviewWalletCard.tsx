@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { useProfileOverview } from "@/services";
+import { formatNumber } from "@/utils/formatters";
 import { ArrowLeft, Wallet, Zap } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
@@ -44,9 +45,7 @@ export function OverviewWalletCard() {
               <Skeleton className="h-8 w-36 rounded-xl bg-emerald-500/20 animate-pulse my-1" />
             ) : (
               <div className="text-3xl font-black text-foreground" dir="ltr">
-                {new Intl.NumberFormat(
-                  locale === "fa" ? "fa-IR" : "en-US",
-                ).format(balance)}
+                {formatNumber(balance, locale)}
                 <span className="text-sm font-semibold text-muted-foreground ms-1">
                   {tCart("currency")}
                 </span>

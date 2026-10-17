@@ -7,7 +7,7 @@ import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useCancelOrder, useMyOrders } from "@/services";
 import type { OrderStatus } from "@/types";
-import { formatRelativeTime } from "@/utils/formatters";
+import { formatNumber, formatRelativeTime } from "@/utils/formatters";
 import {
   Calendar,
   CheckCircle2,
@@ -78,9 +78,6 @@ export function OrdersListClient() {
   const totalPages = pagination
     ? Math.ceil(pagination?.total / pagination?.limit)
     : 1;
-
-  const formatPrice = (value: number) =>
-    new Intl.NumberFormat(locale === "fa" ? "fa-IR" : "en-US").format(value);
 
   return (
     <div className="flex flex-col gap-6">
@@ -241,14 +238,14 @@ export function OrdersListClient() {
                         className="text-xs text-muted-foreground line-through"
                         dir="ltr"
                       >
-                        {formatPrice(order.subtotal)}
+                        {formatNumber(order.subtotal, locale)}
                       </span>
                     )}
                     <span
                       className="text-base font-black text-foreground"
                       dir="ltr"
                     >
-                      {formatPrice(order.totalAmount)}
+                      {formatNumber(order.totalAmount, locale)}
                       <span className="text-xs text-muted-foreground ms-1 font-semibold">
                         {tCart("currency")}
                       </span>

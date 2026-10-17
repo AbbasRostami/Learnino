@@ -5,7 +5,7 @@ import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useCancelOrder, useOrder } from "@/services";
-import { formatRelativeTime } from "@/utils/formatters";
+import { formatNumber, formatRelativeTime } from "@/utils/formatters";
 import {
   ArrowRight,
   BookOpen,
@@ -80,9 +80,6 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
   const discountAmount = order.discountAmount ?? 0;
   const discountCode = order.discountCode;
   const hasDiscount = discountAmount > 0;
-
-  const formatPrice = (value: number) =>
-    new Intl.NumberFormat(locale === "fa" ? "fa-IR" : "en-US").format(value);
 
   return (
     <div className="flex flex-col gap-6">
@@ -190,7 +187,7 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
               </div>
               <div className="text-end shrink-0" dir="ltr">
                 <span className="text-base font-black text-foreground">
-                  {formatPrice(item?.price)}
+                  {formatNumber(item?.price, locale)}
                 </span>
                 <span className="text-xs text-muted-foreground ms-1">
                   {tCart("currency")}
@@ -224,7 +221,7 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
               {t("subtotalLabel")}
             </span>
             <span className="font-bold text-foreground" dir="ltr">
-              {formatPrice(subtotal)} {tCart("currency")}
+              {formatNumber(subtotal, locale)} {tCart("currency")}
             </span>
           </div>
 
@@ -239,7 +236,7 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
                   className="font-bold text-emerald-600 dark:text-emerald-400"
                   dir="ltr"
                 >
-                  -{formatPrice(discountAmount)} {tCart("currency")}
+                  -{formatNumber(discountAmount, locale)} {tCart("currency")}
                 </span>
               </div>
 
@@ -264,7 +261,7 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
               {t("totalAmountLabel")}
             </span>
             <span className="text-xl font-black text-primary" dir="ltr">
-              {formatPrice(order?.totalAmount)}
+              {formatNumber(order?.totalAmount, locale)}
               <span className="text-xs text-muted-foreground font-semibold ms-1">
                 {tCart("currency")}
               </span>
