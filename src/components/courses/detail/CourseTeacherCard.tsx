@@ -44,19 +44,18 @@ export function CourseTeacherCard({ teacher }: CourseTeacherCardProps) {
           )}
         </div>
 
-        {/* Info */}
         <div className="flex-1 min-w-0">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold mb-2">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold mb-2">
             <GraduationCap className="h-3 w-3" aria-hidden="true" />
             <span>{t("teacher")}</span>
           </div>
 
           <h3 className="text-xl font-black text-foreground mb-3">
-            {teacher.name}
+            {teacher?.name}
           </h3>
 
           <Link
-            href={`/teachers/${teacher.slug}`}
+            href={`/teachers/${teacher?.slug}`}
             className="flex items-start gap-1.5 text-sm font-bold text-primary hover:underline underline-offset-4"
           >
             <span>{t("moreCourses")}</span>

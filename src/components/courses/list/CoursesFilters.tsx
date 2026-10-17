@@ -15,12 +15,6 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import {
-  parseAsArrayOf,
-  parseAsInteger,
-  parseAsString,
-  useQueryStates,
-} from "nuqs";
 
 const LEVELS = [
   { value: "BEGINNER", labelKey: "BEGINNER" as const },
@@ -28,49 +22,69 @@ const LEVELS = [
   { value: "ADVANCED", labelKey: "ADVANCED" as const },
 ];
 
-interface CoursesFiltersProps {
-  compact?: boolean;
+export interface FilterValues {
+  categories: string[];
+  level: string;
+  minPrice: number | null;
+  maxPrice: number | null;
 }
 
-export function CoursesFilters({ compact = false }: CoursesFiltersProps) {
-  const t = useTranslations("course");
-  const { data: categoriesData } = useCategories();
-  const categories = categoriesData?.data?.categories ?? [];
-
-  const [filters, setFilters] = useQueryStates({
-    categories: parseAsArrayOf(parseAsString).withDefault([]),
-    level: parseAsString.withDefault(""),
-    minPrice: parseAsInteger,
-    maxPrice: parseAsInteger,
-  });
-
-  const clearAll = () => {
-    setFilters({
-      categories: null,
-      level: null,
-      minPrice: null,
-      maxPrice: null,
-    });
-  };
-
-  const toggleCategory = (slug: string) => {
-    const current = filters.categories;
-    const updated = current.includes(slug)
-      ? current.filter((c) => c !== slug)
-      : [...current, slug];
-    setFilters({ categories: updated.length ? updated : null });
-  };
-
-  const activeFiltersCount =
+export function getCourseActiveFiltersCount(filters: FilterValues): number {
+  return (
     filters.categories.length +
     (filters.level ? 1 : 0) +
     (filters.minPrice !== null ? 1 : 0) +
-    (filters.maxPrice !== null ? 1 : 0);
+    (filters.maxPrice !== null ? 1 : 0)
+  );
+}
+
+interface CoursesFiltersProps {
+  compact?: boolean;
+  categories: string[];
+  level: string;
+  minPrice: number | null;
+  maxPrice: number | null;
+  onCategoriesChange: (value: string[] | null) => void;
+  onLevelChange: (value: string | null) => void;
+  onMinPriceChange: (value: number | null) => void;
+  onMaxPriceChange: (value: number | null) => void;
+  onResetFilters: () => void;
+}
+
+export function CoursesFilters({
+  compact = false,
+  categories: selectedCategories,
+  level,
+  minPrice,
+  maxPrice,
+  onCategoriesChange,
+  onLevelChange,
+  onMinPriceChange,
+  onMaxPriceChange,
+  onResetFilters,
+}: CoursesFiltersProps) {
+  const t = useTranslations("course");
+  const { data: categoriesData } = useCategories();
+  const categoriesList = categoriesData?.data?.categories ?? [];
+
+  const activeFiltersCount = getCourseActiveFiltersCount({
+    categories: selectedCategories,
+    level,
+    minPrice,
+    maxPrice,
+  });
+
+  const toggleCategory = (slug: string) => {
+    const updated = selectedCategories.includes(slug)
+      ? selectedCategories.filter((c) => c !== slug)
+      : [...selectedCategories, slug];
+    onCategoriesChange(updated.length ? updated : null);
+  };
 
   return (
     <div
       className={cn(
-        "flex flex-col gap-6 rounded-3xl border border-border/50 bg-card shadow-sm",
+        "flex flex-col gap-6 rounded-3xl border border-border/50 bg-card shadow-xs",
         compact ? "p-4" : "p-6",
       )}
     >
@@ -84,7 +98,7 @@ export function CoursesFilters({ compact = false }: CoursesFiltersProps) {
               {t("filters")}
             </h2>
             {activeFiltersCount > 0 && (
-              <p className="text-[10px] text-primary font-bold mt-0.5">
+              <p className="text-xs text-primary font-bold mt-0.5">
                 {t("activeFilters", { count: activeFiltersCount })}
               </p>
             )}
@@ -95,8 +109,8 @@ export function CoursesFilters({ compact = false }: CoursesFiltersProps) {
           <Button
             variant="ghost"
             size="sm"
-            onClick={clearAll}
-            className="h-8 gap-1 text-xs text-muted-foreground hover:text-destructive"
+            onClick={onResetFilters}
+            className="h-8 gap-1 text-xs text-muted-foreground hover:text-destructive cursor-pointer"
           >
             <RotateCcw className="h-3 w-3" />
             <span>{t("clearFilters")}</span>
@@ -117,10 +131,10 @@ export function CoursesFilters({ compact = false }: CoursesFiltersProps) {
           </Label>
         </div>
         <div className="flex flex-col gap-1.5 max-h-64 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-border">
-          {categories.map((cat) => {
-            const isActive = filters.categories.includes(cat.slug);
+          {categoriesList.map((cat) => {
+            const isActive = selectedCategories.includes(cat.slug);
             return (
-              <button
+              <Button
                 key={cat.id}
                 type="button"
                 onClick={() => toggleCategory(cat.slug)}
@@ -136,7 +150,7 @@ export function CoursesFilters({ compact = false }: CoursesFiltersProps) {
                 {isActive && (
                   <span className="shrink-0 h-1.5 w-1.5 rounded-full bg-primary" />
                 )}
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -155,43 +169,40 @@ export function CoursesFilters({ compact = false }: CoursesFiltersProps) {
           </Label>
         </div>
         <div className="grid grid-cols-3 gap-1.5">
-          <button
+          <Button
             type="button"
-            onClick={() => setFilters({ level: null })}
+            onClick={() => onLevelChange(null)}
             className={cn(
-              "px-2 py-1.5 rounded-lg text-[10px] font-bold transition-all cursor-pointer",
-              !filters.level
-                ? "bg-primary text-primary-foreground shadow-sm"
+              "px-2 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer",
+              !level
+                ? "bg-primary text-primary-foreground shadow-xs"
                 : "bg-muted text-muted-foreground hover:bg-muted/70",
             )}
           >
             {t("allLevels")}
-          </button>
+          </Button>
           {LEVELS.map((lvl) => (
-            <button
+            <Button
               key={lvl.value}
               type="button"
               onClick={() =>
-                setFilters({
-                  level: filters.level === lvl.value ? null : lvl.value,
-                })
+                onLevelChange(level === lvl.value ? null : lvl.value)
               }
               className={cn(
-                "px-2 py-1.5 rounded-lg text-[10px] font-bold transition-all cursor-pointer",
-                filters.level === lvl.value
-                  ? "bg-primary text-primary-foreground shadow-sm"
+                "px-2 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer",
+                level === lvl.value
+                  ? "bg-primary text-primary-foreground shadow-xs"
                   : "bg-muted text-muted-foreground hover:bg-muted/70",
               )}
             >
               {t(`levels.${lvl.labelKey}`)}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
 
       <Separator />
 
-      {/* Price */}
       <div className="flex flex-col gap-3">
         <div className="flex items-center gap-2">
           <DollarSign
@@ -205,21 +216,16 @@ export function CoursesFilters({ compact = false }: CoursesFiltersProps) {
 
         <div className="grid grid-cols-2 gap-2">
           <div className="flex flex-col gap-1.5">
-            <Label
-              htmlFor="minPrice"
-              className="text-[10px] text-muted-foreground"
-            >
+            <Label htmlFor="minPrice" className="text-xs text-muted-foreground">
               {t("priceMin")}
             </Label>
             <Input
               id="minPrice"
               type="number"
               inputMode="numeric"
-              value={filters.minPrice ?? ""}
+              value={minPrice ?? ""}
               onChange={(e) =>
-                setFilters({
-                  minPrice: e.target.value ? Number(e.target.value) : null,
-                })
+                onMinPriceChange(e.target.value ? Number(e.target.value) : null)
               }
               placeholder="0"
               className="h-9 text-xs rounded-xl"
@@ -227,21 +233,16 @@ export function CoursesFilters({ compact = false }: CoursesFiltersProps) {
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <Label
-              htmlFor="maxPrice"
-              className="text-[10px] text-muted-foreground"
-            >
+            <Label htmlFor="maxPrice" className="text-xs text-muted-foreground">
               {t("priceMax")}
             </Label>
             <Input
               id="maxPrice"
               type="number"
               inputMode="numeric"
-              value={filters.maxPrice ?? ""}
+              value={maxPrice ?? ""}
               onChange={(e) =>
-                setFilters({
-                  maxPrice: e.target.value ? Number(e.target.value) : null,
-                })
+                onMaxPriceChange(e.target.value ? Number(e.target.value) : null)
               }
               placeholder="∞"
               className="h-9 text-xs rounded-xl"
@@ -250,14 +251,16 @@ export function CoursesFilters({ compact = false }: CoursesFiltersProps) {
           </div>
         </div>
 
-        {/* Quick Filters */}
         <div className="flex gap-1.5">
           <button
             type="button"
-            onClick={() => setFilters({ minPrice: null, maxPrice: 0 })}
+            onClick={() => {
+              onMinPriceChange(null);
+              onMaxPriceChange(0);
+            }}
             className={cn(
-              "flex-1 px-2 py-1.5 rounded-lg text-[10px] font-bold transition-all cursor-pointer flex items-center justify-center gap-1",
-              filters.maxPrice === 0 && filters.minPrice === null
+              "flex-1 px-2 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1",
+              maxPrice === 0 && minPrice === null
                 ? "bg-emerald-500/15 text-emerald-600 border border-emerald-500/30"
                 : "bg-muted text-muted-foreground hover:bg-muted/70 border border-transparent",
             )}

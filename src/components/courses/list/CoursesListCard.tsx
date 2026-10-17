@@ -27,6 +27,7 @@ export function CoursesListCard({
   const prefersReducedMotion = useReducedMotion();
 
   const isFree = course?.price === 0;
+  const teacherSlug = course?.teacher?.slug;
 
   return (
     <motion.article
@@ -51,7 +52,7 @@ export function CoursesListCard({
             alt={course.title}
             fill
             priority={priority}
-            quality={85}
+            quality={70}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-700 group-hover:scale-110 motion-reduce:transition-none"
             itemProp="image"
@@ -67,12 +68,12 @@ export function CoursesListCard({
           aria-hidden="true"
         />
 
-        <span className="absolute top-3 inset-e-3 flex items-center rounded-full bg-background/90 backdrop-blur-md px-2.5 py-1 text-[10px] font-bold shadow-sm border border-border/50">
+        <span className="absolute top-3 inset-e-3 flex items-center rounded-full bg-background/90 backdrop-blur-md px-2.5 py-1 text-xs font-bold shadow-sm border border-border/50">
           {t(`levels.${course?.level}`)}
         </span>
 
         {isFree && (
-          <span className="absolute top-3 inset-s-3 flex items-center gap-1 rounded-full bg-emerald-500 text-white px-2.5 py-1 text-[10px] font-black shadow-lg">
+          <span className="absolute top-3 inset-s-3 flex items-center gap-1 rounded-full bg-emerald-500 text-white px-2.5 py-1 text-xs font-black shadow-lg">
             {t("free")}
           </span>
         )}
@@ -82,7 +83,7 @@ export function CoursesListCard({
         <div className="flex items-center justify-between mb-3 text-xs font-semibold">
           <span
             className={cn(
-              "px-2.5 py-1 rounded-full text-[10px] font-bold",
+              "px-2.5 py-1 rounded-full text-xs font-bold",
               style.badgeColor,
             )}
           >
@@ -93,9 +94,7 @@ export function CoursesListCard({
             title={t("studentsCount", { count: course?.stats?.enrollments })}
           >
             <Users className="h-3.5 w-3.5" aria-hidden="true" />
-            <span className="font-bold">
-              {course?.stats?.enrollments?.toLocaleString()}
-            </span>
+            <span className="font-bold">{course?.stats?.enrollments}</span>
           </div>
         </div>
 
@@ -112,42 +111,57 @@ export function CoursesListCard({
         </h3>
 
         <div className="mt-2 flex items-center gap-2">
-          <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border-2 border-background bg-muted shadow-xs ring-1 ring-border/40">
-            {course?.teacher?.avatar ? (
-              <Image
-                src={course.teacher.avatar}
-                alt={course.teacher.name}
-                fill
-                sizes="32px"
-                className="object-cover"
-              />
-            ) : (
-              <div className="flex h-full items-center justify-center bg-primary/10 text-primary text-xs font-bold">
-                {course?.teacher?.name?.charAt(0)}
+          {teacherSlug ? (
+            <Link
+              href={`/teachers/${teacherSlug}`}
+              className="flex items-center gap-2 group/teacher transition-opacity hover:opacity-80"
+            >
+              <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border-2 border-background bg-muted shadow-xs ring-1 ring-border/40">
+                {course?.teacher?.avatar ? (
+                  <Image
+                    src={course.teacher.avatar}
+                    alt={course.teacher.name}
+                    fill
+                    quality={90}
+                    sizes="32px"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center bg-primary/10 text-primary text-xs font-bold">
+                    {course?.teacher?.name?.charAt(0)}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-          <span
-            className="text-xs font-semibold text-muted-foreground truncate"
-            itemProp="provider"
-          >
-            {course?.teacher?.name}
-          </span>
+              <span
+                className="text-xs font-semibold text-muted-foreground group-hover/teacher:text-primary transition-colors truncate"
+                itemProp="provider"
+              >
+                {course?.teacher?.name}
+              </span>
+            </Link>
+          ) : (
+            <div className="flex items-center gap-2">
+              <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border-2 border-background bg-muted">
+                <div className="flex h-full items-center justify-center bg-primary/10 text-primary text-xs font-bold">
+                  {course?.teacher?.name?.charAt(0)}
+                </div>
+              </div>
+              <span className="text-xs font-semibold text-muted-foreground truncate">
+                {course?.teacher?.name}
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="mt-auto pt-4 flex items-center justify-between border-t border-dashed border-border/60">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
               <Heart className="h-3.5 w-3.5" aria-hidden="true" />
-              <span className="font-semibold">
-                {course?.reactions?.likes?.toLocaleString()}
-              </span>
+              <span className="font-semibold">{course?.reactions?.likes}</span>
             </div>
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
               <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
-              <span className="font-semibold">
-                {course?.stats?.comments?.toLocaleString()}
-              </span>
+              <span className="font-semibold">{course?.stats?.comments}</span>
             </div>
           </div>
 
@@ -166,7 +180,7 @@ export function CoursesListCard({
                     locale === "fa" ? "fa-IR" : "en-US",
                   ).format(course?.price)}
                 </span>
-                <span className="text-[10px] text-muted-foreground -mt-0.5">
+                <span className="text-xs text-muted-foreground -mt-0.5">
                   {t("currency")}
                 </span>
               </div>

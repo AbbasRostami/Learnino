@@ -12,6 +12,7 @@ import {
   BookOpen,
   CheckCircle2,
   Loader2,
+  LucideIcon,
   PlayCircle,
   ShoppingCart,
   Sparkles,
@@ -22,16 +23,22 @@ import { toast } from "sonner";
 interface CoursePriceCardProps {
   course: Course;
   slug: string;
+  isLoadingCourse?: boolean;
 }
 
-export function CoursePriceCard({ course, slug }: CoursePriceCardProps) {
+type GuestCartRawItem = string | { courseId?: string; id?: string };
+
+export function CoursePriceCard({
+  course,
+  slug,
+  isLoadingCourse = false,
+}: CoursePriceCardProps) {
   const t = useTranslations("course");
   const tCart = useTranslations("cart");
   const locale = useLocale();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
   const { mutate: addToCart, isPending: isAdding } = useAddToCart({});
-
   const { mutate: enrollFree, isPending: isEnrolling } = useEnrollFreeCourse();
 
   const isFree = course?.price === 0;
@@ -45,21 +52,21 @@ export function CoursePriceCard({ course, slug }: CoursePriceCardProps) {
         );
 
         const guestItem = {
-          id: course.id,
-          courseId: course.id,
-          title: course.title,
-          slug: course.slug,
-          price: course.price,
-          imageUrl: course.imageUrl,
-          level: course.level,
-          category: course.category,
+          id: course?.id,
+          courseId: course?.id,
+          title: course?.title,
+          slug: course?.slug,
+          price: course?.price,
+          imageUrl: course?.imageUrl,
+          level: course?.level,
+          category: course?.category,
           addedAt: new Date().toISOString(),
         };
 
-        const exists = storedCart.some((item: any) =>
+        const exists = storedCart?.some((item: GuestCartRawItem) =>
           typeof item === "string"
-            ? item === course.id
-            : item.courseId === course.id,
+            ? item === course?.id
+            : item.courseId === course?.id,
         );
 
         if (!exists) {
@@ -68,9 +75,7 @@ export function CoursePriceCard({ course, slug }: CoursePriceCardProps) {
             "learnino_guest_cart",
             JSON.stringify(storedCart),
           );
-
           window.dispatchEvent(new Event("cart-updated"));
-
           toast.success(tCart("addSuccess"));
         } else {
           toast.info(tCart("alreadyInCart"));
@@ -92,10 +97,13 @@ export function CoursePriceCard({ course, slug }: CoursePriceCardProps) {
     enrollFree(slug);
   };
 
+  const isCheckingAuthStatus =
+    isAuthenticated && isLoadingCourse && !isEnrolled;
+
   return (
     <div className="relative overflow-hidden rounded-3xl border border-border/50 bg-card/80 backdrop-blur-xl shadow-2xl dark:shadow-none">
       <div
-        className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-primary/20 blur-3xl"
+        className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-primary/20 blur-3xl pointer-events-none"
         aria-hidden="true"
       />
 
@@ -106,10 +114,8 @@ export function CoursePriceCard({ course, slug }: CoursePriceCardProps) {
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
                 <Sparkles className="h-6 w-6" />
               </div>
-              <div>
-                <div className="text-3xl font-black text-emerald-600 dark:text-emerald-400">
-                  {t("free")}
-                </div>
+              <div className="text-3xl font-black text-emerald-600 dark:text-emerald-400">
+                {t("free")}
               </div>
             </div>
           ) : (
@@ -127,33 +133,44 @@ export function CoursePriceCard({ course, slug }: CoursePriceCardProps) {
         </div>
 
         <div className="flex flex-col gap-3 mb-6">
-          {isEnrolled ? (
-            <>
-              <div className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 mb-1">
-                <CheckCircle2 className="h-5 w-5" aria-hidden="true" />
-                <span className="text-sm font-black">{t("alreadyOwned")}</span>
+          {isCheckingAuthStatus ? (
+            <Button
+              disabled
+              size="lg"
+              className="w-full rounded-2xl h-12 gap-2 text-xs font-bold"
+            >
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>در حال بررسی وضعیت...</span>
+            </Button>
+          ) : isEnrolled ? (
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400">
+                <CheckCircle2 className="h-5 w-5 shrink-0" aria-hidden="true" />
+                <span className="text-xs sm:text-sm font-black">
+                  شما دانشجوی این دوره هستید
+                </span>
               </div>
-              <Button
-                size="lg"
-                className="w-full rounded-2xl h-12 shadow-primary/20 shadow-lg hover:shadow-xl transition-all"
+              <Link
+                data-testid="start-learning-link"
+                href="/dashboard/my-courses"
+                className="w-full"
               >
-                <Link
-                  data-testid="start-learning-link"
-                  href={`/dashboard/my-courses/${slug}`}
-                  className="flex items-center justify-center w-full gap-2"
+                <Button
+                  size="lg"
+                  className="w-full rounded-2xl h-12 gap-2 shadow-primary/20 shadow-lg hover:shadow-xl transition-all cursor-pointer font-bold"
                 >
                   <PlayCircle className="h-5 w-5" />
                   <span>{t("startLearning")}</span>
-                </Link>
-              </Button>
-            </>
+                </Button>
+              </Link>
+            </div>
           ) : isFree ? (
             <Button
               size="lg"
               data-testid="enroll-free-btn"
               onClick={handleEnrollFree}
               disabled={isEnrolling}
-              className="w-full rounded-2xl h-12 gap-2 shadow-emerald-500/20 shadow-lg hover:shadow-xl transition-all bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="w-full rounded-2xl h-12 gap-2 shadow-emerald-500/20 shadow-lg hover:shadow-xl transition-all bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer font-bold"
             >
               {isEnrolling ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -168,7 +185,7 @@ export function CoursePriceCard({ course, slug }: CoursePriceCardProps) {
               data-testid="add-to-cart-btn"
               onClick={handleAddToCart}
               disabled={isAdding}
-              className="w-full rounded-2xl h-12 gap-2 cursor-pointer shadow-primary/20 shadow-lg hover:shadow-xl transition-all"
+              className="w-full rounded-2xl h-12 gap-2 cursor-pointer shadow-primary/20 shadow-lg hover:shadow-xl transition-all font-bold"
             >
               {isAdding ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -199,7 +216,14 @@ export function CoursePriceCard({ course, slug }: CoursePriceCardProps) {
   );
 }
 
-function QuickInfo({ icon: Icon, label, value, iconClass }: any) {
+interface QuickInfoProps {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  iconClass: string;
+}
+
+function QuickInfo({ icon: Icon, label, value, iconClass }: QuickInfoProps) {
   return (
     <div className="flex items-center justify-between p-3 rounded-2xl bg-muted/40 border border-border/40">
       <div className="flex items-center gap-2">

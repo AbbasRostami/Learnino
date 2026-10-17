@@ -29,17 +29,11 @@ export function CourseDetailClient({
   const tNav = useTranslations("nav");
   const locale = useLocale();
 
-  const { data } = useCourse(slug, initialCourse);
+  const { data, isLoading, isFetching } = useCourse(slug, initialCourse);
   const course = data?.data?.course ?? initialCourse;
   const style = course?.category
     ? getCategoryStyle(course?.category?.slug)
     : null;
-
-  const excerpt =
-    course?.description
-      ?.replace(/<[^>]*>/g, "")
-      .slice(0, 160)
-      .trim() + "...";
 
   const breadcrumbItems = [
     { label: tNav("courses"), href: "/courses" },
@@ -86,15 +80,13 @@ export function CourseDetailClient({
               {course?.title}
             </h1>
 
-            <p className="text-base text-muted-foreground leading-relaxed mb-6 max-w-3xl font-medium">
-              {excerpt}
-            </p>
-
             <div className="flex flex-wrap items-center gap-3 mb-8 text-xs">
               <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-card/80 border border-border/50 text-foreground font-bold shadow-sm backdrop-blur-md">
                 <Users className="h-4 w-4 text-primary" aria-hidden="true" />
-                <span>
-                  {course?.stats?.enrollments?.toLocaleString()}{" "}
+                <span className="font-bold">
+                  {new Intl.NumberFormat(
+                    locale === "fa" ? "fa-IR" : "en-US",
+                  ).format(course?.stats?.enrollments ?? 0)}{" "}
                   {t("stats.students")}
                 </span>
               </div>
@@ -110,7 +102,7 @@ export function CourseDetailClient({
                   className="h-4 w-4 text-brand-cyan"
                   aria-hidden="true"
                 />
-                <time dateTime={course?.createdAt} suppressHydrationWarning>
+                <time dateTime={course?.createdAt}>
                   {formatRelativeTime(course?.createdAt, locale)}
                 </time>
               </div>
@@ -119,8 +111,8 @@ export function CourseDetailClient({
             {course?.imageUrl && (
               <div className="relative aspect-video w-full overflow-hidden rounded-3xl mb-8 border border-border/50 shadow-2xl dark:shadow-xl shadow-primary/10">
                 <Image
-                  src={course.imageUrl}
-                  alt={course.title}
+                  src={course?.imageUrl}
+                  alt={course?.title}
                   fill
                   priority
                   quality={90}
@@ -141,16 +133,18 @@ export function CourseDetailClient({
             >
               <h2
                 id="about-course-title"
-                className="text-2xl font-black text-foreground mb-6 flex items-center gap-3"
+                className="text-2xl font-black text-foreground mb-4 flex items-center gap-3"
               >
                 <span className="h-8 w-1.5 rounded-full bg-linear-to-b from-primary to-brand-accent shadow-sm" />
                 {t("aboutCourse")}
               </h2>
-              <div
-                className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-black prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-2xl prose-img:shadow-lg prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm prose-pre:rounded-2xl prose-pre:shadow-lg"
-                dangerouslySetInnerHTML={{ __html: course?.description || "" }}
+
+              <p
+                className="text-sm sm:text-base text-muted-foreground leading-relaxed font-medium whitespace-pre-line"
                 itemProp="description"
-              />
+              >
+                {course?.description}
+              </p>
             </section>
 
             <div className="mb-10">
@@ -164,12 +158,16 @@ export function CourseDetailClient({
             )}
 
             <div className="mb-8">
-              <CourseCommentsSection courseSlug={slug} courseId={course.id} />
+              <CourseCommentsSection courseSlug={slug} courseId={course?.id} />
             </div>
           </div>
 
           <aside className="lg:sticky lg:top-24 h-fit">
-            <CoursePriceCard course={course} slug={slug} />
+            <CoursePriceCard
+              course={course}
+              slug={slug}
+              isLoadingCourse={isLoading || isFetching}
+            />
           </aside>
         </div>
       </div>

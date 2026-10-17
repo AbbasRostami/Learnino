@@ -2,22 +2,25 @@ import { CoursesPageClient } from "@/components/courses/list";
 import { CoursesGridSkeleton } from "@/components/skeleton";
 import { getAlternates, SEO_CONFIG, type Locale } from "@/lib/seo";
 import { getCoursesServer } from "@/services/course/courses";
+import type { CourseLevel, CourseSortBy } from "@/types";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 
+interface CoursesSearchParams {
+  page?: string;
+  search?: string;
+  categories?: string | string[];
+  level?: CourseLevel;
+  minPrice?: string;
+  maxPrice?: string;
+  sortBy?: CourseSortBy;
+  order?: "asc" | "desc";
+}
+
 interface ListSectionProps {
   locale: Locale;
-  searchParamsPromise: Promise<{
-    page?: string;
-    search?: string;
-    categories?: string | string[];
-    level?: string;
-    minPrice?: string;
-    maxPrice?: string;
-    sortBy?: string;
-    order?: string;
-  }>;
+  searchParamsPromise: Promise<CoursesSearchParams>;
 }
 
 async function CoursesListSection({
@@ -41,7 +44,7 @@ async function CoursesListSection({
     minPrice: sp.minPrice ? Number(sp.minPrice) : undefined,
     maxPrice: sp.maxPrice ? Number(sp.maxPrice) : undefined,
     sortBy: sp.sortBy || "createdAt",
-    order: (sp.order as "asc" | "desc") || "desc",
+    order: sp.order || "desc",
   });
 
   return <CoursesPageClient initialData={initialData?.data} />;
@@ -52,7 +55,7 @@ export async function generateMetadata({
   searchParams,
 }: {
   params: Promise<{ locale: Locale }>;
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<CoursesSearchParams>;
 }): Promise<Metadata> {
   const { locale } = await params;
   const sp = await searchParams;
@@ -96,7 +99,7 @@ export default async function CoursesPage({
   searchParams,
 }: {
   params: Promise<{ locale: Locale }>;
-  searchParams: Promise<any>;
+  searchParams: Promise<CoursesSearchParams>;
 }) {
   const { locale } = await params;
   setRequestLocale(locale);

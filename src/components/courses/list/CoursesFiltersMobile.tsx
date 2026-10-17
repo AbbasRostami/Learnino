@@ -7,68 +7,68 @@ import {
   SheetContent,
   SheetDescription,
   SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Filter } from "lucide-react";
 import { useTranslations } from "next-intl";
-import {
-  parseAsArrayOf,
-  parseAsInteger,
-  parseAsString,
-  useQueryStates,
-} from "nuqs";
-import { CoursesFilters } from "./CoursesFilters";
+import { CoursesFilters, getCourseActiveFiltersCount } from "./CoursesFilters";
 
-export function CoursesFiltersMobile() {
+interface CoursesFiltersMobileProps {
+  categories: string[];
+  level: string;
+  minPrice: number | null;
+  maxPrice: number | null;
+  onCategoriesChange: (value: string[] | null) => void;
+  onLevelChange: (value: string | null) => void;
+  onMinPriceChange: (value: number | null) => void;
+  onMaxPriceChange: (value: number | null) => void;
+  onResetFilters: () => void;
+}
+
+export function CoursesFiltersMobile(props: CoursesFiltersMobileProps) {
   const t = useTranslations("course");
 
-  const [filters] = useQueryStates({
-    categories: parseAsArrayOf(parseAsString).withDefault([]),
-    level: parseAsString.withDefault(""),
-    minPrice: parseAsInteger,
-    maxPrice: parseAsInteger,
+  const activeFiltersCount = getCourseActiveFiltersCount({
+    categories: props.categories,
+    level: props.level,
+    minPrice: props.minPrice,
+    maxPrice: props.maxPrice,
   });
-
-  const activeFiltersCount =
-    filters.categories.length +
-    (filters.level ? 1 : 0) +
-    (filters.minPrice !== null ? 1 : 0) +
-    (filters.maxPrice !== null ? 1 : 0);
 
   return (
     <Sheet>
-      <SheetTrigger>
-        <Button
-          variant="outline"
-          size="sm"
-          className="lg:hidden gap-2 rounded-xl relative"
-          aria-label={t("openFilters")}
-        >
-          <Filter className="h-4 w-4" />
-          <span>{t("filters")}</span>
-          {activeFiltersCount > 0 && (
-            <Badge
-              variant="default"
-              className="h-5 min-w-5 px-1.5 rounded-full absolute -top-1 -right-1 text-[10px]"
-            >
-              {activeFiltersCount}
-            </Badge>
-          )}
-        </Button>
-      </SheetTrigger>
+      <SheetTrigger
+        render={
+          <Button
+            variant="outline"
+            className="w-full h-11 gap-2 rounded-2xl relative border-border/60 bg-card/60 backdrop-blur-sm lg:hidden"
+            aria-label={t("openFilters")}
+          >
+            <Filter className="h-4 w-4" />
+            <span>{t("filters")}</span>
+            {activeFiltersCount > 0 && (
+              <Badge
+                variant="default"
+                className="h-5 min-w-5 px-1.5 rounded-full absolute -top-1 -inset-e-1 text-xs bg-primary text-primary-foreground"
+              >
+                {activeFiltersCount}
+              </Badge>
+            )}
+          </Button>
+        }
+      />
       <SheetContent
+        showCloseButton
         side="right"
         className="w-full sm:max-w-md p-0 overflow-y-auto"
       >
         <SheetHeader className="p-6 pb-4">
-          <SheetTitle>{t("filters")}</SheetTitle>
           <SheetDescription className="sr-only">
             {t("filterCategories")}
           </SheetDescription>
         </SheetHeader>
         <div className="p-4 pt-0">
-          <CoursesFilters compact />
+          <CoursesFilters compact {...props} />
         </div>
       </SheetContent>
     </Sheet>

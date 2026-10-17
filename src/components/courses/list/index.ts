@@ -1,3 +1,4 @@
+export * from "./CourseCardSkeleton";
 export * from "./CoursesFilters";
 export * from "./CoursesFiltersMobile";
 export * from "./CoursesListCard";

@@ -44,9 +44,11 @@ export function CourseCommentCard({
   };
 
   const isLikePending =
-    isReacting && variables?.type === "LIKE" && variables?.id === comment.id;
+    isReacting && variables?.type === "LIKE" && variables?.id === comment?.id;
   const isDislikePending =
-    isReacting && variables?.type === "DISLIKE" && variables?.id === comment.id;
+    isReacting &&
+    variables?.type === "DISLIKE" &&
+    variables?.id === comment?.id;
 
   return (
     <div
@@ -59,10 +61,10 @@ export function CourseCommentCard({
       itemType="https://schema.org/Comment"
     >
       <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-border/50 bg-muted">
-        {comment.user.avatar ? (
+        {comment?.user?.avatar ? (
           <Image
-            src={comment.user.avatar}
-            alt={comment.user.name}
+            src={comment?.user?.avatar}
+            alt={comment?.user?.name}
             fill
             sizes="40px"
             className="object-cover"
@@ -70,35 +72,33 @@ export function CourseCommentCard({
           />
         ) : (
           <div className="flex h-full items-center justify-center bg-primary/10 text-primary text-xs font-bold">
-            {comment.user.name.charAt(0)}
+            {comment?.user?.name.charAt(0)}
           </div>
         )}
       </div>
 
       <div className="flex-1 min-w-0">
-        {/* Content */}
         <div className="rounded-2xl border border-border/50 bg-card/60 dark:bg-card/30 backdrop-blur-md p-4 transition-all hover:bg-card">
           <div className="flex items-center justify-between gap-2 mb-2">
             <span
               className="text-xs font-bold text-foreground truncate"
               itemProp="author"
             >
-              {comment.user.name}
+              {comment?.user?.name}
             </span>
             <time
-              className="text-[10px] text-muted-foreground shrink-0"
-              dateTime={comment.createdAt}
+              className="text-xs text-muted-foreground shrink-0"
+              dateTime={comment?.createdAt}
               itemProp="dateCreated"
-              suppressHydrationWarning
             >
-              {formatRelativeTime(comment.createdAt, locale)}
+              {formatRelativeTime(comment?.createdAt, locale)}
             </time>
           </div>
           <p
             className="text-xs sm:text-sm text-foreground/90 leading-relaxed"
             itemProp="text"
           >
-            {comment.content}
+            {comment?.content}
           </p>
         </div>
 
@@ -108,8 +108,8 @@ export function CourseCommentCard({
             onClick={() => handleReaction("LIKE")}
             disabled={isReacting}
             className={cn(
-              "flex items-center gap-1 text-[11px] font-bold transition-all cursor-pointer disabled:opacity-50 hover:scale-105",
-              comment.reactions?.myReaction === "LIKE"
+              "flex items-center gap-1 text-xs font-bold transition-all cursor-pointer disabled:opacity-50 hover:scale-105",
+              comment?.reactions?.myReaction === "LIKE"
                 ? "text-emerald-600 dark:text-emerald-400"
                 : "text-muted-foreground hover:text-foreground",
             )}
@@ -120,7 +120,7 @@ export function CourseCommentCard({
             ) : (
               <ThumbsUp className="h-3 w-3" aria-hidden="true" />
             )}
-            <span>{comment.reactions?.likes ?? 0}</span>
+            <span>{comment?.reactions?.likes ?? 0}</span>
           </button>
 
           <button
@@ -128,8 +128,8 @@ export function CourseCommentCard({
             onClick={() => handleReaction("DISLIKE")}
             disabled={isReacting}
             className={cn(
-              "flex items-center gap-1 text-[11px] font-bold transition-all cursor-pointer disabled:opacity-50 hover:scale-105",
-              comment.reactions?.myReaction === "DISLIKE"
+              "flex items-center gap-1 text-xs font-bold transition-all cursor-pointer disabled:opacity-50 hover:scale-105",
+              comment?.reactions?.myReaction === "DISLIKE"
                 ? "text-destructive"
                 : "text-muted-foreground hover:text-foreground",
             )}
@@ -140,14 +140,14 @@ export function CourseCommentCard({
             ) : (
               <ThumbsDown className="h-3 w-3" aria-hidden="true" />
             )}
-            <span>{comment.reactions?.dislikes ?? 0}</span>
+            <span>{comment?.reactions?.dislikes ?? 0}</span>
           </button>
 
           {isAuthenticated && depth < 2 && (
             <button
               type="button"
-              onClick={() => onReply(isReplying ? null : comment.id)}
-              className="flex items-center gap-1 text-[11px] font-black text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+              onClick={() => onReply(isReplying ? null : comment?.id)}
+              className="flex items-center gap-1 text-xs font-black text-muted-foreground hover:text-primary transition-colors cursor-pointer"
             >
               <Reply className="h-3 w-3" aria-hidden="true" />
               <span>{isReplying ? t("cancelReply") : t("submitComment")}</span>
@@ -158,18 +158,18 @@ export function CourseCommentCard({
         {isReplying && (
           <div className="mt-3 ms-2">
             <CommentForm
-              onSubmit={(content) => onSubmitReply(content, comment.id)}
+              onSubmit={(content) => onSubmitReply(content, comment?.id)}
               isSubmitting={isSubmitting}
-              placeholder={t("replyTo", { name: comment.user.name })}
+              placeholder={t("replyTo", { name: comment?.user?.name })}
               submitLabel={t("submitComment")}
               autoFocus
             />
           </div>
         )}
 
-        {comment.replies && comment.replies.length > 0 && (
+        {comment?.replies && comment?.replies.length > 0 && (
           <div className="mt-4 flex flex-col gap-3">
-            {comment.replies.map((reply) => (
+            {comment?.replies?.map((reply) => (
               <CourseCommentCard
                 key={reply.id}
                 comment={reply}

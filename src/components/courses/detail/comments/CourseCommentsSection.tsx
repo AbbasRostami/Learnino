@@ -2,12 +2,13 @@
 
 import { CommentForm } from "@/components/blog/detail/comments/CommentForm";
 import { CommentsListSkeleton } from "@/components/skeleton";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
+import { cn } from "@/lib/utils";
 import { useCourseComments, useCreateComment } from "@/services";
 import { useAuthStore } from "@/store/authStore";
 import { useQueryClient } from "@tanstack/react-query";
-import { MessageSquare } from "lucide-react";
+import { LogIn, MessageSquare, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { CourseCommentCard } from "./CourseCommentCard";
@@ -85,16 +86,29 @@ export function CourseCommentsSection({
           />
         </div>
       ) : (
-        <div className="mb-8 p-6 rounded-2xl border border-dashed border-border/60 bg-muted/30 text-center flex flex-col items-center gap-2">
-          <p className="text-sm text-muted-foreground font-semibold">
-            {t("loginToComment")}
-          </p>
-          <Button
-            size="sm"
-            className="rounded-full px-6 font-bold cursor-pointer"
+        <div className="mb-8 p-6 sm:p-8 rounded-3xl border border-primary/20 bg-linear-to-br from-primary/5 via-brand-accent/5 to-transparent text-center flex flex-col items-center justify-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-sm">
+            <Sparkles className="h-6 w-6" />
+          </div>
+          <div className="space-y-1 max-w-sm">
+            <p className="text-base font-bold text-foreground">
+              {t("loginToComment")}
+            </p>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              برای ثبت دیدگاه، پرسش درباره دوره یا پاسخ به نظر دیگران وارد حساب
+              کاربری خود شوید.
+            </p>
+          </div>
+          <Link
+            href="/login"
+            className={cn(
+              buttonVariants({ size: "default" }),
+              "mt-2 rounded-full px-6 font-bold cursor-pointer bg-primary text-primary-foreground shadow-md shadow-primary/20 hover:opacity-90 gap-2",
+            )}
           >
-            <Link href="/login">ورود به حساب</Link>
-          </Button>
+            <LogIn className="h-4 w-4" />
+            <span>ورود به حساب کاربری</span>
+          </Link>
         </div>
       )}
 

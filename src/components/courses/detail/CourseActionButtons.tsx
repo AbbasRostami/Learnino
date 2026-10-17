@@ -44,7 +44,7 @@ export function CourseActionButtons({
       toast.info(t("loginRequired"));
       return;
     }
-    toggleReaction({ id: course.id, type });
+    toggleReaction({ id: course?.id, type });
   };
 
   const handleFavorite = () => {
@@ -81,7 +81,7 @@ export function CourseActionButtons({
           disabled={isReacting}
           className={cn(
             "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer disabled:opacity-50",
-            course.reactions?.myReaction === "LIKE"
+            course?.reactions?.myReaction === "LIKE"
               ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400 shadow-sm"
               : "text-muted-foreground hover:bg-background hover:text-foreground",
           )}
@@ -93,11 +93,11 @@ export function CourseActionButtons({
             <ThumbsUp
               className={cn(
                 "h-3.5 w-3.5",
-                course.reactions?.myReaction === "LIKE" && "fill-current",
+                course?.reactions?.myReaction === "LIKE" && "fill-current",
               )}
             />
           )}
-          <span>{course.reactions?.likes ?? 0}</span>
+          <span>{course?.reactions?.likes ?? 0}</span>
         </button>
 
         <button
@@ -106,7 +106,7 @@ export function CourseActionButtons({
           disabled={isReacting}
           className={cn(
             "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer disabled:opacity-50",
-            course.reactions?.myReaction === "DISLIKE"
+            course?.reactions?.myReaction === "DISLIKE"
               ? "bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-400 shadow-sm"
               : "text-muted-foreground hover:bg-background hover:text-foreground",
           )}
@@ -118,11 +118,11 @@ export function CourseActionButtons({
             <ThumbsDown
               className={cn(
                 "h-3.5 w-3.5",
-                course.reactions?.myReaction === "DISLIKE" && "fill-current",
+                course?.reactions?.myReaction === "DISLIKE" && "fill-current",
               )}
             />
           )}
-          <span>{course.reactions?.dislikes ?? 0}</span>
+          <span>{course?.reactions?.dislikes ?? 0}</span>
         </button>
       </div>
 
@@ -132,7 +132,7 @@ export function CourseActionButtons({
         disabled={isFavPending}
         className={cn(
           "flex items-center justify-center h-9 w-9 rounded-full border transition-all cursor-pointer disabled:opacity-50 shadow-xs",
-          course.isFavorite
+          course?.isFavorite
             ? "bg-amber-100 border-amber-300/60 text-amber-600 dark:bg-amber-500/15 dark:border-amber-500/30 dark:text-amber-400"
             : "bg-muted/50 border-border/40 text-muted-foreground hover:text-amber-600 hover:border-amber-300/60",
         )}
@@ -142,7 +142,7 @@ export function CourseActionButtons({
           <Loader2 className="h-4 w-4 animate-spin" />
         ) : (
           <Bookmark
-            className={cn("h-4 w-4", course.isFavorite && "fill-current")}
+            className={cn("h-4 w-4", course?.isFavorite && "fill-current")}
           />
         )}
       </button>
