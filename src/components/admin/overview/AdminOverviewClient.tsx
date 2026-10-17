@@ -4,15 +4,15 @@ import { useAdminOverview, useProfile } from "@/services";
 import { useLocale, useTranslations } from "next-intl";
 import { ReadOnlyBanner } from "../shared";
 import { AdminOverviewSkeleton } from "./AdminOverviewSkeleton";
-import { OverviewExpiringDiscounts } from "./OverviewExpiringDiscounts";
-import { OverviewOrdersChart } from "./OverviewOrdersChart";
-import { OverviewPendingComments } from "./OverviewPendingComments";
-import { OverviewRevenueChart } from "./OverviewRevenueChart";
 import { OverviewStatsGrid } from "./OverviewStatsGrid";
-import { OverviewTopCourses } from "./OverviewTopCourses";
-import { OverviewTopDiscounts } from "./OverviewTopDiscounts";
-import { OverviewUsersChart } from "./OverviewUsersChart";
 import { OverviewWelcomeBanner } from "./OverviewWelcomeBanner";
+import { OverviewOrdersChart } from "./charts/OverviewOrdersChart";
+import { OverviewRevenueChart } from "./charts/OverviewRevenueChart";
+import { OverviewUsersChart } from "./charts/OverviewUsersChart";
+import { OverviewExpiringDiscounts } from "./widgets/OverviewExpiringDiscounts";
+import { OverviewPendingComments } from "./widgets/OverviewPendingComments";
+import { OverviewTopCourses } from "./widgets/OverviewTopCourses";
+import { OverviewTopDiscounts } from "./widgets/OverviewTopDiscounts";
 
 export function AdminOverviewClient() {
   const t = useTranslations("admin.overview");
