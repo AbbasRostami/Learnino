@@ -45,7 +45,7 @@ export function SettingsChangePassword() {
           {t("changePassword")}
         </h2>
       </div>
-      <p className="text-[11px] text-muted-foreground mb-6 leading-relaxed">
+      <p className="text-xs text-muted-foreground mb-6 leading-relaxed">
         {t("changePasswordDescription")}
       </p>
 
@@ -68,7 +68,7 @@ export function SettingsChangePassword() {
               label={t("newPassword")}
               autoComplete="new-password"
             />
-            <p className="text-[10px] text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               {tDashboard("passwordHint")}
             </p>
           </div>

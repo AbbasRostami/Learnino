@@ -35,7 +35,7 @@ export function SettingsAppearance() {
             {tDashboard("themeSection")}
           </h2>
         </div>
-        <p className="text-[11px] text-muted-foreground mb-4">
+        <p className="text-xs text-muted-foreground mb-4">
           {tDashboard("themeDescription")}
         </p>
 
@@ -72,7 +72,7 @@ export function SettingsAppearance() {
             {tDashboard("languageSection")}
           </h2>
         </div>
-        <p className="text-[11px] text-muted-foreground mb-4">
+        <p className="text-xs text-muted-foreground mb-4">
           {tDashboard("languageDescription")}
         </p>
 
