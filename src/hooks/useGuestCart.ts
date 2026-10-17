@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 
 const GUEST_CART_KEY = "learnino_guest_cart";
 
+type RawGuestCartItem = string | (Partial<CartItem> & { courseId?: string });
+
 export function useGuestCart() {
   const [guestItems, setGuestItems] = useState<CartItem[]>([]);
   const [isReady, setIsReady] = useState(false);
@@ -15,10 +17,10 @@ export function useGuestCart() {
     const loadCart = () => {
       try {
         const stored = localStorage.getItem(GUEST_CART_KEY);
-        const parsed = stored ? JSON.parse(stored) : [];
+        const parsed: RawGuestCartItem[] = stored ? JSON.parse(stored) : [];
 
         const validItems: CartItem[] = parsed
-          .map((item: any) => {
+          .map((item): CartItem | null => {
             if (typeof item === "string") {
               return {
                 id: item,
@@ -32,19 +34,23 @@ export function useGuestCart() {
                 addedAt: new Date().toISOString(),
               };
             }
-            return {
-              id: item.id || item.courseId,
-              courseId: item.courseId || item.id,
-              title: item.title || "",
-              slug: item.slug || "",
-              price: item.price || 0,
-              imageUrl: item.imageUrl || null,
-              level: item.level || "BEGINNER",
-              category: item.category || { id: "", name: "", slug: "" },
-              addedAt: item.addedAt || new Date().toISOString(),
-            };
+            if (typeof item === "object" && item !== null) {
+              const courseId = item.courseId || item.id || "";
+              return {
+                id: item.id || courseId,
+                courseId,
+                title: item.title || "",
+                slug: item.slug || "",
+                price: item.price || 0,
+                imageUrl: item.imageUrl || null,
+                level: item.level || "BEGINNER",
+                category: item.category || { id: "", name: "", slug: "" },
+                addedAt: item.addedAt || new Date().toISOString(),
+              };
+            }
+            return null;
           })
-          .filter(Boolean);
+          .filter((item): item is CartItem => item !== null);
 
         setGuestItems(validItems);
       } catch {

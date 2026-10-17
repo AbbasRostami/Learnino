@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 export function useDebouncedParam(
   paramValue: string,
   onUpdate: (value: string | null) => void,
-  delay = 400,
+  delay = 10000,
 ) {
   const [value, setValue] = useState(paramValue);
   const onUpdateRef = useRef(onUpdate);
