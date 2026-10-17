@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
+import type { FlatCommentItem } from "@/types";
 import { formatRelativeTime } from "@/utils/formatters";
 import {
   BookOpen,
@@ -48,7 +49,7 @@ const STATUS_STYLES = {
 };
 
 interface MyCommentCardProps {
-  comment: any;
+  comment: FlatCommentItem;
   onDelete: () => void;
   isDeleting: boolean;
   index: number;
@@ -64,18 +65,18 @@ export function MyCommentCard({
   const locale = useLocale();
   const prefersReducedMotion = useReducedMotion();
 
-  const status = comment.status as keyof typeof STATUS_STYLES;
+  const status = comment?.status as keyof typeof STATUS_STYLES;
   const style = STATUS_STYLES[status] || STATUS_STYLES.APPROVED;
 
-  const isCourseComment = !!comment?.course;
-  const isPostComment = !!comment?.post;
+  const isCourseComment = Boolean(comment?.course);
+  const isPostComment = Boolean(comment?.post);
 
   const targetTitle =
     comment?.course?.title || comment?.post?.title || t("defaultCommentTarget");
   const targetLink = isCourseComment
-    ? `/courses/${comment?.course.slug}`
+    ? `/courses/${comment?.course?.slug}`
     : isPostComment
-      ? `/blog/${comment?.post.slug}`
+      ? `/blog/${comment?.post?.slug}`
       : "#";
   const targetLabel = isCourseComment
     ? t("onCourse")
@@ -120,7 +121,7 @@ export function MyCommentCard({
           </div>
 
           <div className="flex flex-col min-w-0">
-            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
               {t("commentOn")} {targetLabel}
             </span>
             {targetLink !== "#" ? (
@@ -141,7 +142,7 @@ export function MyCommentCard({
 
         <div
           className={cn(
-            "shrink-0 inline-flex items-center gap-1 text-[10px] font-black px-2.5 py-1 rounded-full border",
+            "shrink-0 inline-flex items-center gap-1 text-xs font-black px-2.5 py-1 rounded-full border",
             style.badgeColor,
           )}
         >
@@ -165,7 +166,7 @@ export function MyCommentCard({
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-5 py-3 border-t border-dashed border-border/60 bg-muted/20">
-        <div className="flex items-center flex-wrap gap-x-4 gap-y-1 text-[10px] font-semibold text-muted-foreground">
+        <div className="flex items-center flex-wrap gap-x-4 gap-y-1 text-xs font-semibold text-muted-foreground">
           <span className="flex items-center gap-1">
             <Reply className="h-3 w-3" aria-hidden="true" />
             <span>
@@ -178,7 +179,7 @@ export function MyCommentCard({
               {comment?.stats?.reactions ?? 0} {t("reactions")}
             </span>
           </span>
-          <span className="flex items-center gap-1" suppressHydrationWarning>
+          <span className="flex items-center gap-1">
             <Clock className="h-3 w-3" aria-hidden="true" />
             <span>{formatRelativeTime(comment?.createdAt, locale)}</span>
           </span>
@@ -189,7 +190,7 @@ export function MyCommentCard({
             <Button
               size="sm"
               variant="ghost"
-              className="h-7 px-2.5 rounded-lg text-[11px] font-bold text-primary hover:bg-primary/10 cursor-pointer gap-1"
+              className="h-7 px-2.5 rounded-lg text-xs font-bold text-primary hover:bg-primary/10 cursor-pointer gap-1"
             >
               <Link href={targetLink}>
                 <span>{t("viewSource")}</span>
@@ -203,7 +204,7 @@ export function MyCommentCard({
             size="sm"
             onClick={onDelete}
             disabled={isDeleting}
-            className="h-7 px-2.5 rounded-lg text-[11px] font-bold text-rose-600 hover:bg-rose-500/10 cursor-pointer gap-1 disabled:opacity-50"
+            className="h-7 px-2.5 rounded-lg text-xs font-bold text-rose-600 hover:bg-rose-500/10 cursor-pointer gap-1 disabled:opacity-50"
           >
             {isDeleting ? (
               <Loader2 className="h-3 w-3 animate-spin" />

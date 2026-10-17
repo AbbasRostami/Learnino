@@ -13,7 +13,6 @@ export async function generateMetadata({
 
   return {
     title: `${t("comments")} | ${tCommon("appName")}`,
-    robots: { index: false, follow: false },
   };
 }
 
