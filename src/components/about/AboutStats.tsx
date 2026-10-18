@@ -1,7 +1,6 @@
 "use client";
 
 import { BookOpen, Clock, GraduationCap, Users } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 
 const STATS = [
@@ -33,7 +32,6 @@ const STATS = [
 
 export function AboutStats() {
   const t = useTranslations("aboutPage.stats");
-  const prefersReducedMotion = useReducedMotion();
 
   return (
     <section
@@ -47,15 +45,10 @@ export function AboutStats() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {STATS.map((stat, index) => (
-            <motion.div
+            <div
               key={stat.key}
-              initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
-              whileInView={
-                prefersReducedMotion ? undefined : { opacity: 1, y: 0 }
-              }
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative flex flex-col items-center text-center p-6 rounded-3xl border border-border/50 bg-card hover:border-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 motion-reduce:transition-none motion-reduce:hover:transform-none"
+              style={{ animationDelay: `${index * 100}ms` }}
+              className="group relative flex flex-col items-center text-center p-6 rounded-3xl border border-border/50 bg-card hover:border-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-in fade-in-0 slide-in-from-bottom-4 fill-mode-backwards motion-reduce:animate-none"
             >
               <div
                 className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br ${stat.color} mb-4 shadow-lg group-hover:scale-110 transition-transform motion-reduce:group-hover:scale-100`}
@@ -68,7 +61,7 @@ export function AboutStats() {
               <div className="text-sm text-muted-foreground font-semibold">
                 {t(stat.key)}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

@@ -3,27 +3,15 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 import { MessagesSquare } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 
 export function LearningPathsCTA() {
   const t = useTranslations("learningPathsPage.cta");
-  const prefersReducedMotion = useReducedMotion();
 
   return (
     <section aria-labelledby="lp-cta-title" className="py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={
-            prefersReducedMotion ? undefined : { opacity: 0, scale: 0.95 }
-          }
-          whileInView={
-            prefersReducedMotion ? undefined : { opacity: 1, scale: 1 }
-          }
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="relative overflow-hidden rounded-3xl border border-primary/20 bg-linear-to-br from-primary/10 via-brand-accent/10 to-brand-cyan/10 p-10 md:p-16 text-center shadow-2xl"
-        >
+        <div className="relative overflow-hidden rounded-3xl border border-primary/20 bg-linear-to-br from-primary/10 via-brand-accent/10 to-brand-cyan/10 p-10 md:p-16 text-center shadow-2xl animate-in fade-in-0 zoom-in-95 duration-500 motion-reduce:animate-none">
           <div
             className="absolute -top-24 -left-24 h-64 w-64 rounded-full bg-primary/20 blur-3xl"
             aria-hidden="true"
@@ -69,7 +57,7 @@ export function LearningPathsCTA() {
               </Button>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

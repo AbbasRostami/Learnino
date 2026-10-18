@@ -1,7 +1,6 @@
 "use client";
 
 import { Eye, Sparkles, Target, TrendingUp } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 
 const CARDS = [
@@ -12,7 +11,6 @@ const CARDS = [
 
 export function AboutMission() {
   const t = useTranslations("aboutPage.mission");
-  const prefersReducedMotion = useReducedMotion();
 
   return (
     <section aria-labelledby="about-mission-title" className="py-16 md:py-24">
@@ -43,15 +41,10 @@ export function AboutMission() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {CARDS.map((card, index) => (
-            <motion.article
+            <article
               key={card.key}
-              initial={prefersReducedMotion ? undefined : { opacity: 0, y: 30 }}
-              whileInView={
-                prefersReducedMotion ? undefined : { opacity: 1, y: 0 }
-              }
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
-              className="group relative overflow-hidden rounded-3xl border border-border/50 bg-card p-8 hover:border-primary/30 hover:shadow-2xl transition-all duration-500 motion-reduce:transition-none"
+              style={{ animationDelay: `${index * 150}ms` }}
+              className="group relative overflow-hidden rounded-3xl border border-border/50 bg-card p-8 hover:border-primary/30 hover:shadow-2xl transition-all duration-500 animate-in fade-in-0 slide-in-from-bottom-6 fill-mode-backwards motion-reduce:animate-none"
             >
               <div
                 className={`absolute -top-20 -right-20 h-40 w-40 rounded-full bg-linear-to-br ${card.gradient} opacity-0 group-hover:opacity-20 blur-3xl transition-opacity duration-500`}
@@ -70,7 +63,7 @@ export function AboutMission() {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {t(`cards.${card.key}.description`)}
               </p>
-            </motion.article>
+            </article>
           ))}
         </div>
       </div>

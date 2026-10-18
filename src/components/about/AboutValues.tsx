@@ -9,7 +9,6 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 
 const VALUES = [
@@ -48,7 +47,6 @@ const VALUES = [
 
 export function AboutValues() {
   const t = useTranslations("aboutPage.values");
-  const prefersReducedMotion = useReducedMotion();
 
   return (
     <section
@@ -57,7 +55,7 @@ export function AboutValues() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-rose-500/20 bg-rose-500/5 text-xs font-semibold text-rose-600 dark:text-rose-400 shadow-sm mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-bold border border-rose-500/20 bg-rose-500/5 text-xs text-rose-700 dark:text-rose-300 shadow-sm mb-4">
             <Heart className="h-3.5 w-3.5" aria-hidden="true" />
             <span>{t("badge")}</span>
           </div>
@@ -93,15 +91,10 @@ export function AboutValues() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {VALUES.map((value, index) => (
-            <motion.article
+            <article
               key={value.key}
-              initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
-              whileInView={
-                prefersReducedMotion ? undefined : { opacity: 1, y: 0 }
-              }
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: index * 0.08 }}
-              className="group flex gap-4 p-6 rounded-2xl border border-border/50 bg-card hover:border-primary/30 hover:shadow-lg transition-all duration-300 motion-reduce:transition-none"
+              style={{ animationDelay: `${index * 80}ms` }}
+              className="group flex gap-4 p-6 rounded-2xl border border-border/50 bg-card hover:border-primary/30 hover:shadow-lg transition-all duration-300 animate-in fade-in-0 slide-in-from-bottom-4 fill-mode-backwards motion-reduce:animate-none"
             >
               <div
                 className={`shrink-0 flex h-12 w-12 items-center justify-center rounded-xl ${value.bg} group-hover:scale-110 transition-transform motion-reduce:group-hover:scale-100`}
@@ -119,7 +112,7 @@ export function AboutValues() {
                   {t(`items.${value.key}.description`)}
                 </p>
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
       </div>

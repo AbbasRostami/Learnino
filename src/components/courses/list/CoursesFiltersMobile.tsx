@@ -1,7 +1,6 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -38,25 +37,20 @@ export function CoursesFiltersMobile(props: CoursesFiltersMobileProps) {
   return (
     <Sheet>
       <SheetTrigger
-        render={
-          <Button
-            variant="outline"
-            className="w-full h-11 gap-2 rounded-2xl relative border-border/60 bg-card/60 backdrop-blur-sm lg:hidden"
-            aria-label={t("openFilters")}
+        className="inline-flex items-center justify-center w-full h-11 gap-2 rounded-2xl relative border border-border/60 bg-card/60 backdrop-blur-sm lg:hidden text-sm font-bold text-foreground transition-colors hover:bg-accent hover:text-accent-foreground outline-none cursor-pointer"
+        aria-label={t("openFilters")}
+      >
+        <Filter className="h-4 w-4" />
+        <span>{t("filters")}</span>
+        {activeFiltersCount > 0 && (
+          <Badge
+            variant="default"
+            className="h-5 min-w-5 px-1.5 rounded-full absolute -top-1 -inset-e-1 text-xs bg-primary text-primary-foreground"
           >
-            <Filter className="h-4 w-4" />
-            <span>{t("filters")}</span>
-            {activeFiltersCount > 0 && (
-              <Badge
-                variant="default"
-                className="h-5 min-w-5 px-1.5 rounded-full absolute -top-1 -inset-e-1 text-xs bg-primary text-primary-foreground"
-              >
-                {activeFiltersCount}
-              </Badge>
-            )}
-          </Button>
-        }
-      />
+            {activeFiltersCount}
+          </Badge>
+        )}
+      </SheetTrigger>
       <SheetContent
         showCloseButton
         side="right"

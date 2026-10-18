@@ -17,7 +17,7 @@ export function EmptyBlogState() {
       <div className="space-y-1">
         <h3 className="text-xl font-black text-foreground">{t("noResults")}</h3>
         <p className="text-sm font-medium text-muted-foreground">
-          لطفاً فیلترها را تغییر دهید یا عبارت دیگری را جستجو کنید
+          {t("postNotFound")}
         </p>
       </div>
     </div>

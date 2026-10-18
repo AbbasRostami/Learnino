@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 import type { Course } from "@/types";
 import { formatNumber } from "@/utils/formatters";
 import { BookOpen, Heart, MessageCircle, Users } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
@@ -20,24 +19,18 @@ interface CoursesListCardProps {
 export function CoursesListCard({
   course,
   priority = false,
-  index = 0,
 }: CoursesListCardProps) {
   const t = useTranslations("course");
   const style = getCategoryStyle(course?.category?.slug);
   const locale = useLocale();
-  const prefersReducedMotion = useReducedMotion();
 
   const isFree = course?.price === 0;
   const teacherSlug = course?.teacher?.slug;
 
   return (
-    <motion.article
+    <article
       data-testid="course-card"
-      initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
-      whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
-      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/50 bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-primary/40 motion-reduce:transition-none motion-reduce:hover:transform-none"
+      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/50 bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-primary/40 animate-in fade-in-0 slide-in-from-bottom-4 fill-mode-backwards motion-reduce:animate-none motion-reduce:hover:transform-none"
       itemScope
       itemType="https://schema.org/Course"
     >
@@ -54,7 +47,7 @@ export function CoursesListCard({
             fill
             priority={priority}
             quality={70}
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 380px"
             className="object-cover transition-transform duration-700 group-hover:scale-110 motion-reduce:transition-none"
             itemProp="image"
           />
@@ -74,7 +67,7 @@ export function CoursesListCard({
         </span>
 
         {isFree && (
-          <span className="absolute top-3 inset-s-3 flex items-center gap-1 rounded-full bg-emerald-500 text-white px-2.5 py-1 text-xs font-black shadow-lg">
+          <span className="absolute top-3 inset-s-3 flex items-center gap-1 rounded-full bg-emerald-600 text-white px-2.5 py-1 text-xs font-extrabold shadow-lg">
             {t("free")}
           </span>
         )}
@@ -99,7 +92,7 @@ export function CoursesListCard({
           </div>
         </div>
 
-        <h3
+        <h2
           className="mb-2 line-clamp-2 text-base md:text-[17px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors min-h-12"
           itemProp="name"
         >
@@ -109,7 +102,7 @@ export function CoursesListCard({
           >
             {course?.title}
           </Link>
-        </h3>
+        </h2>
 
         <div className="mt-2 flex items-center gap-2">
           {teacherSlug ? (
@@ -123,7 +116,7 @@ export function CoursesListCard({
                     src={course.teacher.avatar}
                     alt={course.teacher.name}
                     fill
-                    quality={90}
+                    quality={85}
                     sizes="32px"
                     className="object-cover"
                   />
@@ -168,7 +161,7 @@ export function CoursesListCard({
 
           <div className="text-end">
             {isFree ? (
-              <span className="text-sm font-black text-emerald-600 dark:text-emerald-400">
+              <span className="text-sm font-black text-emerald-700 dark:text-emerald-300">
                 {t("free")}
               </span>
             ) : (
@@ -177,7 +170,7 @@ export function CoursesListCard({
                   className="text-base font-black leading-tight text-foreground"
                   dir="ltr"
                 >
-                  {formatNumber(course?.price)}
+                  {formatNumber(course?.price, locale)}
                 </span>
                 <span className="text-xs text-muted-foreground -mt-0.5">
                   {t("currency")}
@@ -190,6 +183,6 @@ export function CoursesListCard({
 
       <meta itemProp="url" content={`/courses/${course?.slug}`} />
       <meta itemProp="description" content={course?.description} />
-    </motion.article>
+    </article>
   );
 }

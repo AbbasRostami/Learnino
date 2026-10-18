@@ -131,7 +131,7 @@ export function CourseCard({ course, priority = false }: CourseCardProps) {
 
           <div className="flex h-10 items-center justify-end font-black text-foreground text-end">
             {isFree ? (
-              <span className="text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-md text-sm font-bold shadow-sm">
+              <span className="text-emerald-800 dark:text-emerald-300 bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-1 rounded-md text-sm font-extrabold shadow-sm">
                 {t("free")}
               </span>
             ) : (
@@ -140,7 +140,7 @@ export function CourseCard({ course, priority = false }: CourseCardProps) {
                   className="text-base md:text-lg font-black leading-tight bg-linear-to-l from-primary to-primary/70 bg-clip-text text-transparent"
                   dir="ltr"
                 >
-                  {formatNumber(course?.price)}
+                  {formatNumber(course?.price, locale)}
                 </span>
                 <span className="text-[11px] font-medium text-muted-foreground leading-tight">
                   {t("currency")}

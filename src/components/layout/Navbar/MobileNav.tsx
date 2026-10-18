@@ -5,7 +5,7 @@ import { LogIn, Menu } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
@@ -41,16 +41,13 @@ export function MobileNav() {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-10 w-10 rounded-full cursor-pointer lg:hidden"
-          aria-label={t("menu")}
-        >
-          <Menu className="h-6 w-6" />
-        </Button>
+      <SheetTrigger
+        className="h-10 w-10 rounded-full cursor-pointer lg:hidden hover:bg-accent/80 flex items-center justify-center transition-colors outline-none"
+        aria-label={t("menu")}
+      >
+        <Menu className="h-6 w-6" />
       </SheetTrigger>
+
       <SheetContent
         side={sheetSide}
         className="w-80 p-0 flex flex-col [&>button]:hidden"
@@ -105,7 +102,10 @@ export function MobileNav() {
 
         <Separator />
 
-        <div className="p-4 text-xs text-center text-muted-foreground">
+        <div
+          className="p-4 text-xs text-center text-muted-foreground"
+          suppressHydrationWarning
+        >
           © {year ?? 2026} Learnino
         </div>
       </SheetContent>

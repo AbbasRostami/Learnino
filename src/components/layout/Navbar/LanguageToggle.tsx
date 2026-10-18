@@ -5,7 +5,6 @@ import { Languages } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useTransition } from "react";
 
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,16 +28,12 @@ export function LanguageToggle() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-9 w-9 rounded-full cursor-pointer"
-          aria-label={t("toggle")}
-          disabled={isPending}
-        >
-          <Languages className="h-4 w-4" />
-        </Button>
+      <DropdownMenuTrigger
+        className="h-9 w-9 rounded-full cursor-pointer hover:bg-accent/80 flex items-center justify-center transition-colors outline-none"
+        aria-label={t("toggle")}
+        disabled={isPending}
+      >
+        <Languages className="h-4 w-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-36">
         <DropdownMenuItem

@@ -13,7 +13,6 @@ import {
   Heart,
   MessageCircle,
 } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
@@ -31,17 +30,13 @@ export function BlogPostCard({
   locale,
 }: BlogPostCardProps) {
   const t = useTranslations("blog");
-  const prefersReducedMotion = useReducedMotion();
   const style = post?.category ? getCategoryStyle(post?.category?.slug) : null;
   const excerpt = stripHtml(post.content, 120);
 
   return (
-    <motion.article
-      initial={prefersReducedMotion ? undefined : { opacity: 0, y: 20 }}
-      whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
-      className="group flex flex-col h-full overflow-hidden rounded-[2rem] border border-border/50 bg-card/60 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:border-primary/40 motion-reduce:transition-none motion-reduce:hover:transform-none"
+    <article
+      style={{ animationDelay: `${Math.min(index * 50, 300)}ms` }}
+      className="group flex flex-col h-full overflow-hidden rounded-[2rem] border border-border/50 bg-card/60 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:border-primary/40 animate-in fade-in-0 slide-in-from-bottom-4 fill-mode-backwards motion-reduce:animate-none motion-reduce:hover:transform-none"
       itemScope
       itemType="https://schema.org/BlogPosting"
     >
@@ -57,7 +52,7 @@ export function BlogPostCard({
               alt={post?.title}
               fill
               priority={priority}
-              quality={85}
+              quality={75}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover transition-transform duration-700 group-hover:scale-110 motion-reduce:transition-none"
               itemProp="image"
@@ -96,12 +91,12 @@ export function BlogPostCard({
           </div>
         </div>
 
-        <h3
+        <h2
           className="mb-3 line-clamp-2 text-lg font-black text-foreground leading-tight group-hover:text-primary transition-colors min-h-12"
           itemProp="headline"
         >
           <Link href={`/blog/${post?.slug}`}>{post?.title}</Link>
-        </h3>
+        </h2>
 
         {excerpt && (
           <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed mb-6 font-medium">
@@ -126,6 +121,7 @@ export function BlogPostCard({
           </div>
           <Link
             href={`/blog/${post?.slug}`}
+            aria-label={`${t("readMore")}: ${post?.title}`}
             className="flex items-center gap-1.5 text-xs font-black text-primary group-hover:gap-2.5 transition-all bg-primary/10 hover:bg-primary hover:text-white px-3 py-1.5 rounded-full"
           >
             <span>{t("readMore")}</span>
@@ -137,6 +133,6 @@ export function BlogPostCard({
         </div>
       </div>
       <meta itemProp="url" content={`/blog/${post?.slug}`} />
-    </motion.article>
+    </article>
   );
 }
