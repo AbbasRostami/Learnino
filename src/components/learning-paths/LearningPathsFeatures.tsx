@@ -7,7 +7,7 @@ const FEATURES = [
   {
     key: "structured",
     icon: Layers,
-    color: "text-primary",
+    color: "text-primary-700 dark:text-primary-300",
     bg: "bg-primary/10",
   },
   {
@@ -25,7 +25,7 @@ const FEATURES = [
   {
     key: "certificate",
     icon: Award,
-    color: "text-emerald-500",
+    color: "text-emerald-700 dark:text-emerald-300",
     bg: "bg-emerald-500/10",
   },
 ] as const;
@@ -61,7 +61,7 @@ export function LearningPathsFeatures() {
               <h3 className="text-sm font-bold text-foreground mb-1">
                 {t(`${feature.key}.title`)}
               </h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-xs text-foreground/80 font-medium leading-relaxed">
                 {t(`${feature.key}.description`)}
               </p>
             </div>

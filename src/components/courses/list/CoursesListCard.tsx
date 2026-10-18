@@ -30,7 +30,7 @@ export function CoursesListCard({
   return (
     <article
       data-testid="course-card"
-      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/50 bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-primary/40 animate-in fade-in-0 slide-in-from-bottom-4 fill-mode-backwards motion-reduce:animate-none motion-reduce:hover:transform-none"
+      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/60 bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-primary/40 animate-in fade-in-0 slide-in-from-bottom-4 fill-mode-backwards motion-reduce:animate-none motion-reduce:hover:transform-none"
       itemScope
       itemType="https://schema.org/Course"
     >
@@ -62,12 +62,12 @@ export function CoursesListCard({
           aria-hidden="true"
         />
 
-        <span className="absolute top-3 inset-e-3 flex items-center rounded-full bg-background/90 backdrop-blur-md px-2.5 py-1 text-xs font-bold shadow-sm border border-border/50">
+        <span className="absolute top-3 inset-e-3 flex items-center rounded-full bg-background/95 backdrop-blur-md px-2.5 py-1 text-xs font-bold text-foreground shadow-xs border border-border/60">
           {t(`levels.${course?.level}`)}
         </span>
 
         {isFree && (
-          <span className="absolute top-3 inset-s-3 flex items-center gap-1 rounded-full bg-emerald-600 text-white px-2.5 py-1 text-xs font-extrabold shadow-lg">
+          <span className="absolute top-3 inset-s-3 flex items-center gap-1 rounded-full bg-emerald-800 dark:bg-emerald-700 text-white px-2.5 py-1 text-xs font-black shadow-md">
             {t("free")}
           </span>
         )}
@@ -84,7 +84,7 @@ export function CoursesListCard({
             {course?.category?.name}
           </span>
           <div
-            className="flex items-center gap-1 text-muted-foreground"
+            className="flex items-center gap-1 text-foreground/80"
             title={t("studentsCount", { count: course?.stats?.enrollments })}
           >
             <Users className="h-3.5 w-3.5" aria-hidden="true" />
@@ -121,13 +121,13 @@ export function CoursesListCard({
                     className="object-cover"
                   />
                 ) : (
-                  <div className="flex h-full items-center justify-center bg-primary/10 text-primary text-xs font-bold">
+                  <div className="flex h-full items-center justify-center bg-primary/10 text-primary-700 dark:text-primary-300 text-xs font-bold">
                     {course?.teacher?.name?.charAt(0)}
                   </div>
                 )}
               </div>
               <span
-                className="text-xs font-semibold text-muted-foreground group-hover/teacher:text-primary transition-colors truncate"
+                className="text-xs font-bold text-foreground/80 group-hover/teacher:text-primary transition-colors truncate"
                 itemProp="provider"
               >
                 {course?.teacher?.name}
@@ -136,11 +136,11 @@ export function CoursesListCard({
           ) : (
             <div className="flex items-center gap-2">
               <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border-2 border-background bg-muted">
-                <div className="flex h-full items-center justify-center bg-primary/10 text-primary text-xs font-bold">
+                <div className="flex h-full items-center justify-center bg-primary/10 text-primary-700 dark:text-primary-300 text-xs font-bold">
                   {course?.teacher?.name?.charAt(0)}
                 </div>
               </div>
-              <span className="text-xs font-semibold text-muted-foreground truncate">
+              <span className="text-xs font-bold text-foreground/80 truncate">
                 {course?.teacher?.name}
               </span>
             </div>
@@ -149,19 +149,19 @@ export function CoursesListCard({
 
         <div className="mt-auto pt-4 flex items-center justify-between border-t border-dashed border-border/60">
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+            <div className="flex items-center gap-1 text-xs text-foreground/80">
               <Heart className="h-3.5 w-3.5" aria-hidden="true" />
-              <span className="font-semibold">{course?.reactions?.likes}</span>
+              <span className="font-bold">{course?.reactions?.likes}</span>
             </div>
-            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+            <div className="flex items-center gap-1 text-xs text-foreground/80">
               <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
-              <span className="font-semibold">{course?.stats?.comments}</span>
+              <span className="font-bold">{course?.stats?.comments}</span>
             </div>
           </div>
 
           <div className="text-end">
             {isFree ? (
-              <span className="text-sm font-black text-emerald-700 dark:text-emerald-300">
+              <span className="text-sm font-black text-emerald-800 dark:text-emerald-300">
                 {t("free")}
               </span>
             ) : (
@@ -172,7 +172,7 @@ export function CoursesListCard({
                 >
                   {formatNumber(course?.price, locale)}
                 </span>
-                <span className="text-xs text-muted-foreground -mt-0.5">
+                <span className="text-xs text-foreground/70 font-semibold -mt-0.5">
                   {t("currency")}
                 </span>
               </div>

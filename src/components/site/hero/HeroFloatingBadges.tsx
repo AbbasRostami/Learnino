@@ -1,29 +1,15 @@
 "use client";
 
 import { Code2, Radio, Sparkles, Zap } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 
 export function HeroFloatingBadges() {
   const t = useTranslations("hero");
-  const prefersReducedMotion = useReducedMotion();
-
-  const animation = prefersReducedMotion
-    ? {}
-    : {
-        y: [0, -12, 0],
-        transition: {
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut" as const,
-        },
-      };
 
   return (
     <>
-      <motion.div
-        animate={animation}
-        className="absolute -top-4 inset-s-4 sm:top-8 sm:inset-s-0 z-20 hidden sm:flex items-center gap-2 rounded-2xl bg-card/95 backdrop-blur-xl border border-border/60 px-4 py-2.5 shadow-lg shadow-primary/10"
+      <div
+        className="absolute -top-4 inset-s-4 sm:top-8 sm:inset-s-0 z-20 hidden sm:flex items-center gap-2 rounded-2xl bg-card/95 backdrop-blur-xl border border-border/60 px-4 py-2.5 shadow-lg shadow-primary/10 animate-float motion-reduce:animate-none"
         aria-hidden="true"
       >
         <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
@@ -35,23 +21,10 @@ export function HeroFloatingBadges() {
             {t("floatingBadge1")}
           </span>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div
-        animate={
-          prefersReducedMotion
-            ? {}
-            : {
-                y: [0, 10, 0],
-                transition: {
-                  duration: 4.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1,
-                },
-              }
-        }
-        className="absolute -bottom-4 inset-e-4 sm:bottom-16 sm:inset-e-0 z-20 hidden sm:flex items-center gap-2 rounded-2xl bg-card/95 backdrop-blur-xl border border-border/60 px-4 py-2.5 shadow-lg shadow-brand-accent/10"
+      <div
+        className="absolute -bottom-4 inset-e-4 sm:bottom-16 sm:inset-e-0 z-20 hidden sm:flex items-center gap-2 rounded-2xl bg-card/95 backdrop-blur-xl border border-border/60 px-4 py-2.5 shadow-lg shadow-brand-accent/10 animate-float-delayed motion-reduce:animate-none"
         aria-hidden="true"
       >
         <div className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-brand-accent/10 text-brand-accent">
@@ -67,48 +40,21 @@ export function HeroFloatingBadges() {
             {t("floatingBadge2")}
           </span>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div
-        animate={
-          prefersReducedMotion
-            ? {}
-            : {
-                rotate: [0, 15, -15, 0],
-                scale: [1, 1.1, 1],
-                transition: {
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                },
-              }
-        }
-        className="absolute top-1/4 inset-e-4 z-20 hidden lg:block text-brand-accent"
+      <div
+        className="absolute top-1/4 inset-e-4 z-20 hidden lg:block text-brand-accent animate-pulse motion-reduce:animate-none"
         aria-hidden="true"
       >
         <Sparkles className="h-6 w-6 drop-shadow-lg" />
-      </motion.div>
+      </div>
 
-      <motion.div
-        animate={
-          prefersReducedMotion
-            ? {}
-            : {
-                rotate: [0, -10, 10, 0],
-                scale: [1, 1.15, 1],
-                transition: {
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 2,
-                },
-              }
-        }
-        className="absolute bottom-1/3 inset-s-8 z-20 hidden lg:block text-primary"
+      <div
+        className="absolute bottom-1/3 inset-s-8 z-20 hidden lg:block text-primary animate-pulse motion-reduce:animate-none"
         aria-hidden="true"
       >
         <Zap className="h-5 w-5 drop-shadow-lg fill-primary" />
-      </motion.div>
+      </div>
     </>
   );
 }

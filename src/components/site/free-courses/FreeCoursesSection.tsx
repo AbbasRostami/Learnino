@@ -18,7 +18,7 @@ export async function FreeCoursesSection() {
     >
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
         <div className="flex flex-col gap-3 items-center sm:items-start text-center sm:text-start">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 text-xs font-bold text-emerald-800 dark:text-emerald-300 shadow-sm">
             <Gift className="h-3.5 w-3.5" aria-hidden="true" />
             <span>{t("sectionBadge")}</span>
           </div>

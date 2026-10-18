@@ -16,11 +16,11 @@ export function LearningPathsHowItWorks() {
   return (
     <section
       aria-labelledby="lp-how-title"
-      className="py-16 md:py-24 bg-muted/30"
+      className="py-16 md:py-24 bg-muted/40"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/20 bg-amber-500/5 text-xs font-bold text-amber-700 dark:text-amber-300 shadow-sm mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs font-bold text-amber-800 dark:text-amber-300 shadow-xs mb-4">
             <Zap className="h-3.5 w-3.5" aria-hidden="true" />
             <span>{t("badge")}</span>
           </div>
@@ -70,7 +70,7 @@ export function LearningPathsHowItWorks() {
                 <h3 className="mt-6 text-base font-bold text-foreground mb-2">
                   {t(`steps.${step.key}.title`)}
                 </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed max-w-50">
+                <p className="text-sm text-foreground/80 font-medium leading-relaxed max-w-50">
                   {t(`steps.${step.key}.description`)}
                 </p>
               </div>

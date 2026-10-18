@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 import { MessagesSquare } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -44,17 +43,17 @@ export function LearningPathsCTA() {
               })}
             </h2>
 
-            <p className="text-base text-muted-foreground leading-relaxed mb-8 max-w-xl mx-auto">
+            <p className="text-base text-foreground/80 font-medium leading-relaxed mb-8 max-w-xl mx-auto">
               {t("description")}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Button
-                size="lg"
-                className="rounded-full px-8 shadow-lg hover:shadow-xl transition-shadow motion-reduce:transition-none"
+              <Link
+                href="/courses"
+                className="inline-flex h-11 items-center justify-center rounded-full bg-primary px-8 text-sm font-bold text-primary-foreground shadow-lg hover:bg-primary/90 hover:shadow-xl transition-all min-h-11 min-w-11 motion-reduce:transition-none"
               >
-                <Link href="/courses">{t("secondary")}</Link>
-              </Button>
+                {t("secondary")}
+              </Link>
             </div>
           </div>
         </div>
