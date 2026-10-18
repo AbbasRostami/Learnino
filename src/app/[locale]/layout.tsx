@@ -5,6 +5,7 @@ import { DirectionProvider } from "@/components/ui/direction";
 import { Toaster } from "@/components/ui/sonner";
 import { routing, type Locale } from "@/i18n/routing";
 import {
+  getAlternates,
   getDefaultOpenGraph,
   getDefaultTwitter,
   PUBLIC_ROBOTS,
@@ -53,10 +54,9 @@ export async function generateMetadata({
     : SEO_CONFIG.defaultLocale;
 
   const keywordsList = SEO_CONFIG.keywords[currentLocale];
-  const baseUrl = SEO_CONFIG.baseUrl || "https://learnino.vercel.app";
 
   return {
-    metadataBase: new URL(baseUrl),
+    metadataBase: new URL(SEO_CONFIG.baseUrl),
 
     title: {
       default: `${SEO_CONFIG.siteName[locale]} | ${SEO_CONFIG.tagline[locale]}`,
@@ -82,19 +82,12 @@ export async function generateMetadata({
 
     twitter: getDefaultTwitter(locale),
 
-    alternates: {
-      canonical: `/${locale}`,
-      languages: {
-        fa: "/fa",
-        en: "/en",
-        "x-default": "/en",
-      },
-    },
+    alternates: getAlternates("/", locale),
 
     robots: PUBLIC_ROBOTS,
 
     verification: {
-      google: process.env.GOOGLE_SITE_VERIFICATION!,
+      google: process.env.GOOGLE_SITE_VERIFICATION || "",
     },
 
     category: "Education",
