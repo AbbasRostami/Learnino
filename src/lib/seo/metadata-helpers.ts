@@ -11,19 +11,21 @@ export function cleanMetaDescription(html: string, maxLength = 155): string {
 
 export function getFullUrl(path: string, locale?: Locale): string {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  const cleanPath = normalizedPath === "/" ? "" : normalizedPath;
   const localePrefix = locale ? `/${locale}` : "";
-  return `${SEO_CONFIG.baseUrl}${localePrefix}${normalizedPath}`;
+  return `${SEO_CONFIG.baseUrl}${localePrefix}${cleanPath}`;
 }
 
 export function getAlternates(path: string, currentLocale: Locale) {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  const cleanPath = normalizedPath === "/" ? "" : normalizedPath;
 
   return {
-    canonical: `/${currentLocale}${normalizedPath}`,
+    canonical: `${SEO_CONFIG.baseUrl}/${currentLocale}${cleanPath}`,
     languages: {
-      fa: `/fa${normalizedPath}`,
-      en: `/en${normalizedPath}`,
-      "x-default": `/fa${normalizedPath}`,
+      fa: `${SEO_CONFIG.baseUrl}/fa${cleanPath}`,
+      en: `${SEO_CONFIG.baseUrl}/en${cleanPath}`,
+      "x-default": `${SEO_CONFIG.baseUrl}/fa${cleanPath}`,
     },
   };
 }
@@ -83,6 +85,6 @@ export const PRIVATE_ROBOTS: Metadata["robots"] = {
   nocache: true,
 };
 
-export function serializeJsonLd(data: Record<string, any>): string {
+export function serializeJsonLd(data: Record<string, unknown>): string {
   return JSON.stringify(data).replace(/</g, "\\u003c").replace(/>/g, "\\u003e");
 }
