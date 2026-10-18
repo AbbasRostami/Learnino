@@ -4,60 +4,67 @@ import { NextRequest, NextResponse } from "next/server";
 import { routing } from "./i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
-
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_ACCESS_SECRET!);
 
-export default async function proxy(request: NextRequest) {
+const ADMIN_ROLES = ["ADMIN", "SUPER_ADMIN"];
+
+export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const locale = pathname.startsWith("/en") ? "en" : "fa";
 
-  const isAdminRoute =
-    pathname.match(/^\/(?:fa|en)\/admin(?:\/.*)?$/) &&
-    !pathname.includes("/admin-login");
-
-  if (isAdminRoute) {
-    const locale = pathname.startsWith("/en") ? "en" : "fa";
-
-    const token =
-      request.cookies.get("accessToken")?.value ||
-      request.cookies.get("token")?.value;
-
-    if (!token) {
-      console.log("🚩 [Proxy Check]: No token found. Redirecting to login.");
-      return NextResponse.redirect(
-        new URL(`/${locale}/admin-login`, request.url),
-      );
-    }
-
-    try {
-      const { payload } = await jwtVerify(token, JWT_SECRET);
-
-      console.log("🔑 [Proxy Check]: Decrypted JWT Payload:", payload);
-
-      const userRole = payload?.role?.toString().toUpperCase();
-
-      if (userRole !== "ADMIN") {
-        console.log(
-          `⚠️ [Proxy Check]: Access Denied! Role is: ${userRole}. Redirecting to Home.`,
-        );
-        return NextResponse.redirect(new URL(`/${locale}`, request.url));
-      }
-
-      console.log("✅ [Proxy Check]: Access Granted for ADMIN.");
-    } catch (error: any) {
-      console.error(
-        "❌ [Proxy Check]: JWT Verification Failed:",
-        error.message,
-      );
-      const response = NextResponse.redirect(
-        new URL(`/${locale}/admin-login`, request.url),
-      );
-      response.cookies.delete("accessToken");
-      response.cookies.delete("token");
-      return response;
-    }
+  if (
+    pathname.includes("/admin-login") ||
+    pathname.includes("/login") ||
+    pathname.includes("/register")
+  ) {
+    return intlMiddleware(request);
   }
 
-  return intlMiddleware(request);
+  const isAdminRoute = /^\/(?:fa|en)\/admin(?:\/.*)?$/.test(pathname);
+  const isDashboardRoute = /^\/(?:fa|en)\/dashboard(?:\/.*)?$/.test(pathname);
+
+  if (!isAdminRoute && !isDashboardRoute) {
+    return intlMiddleware(request);
+  }
+
+  const accessToken = request.cookies.get("accessToken")?.value;
+  const refreshToken = request.cookies.get("refreshToken")?.value;
+
+  const loginRedirectUrl = isAdminRoute
+    ? `/${locale}/admin-login`
+    : `/${locale}/login`;
+
+  if (!accessToken && !refreshToken) {
+    return NextResponse.redirect(new URL(loginRedirectUrl, request.url));
+  }
+
+  if (!accessToken) {
+    return intlMiddleware(request);
+  }
+
+  try {
+    const { payload } = await jwtVerify(accessToken, JWT_SECRET);
+
+    if (isAdminRoute) {
+      const userRole = payload?.role?.toString().toUpperCase();
+      if (!userRole || !ADMIN_ROLES.includes(userRole)) {
+        return NextResponse.redirect(new URL(`/${locale}`, request.url));
+      }
+    }
+
+    return intlMiddleware(request);
+  } catch (error) {
+    if (refreshToken) {
+      return intlMiddleware(request);
+    }
+
+    const response = NextResponse.redirect(
+      new URL(loginRedirectUrl, request.url),
+    );
+    response.cookies.delete("accessToken");
+    response.cookies.delete("refreshToken");
+    return response;
+  }
 }
 
 export const config = {

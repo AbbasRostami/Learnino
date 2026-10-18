@@ -5,7 +5,8 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const BACKEND_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ||
-  "https://course-shop-api.onrender.com";
+  process.env.API_BASE_URL ||
+  "http://localhost:5000";
 
 const nextConfig: NextConfig = {
   ...(process.env.DOCKER_BUILD ? { output: "standalone" } : {}),
