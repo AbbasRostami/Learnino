@@ -36,7 +36,8 @@
     "searching": "در حال جستجو...",
     "noResults": "نتیجه‌ای برای «{query}» پیدا نشد.",
     "coursesGroup": "دوره‌ها",
-    "postsGroup": "مقاله‌ها"
+    "postsGroup": "مقاله‌ها",
+    "clearSearch": "پاک کردن جستجو"
   },
   "user": {
     "profile": "پروفایل",
@@ -374,6 +375,12 @@
     "enrollments": "ثبت‌نام‌ها",
     "comments": "نظرات",
     "currency": "تومان",
+
+    "emptyTitle": "هنوز دوره‌ای ثبت نشده است",
+    "emptyDescription": "به محض انتشار دوره‌های جدید، اینجا نمایش داده می‌شوند.",
+    "emptyFilteredTitle": "دوره‌ای با این فیلترها پیدا نشد",
+    "emptyFilteredDescription": "فیلترها را تغییر دهید یا همه فیلترها را پاک کنید تا نتایج بیشتری ببینید.",
+
     "levels": {
       "BEGINNER": "مقدماتی",
       "INTERMEDIATE": "متوسط",

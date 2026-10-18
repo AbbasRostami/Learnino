@@ -36,7 +36,8 @@
     "searching": "Searching...",
     "noResults": "No results found for “{query}”.",
     "coursesGroup": "Courses",
-    "postsGroup": "Posts"
+    "postsGroup": "Posts",
+    "clearSearch": "Clear search"
   },
   "user": {
     "profile": "Profile",
@@ -374,6 +375,12 @@
     "enrollments": "Enrollments",
     "comments": "Comments",
     "currency": "Toman",
+
+    "emptyTitle": "No courses available yet",
+    "emptyDescription": "Newly published courses will show up here.",
+    "emptyFilteredTitle": "No courses match your filters",
+    "emptyFilteredDescription": "Try changing filters or clear them to see more results.",
+
     "levels": {
       "BEGINNER": "Beginner",
       "INTERMEDIATE": "Intermediate",
