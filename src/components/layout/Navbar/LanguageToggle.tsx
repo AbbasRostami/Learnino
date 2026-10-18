@@ -29,19 +29,17 @@ export function LanguageToggle() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        render={
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-9 w-9 rounded-full cursor-pointer"
-            aria-label={t("toggle")}
-            disabled={isPending}
-          >
-            <Languages className="h-4 w-4" />
-          </Button>
-        }
-      />
+      <DropdownMenuTrigger>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-9 w-9 rounded-full cursor-pointer"
+          aria-label={t("toggle")}
+          disabled={isPending}
+        >
+          <Languages className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-36">
         <DropdownMenuItem
           onClick={() => changeLocale("fa")}

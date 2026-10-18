@@ -41,18 +41,16 @@ export function MobileNav() {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger
-        render={
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-10 w-10 rounded-full cursor-pointer lg:hidden"
-            aria-label={t("menu")}
-          >
-            <Menu className="h-6 w-6" />
-          </Button>
-        }
-      />
+      <SheetTrigger>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-10 w-10 rounded-full cursor-pointer lg:hidden"
+          aria-label={t("menu")}
+        >
+          <Menu className="h-6 w-6" />
+        </Button>
+      </SheetTrigger>
       <SheetContent
         side={sheetSide}
         className="w-80 p-0 flex flex-col [&>button]:hidden"
@@ -90,6 +88,7 @@ export function MobileNav() {
             <Link
               href="/login"
               onClick={() => setOpen(false)}
+              aria-label={t("loginRegister")}
               className={cn(
                 buttonVariants({
                   size: "lg",

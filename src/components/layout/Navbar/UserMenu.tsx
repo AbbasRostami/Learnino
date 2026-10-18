@@ -48,13 +48,22 @@ export function UserMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="h-10 w-10 rounded-full cursor-pointer p-0 outline-none transition-opacity hover:opacity-90 flex items-center justify-center">
-        <Avatar className="h-10 w-10 ring-2 ring-primary/20 hover:ring-primary/40 transition-all">
-          <AvatarImage src={profile?.avatar || undefined} alt={profile?.name} />
-          <AvatarFallback className="bg-linear-to-br from-primary to-brand-accent text-primary-foreground text-sm font-semibold">
-            {initials}
-          </AvatarFallback>
-        </Avatar>
+      <DropdownMenuTrigger>
+        <button
+          type="button"
+          aria-label={t("myAccount")}
+          className="h-10 w-10 rounded-full cursor-pointer p-0 outline-none transition-opacity hover:opacity-90 flex items-center justify-center"
+        >
+          <Avatar className="h-10 w-10 ring-2 ring-primary/20 hover:ring-primary/40 transition-all">
+            <AvatarImage
+              src={profile?.avatar || undefined}
+              alt={profile?.name}
+            />
+            <AvatarFallback className="bg-linear-to-br from-primary to-brand-accent text-primary-foreground text-sm font-semibold">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+        </button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-64">

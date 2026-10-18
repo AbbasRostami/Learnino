@@ -125,7 +125,7 @@ export function Carousel({
             )}
           </div> */}
 
-          <div className="flex items-center justify-center gap-1.5">
+          <div className="flex items-center justify-center gap-1">
             {showDots &&
               scrollSnaps.length > 1 &&
               scrollSnaps.map((_, index) => (
@@ -134,13 +134,17 @@ export function Carousel({
                   type="button"
                   onClick={() => scrollTo(index)}
                   aria-label={`رفتن به اسلاید ${index + 1}`}
-                  className={cn(
-                    "h-2 rounded-full transition-all duration-300 cursor-pointer",
-                    index === selectedIndex
-                      ? "w-8 bg-primary"
-                      : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/60",
-                  )}
-                />
+                  className="p-2 flex items-center justify-center cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full"
+                >
+                  <span
+                    className={cn(
+                      "h-2 rounded-full transition-all duration-300",
+                      index === selectedIndex
+                        ? "w-8 bg-primary"
+                        : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/60",
+                    )}
+                  />
+                </button>
               ))}
           </div>
 

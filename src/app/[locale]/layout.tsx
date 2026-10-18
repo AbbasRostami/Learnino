@@ -83,11 +83,11 @@ export async function generateMetadata({
     twitter: getDefaultTwitter(locale),
 
     alternates: {
-      canonical: `${baseUrl}/${locale}`,
+      canonical: `/${locale}`,
       languages: {
-        fa: `${baseUrl}/fa`,
-        en: `${baseUrl}/en`,
-        "x-default": `${baseUrl}/fa`,
+        fa: "/fa",
+        en: "/en",
+        "x-default": "/en",
       },
     },
 

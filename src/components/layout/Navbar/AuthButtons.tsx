@@ -1,4 +1,3 @@
-// src/components/layout/Navbar/AuthButtons.tsx
 "use client";
 
 import { buttonVariants } from "@/components/ui/button";
@@ -13,6 +12,7 @@ export function AuthButtons() {
   return (
     <Link
       href="/login"
+      aria-label={t("loginRegister")}
       className={cn(
         buttonVariants({ size: "default" }),
         "h-9 rounded-full px-3 md:px-4 gap-2",

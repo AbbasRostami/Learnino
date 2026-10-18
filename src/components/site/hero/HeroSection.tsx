@@ -38,15 +38,15 @@ export function HeroSection() {
                 alt={t("imageAlt")}
                 fill
                 priority
-                quality={80}
+                quality={75}
                 sizes="(max-width: 640px) 96px, 128px"
                 className="object-contain drop-shadow-xl relative z-10"
               />
             </div>
 
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-sm text-primary backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/10 text-xs sm:text-sm text-primary font-bold backdrop-blur-sm">
               <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-              <span className="font-medium">{t("badge")}</span>
+              <span>{t("badge")}</span>
             </div>
 
             <h1
@@ -152,7 +152,7 @@ export function HeroSection() {
                   alt={t("imageAlt")}
                   fill
                   priority
-                  quality={85}
+                  quality={75}
                   sizes="(max-width: 1024px) 0px, (max-width: 1280px) 450px, 500px"
                   className="object-contain drop-shadow-2xl transition-transform duration-500 hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100"
                 />
