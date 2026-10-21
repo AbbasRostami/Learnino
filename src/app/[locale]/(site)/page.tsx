@@ -15,14 +15,17 @@ import {
   PostsGridSkeleton,
   TeachersGridSkeleton,
 } from "@/components/skeleton";
+import { Suspense } from "react";
+
 import {
   getAlternates,
   getDefaultOpenGraph,
   getDefaultTwitter,
+  getFullUrl,
+  SEO_CONFIG,
+  type Locale,
 } from "@/lib/seo";
-import { SEO_CONFIG, type Locale } from "@/lib/seo";
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 export async function generateMetadata({
   params,
@@ -37,14 +40,12 @@ export async function generateMetadata({
     : `${SEO_CONFIG.siteName.en} | ${SEO_CONFIG.tagline.en}`;
 
   return {
-    title: {
-      absolute: title,
-    },
+    title: { absolute: title },
     description: SEO_CONFIG.description[locale],
     alternates: getAlternates("/", locale),
     openGraph: getDefaultOpenGraph(locale, {
       title,
-      url: `/${locale}`,
+      url: getFullUrl("", locale),
     }),
     twitter: getDefaultTwitter(locale, {
       title,
@@ -73,7 +74,7 @@ export default async function HomePage({
 
         <AboutSection />
 
-        <Suspense fallback={<CoursesGridSkeleton count={4} />}>
+        <Suspense fallback={<CoursesGridSkeleton count={3} />}>
           <FeaturedCoursesSection />
         </Suspense>
 

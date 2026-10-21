@@ -3,6 +3,10 @@ import { BreadcrumbJsonLd, CourseJsonLd } from "@/components/seo";
 import {
   cleanMetaDescription,
   getAlternates,
+  getDefaultOpenGraph,
+  getDefaultTwitter,
+  getFullUrl,
+  PRIVATE_ROBOTS,
   SEO_CONFIG,
   type Locale,
 } from "@/lib/seo";
@@ -71,42 +75,40 @@ export async function generateMetadata({
   if (!course) {
     return {
       title: locale === "fa" ? "دوره یافت نشد" : "Course Not Found",
-      robots: { index: false, follow: false },
+      robots: PRIVATE_ROBOTS,
     };
   }
 
   const description = cleanMetaDescription(course?.description || "");
-  const isFa = locale === "fa";
-  const ogImage = course?.imageUrl || "/logo/Main-Logo.png";
+  const title = course?.title;
+  const rawImageUrl = course?.imageUrl || SEO_CONFIG.defaultImages.og;
+  const ogImageUrl = rawImageUrl.startsWith("http")
+    ? rawImageUrl
+    : getFullUrl(rawImageUrl);
+  const fullPageUrl = getFullUrl(`/courses/${slug}`, locale);
 
   return {
-    title: course?.title,
+    title,
     description,
-
-    openGraph: {
+    openGraph: getDefaultOpenGraph(locale, {
       type: "website",
-      title: course?.title,
+      title,
       description,
-      url: `/${locale}/courses/${slug}`,
+      url: fullPageUrl,
       images: [
         {
-          url: ogImage,
+          url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: course?.title,
+          alt: title,
         },
       ],
-      locale: isFa ? "fa_IR" : "en_US",
-      siteName: SEO_CONFIG.siteName[locale],
-    },
-
-    twitter: {
-      card: "summary_large_image",
-      title: course?.title,
+    }),
+    twitter: getDefaultTwitter(locale, {
+      title,
       description,
-      images: [ogImage],
-    },
-
+      images: [ogImageUrl],
+    }),
     alternates: getAlternates(`/courses/${slug}`, locale),
   };
 }

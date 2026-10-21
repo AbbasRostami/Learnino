@@ -1,5 +1,72 @@
 import type { Metadata } from "next";
-import { SEO_CONFIG, type Locale } from "./config";
+
+const appUrl = (
+  process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+).replace(/\/+$/, "");
+
+export const SEO_CONFIG = {
+  baseUrl: appUrl,
+
+  siteName: {
+    fa: "لرنینو",
+    en: "Learnino",
+  },
+
+  tagline: {
+    fa: "پلتفرم آموزش برنامه‌نویسی",
+    en: "Programming Education Platform",
+  },
+
+  description: {
+    fa: "لرنینو، پلتفرم تخصصی آموزش برنامه‌نویسی و توسعه نرم‌افزار. از صفر تا ورود به بازار کار با دوره‌های پروژه‌محور و اساتید مجرب.",
+    en: "Learnino is a specialized platform for programming and software development education. From zero to job-ready with project-based courses.",
+  },
+
+  keywords: {
+    fa: [
+      "آموزش برنامه‌نویسی",
+      "دوره React",
+      "دوره Next.js",
+      "آموزش جاوااسکریپت",
+      "آموزش پایتون",
+      "لرنینو",
+      "دوره آنلاین",
+    ],
+    en: [
+      "programming courses",
+      "React course",
+      "Next.js tutorial",
+      "JavaScript",
+      "Python",
+      "Learnino",
+      "online courses",
+    ],
+  },
+
+  author: {
+    name: "Abbas Rostami",
+    url: "https://github.com/AbbasRostami",
+  },
+
+  publisher: "Learnino",
+
+  social: {
+    twitter: "@learnino",
+    instagram: "@learnino",
+    telegram: "@learnino",
+  },
+
+  defaultImages: {
+    og: "/logo/Main-Logo.png",
+    logo: "/logo/Main-Logo.png",
+    favicon: "/favicon.ico",
+  },
+
+  locales: ["fa", "en"] as const,
+  defaultLocale: "fa" as const,
+} as const;
+
+export type Locale = (typeof SEO_CONFIG.locales)[number];
 
 export function cleanMetaDescription(html: string, maxLength = 155): string {
   return html
@@ -34,15 +101,18 @@ export function getDefaultOpenGraph(
   locale: Locale,
   overrides?: Partial<Metadata["openGraph"]>,
 ): Metadata["openGraph"] {
+  const defaultOgImage = getFullUrl(SEO_CONFIG.defaultImages.og);
+
   return {
     type: "website",
     locale: locale === "fa" ? "fa_IR" : "en_US",
     siteName: SEO_CONFIG.siteName[locale],
     title: `${SEO_CONFIG.siteName[locale]} | ${SEO_CONFIG.tagline[locale]}`,
     description: SEO_CONFIG.description[locale],
+    url: getFullUrl("", locale),
     images: [
       {
-        url: SEO_CONFIG.defaultImages.og,
+        url: defaultOgImage,
         width: 1200,
         height: 630,
         alt: SEO_CONFIG.siteName[locale],
@@ -56,11 +126,13 @@ export function getDefaultTwitter(
   locale: Locale,
   overrides?: Partial<Metadata["twitter"]>,
 ): Metadata["twitter"] {
+  const defaultOgImage = getFullUrl(SEO_CONFIG.defaultImages.og);
+
   return {
     card: "summary_large_image",
     title: `${SEO_CONFIG.siteName[locale]} | ${SEO_CONFIG.tagline[locale]}`,
     description: SEO_CONFIG.description[locale],
-    images: [SEO_CONFIG.defaultImages.og],
+    images: [defaultOgImage],
     creator: SEO_CONFIG.social.twitter,
     site: SEO_CONFIG.social.twitter,
     ...overrides,

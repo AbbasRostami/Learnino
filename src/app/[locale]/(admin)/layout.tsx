@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 
+import { PRIVATE_ROBOTS } from "@/lib/seo";
+
 export async function generateMetadata({
   params,
 }: {
@@ -14,7 +16,7 @@ export async function generateMetadata({
   return {
     title: { template: `%s | ${t("title")}`, default: t("title") },
     description: t("subtitle"),
-    robots: { index: false, follow: false },
+    robots: PRIVATE_ROBOTS,
   };
 }
 
