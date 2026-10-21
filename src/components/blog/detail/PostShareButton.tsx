@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Check, Share2 } from "lucide-react";
 import { useState } from "react";
@@ -30,7 +31,7 @@ export function PostShareButton({ title, slug }: PostShareButtonProps) {
   };
 
   return (
-    <button
+    <Button
       type="button"
       onClick={handleShare}
       className={cn(
@@ -42,6 +43,6 @@ export function PostShareButton({ title, slug }: PostShareButtonProps) {
       aria-label="اشتراک‌ گذاری"
     >
       {copied ? <Check className="h-4 w-4" /> : <Share2 className="h-4 w-4" />}
-    </button>
+    </Button>
   );
 }

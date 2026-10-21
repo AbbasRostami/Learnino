@@ -136,13 +136,10 @@ export function CourseCard({ course, priority = false }: CourseCardProps) {
               </span>
             ) : (
               <div className="flex flex-col items-end justify-center">
-                <span
-                  className="text-base md:text-lg font-black leading-tight bg-linear-to-l from-primary to-primary/70 bg-clip-text text-transparent"
-                  dir="ltr"
-                >
+                <span className="text-base md:text-lg font-black leading-tight bg-linear-to-l from-primary to-primary/70 bg-clip-text text-transparent">
                   {formatNumber(course?.price, locale)}
                 </span>
-                <span className="text-[11px] font-medium text-muted-foreground leading-tight">
+                <span className="text-xs font-medium text-muted-foreground leading-tight">
                   {t("currency")}
                 </span>
               </div>

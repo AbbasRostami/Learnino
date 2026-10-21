@@ -3,6 +3,7 @@
 import { CoursesListCard } from "@/components/courses/list/CoursesListCard";
 import { AppBreadcrumb } from "@/components/shared/AppBreadcrumb";
 import { useTeacher } from "@/services";
+import { TeacherCourse, TeacherWithCourses } from "@/types";
 import { BookOpen, Globe, GraduationCap, Sparkles, Users } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
@@ -11,7 +12,7 @@ import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 interface TeacherProfileClientProps {
   slug: string;
-  initialTeacher: any;
+  initialTeacher: TeacherWithCourses;
 }
 
 export function TeacherProfileClient({
@@ -26,7 +27,7 @@ export function TeacherProfileClient({
   const teacher = data?.data?.teacher ?? initialTeacher;
 
   const totalStudents = teacher?.courses?.reduce(
-    (acc: number, course: any) => acc + (course.studentsCount || 0),
+    (acc: number, course: TeacherCourse) => acc + (course.studentsCount || 0),
     0,
   );
 
@@ -148,13 +149,12 @@ export function TeacherProfileClient({
                   </span>
                 </div>
                 <span className="text-3xl font-black text-foreground">
-                  {totalStudents?.toLocaleString() || 0}
+                  {totalStudents || 0}
                 </span>
               </div>
             </div>
           </div>
         </motion.div>
-        {/* 🌟 بخش دوره‌های مدرس */}
         <section
           aria-labelledby="teacher-courses-title"
           className="max-w-7xl mx-auto"

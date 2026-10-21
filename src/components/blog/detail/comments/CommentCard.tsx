@@ -9,6 +9,7 @@ import { Loader2, Reply, ThumbsDown, ThumbsUp } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { CommentForm } from "./CommentForm";
+import { Button } from "@/components/ui/button";
 
 interface CommentCardProps {
   comment: CommentTreeItem;
@@ -79,7 +80,7 @@ export function CommentCard({
         </div>
 
         <div className="flex items-center gap-3 mt-2 ms-2">
-          <button
+          <Button
             type="button"
             onClick={() => handleReaction("LIKE")}
             disabled={isReacting}
@@ -101,9 +102,9 @@ export function CommentCard({
               />
             )}
             <span>{comment?.reactions?.likes}</span>
-          </button>
+          </Button>
 
-          <button
+          <Button
             type="button"
             onClick={() => handleReaction("DISLIKE")}
             disabled={isReacting}
@@ -126,17 +127,17 @@ export function CommentCard({
               />
             )}
             <span>{comment?.reactions?.dislikes}</span>
-          </button>
+          </Button>
 
           {isAuthenticated && depth < 2 && (
-            <button
+            <Button
               type="button"
               onClick={() => onReply(isReplying ? null : comment?.id)}
               className="flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"
             >
               <Reply className="h-3.5 w-3.5" />
               <span>{isReplying ? t("cancelReply") : t("submitComment")}</span>
-            </button>
+            </Button>
           )}
         </div>
 
