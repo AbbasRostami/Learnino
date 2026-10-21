@@ -3,10 +3,7 @@ import { useAuthStore } from "../store/authStore";
 
 const isServer = typeof window === "undefined";
 
-const RAW_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ||
-  process.env.API_BASE_URL ||
-  "http://localhost:5000";
+const RAW_BASE_URL = process.env.API_BASE_URL || "http://localhost:5000";
 
 const CLEAN_BASE_URL = `${RAW_BASE_URL.replace(/\/$/, "")}/api`;
 
