@@ -1,15 +1,10 @@
 "use client";
 
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Link } from "@/i18n/routing";
 import type { UserProfile } from "@/types";
-import { ArrowLeft, AtSign, Mail, Phone, User } from "lucide-react";
+import { AtSign, Phone, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Controller, type Control } from "react-hook-form";
 
@@ -49,7 +44,7 @@ export function ProfileInfoFields({
                   id="profile-name"
                   aria-invalid={fieldState?.invalid}
                   placeholder={t("namePlaceholder")}
-                  className="h-11 rounded-xl text-xs font-bold pr-10 ltr:pl-10 ltr:pr-3"
+                  className="h-11 rounded-md text-xs font-bold pr-10 ltr:pl-10 ltr:pr-3"
                 />
               </div>
               {fieldState?.invalid && fieldState?.error && (
@@ -72,7 +67,7 @@ export function ProfileInfoFields({
                   id="profile-phone"
                   aria-invalid={fieldState?.invalid}
                   placeholder={t("phonePlaceholder")}
-                  className="h-11 rounded-xl text-xs font-bold pr-10 ltr:pl-10 ltr:pr-3"
+                  className="h-11 rounded-md text-xs font-bold pr-10 ltr:pl-10 ltr:pr-3"
                   dir="ltr"
                   maxLength={11}
                   autoComplete="tel"
@@ -96,7 +91,6 @@ export function ProfileInfoFields({
             className="text-xs font-bold text-primary hover:underline inline-flex items-center gap-1"
           >
             <span>{t("changeEmailLink")}</span>
-            <ArrowLeft className="h-3 w-3 rtl:rotate-180" aria-hidden="true" />
           </Link>
         </div>
         <div className="relative">
@@ -105,14 +99,10 @@ export function ProfileInfoFields({
             id="profile-email"
             value={profile?.email || ""}
             disabled
-            className="h-11 rounded-xl text-xs font-bold bg-muted/40 opacity-70 cursor-not-allowed pr-10 ltr:pl-10 ltr:pr-3"
+            className="h-11 rounded-md text-xs font-bold bg-muted/40 opacity-70 cursor-not-allowed pr-10 ltr:pl-10 ltr:pr-3"
             dir="ltr"
           />
         </div>
-        <FieldDescription className="flex items-center gap-1">
-          <Mail className="h-3 w-3" aria-hidden="true" />
-          {t("emailNotEditable")}
-        </FieldDescription>
       </Field>
     </div>
   );

@@ -2,7 +2,6 @@
 
 import { FieldGroup } from "@/components/ui/field";
 import type { UserProfile } from "@/types";
-import { motion, useReducedMotion } from "motion/react";
 import { useProfileForm } from "../hooks/useProfileForm";
 import { ProfileAvatarField } from "./ProfileAvatarField";
 import { ProfileFormActions } from "./ProfileFormActions";
@@ -13,8 +12,6 @@ interface ProfileFormProps {
 }
 
 export function ProfileForm({ profile }: ProfileFormProps) {
-  const prefersReducedMotion = useReducedMotion();
-
   const {
     form,
     previewUrl,
@@ -31,12 +28,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
   } = useProfileForm({ profile });
 
   return (
-    <motion.div
-      initial={prefersReducedMotion ? undefined : { opacity: 0, y: 15 }}
-      animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: 0.1 }}
-      className="relative p-6 sm:p-8 rounded-3xl border border-border/50 bg-card/60 backdrop-blur-md shadow-sm"
-    >
+    <div className="relative p-6 sm:p-8 rounded-3xl border border-border/50 bg-card/60 backdrop-blur-md shadow-sm animate-in fade-in-0 slide-in-from-bottom-4 duration-500 delay-100 fill-mode-both">
       <form
         id="profile-form"
         onSubmit={form?.handleSubmit(onSubmit)}
@@ -44,7 +36,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
       >
         <FieldGroup>
           <ProfileAvatarField
-            control={form.control} 
+            control={form.control}
             profile={profile}
             displayAvatar={displayAvatar}
             previewUrl={previewUrl}
@@ -68,6 +60,6 @@ export function ProfileForm({ profile }: ProfileFormProps) {
           onDiscard={handleDiscard}
         />
       </form>
-    </motion.div>
+    </div>
   );
 }
