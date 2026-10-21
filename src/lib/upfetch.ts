@@ -8,12 +8,7 @@ const RAW_BASE_URL =
 
 const CLEAN_BASE_URL = `${RAW_BASE_URL.replace(/\/$/, "")}/api`;
 
-const API_BASE_URL = isServer
-  ? CLEAN_BASE_URL
-  : process.env.NODE_ENV === "development"
-    ? "/api"
-    : CLEAN_BASE_URL;
-
+const API_BASE_URL = isServer ? CLEAN_BASE_URL : "/api";
 const DEFAULT_LOCALE = "fa";
 const SUPPORTED_LOCALES = ["fa", "en"] as const;
 
