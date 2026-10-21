@@ -1,13 +1,14 @@
 "use client";
 
-import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { getCategoryStyle } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";
 import type { CartItem } from "@/types";
+import { formatNumber } from "@/utils/formatters";
 import { BookOpen, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { Button } from "../ui/button";
 
 interface CartItemCardProps {
   item: CartItem;
@@ -21,7 +22,6 @@ export function CartItemCard({
   isRemoving,
 }: CartItemCardProps) {
   const t = useTranslations("course");
-  const locale = useLocale();
   const style = getCategoryStyle(item?.category?.slug);
 
   return (
@@ -51,15 +51,15 @@ export function CartItemCard({
             {item?.category && (
               <span
                 className={cn(
-                  "px-2.5 py-0.5 rounded-full text-[10px] font-bold",
+                  "px-2.5 py-0.5 rounded-full text-xs font-bold",
                   style.badgeColor,
                 )}
               >
                 {item?.category?.name}
               </span>
             )}
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
-              {t(`levels.${item?.level?.toUpperCase()}`)}
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
+              {t(`levels.${item?.level}`)}
             </span>
           </div>
 
@@ -72,25 +72,24 @@ export function CartItemCard({
           data-testid="cart-item-card"
           className="flex items-center justify-between mt-4 pt-3 border-t border-dashed border-border/60"
         >
-          <button
+          <Button
+            variant="destructive"
             type="button"
             data-testid="remove-item-btn"
             onClick={onRemove}
             disabled={isRemoving}
-            className="flex items-center gap-1 text-xs text-muted-foreground hover:text-destructive transition-colors cursor-pointer disabled:opacity-50"
+            className="flex items-center gap-1 text-xs cursor-pointer disabled:opacity-50"
             aria-label={t("removeItem")}
           >
             <Trash2 className="h-3.5 w-3.5" />
             <span className="font-semibold">{t("removeItem")}</span>{" "}
-          </button>
+          </Button>
 
-          <div className="text-end" dir="ltr">
+          <div className="text-end">
             <span className="text-lg font-black text-foreground">
-              {new Intl.NumberFormat(
-                locale === "fa" ? "fa-IR" : "en-US",
-              ).format(item?.price)}
+              {formatNumber(item?.price)}
             </span>
-            <span className="text-[10px] text-muted-foreground ms-1">
+            <span className="text-xs text-muted-foreground ms-1">
               {t("currency")}
             </span>
           </div>

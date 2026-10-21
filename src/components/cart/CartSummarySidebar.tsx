@@ -2,17 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { useLocale } from "@/hooks/useLocale";
-import { useRouter } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
-import {
-  useApplyDiscount,
-  useCheckoutWallet,
-  useCheckoutZarinpal,
-  useWallet,
-} from "@/services";
-import { useRemoveDiscount } from "@/services/cart/useRemoveDiscount";
-import { useAuthStore } from "@/store/authStore";
 import type { GetCartResponse } from "@/types";
+import { formatNumber } from "@/utils/formatters";
 import {
   CheckCircle2,
   CreditCard,
@@ -26,8 +18,7 @@ import {
   X,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { toast } from "sonner";
+import { useCartSummary } from "./useCartSummary";
 
 interface CartSummarySidebarProps {
   cart: GetCartResponse["data"]["cart"] | undefined;
@@ -37,86 +28,25 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
   const t = useTranslations("cart");
   const tOrder = useTranslations("order");
   const locale = useLocale();
-  const router = useRouter();
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
-  const [discountCode, setDiscountCode] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState<"ZARINPAL" | "WALLET">(
-    "ZARINPAL",
-  );
-
-  const { data: walletData } = useWallet();
-  const walletBalance = walletData?.data?.wallet?.balance ?? 0;
-
-  const { mutate: applyDiscount, isPending: isApplyingDiscount } =
-    useApplyDiscount({
-      onSuccessCallback: () => setDiscountCode(""),
-    });
-
-  const { mutate: removeDiscount, isPending: isRemovingDiscount } =
-    useRemoveDiscount();
-
-  const { mutate: checkoutZarinpal, isPending: isZarinpalPending } =
-    useCheckoutZarinpal();
-
-  const { mutate: checkoutWallet, isPending: isWalletPending } =
-    useCheckoutWallet({
-      onSuccessCallback: (data) => {
-        router.push(
-          `/payment/success?status=success&refId=${data?.order?.id}&amount=${data?.order?.totalAmount}&newBalance=${data?.newBalance}`,
-        );
-      },
-    });
-
-  const subtotal = cart?.subtotal ?? 0;
-  const totalPayment = cart?.totalPayment ?? subtotal;
-  const discountAmount = cart?.discount ? subtotal - totalPayment : 0;
-  const isWalletInsufficient = walletBalance < totalPayment;
-
-  const formatPrice = (value: number) =>
-    new Intl.NumberFormat(locale === "fa" ? "fa-IR" : "en-US").format(value);
-
-  const handleSelectPaymentMethod = (method: "ZARINPAL" | "WALLET") => {
-    if (method === "WALLET" && !isAuthenticated) {
-      toast.info(t("loginRequired"));
-      router.push("/login");
-      return;
-    }
-    setPaymentMethod(method);
-  };
-
-  const handleApplyDiscount = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!discountCode.trim()) return;
-
-    if (!isAuthenticated) {
-      toast.info(t("loginRequiredDiscount"));
-      router.push("/login");
-      return;
-    }
-
-    applyDiscount({ code: discountCode });
-  };
-
-  const handleCheckout = () => {
-    if (!isAuthenticated) {
-      toast.info(t("loginRequiredCheckout"));
-      router.push("/login");
-      return;
-    }
-
-    if (paymentMethod === "ZARINPAL") {
-      checkoutZarinpal();
-    } else {
-      if (isWalletInsufficient) {
-        toast.error(t("insufficientBalance"));
-        return;
-      }
-      checkoutWallet();
-    }
-  };
-
-  const isCheckoutPending = isZarinpalPending || isWalletPending;
+  const {
+    isAuthenticated,
+    discountCode,
+    setDiscountCode,
+    paymentMethod,
+    walletBalance,
+    isApplyingDiscount,
+    isRemovingDiscount,
+    isCheckoutPending,
+    subtotal,
+    totalPayment,
+    discountAmount,
+    isWalletInsufficient,
+    removeDiscount,
+    handleSelectPaymentMethod,
+    handleApplyDiscount,
+    handleCheckout,
+  } = useCartSummary(cart);
 
   return (
     <div className="flex flex-col gap-6 p-6 rounded-3xl border border-border/50 bg-card/80 backdrop-blur-xl shadow-xl">
@@ -137,21 +67,22 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
               </div>
               <div className="flex flex-col min-w-0">
                 <span className="text-xs font-black truncate">
-                  {cart.discount.code}
+                  {cart?.discount?.code}
                 </span>
-                <span className="text-[10px] font-semibold opacity-80">
-                  {cart.discount.type === "PERCENTAGE"
-                    ? `${cart.discount.value}% تخفیف`
-                    : `${formatPrice(cart.discount.value)} ${t("currency")}`}
+                <span className="text-xs font-semibold opacity-80">
+                  {cart?.discount?.type === "PERCENTAGE"
+                    ? `${cart?.discount?.value}% تخفیف`
+                    : `${formatNumber(cart?.discount?.value, locale)} ${t("currency")}`}
                 </span>
               </div>
             </div>
 
-            <button
+            <Button
               type="button"
+              variant="destructive"
               onClick={() => removeDiscount()}
               disabled={isRemovingDiscount}
-              className="shrink-0 h-8 w-8 flex items-center justify-center rounded-lg hover:bg-emerald-500/20 transition-colors cursor-pointer disabled:opacity-50"
+              className="shrink-0 h-8 w-8 flex items-center justify-center rounded-lg cursor-pointer disabled:opacity-50"
               aria-label={t("discountRemove")}
             >
               {isRemovingDiscount ? (
@@ -159,7 +90,7 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
               ) : (
                 <X className="h-4 w-4" />
               )}
-            </button>
+            </Button>
           </div>
         ) : (
           <form onSubmit={handleApplyDiscount} className="relative group">
@@ -169,21 +100,19 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
                 data-testid="coupon-input"
                 type="text"
                 value={discountCode}
-                onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+                onChange={(e) => setDiscountCode(e.target.value)}
                 placeholder={t("discountPlaceholder")}
                 className="flex-1 min-w-0 h-11 bg-transparent px-4 text-xs font-semibold text-foreground placeholder:text-muted-foreground/70 focus:outline-none disabled:opacity-50 uppercase"
                 disabled={isApplyingDiscount}
-                maxLength={50}
-                dir="ltr"
               />
 
-              <button
+              <Button
                 type="submit"
                 data-testid="coupon-submit-btn"
-                disabled={isApplyingDiscount || !discountCode.trim()}
+                disabled={isApplyingDiscount || !discountCode}
                 className={cn(
                   "shrink-0 h-9 me-1 px-4 rounded-xl text-xs font-black transition-all cursor-pointer inline-flex items-center justify-center gap-1.5",
-                  discountCode.trim() && !isApplyingDiscount
+                  discountCode && !isApplyingDiscount
                     ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm hover:shadow-md"
                     : "bg-muted text-muted-foreground cursor-not-allowed",
                 )}
@@ -196,7 +125,7 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
                     <span>{t("applyDiscount")}</span>
                   </>
                 )}
-              </button>
+              </Button>
             </div>
           </form>
         )}
@@ -210,12 +139,14 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
         </span>
 
         <div className="grid grid-cols-2 gap-2">
-          <button
+          <Button
+            variant="ghost"
+            size="lg"
             type="button"
             data-testid="zarinpal-pay-btn"
             onClick={() => handleSelectPaymentMethod("ZARINPAL")}
             className={cn(
-              "flex flex-col items-center gap-2 p-3 rounded-2xl border text-xs font-bold transition-all cursor-pointer",
+              "h-18 flex flex-col items-center gap-2 p-3 rounded-2xl border text-xs font-bold transition-all cursor-pointer",
               paymentMethod === "ZARINPAL"
                 ? "border-primary bg-primary/10 text-primary shadow-xs"
                 : "border-border/60 bg-muted/30 text-muted-foreground hover:bg-muted",
@@ -224,14 +155,16 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
           >
             <CreditCard className="h-5 w-5" aria-hidden="true" />
             <span>{tOrder("paymentMethods.ZARINPAL")}</span>
-          </button>
+          </Button>
 
-          <button
+          <Button
+            variant="ghost"
+            size="lg"
             type="button"
             data-testid="wallet-pay-btn"
             onClick={() => handleSelectPaymentMethod("WALLET")}
             className={cn(
-              "flex flex-col items-center gap-2 p-3 rounded-2xl border text-xs font-bold transition-all cursor-pointer relative",
+              "h-18 flex flex-col items-center gap-2 p-3 rounded-2xl border text-xs font-bold transition-all cursor-pointer relative",
               paymentMethod === "WALLET"
                 ? "border-primary bg-primary/10 text-primary shadow-xs"
                 : "border-border/60 bg-muted/30 text-muted-foreground hover:bg-muted",
@@ -243,7 +176,7 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
               <span>{tOrder("paymentMethods.WALLET")}</span>
               {!isAuthenticated && <Lock className="h-3 w-3 text-amber-500" />}
             </div>
-          </button>
+          </Button>
         </div>
 
         {paymentMethod === "WALLET" && isAuthenticated && (
@@ -256,8 +189,8 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
             )}
           >
             <span className="font-semibold">{t("walletBalance")}:</span>
-            <span className="font-bold" dir="ltr">
-              {formatPrice(walletBalance)} {t("currency")}
+            <span className="font-bold">
+              {formatNumber(walletBalance, locale)} {t("currency")}
             </span>
           </div>
         )}
@@ -268,24 +201,24 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
       <div className="flex flex-col gap-2.5 text-xs">
         <div className="flex justify-between text-muted-foreground font-semibold">
           <span>{t("subtotal")}</span>
-          <span dir="ltr">
-            {formatPrice(subtotal)} {t("currency")}
+          <span>
+            {formatNumber(subtotal, locale)} {t("currency")}
           </span>
         </div>
 
         {discountAmount > 0 && (
           <div className="flex justify-between text-emerald-600 dark:text-emerald-400 font-bold">
             <span>{t("discountAmount")}</span>
-            <span dir="ltr">
-              -{formatPrice(discountAmount)} {t("currency")}
+            <span>
+              -{formatNumber(discountAmount, locale)} {t("currency")}
             </span>
           </div>
         )}
 
         <div className="flex justify-between text-base font-black text-foreground pt-2 border-t border-border/40 items-baseline">
           <span>{t("totalAmount")}</span>
-          <span className="text-primary text-xl" dir="ltr">
-            {formatPrice(totalPayment)}
+          <span className="text-primary text-xl">
+            {formatNumber(totalPayment, locale)}
             <span className="text-xs font-semibold text-muted-foreground ms-1">
               {t("currency")}
             </span>
@@ -325,7 +258,7 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
         )}
       </Button>
 
-      <div className="flex items-center justify-center gap-1.5 text-[10px] text-muted-foreground font-semibold">
+      <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground font-semibold">
         <ShieldCheck className="h-4 w-4 text-emerald-500" aria-hidden="true" />
         <span>{t("secureCheckout")}</span>
       </div>
