@@ -77,7 +77,7 @@ export function UserMenu() {
                 <p className="text-sm font-semibold truncate">
                   {profile?.name || t("myAccount")}
                 </p>
-                <p className="text-xs text-muted-foreground truncate" dir="ltr">
+                <p className="text-xs text-muted-foreground truncate">
                   {profile?.email}
                 </p>
               </div>

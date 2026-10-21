@@ -1,14 +1,7 @@
 "use client";
 
 import { Link, useRouter } from "@/i18n/routing";
-import {
-  ArrowUpLeft,
-  BookOpen,
-  FileText,
-  Loader2,
-  Search,
-  X,
-} from "lucide-react";
+import { ArrowUpLeft, BookOpen, FileText, Loader2, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { parseAsString, useQueryState } from "nuqs";
@@ -76,7 +69,7 @@ export function SearchInput() {
       >
         <Search className="absolute right-3.5 ltr:right-auto ltr:left-3.5 h-4 w-4 text-muted-foreground pointer-events-none" />
         <Input
-          type="text"
+          type="search"
           inputMode="search"
           value={inputValue}
           aria-label={t("searchPlaceholder")}
@@ -88,21 +81,6 @@ export function SearchInput() {
           placeholder={t("searchPlaceholder")}
           className="h-10 text-sm rounded-full bg-muted/50 border-border/60 pr-10 ltr:pr-8 ltr:pl-10 focus-visible:bg-background focus-visible:ring-primary/40 transition-all"
         />
-        {inputValue && (
-          <button
-            type="button"
-            aria-label={t("clearSearch")}
-            onClick={() => {
-              setInputValue("");
-              setQ(null);
-              setIsOpen(false);
-            }}
-            className="absolute left-3 ltr:left-auto ltr:right-3 text-muted-foreground hover:text-foreground p-0.5 cursor-pointer"
-          >
-            <X className="h-3.5 w-3.5" aria-hidden="true" />
-            <span className="sr-only">{t("clearSearch")}</span>
-          </button>
-        )}
       </form>
 
       {isOpen && inputValue.trim().length >= 2 && (
