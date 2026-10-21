@@ -128,7 +128,6 @@
     "rights": "Learnino - All rights reserved.",
     "developedBy": "Designed & Developed by",
     "highlightTitle": "Learnino",
-    "highlightText": "Learn programming without limits — from zero to career-ready.",
     "courseHtmlCss": "Complete HTML & CSS Course",
     "courseJavascript": "Modern JavaScript Course",
     "courseReactNext": "Advanced React & Next.js",
@@ -152,7 +151,6 @@
       "hours": "Hours of Content"
     },
     "brand": {
-      "tagline": "Code the world, build the future",
       "madeWith": "Made with",
       "loveIn": "in Iran"
     }
@@ -1070,7 +1068,6 @@
     "phonePlaceholder": "09121234567",
     "emailLabel": "Email Address",
     "changeEmailLink": "Change email",
-    "emailNotEditable": "Email cannot be edited here",
     "uploadNew": "Upload Photo",
     "removeAvatarBtn": "Remove Photo",
     "saveChanges": "Save Changes",

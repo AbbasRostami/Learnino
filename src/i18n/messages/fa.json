@@ -128,7 +128,6 @@
     "rights": "لرنینو - تمامی حقوق مادی و معنوی محفوظ است.",
     "developedBy": "طراحی و توسعه توسط",
     "highlightTitle": "لرنینو",
-    "highlightText": "یادگیری برنامه‌نویسی بدون مرز، از صفر تا ورود به بازار کار.",
     "courseHtmlCss": "آموزش جامع HTML و CSS",
     "courseJavascript": "آموزش جاوااسکریپت مدرن",
     "courseReactNext": "آموزش پیشرفته React و Next.js",
@@ -152,7 +151,6 @@
       "hours": "ساعت آموزش"
     },
     "brand": {
-      "tagline": "کد بنویس، دنیا رو بساز",
       "madeWith": "ساخته شده با",
       "loveIn": "در ایران"
     }
@@ -1070,7 +1068,6 @@
     "phonePlaceholder": "09121234567",
     "emailLabel": "آدرس ایمیل",
     "changeEmailLink": "تغییر ایمیل",
-    "emailNotEditable": "ایمیل غیرقابل ویرایش است",
     "uploadNew": "آپلود تصویر",
     "removeAvatarBtn": "حذف تصویر",
     "saveChanges": "ذخیره تغییرات",
