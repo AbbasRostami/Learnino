@@ -1,6 +1,5 @@
 "use client";
 
-import { Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { FaInstagram, FaTelegramPlane, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -45,11 +44,6 @@ export function FooterBrand() {
       <p className="text-sm text-muted-foreground leading-relaxed max-w-md">
         {t("description")}
       </p>
-
-      <div className="inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-full bg-linear-to-r from-primary/10 to-brand-accent/10 border border-primary/20 text-xs font-bold text-primary shadow-xs w-fit">
-        <Sparkles className="h-3 w-3" />
-        <span>{t("brand.tagline")}</span>
-      </div>
 
       <div className="flex items-center gap-2.5 pt-2">
         {socialLinks.map((social) => (

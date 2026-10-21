@@ -2,7 +2,6 @@
 
 import { FooterBottom } from "./FooterBottom";
 import { FooterBrand } from "./FooterBrand";
-import { FooterHighlightCard } from "./FooterHighlightCard";
 import { FooterNavLinks } from "./FooterNavLinks";
 import { FooterNewsletter } from "./FooterNewsletter";
 import { FooterStats } from "./FooterStats";
@@ -22,7 +21,6 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-12">
           <FooterBrand />
           <FooterNavLinks />
-          <FooterHighlightCard />
         </div>
 
         <FooterBottom />
