@@ -1,6 +1,7 @@
 "use client";
 
 import { CommentForm } from "@/components/blog/detail/comments/CommentForm";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useCommentReaction } from "@/services";
 import { useAuthStore } from "@/store/authStore";
@@ -103,7 +104,7 @@ export function CourseCommentCard({
         </div>
 
         <div className="flex items-center gap-3 mt-1.5 ms-2">
-          <button
+          <Button
             type="button"
             onClick={() => handleReaction("LIKE")}
             disabled={isReacting}
@@ -121,9 +122,9 @@ export function CourseCommentCard({
               <ThumbsUp className="h-3 w-3" aria-hidden="true" />
             )}
             <span>{comment?.reactions?.likes ?? 0}</span>
-          </button>
+          </Button>
 
-          <button
+          <Button
             type="button"
             onClick={() => handleReaction("DISLIKE")}
             disabled={isReacting}
@@ -141,17 +142,17 @@ export function CourseCommentCard({
               <ThumbsDown className="h-3 w-3" aria-hidden="true" />
             )}
             <span>{comment?.reactions?.dislikes ?? 0}</span>
-          </button>
+          </Button>
 
           {isAuthenticated && depth < 2 && (
-            <button
+            <Button
               type="button"
               onClick={() => onReply(isReplying ? null : comment?.id)}
               className="flex items-center gap-1 text-xs font-black text-muted-foreground hover:text-primary transition-colors cursor-pointer"
             >
               <Reply className="h-3 w-3" aria-hidden="true" />
               <span>{isReplying ? t("cancelReply") : t("submitComment")}</span>
-            </button>
+            </Button>
           )}
         </div>
 

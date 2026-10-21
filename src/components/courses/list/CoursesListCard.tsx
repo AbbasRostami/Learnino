@@ -166,10 +166,7 @@ export function CoursesListCard({
               </span>
             ) : (
               <div className="flex flex-col items-end">
-                <span
-                  className="text-base font-black leading-tight text-foreground"
-                  dir="ltr"
-                >
+                <span className="text-base font-black leading-tight text-foreground">
                   {formatNumber(course?.price, locale)}
                 </span>
                 <span className="text-xs text-foreground/70 font-semibold -mt-0.5">

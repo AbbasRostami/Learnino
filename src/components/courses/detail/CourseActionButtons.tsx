@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useCourseReaction, useToggleCourseFavorite } from "@/services";
 import { useAuthStore } from "@/store/authStore";
@@ -75,7 +76,7 @@ export function CourseActionButtons({
   return (
     <div className="flex flex-wrap items-center gap-2">
       <div className="flex items-center gap-1.5 rounded-full p-1 bg-muted/50 dark:bg-muted/30 border border-border/40 shadow-xs">
-        <button
+        <Button
           type="button"
           onClick={() => handleReaction("LIKE")}
           disabled={isReacting}
@@ -98,9 +99,9 @@ export function CourseActionButtons({
             />
           )}
           <span>{course?.reactions?.likes ?? 0}</span>
-        </button>
+        </Button>
 
-        <button
+        <Button
           type="button"
           onClick={() => handleReaction("DISLIKE")}
           disabled={isReacting}
@@ -123,10 +124,10 @@ export function CourseActionButtons({
             />
           )}
           <span>{course?.reactions?.dislikes ?? 0}</span>
-        </button>
+        </Button>
       </div>
 
-      <button
+      <Button
         type="button"
         onClick={handleFavorite}
         disabled={isFavPending}
@@ -145,9 +146,9 @@ export function CourseActionButtons({
             className={cn("h-4 w-4", course?.isFavorite && "fill-current")}
           />
         )}
-      </button>
+      </Button>
 
-      <button
+      <Button
         type="button"
         onClick={handleShare}
         className={cn(
@@ -163,7 +164,7 @@ export function CourseActionButtons({
         ) : (
           <Share2 className="h-4 w-4" />
         )}
-      </button>
+      </Button>
     </div>
   );
 }

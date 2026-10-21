@@ -120,7 +120,7 @@ export function CoursePriceCard({
               </div>
             </div>
           ) : (
-            <div className="flex items-baseline gap-2" dir="ltr">
+            <div className="flex items-baseline gap-2">
               <span className="text-4xl font-black text-foreground">
                 {formatNumber(course?.price)}
               </span>

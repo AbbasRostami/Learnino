@@ -253,7 +253,7 @@ export function CoursesFilters({
         </div>
 
         <div className="flex gap-1.5">
-          <button
+          <Button
             type="button"
             onClick={() => {
               onMinPriceChange(null);
@@ -262,13 +262,13 @@ export function CoursesFilters({
             className={cn(
               "flex-1 px-2 py-1.5 rounded-lg text-xs font-extrabold transition-all cursor-pointer flex items-center justify-center gap-1 border",
               maxPrice === 0 && minPrice === null
-                ? "bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border-emerald-500/30"
+                ? "bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/20"
                 : "bg-muted text-foreground/80 hover:bg-muted/80 border-transparent",
             )}
           >
             <Sparkles className="h-3 w-3" />
             <span>{t("onlyFree")}</span>
-          </button>
+          </Button>
         </div>
       </div>
     </div>
