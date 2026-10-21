@@ -53,8 +53,8 @@ export function AppBreadcrumb({
       accumulatedPath += `/${segment}`;
       const isLast = index === segments.length - 1;
 
-      const label = t.has(segment as any)
-        ? t(segment as any)
+      const label = t.has(segment)
+        ? t(segment)
         : decodeURIComponent(segment).replace(/-/g, " ");
 
       generated.push({

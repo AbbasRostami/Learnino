@@ -125,7 +125,7 @@ export default function LoginForm() {
                     aria-invalid={fieldState.invalid}
                     autoComplete="current-password"
                   />
-                  <button
+                  <Button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
                     disabled={isPending}
@@ -139,7 +139,7 @@ export default function LoginForm() {
                     ) : (
                       <Eye className="h-4 w-4" />
                     )}
-                  </button>
+                  </Button>
                 </div>
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />

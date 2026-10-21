@@ -51,7 +51,6 @@ export function WalletsFilters({
             }
             placeholder={t("minBalancePlaceholder")}
             className="h-11 rounded-xl text-xs font-bold bg-background border-border/60"
-            dir="ltr"
           />
         </div>
 
@@ -65,7 +64,6 @@ export function WalletsFilters({
             }
             placeholder={t("maxBalancePlaceholder")}
             className="h-11 rounded-xl text-xs font-bold bg-background border-border/60"
-            dir="ltr"
           />
         </div>
       </div>
