@@ -67,10 +67,7 @@ export function OverviewRecentOrders() {
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <span
-                    className="text-xs text-muted-foreground truncate"
-                    dir="ltr"
-                  >
+                  <span className="text-xs text-muted-foreground truncate">
                     #{order?.id?.slice(0, 8)}
                   </span>
                   <span
@@ -91,7 +88,7 @@ export function OverviewRecentOrders() {
                   )}
                 </p>
               </div>
-              <div className="text-end shrink-0" dir="ltr">
+              <div className="text-end shrink-0">
                 <span className="text-sm font-black text-foreground">
                   {formatNumber(order?.totalAmount, locale)}
                 </span>

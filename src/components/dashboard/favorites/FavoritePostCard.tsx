@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 import { getCategoryStyle } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";
@@ -55,7 +56,7 @@ export function FavoritePostCard({
         <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity" />
       </Link>
 
-      <button
+      <Button
         onClick={(e) => {
           e.preventDefault();
           onRemove();
@@ -68,7 +69,7 @@ export function FavoritePostCard({
         ) : (
           <Trash2 className="h-4 w-4" />
         )}
-      </button>
+      </Button>
 
       <div className="flex flex-1 flex-col p-4 gap-3">
         <div className="flex items-center justify-between">

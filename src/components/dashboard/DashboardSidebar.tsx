@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { Button } from "../ui/button";
 
 const MENU_SECTIONS = [
   {
@@ -108,10 +109,7 @@ export function DashboardSidebar({ onNavigate }: DashboardSidebarProps) {
               <span className="text-sm font-bold text-foreground truncate">
                 {userName}
               </span>
-              <span
-                className="text-xs text-muted-foreground truncate"
-                dir="ltr"
-              >
+              <span className="text-xs text-muted-foreground truncate">
                 {profile?.email}
               </span>
             </div>
@@ -159,15 +157,16 @@ export function DashboardSidebar({ onNavigate }: DashboardSidebarProps) {
       ))}
 
       <div className="mt-2 pt-4 border-t border-dashed border-border/60">
-        <button
+        <Button
+          variant="destructive"
           type="button"
           onClick={handleLogout}
           disabled={isLoggingOut}
-          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-2xl text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition-all cursor-pointer disabled:opacity-50"
+          className="flex items-center gap-3 w-full px-3 py-2.5 text-xs font-bold cursor-pointer disabled:opacity-50"
         >
           <LogOut className="h-4 w-4 shrink-0" aria-hidden="true" />
           <span>{t("menu.logout")}</span>
-        </button>
+        </Button>
       </div>
     </nav>
   );

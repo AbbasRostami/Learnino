@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff, KeyRound } from "lucide-react";
@@ -47,10 +48,11 @@ export function PasswordField<T extends FieldValues>({
               className="h-11 rounded-xl text-xs font-bold pr-10 ltr:pl-10 ltr:pr-3"
               autoComplete={autoComplete}
             />
-            <button
+            <Button
+              variant="ghost"
               type="button"
               onClick={() => setShowPassword((s) => !s)}
-              className="absolute top-1/2 -translate-y-1/2 left-3 ltr:right-3 ltr:left-auto text-muted-foreground hover:text-foreground cursor-pointer p-1"
+              className="absolute top-1/2 -translate-y-1/2 left-3 ltr:right-3 ltr:left-auto cursor-pointer p-1"
               aria-label={showPassword ? t("hidePassword") : t("showPassword")}
             >
               {showPassword ? (
@@ -58,7 +60,7 @@ export function PasswordField<T extends FieldValues>({
               ) : (
                 <Eye className="h-4 w-4" />
               )}
-            </button>
+            </Button>
           </div>
           {fieldState?.invalid && fieldState?.error && (
             <FieldError errors={[fieldState?.error]} />

@@ -99,7 +99,7 @@ export function OrdersListClient() {
         </div>
 
         <div className="flex items-center gap-1 p-1 rounded-2xl bg-muted/50 border border-border/40 text-xs shrink-0 overflow-x-auto">
-          <button
+          <Button
             type="button"
             onClick={() => setStatusFilter(undefined)}
             className={cn(
@@ -110,21 +110,22 @@ export function OrdersListClient() {
             )}
           >
             {t("filterAll")}
-          </button>
+          </Button>
           {(["PENDING", "PAID", "CANCELLED"] as OrderStatus[]).map((st) => (
-            <button
+            <Button
+              variant="ghost"
               key={st}
               type="button"
               onClick={() => setStatusFilter(st)}
               className={cn(
-                "px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer whitespace-nowrap",
+                "font-semibold cursor-pointer whitespace-nowrap",
                 statusFilter === st
                   ? "bg-card text-foreground shadow-xs"
                   : "text-muted-foreground hover:text-foreground",
               )}
             >
               {tOrder(`statuses.${st}`)}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -182,11 +183,8 @@ export function OrdersListClient() {
                       <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                         {t("orderNumber")}
                       </span>
-                      <span
-                        className="text-xs sm:text-sm font-black text-foreground"
-                        dir="ltr"
-                      >
-                        #{order.id.slice(0, 8)}
+                      <span className="text-xs sm:text-sm font-black text-foreground">
+                        #{order?.id?.slice(0, 8)}
                       </span>
                     </div>
                   </div>
@@ -198,7 +196,7 @@ export function OrdersListClient() {
                     )}
                   >
                     <StatusIcon className="h-3 w-3" aria-hidden="true" />
-                    <span>{tOrder(`statuses.${order.status}`)}</span>
+                    <span>{tOrder(`statuses.${order?.status}`)}</span>
                   </div>
                 </div>
 
@@ -233,19 +231,13 @@ export function OrdersListClient() {
 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-3 border-t border-dashed border-border/60 bg-muted/20">
                   <div className="flex items-baseline gap-2">
-                    {order.subtotal && order.discountAmount > 0 && (
-                      <span
-                        className="text-xs text-muted-foreground line-through"
-                        dir="ltr"
-                      >
-                        {formatNumber(order.subtotal, locale)}
+                    {order?.subtotal && order?.discountAmount > 0 && (
+                      <span className="text-xs text-muted-foreground line-through">
+                        {formatNumber(order?.subtotal, locale)}
                       </span>
                     )}
-                    <span
-                      className="text-base font-black text-foreground"
-                      dir="ltr"
-                    >
-                      {formatNumber(order.totalAmount, locale)}
+                    <span className="text-base font-black text-foreground">
+                      {formatNumber(order?.totalAmount, locale)}
                       <span className="text-xs text-muted-foreground ms-1 font-semibold">
                         {tCart("currency")}
                       </span>
@@ -253,13 +245,13 @@ export function OrdersListClient() {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    {order.status === "PENDING" && (
+                    {order?.status === "PENDING" && (
                       <Button
-                        variant="outline"
+                        variant="destructive"
                         size="sm"
                         onClick={() => cancelOrder(order?.id)}
                         disabled={isCancelling && cancellingId === order?.id}
-                        className="rounded-xl h-9 min-w-23 text-xs font-bold text-rose-600 border-rose-500/30 hover:bg-rose-500/10 hover:text-rose-700 cursor-pointer gap-1.5 justify-center shadow-xs"
+                        className="min-w-23 text-xs font-bold  cursor-pointer gap-1.5 justify-center shadow-xs"
                       >
                         {isCancelling && cancellingId === order?.id ? (
                           <Loader2 className="h-3.5 w-3.5 animate-spin shrink-0" />
@@ -273,7 +265,7 @@ export function OrdersListClient() {
                     <Button
                       variant="secondary"
                       size="sm"
-                      className="rounded-xl h-9 min-w-23 text-xs font-bold cursor-pointer shadow-xs"
+                      className="min-w-23 text-xs font-bold cursor-pointer shadow-xs"
                     >
                       <Link
                         href={`/dashboard/orders/${order?.id}`}

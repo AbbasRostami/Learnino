@@ -44,7 +44,7 @@ export function OverviewWalletCard() {
             {isLoading || balance === undefined ? (
               <Skeleton className="h-8 w-36 rounded-xl bg-emerald-500/20 animate-pulse my-1" />
             ) : (
-              <div className="text-3xl font-black text-foreground" dir="ltr">
+              <div className="text-3xl font-black text-foreground">
                 {formatNumber(balance, locale)}
                 <span className="text-sm font-semibold text-muted-foreground ms-1">
                   {tCart("currency")}

@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Link, usePathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { Globe, Monitor, Moon, Palette, Sun } from "lucide-react";
@@ -43,12 +44,13 @@ export function SettingsAppearance() {
           {THEMES?.map((th) => {
             const isActive = theme === th?.value;
             return (
-              <button
+              <Button
+                variant="ghost"
                 key={th?.value}
                 type="button"
                 onClick={() => setTheme(th?.value)}
                 className={cn(
-                  "flex flex-col items-center gap-2 p-4 rounded-2xl border text-xs font-bold transition-all cursor-pointer",
+                  "h-18 flex flex-col items-center gap-2 p-4 rounded-2xl border text-xs font-bold cursor-pointer",
                   isActive
                     ? "border-primary bg-primary/10 text-primary shadow-md"
                     : "border-border/60 bg-muted/30 text-muted-foreground hover:bg-muted",
@@ -57,7 +59,7 @@ export function SettingsAppearance() {
               >
                 <th.icon className="h-5 w-5" aria-hidden="true" />
                 <span>{t(th?.labelKey)}</span>
-              </button>
+              </Button>
             );
           })}
         </div>

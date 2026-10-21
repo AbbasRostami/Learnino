@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { getCategoryStyle } from "@/lib/category-icons";
@@ -75,7 +76,7 @@ export function FavoriteCourseCard({
         </span>
       </Link>
 
-      <button
+      <Button
         onClick={(e) => {
           e.preventDefault();
           onRemove();
@@ -88,19 +89,19 @@ export function FavoriteCourseCard({
         ) : (
           <Trash2 className="h-4 w-4" />
         )}
-      </button>
+      </Button>
 
       <div className="flex flex-1 flex-col p-4 gap-3">
         <div className="flex items-center justify-between">
           {courseData?.category && style && (
             <Link
-              href={`/courses?categories=${courseData?.category.slug}`}
+              href={`/courses?categories=${courseData?.category?.slug}`}
               className={cn(
                 "px-2 py-0.5 rounded-md text-[10px] font-bold hover:opacity-80 transition-opacity",
                 style.badgeColor,
               )}
             >
-              {courseData?.category.name}
+              {courseData?.category?.name}
             </Link>
           )}
           <div className="flex items-center gap-2 text-[10px] text-muted-foreground font-bold">
@@ -126,7 +127,7 @@ export function FavoriteCourseCard({
             </Link>
           </span>
 
-          <div className="text-end font-black" dir="ltr">
+          <div className="text-end font-black">
             {isFree ? (
               <span className="text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-md">
                 {t("free")}

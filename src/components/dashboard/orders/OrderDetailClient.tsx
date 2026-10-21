@@ -73,12 +73,12 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
     );
   }
 
-  const style = STATUS_STYLES[order.status];
+  const style = STATUS_STYLES[order?.status];
   const StatusIcon = style.Icon;
 
-  const subtotal = order.subtotal ?? order.totalAmount;
-  const discountAmount = order.discountAmount ?? 0;
-  const discountCode = order.discountCode;
+  const subtotal = order?.subtotal ?? order?.totalAmount;
+  const discountAmount = order?.discountAmount ?? 0;
+  const discountCode = order?.discountCode;
   const hasDiscount = discountAmount > 0;
 
   return (
@@ -96,7 +96,7 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
           </Button>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-lg font-black text-foreground" dir="ltr">
+              <h1 className="text-lg font-black text-foreground">
                 #{order.id.slice(0, 8)}
               </h1>
               <span
@@ -178,14 +178,11 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
                     item?.courseTitle
                   )}
                 </h3>
-                <span
-                  className="text-xs text-muted-foreground mt-1 inline-block"
-                  dir="ltr"
-                >
+                <span className="text-xs text-muted-foreground mt-1 inline-block">
                   {t("courseIdLabel")}: {item?.courseId?.slice(0, 8)}...
                 </span>
               </div>
-              <div className="text-end shrink-0" dir="ltr">
+              <div className="text-end shrink-0">
                 <span className="text-base font-black text-foreground">
                   {formatNumber(item?.price, locale)}
                 </span>
@@ -220,7 +217,7 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
             <span className="text-muted-foreground font-semibold">
               {t("subtotalLabel")}
             </span>
-            <span className="font-bold text-foreground" dir="ltr">
+            <span className="font-bold text-foreground">
               {formatNumber(subtotal, locale)} {tCart("currency")}
             </span>
           </div>
@@ -232,10 +229,7 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
                   <Tag className="h-3.5 w-3.5 text-emerald-500" />
                   {t("discountLabel")}
                 </span>
-                <span
-                  className="font-bold text-emerald-600 dark:text-emerald-400"
-                  dir="ltr"
-                >
+                <span className="font-bold text-emerald-600 dark:text-emerald-400">
                   -{formatNumber(discountAmount, locale)} {tCart("currency")}
                 </span>
               </div>
@@ -260,7 +254,7 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
             <span className="font-bold text-foreground">
               {t("totalAmountLabel")}
             </span>
-            <span className="text-xl font-black text-primary" dir="ltr">
+            <span className="text-xl font-black text-primary">
               {formatNumber(order?.totalAmount, locale)}
               <span className="text-xs text-muted-foreground font-semibold ms-1">
                 {tCart("currency")}

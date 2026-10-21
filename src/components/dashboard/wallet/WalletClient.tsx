@@ -129,10 +129,7 @@ export function WalletClient() {
                   <TrendingUp className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                   {t("currentBalanceLabel")}
                 </span>
-                <div
-                  className="text-3xl sm:text-5xl font-black text-foreground"
-                  dir="ltr"
-                >
+                <div className="text-3xl sm:text-5xl font-black text-foreground">
                   {formatNumber(balanceToman, locale)}
                   <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 ms-2">
                     {tCart("currency")}
@@ -183,7 +180,8 @@ export function WalletClient() {
               </label>
 
               <div className="relative flex items-center gap-1.5 rounded-2xl border border-border/60 bg-background focus-within:border-emerald-500/50 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all overflow-hidden shadow-xs">
-                <button
+                <Button
+                variant="ghost"
                   type="button"
                   onClick={decrementAmount}
                   disabled={amountToman < STEP_AMOUNT_TOMAN}
@@ -191,7 +189,7 @@ export function WalletClient() {
                   aria-label="کاهش مبلغ"
                 >
                   <Minus className="h-4 w-4" />
-                </button>
+                </Button>
 
                 <Input
                   id="amount"
@@ -201,17 +199,17 @@ export function WalletClient() {
                   min={0}
                   step={STEP_AMOUNT_TOMAN}
                   className="flex-1 h-11 text-center text-sm font-black border-0 rounded-none focus-visible:ring-0 shadow-none bg-transparent"
-                  dir="ltr"
                 />
 
-                <button
+                <Button
+                variant="ghost"
                   type="button"
                   onClick={incrementAmount}
                   className="shrink-0 h-11 w-11 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors cursor-pointer"
                   aria-label="افزایش مبلغ"
                 >
                   <Plus className="h-4 w-4" />
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -219,7 +217,7 @@ export function WalletClient() {
               {PRESET_AMOUNTS_TOMAN.map((amt) => {
                 const isActive = amountToman === amt;
                 return (
-                  <button
+                  <Button
                     key={amt}
                     type="button"
                     onClick={() => setAmountToman(amt)}
@@ -231,8 +229,8 @@ export function WalletClient() {
                     )}
                   >
                     <Plus className="h-3 w-3" />
-                    <span dir="ltr">{formatNumber(amt, locale)}</span>
-                  </button>
+                    <span>{formatNumber(amt, locale)}</span>
+                  </Button>
                 );
               })}
             </div>
@@ -283,15 +281,15 @@ export function WalletClient() {
           </div>
         ) : (
           <div className="flex flex-col gap-2">
-            {transactions.map((tx, idx) => {
-              const isCharge = tx.type === "CHARGE";
-              const isRefund = tx.type === "REFUND";
+            {transactions?.map((tx, idx) => {
+              const isCharge = tx?.type === "CHARGE";
+              const isRefund = tx?.type === "REFUND";
               const isIncoming = isCharge || isRefund;
-              const amountToman = tx.amount;
+              const amountToman = tx?.amount;
 
               return (
                 <motion.div
-                  key={tx.id}
+                  key={tx?.id}
                   initial={
                     prefersReducedMotion ? undefined : { opacity: 0, y: 10 }
                   }
@@ -323,33 +321,30 @@ export function WalletClient() {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 flex-wrap mb-0.5">
                         <span className="text-xs font-bold text-foreground truncate">
-                          {tx.description}
+                          {tx?.description}
                         </span>
                         <span
                           className={cn(
                             "text-xs font-black px-2 py-0.5 rounded-full border",
-                            TX_STATUS_STYLES[tx.status] ||
+                            TX_STATUS_STYLES[tx?.status] ||
                               TX_STATUS_STYLES.CANCELLED,
                           )}
                         >
-                          {t(`transactionStatus${tx.status}`)}
+                          {t(`transactionStatus${tx?.status}`)}
                         </span>
                       </div>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <span>{formatRelativeTime(tx.createdAt, locale)}</span>
-                        {tx.refId && (
-                          <span
-                            className="bg-muted/40 px-1.5 py-0.5 rounded"
-                            dir="ltr"
-                          >
-                            {t("transactionRefId")}: {tx.refId}
+                        <span>{formatRelativeTime(tx?.createdAt, locale)}</span>
+                        {tx?.refId && (
+                          <span className="bg-muted/40 px-1.5 py-0.5 rounded">
+                            {t("transactionRefId")}: {tx?.refId}
                           </span>
                         )}
                       </div>
                     </div>
                   </div>
 
-                  <div className="text-end shrink-0" dir="ltr">
+                  <div className="text-end shrink-0">
                     <span
                       className={cn(
                         "text-sm font-black",
