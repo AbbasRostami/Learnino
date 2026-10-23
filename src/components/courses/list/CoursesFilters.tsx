@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useCategories } from "@/services";
 import {
@@ -64,7 +65,8 @@ export function CoursesFilters({
   onResetFilters,
 }: CoursesFiltersProps) {
   const t = useTranslations("course");
-  const { data: categoriesData } = useCategories();
+  const { data: categoriesData, isLoading: isCategoriesLoading } =
+    useCategories();
   const categoriesList = categoriesData?.data?.categories ?? [];
 
   const activeFiltersCount = getCourseActiveFiltersCount({
@@ -131,29 +133,41 @@ export function CoursesFilters({
           </Label>
         </div>
         <div className="flex flex-col gap-1.5 max-h-64 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-border">
-          {categoriesList?.map((cat) => {
-            const isActive = selectedCategories.includes(cat?.slug);
-            return (
-              <Button
-                variant="outline"
-                key={cat?.id}
-                type="button"
-                onClick={() => toggleCategory(cat?.slug)}
-                className={cn(
-                  "flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-start transition-all cursor-pointer",
-                  isActive
-                    ? "bg-primary/10 text-primary border border-primary/30"
-                    : "text-foreground/80 hover:bg-muted border border-transparent",
-                )}
-                aria-pressed={isActive}
-              >
-                <span className="truncate">{cat?.name}</span>
-                {isActive && (
-                  <span className="shrink-0 h-1.5 w-1.5 rounded-full bg-primary" />
-                )}
-              </Button>
-            );
-          })}
+          {isCategoriesLoading
+            ? [65, 45, 75, 50, 85].map((width, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between px-3 h-9.5 rounded-xl border border-transparent bg-muted/30"
+                >
+                  <Skeleton
+                    className="h-3.5 rounded-md bg-primary/15 dark:bg-primary/20"
+                    style={{ width: `${width}%` }}
+                  />
+                </div>
+              ))
+            : categoriesList?.map((cat) => {
+                const isActive = selectedCategories.includes(cat?.slug);
+                return (
+                  <Button
+                    variant="outline"
+                    key={cat?.id}
+                    type="button"
+                    onClick={() => toggleCategory(cat?.slug)}
+                    className={cn(
+                      "flex items-center justify-between px-3 py-2 h-9.5 rounded-xl text-xs font-semibold text-start transition-all cursor-pointer",
+                      isActive
+                        ? "bg-primary/10 text-primary border border-primary/30"
+                        : "text-foreground/80 hover:bg-muted border border-transparent",
+                    )}
+                    aria-pressed={isActive}
+                  >
+                    <span className="truncate">{cat?.name}</span>
+                    {isActive && (
+                      <span className="shrink-0 h-1.5 w-1.5 rounded-full bg-primary" />
+                    )}
+                  </Button>
+                );
+              })}
         </div>
       </div>
 

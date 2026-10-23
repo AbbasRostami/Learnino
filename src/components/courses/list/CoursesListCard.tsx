@@ -62,7 +62,34 @@ export function CoursesListCard({
           aria-hidden="true"
         />
 
-        <span className="absolute top-3 inset-e-3 flex items-center rounded-full bg-background/95 backdrop-blur-md px-2.5 py-1 text-xs font-bold text-foreground shadow-xs border border-border/60">
+        <span
+          className={cn(
+            "absolute top-3 inset-e-3 flex items-center gap-1.5 rounded-full px-1.5 py-0.5 text-[11px] font-black shadow-lg backdrop-blur-md transition-all duration-300 group-hover:scale-105 border",
+            course?.level === "BEGINNER" &&
+              "bg-emerald-500/15 text-emerald-700 border-emerald-500/30 dark:text-emerald-400 dark:bg-emerald-500/20 shadow-emerald-500/10",
+            course?.level === "INTERMEDIATE" &&
+              "bg-amber-500/15 text-amber-700 border-amber-500/30 dark:text-amber-400 dark:bg-amber-500/20 shadow-amber-500/10",
+            course?.level === "ADVANCED" &&
+              "bg-rose-500/15 text-rose-700 border-rose-500/30 dark:text-rose-400 dark:bg-rose-500/20 shadow-rose-500/10",
+            !["BEGINNER", "INTERMEDIATE", "ADVANCED"].includes(
+              course?.level || "",
+            ) && "bg-background/90 text-foreground border-border/60",
+          )}
+        >
+          <span
+            className={cn(
+              "relative flex h-2 w-2 rounded-full",
+              course?.level === "BEGINNER" && "bg-emerald-500",
+              course?.level === "INTERMEDIATE" && "bg-amber-500",
+              course?.level === "ADVANCED" && "bg-rose-500",
+              !["BEGINNER", "INTERMEDIATE", "ADVANCED"].includes(
+                course?.level || "",
+              ) && "bg-primary",
+            )}
+          >
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-40 bg-inherit"></span>
+          </span>
+
           {t(`levels.${course?.level}`)}
         </span>
 
@@ -104,7 +131,7 @@ export function CoursesListCard({
           </Link>
         </h2>
 
-        <div className="mt-2 flex items-center gap-2">
+        <div className="mt-4 flex items-center gap-2">
           {teacherSlug ? (
             <Link
               href={`/teachers/${teacherSlug}`}
@@ -113,8 +140,8 @@ export function CoursesListCard({
               <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border-2 border-background bg-muted shadow-xs ring-1 ring-border/40">
                 {course?.teacher?.avatar ? (
                   <Image
-                    src={course.teacher.avatar}
-                    alt={course.teacher.name}
+                    src={course?.teacher?.avatar}
+                    alt={course?.teacher?.name}
                     fill
                     quality={85}
                     sizes="32px"
@@ -147,7 +174,7 @@ export function CoursesListCard({
           )}
         </div>
 
-        <div className="mt-auto pt-4 flex items-center justify-between border-t border-dashed border-border/60">
+        <div className="mt-2 pt-4 flex items-center justify-between border-t border-dashed border-border/60">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1 text-xs text-foreground/80">
               <Heart className="h-3.5 w-3.5" aria-hidden="true" />
