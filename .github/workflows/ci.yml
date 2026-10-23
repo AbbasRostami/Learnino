@@ -32,8 +32,12 @@ jobs:
       - name: Run Unit & Integration Tests
         run: pnpm test:run
 
+      - name: Wake up Render Backend
+        run: curl -s --max-time 15 "${{ secrets.NEXT_PUBLIC_API_BASE_URL }}" || true
+
       - name: Build project
         run: pnpm build
         env:
-          NEXT_PUBLIC_APP_URL: http://localhost:3000
-          NEXT_PUBLIC_API_URL: http://localhost:3000/api
+          NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+          NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
+          JWT_ACCESS_SECRET: ${{ secrets.JWT_ACCESS_SECRET }}
