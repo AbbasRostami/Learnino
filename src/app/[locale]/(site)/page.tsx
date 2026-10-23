@@ -74,7 +74,7 @@ export default async function HomePage({
 
         <AboutSection />
 
-        <Suspense fallback={<CoursesGridSkeleton count={3} />}>
+        <Suspense fallback={<CoursesGridSkeleton count={4} />}>
           <FeaturedCoursesSection />
         </Suspense>
 

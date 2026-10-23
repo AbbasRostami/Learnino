@@ -106,7 +106,7 @@ export default async function CoursesPage({
 
   return (
     <main className="flex-1">
-      <Suspense fallback={<CoursesGridSkeleton count={6} />}>
+      <Suspense fallback={<CoursesGridSkeleton count={8} />}>
         <CoursesListSection
           locale={locale}
           searchParamsPromise={searchParams}
