@@ -51,7 +51,7 @@ export function AboutSection() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 overflow-hidden">
+    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
         <div className="flex flex-col gap-6 order-2 lg:order-1">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 text-xs font-semibold text-primary w-fit shadow-xs">

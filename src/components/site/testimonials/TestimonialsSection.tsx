@@ -10,7 +10,7 @@ export function TestimonialsSection() {
 
   return (
     <section
-      className="container mx-auto px-4 sm:px-6 lg:px-8 py-12"
+      className="container mx-auto px-4 sm:px-6 lg:px-8 py-5"
       aria-labelledby="testimonials-title"
     >
       <div className="flex flex-col items-center text-center gap-4 max-w-3xl mx-auto mb-12">

@@ -44,7 +44,7 @@ export function HeroSection() {
               />
             </div>
 
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/10 text-xs sm:text-sm text-primary-700 dark:text-primary-300 font-extrabold backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/10 text-xs sm:text-sm text-primary dark:text-primary-300 font-extrabold backdrop-blur-sm">
               <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
               <span>{t("badge")}</span>
             </div>

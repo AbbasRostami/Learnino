@@ -21,6 +21,7 @@ export function CourseCard({ course, priority = false }: CourseCardProps) {
 
   const isFree = course?.price === 0;
   const locale = useLocale();
+  const teacherSlug = course?.teacher?.slug;
 
   return (
     <article
@@ -35,7 +36,7 @@ export function CourseCard({ course, priority = false }: CourseCardProps) {
 
       <Link
         href={`/courses/${course?.slug}`}
-        className="relative aspect-16/10 w-full overflow-hidden bg-muted"
+        className="relative aspect-16/10 w-full overflow-hidden bg-muted shrink-0"
         aria-label={course?.title}
       >
         {course?.imageUrl ? (
@@ -60,23 +61,50 @@ export function CourseCard({ course, priority = false }: CourseCardProps) {
           aria-hidden="true"
         />
 
-        <div className="absolute top-3 inset-e-3 flex items-center rounded-full border border-white/20 bg-background/90 backdrop-blur-md px-2.5 py-1 text-xs font-bold shadow-md">
+        <span
+          className={cn(
+            "absolute top-3 inset-e-3 flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-black shadow-lg backdrop-blur-md transition-all duration-300 group-hover:scale-105 border shrink-0",
+            course?.level === "BEGINNER" &&
+              "bg-emerald-500/15 text-emerald-700 border-emerald-500/30 dark:text-emerald-400 dark:bg-emerald-500/20 shadow-emerald-500/10",
+            course?.level === "INTERMEDIATE" &&
+              "bg-amber-500/15 text-amber-700 border-amber-500/30 dark:text-amber-400 dark:bg-amber-500/20 shadow-amber-500/10",
+            course?.level === "ADVANCED" &&
+              "bg-rose-500/15 text-rose-700 border-rose-500/30 dark:text-rose-400 dark:bg-rose-500/20 shadow-rose-500/10",
+            !["BEGINNER", "INTERMEDIATE", "ADVANCED"].includes(
+              course?.level || "",
+            ) && "bg-background/90 text-foreground border-border/60",
+          )}
+        >
+          <span
+            className={cn(
+              "relative flex h-2 w-2 rounded-full shrink-0",
+              course?.level === "BEGINNER" && "bg-emerald-500",
+              course?.level === "INTERMEDIATE" && "bg-amber-500",
+              course?.level === "ADVANCED" && "bg-rose-500",
+              !["BEGINNER", "INTERMEDIATE", "ADVANCED"].includes(
+                course?.level || "",
+              ) && "bg-primary",
+            )}
+          >
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-40 bg-inherit" />
+          </span>
+
           {t(`levels.${course?.level}`)}
-        </div>
+        </span>
       </Link>
 
       <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-center justify-between mb-3 text-xs font-semibold">
+        <div className="flex items-center justify-between gap-2 mb-3 text-xs font-semibold h-6 shrink-0">
           <span
             className={cn(
-              "px-2.5 py-1 rounded-md border border-border/40",
+              "px-2.5 py-1 rounded-md border border-border/40 truncate max-w-[65%]",
               style.badgeColor,
             )}
           >
             {course?.category?.name}
           </span>
           <div
-            className="flex items-center gap-1 text-muted-foreground"
+            className="flex items-center gap-1 text-muted-foreground shrink-0"
             title={t("studentsCount", { count: course?.stats?.enrollments })}
           >
             <Users className="h-3.5 w-3.5" aria-hidden="true" />
@@ -84,39 +112,59 @@ export function CourseCard({ course, priority = false }: CourseCardProps) {
           </div>
         </div>
 
-        <h3
-          className="mb-2 line-clamp-2 text-base md:text-lg font-bold text-foreground leading-snug group-hover:text-primary transition-colors"
-          itemProp="name"
-        >
-          <Link href={`/courses/${course?.slug}`}>{course?.title}</Link>
-        </h3>
-
-        <div className="mt-auto pt-4 flex items-center gap-2.5">
-          <div className="relative h-9 w-9 overflow-hidden rounded-full ring-2 ring-border/60 bg-muted">
-            {course?.teacher?.avatar ? (
-              <Image
-                src={course?.teacher?.avatar}
-                alt={course?.teacher?.name}
-                fill
-                sizes="36px"
-                quality={75}
-                className="object-cover"
-              />
-            ) : (
-              <div className="flex h-full items-center justify-center bg-primary/10 text-primary text-xs font-bold">
-                {course?.teacher?.name?.charAt(0)}
-              </div>
-            )}
-          </div>
-          <span
-            className="text-xs font-semibold text-foreground/80"
-            itemProp="provider"
+        <div className="h-11 md:h-13 mb-2 flex items-start overflow-hidden">
+          <h3
+            className="line-clamp-2 text-base md:text-lg font-bold text-foreground leading-snug group-hover:text-primary transition-colors"
+            itemProp="name"
           >
-            {course?.teacher?.name}
-          </span>
+            <Link href={`/courses/${course?.slug}`}>{course?.title}</Link>
+          </h3>
         </div>
 
-        <div className="mt-4 flex items-center justify-between border-t border-dashed border-border/60 pt-4">
+        <div className="mt-2 flex items-center gap-2 h-8 shrink-0">
+          {teacherSlug ? (
+            <Link
+              href={`/teachers/${teacherSlug}`}
+              className="flex items-center gap-2 group/teacher transition-opacity hover:opacity-80 min-w-0"
+            >
+              <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border-2 border-background bg-muted shadow-xs ring-1 ring-border/40">
+                {course?.teacher?.avatar ? (
+                  <Image
+                    src={course?.teacher?.avatar}
+                    alt={course?.teacher?.name}
+                    fill
+                    quality={85}
+                    sizes="32px"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center bg-primary/10 text-primary-700 dark:text-primary-300 text-xs font-bold">
+                    {course?.teacher?.name?.charAt(0)}
+                  </div>
+                )}
+              </div>
+              <span
+                className="text-xs font-bold text-foreground/80 group-hover/teacher:text-primary transition-colors truncate"
+                itemProp="provider"
+              >
+                {course?.teacher?.name}
+              </span>
+            </Link>
+          ) : (
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border-2 border-background bg-muted">
+                <div className="flex h-full items-center justify-center bg-primary/10 text-primary-700 dark:text-primary-300 text-xs font-bold">
+                  {course?.teacher?.name?.charAt(0)}
+                </div>
+              </div>
+              <span className="text-xs font-bold text-foreground/80 truncate">
+                {course?.teacher?.name}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-auto pt-4 flex items-center justify-between border-t border-dashed border-border/60 shrink-0">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-pink-500">
               <Heart className="h-3.5 w-3.5" aria-hidden="true" />
