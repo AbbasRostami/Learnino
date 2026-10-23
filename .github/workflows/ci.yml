@@ -4,12 +4,9 @@ on:
   push:
     branches: [main, master]
 
-  pull_request:
-    branches: [main, master]
-
 jobs:
   test-and-build:
-    name: "🧪 Test & Build"
+    name: "🧪 Test & Build & Deploy"
 
     runs-on: ubuntu-latest
 
@@ -41,3 +38,11 @@ jobs:
           NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
           NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
           JWT_ACCESS_SECRET: ${{ secrets.JWT_ACCESS_SECRET }}
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-prod: true
