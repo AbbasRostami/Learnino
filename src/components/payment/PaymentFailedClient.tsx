@@ -7,8 +7,6 @@ import {
   AlertCircle,
   Copy,
   Hash,
-  HeadphonesIcon,
-  Home,
   RotateCcw,
   ShieldAlert,
   ShoppingCart,
@@ -59,7 +57,7 @@ export function PaymentFailedClient({
         <div className="relative rounded-3xl border border-rose-500/20 bg-card/80 backdrop-blur-xl shadow-2xl shadow-rose-500/10 dark:shadow-rose-500/5 p-8 md:p-10">
           <div className="absolute -top-px inset-s-10 inset-e-10 h-px bg-linear-to-r from-transparent via-rose-500/60 to-transparent" />
 
-          <div className="flex flex-col items-center text-center mb-8">
+          <div className="flex flex-col items-center text-center mb-4">
             <motion.div
               initial={
                 prefersReducedMotion ? undefined : { scale: 0, rotate: -180 }
@@ -95,9 +93,6 @@ export function PaymentFailedClient({
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-foreground tracking-tight leading-tight mb-3">
               {t("title")}
             </h1>
-            <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-md">
-              {t("subtitle")}
-            </p>
           </div>
 
           <motion.div
@@ -127,7 +122,6 @@ export function PaymentFailedClient({
                       </span>
                       <span
                         className="font-bold text-foreground truncate"
-                        dir="ltr"
                       >
                         {authority}
                       </span>
@@ -177,7 +171,7 @@ export function PaymentFailedClient({
               href="/cart"
               className={cn(
                 buttonVariants({ size: "lg" }),
-                "flex-1 rounded-2xl h-12 gap-2 shadow-lg shadow-rose-500/20 cursor-pointer bg-linear-to-r from-rose-500 to-rose-600 hover:opacity-90 font-bold text-white",
+                "flex-1 rounded-2xl h-12 py-2 gap-2 shadow-lg shadow-rose-500/20 cursor-pointer bg-linear-to-r from-rose-500 to-rose-600 hover:opacity-90 font-bold text-white",
               )}
             >
               <RotateCcw className="h-4 w-4" />
@@ -188,57 +182,12 @@ export function PaymentFailedClient({
               href="/cart"
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
-                "flex-1 rounded-2xl h-12 gap-2 cursor-pointer font-bold border-border/60 hover:bg-muted",
+                "flex-1 rounded-2xl h-12 py-2 gap-2 cursor-pointer font-bold border-border/60 hover:bg-muted",
               )}
             >
               <ShoppingCart className="h-4 w-4" />
               <span>{t("backToCart")}</span>
             </Link>
-          </motion.div>
-
-          <motion.div
-            initial={prefersReducedMotion ? undefined : { opacity: 0, y: 10 }}
-            animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="rounded-2xl border border-primary/20 bg-linear-to-br from-primary/5 via-brand-accent/5 to-transparent p-5"
-          >
-            <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <HeadphonesIcon className="h-5 w-5" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-sm font-black text-foreground mb-1.5">
-                  {t("supportTitle")}
-                </h3>
-                <p className="text-xs text-muted-foreground leading-relaxed mb-3">
-                  {t("supportText")}
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-                  <Link
-                    href="/contact"
-                    className={cn(
-                      buttonVariants({ variant: "outline", size: "sm" }),
-                      "rounded-full text-xs gap-1.5 h-8 cursor-pointer border-primary/30 hover:bg-primary/10 hover:text-primary",
-                    )}
-                  >
-                    <HeadphonesIcon className="h-3 w-3" />
-                    <span>{t("contactSupport")}</span>
-                  </Link>
-
-                  <Link
-                    href="/"
-                    className={cn(
-                      buttonVariants({ variant: "ghost", size: "sm" }),
-                      "rounded-full text-xs gap-1.5 h-8 cursor-pointer text-muted-foreground hover:text-foreground",
-                    )}
-                  >
-                    <Home className="h-3 w-3" />
-                    <span>{t("backToHome")}</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
           </motion.div>
         </div>
       </motion.div>

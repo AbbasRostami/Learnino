@@ -4,6 +4,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
+import { formatNumber } from "@/utils/formatters";
 import {
   CheckCircle2,
   Copy,
@@ -48,9 +49,6 @@ export function PaymentSuccessClient({
     const timer = setTimeout(() => setShowConfetti(false), 3000);
     return () => clearTimeout(timer);
   }, []);
-
-  const formatPrice = (value: number) =>
-    new Intl.NumberFormat(locale === "fa" ? "fa-IR" : "en-US").format(value);
 
   const currentDateTime = new Intl.DateTimeFormat(
     locale === "fa" ? "fa-IR" : "en-US",
@@ -225,7 +223,7 @@ export function PaymentSuccessClient({
                     label={t("amount")}
                     value={
                       <span className="text-emerald-600 dark:text-emerald-400 font-black text-base">
-                        {formatPrice(amount)} {tCart("currency")}
+                        {formatNumber(amount, locale)} {tCart("currency")}
                       </span>
                     }
                   />
@@ -237,7 +235,7 @@ export function PaymentSuccessClient({
                     label={t("newBalance")}
                     value={
                       <span className="text-primary font-black text-base">
-                        {formatPrice(newBalance)} {tCart("currency")}
+                        {formatNumber(newBalance, locale)} {tCart("currency")}
                       </span>
                     }
                   />
@@ -267,7 +265,6 @@ export function PaymentSuccessClient({
 
             <ul className="flex flex-col gap-2 text-xs text-muted-foreground">
               <TipItem text={t("tip1")} />
-              <TipItem text={t("tip2")} />
               <TipItem text={t("tip3")} />
             </ul>
           </motion.div>
@@ -343,7 +340,6 @@ function DetailRow({
       <div className="flex items-center gap-2 min-w-0">
         <span
           className={`font-bold text-foreground ${truncate ? "truncate max-w-45" : ""}`}
-          dir="ltr"
         >
           {value}
         </span>
