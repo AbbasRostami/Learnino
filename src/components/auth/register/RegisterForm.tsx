@@ -2,8 +2,9 @@
 
 import { Link } from "@/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Lock, Mail, User } from "lucide-react";
+import { Eye, EyeOff, Loader2, Lock, Mail, User } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -28,6 +29,7 @@ interface Props {
 export default function RegisterForm({ onSuccess }: Props) {
   const t = useTranslations("auth");
   const schema = getRegisterSchema(t);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { mutate: registerUser, isPending } = useRegister({
     onSuccessCallback: (email) => {
@@ -76,13 +78,13 @@ export default function RegisterForm({ onSuccess }: Props) {
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor="register-name">{t("name")}</FieldLabel>
                 <div className="relative">
-                  <User className="absolute right-3 top-3 h-4 w-4 text-muted-foreground pointer-events-none rtl:right-3 rtl:left-auto ltr:left-3 ltr:right-auto" />
+                  <User className="absolute top-3 h-4 w-4 text-muted-foreground pointer-events-none right-3 ltr:left-3 ltr:right-auto" />
                   <Input
                     {...field}
                     id="register-name"
                     data-testid="name-input"
                     placeholder={t("namePlaceholder")}
-                    className="rtl:pr-10 ltr:pl-10 h-11 rounded-xl"
+                    className="h-11 rounded-xl pr-10 ltr:pl-10 ltr:pr-3"
                     disabled={isPending}
                     aria-invalid={fieldState.invalid}
                   />
@@ -101,7 +103,7 @@ export default function RegisterForm({ onSuccess }: Props) {
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor="register-email">{t("email")}</FieldLabel>
                 <div className="relative">
-                  <Mail className="absolute right-3 top-3 h-4 w-4 text-muted-foreground pointer-events-none rtl:right-3 rtl:left-auto ltr:left-3 ltr:right-auto" />
+                  <Mail className="absolute top-3 h-4 w-4 text-muted-foreground pointer-events-none right-3 ltr:left-3 ltr:right-auto" />
                   <Input
                     {...field}
                     id="register-email"
@@ -109,7 +111,7 @@ export default function RegisterForm({ onSuccess }: Props) {
                     type="email"
                     placeholder="example@email.com"
                     dir="ltr"
-                    className="rtl:pr-10 ltr:pl-10 text-left h-11 rounded-xl"
+                    className="h-11 rounded-xl text-left pr-10 ltr:pl-10 ltr:pr-3"
                     disabled={isPending}
                     aria-invalid={fieldState.invalid}
                     autoComplete="email"
@@ -131,18 +133,34 @@ export default function RegisterForm({ onSuccess }: Props) {
                   {t("password")}
                 </FieldLabel>
                 <div className="relative">
-                  <Lock className="absolute right-3 top-3 h-4 w-4 text-muted-foreground pointer-events-none rtl:right-3 rtl:left-auto ltr:left-3 ltr:right-auto" />
+                  <Lock className="absolute top-3 h-4 w-4 text-muted-foreground pointer-events-none right-3 ltr:left-3 ltr:right-auto" />
                   <Input
                     {...field}
                     id="register-password"
                     data-testid="password-input"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
-                    className="rtl:pr-10 ltr:pl-10 h-11 rounded-xl"
+                    className="h-11 rounded-xl px-10"
                     disabled={isPending}
                     aria-invalid={fieldState.invalid}
                     autoComplete="new-password"
                   />
+                  <Button
+                    variant="ghost"
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    disabled={isPending}
+                    className="absolute top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer left-3 ltr:left-auto ltr:right-3 h-auto p-0 hover:bg-transparent"
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </Button>
                 </div>
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />

@@ -44,6 +44,7 @@ export function AuthCard({
             fill
             priority
             className="object-contain dark:hidden"
+            sizes="192px"
           />
           <Image
             src={isFa ? "/logo/Farsi-Dark.png" : "/logo/English-Dark.png"}
@@ -51,6 +52,7 @@ export function AuthCard({
             fill
             priority
             className="hidden object-contain dark:block"
+            sizes="192px"
           />
         </Link>
       </div>

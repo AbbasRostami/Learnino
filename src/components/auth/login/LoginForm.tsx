@@ -126,6 +126,7 @@ export default function LoginForm() {
                     autoComplete="current-password"
                   />
                   <Button
+                    variant="ghost"
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
                     disabled={isPending}
