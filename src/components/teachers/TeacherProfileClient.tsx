@@ -115,7 +115,7 @@ export function TeacherProfileClient({
                 className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-3xl font-medium mb-8"
                 itemProp="description"
               >
-                {teacher.bio}
+                {teacher?.bio}
               </p>
             )}
 
@@ -184,9 +184,9 @@ export function TeacherProfileClient({
               viewport={{ once: true, margin: "-50px" }}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              {teacher.courses.map((course: any, index: number) => (
+              {teacher?.courses?.map((course: any, index: number) => (
                 <motion.div
-                  key={course.id}
+                  key={course?.id}
                   variants={prefersReducedMotion ? undefined : itemVariants}
                 >
                   <CoursesListCard

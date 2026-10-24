@@ -1,4 +1,5 @@
 import { BreadcrumbJsonLd } from "@/components/seo";
+import { TeacherProfileSkeleton } from "@/components/skeleton";
 import { TeacherProfileClient } from "@/components/teachers/TeacherProfileClient";
 import {
   cleanMetaDescription,
@@ -38,16 +39,6 @@ async function TeacherDetailSection({ paramsPromise }: TeacherSectionProps) {
       />
       <TeacherProfileClient slug={slug} initialTeacher={teacher} />
     </>
-  );
-}
-
-function TeacherDetailFallback() {
-  return (
-    <div className="container mx-auto px-4 py-12 animate-pulse">
-      <div className="h-40 w-40 rounded-3xl bg-muted/60 mb-6" />
-      <div className="h-8 w-64 rounded-xl bg-muted/60 mb-4" />
-      <div className="h-4 w-full max-w-xl rounded-md bg-muted/40" />
-    </div>
   );
 }
 
@@ -109,7 +100,7 @@ export default async function TeacherDetailPage({
 }) {
   return (
     <main className="flex-1">
-      <Suspense fallback={<TeacherDetailFallback />}>
+      <Suspense fallback={<TeacherProfileSkeleton />}>
         <TeacherDetailSection paramsPromise={params} />
       </Suspense>
     </main>

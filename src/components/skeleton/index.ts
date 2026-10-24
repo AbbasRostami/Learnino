@@ -9,4 +9,5 @@ export * from "./ProfileSkeleton";
 export * from "./SectionHeaderSkeleton";
 export * from "./TableRowSkeleton";
 export * from "./TeacherCardSkeleton";
+export * from "./TeacherProfileSkeleton";
 export * from "./TeachersGridSkeleton";
