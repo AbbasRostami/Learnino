@@ -128,14 +128,14 @@
     "rights": "لرنینو - تمامی حقوق مادی و معنوی محفوظ است.",
     "developedBy": "طراحی و توسعه توسط",
     "highlightTitle": "لرنینو",
-    "courseHtmlCss": "آموزش جامع HTML و CSS",
-    "courseJavascript": "آموزش جاوااسکریپت مدرن",
-    "courseReactNext": "آموزش پیشرفته React و Next.js",
-    "coursePython": "آموزش پایتون پروژه محور",
+    "courseReactNext": "مسترکلاس React 19 و Next.js 15",
+    "courseJavascript": "بوت‌کمپ جاوااسکریپت و تایپ‌اسکریپت",
+    "coursePython": "پایتون برای ماشین لرنینگ و علم داده",
+    "courseCleanCode": "کد تمیز و دیزاین پترن‌ها",
     "linkLearningPaths": "مسیرهای یادگیری برنامه‌نویسی",
-    "linkSql": "آموزش پایگاه داده SQL",
-    "linkBlog": "بلاگ و مقالات آموزشی",
-    "linkFaq": "سوالات متداول",
+    "linkBlog": "وبلاگ و مقالات آموزشی",
+    "linkAbout": "درباره لرنینو",
+    "courseFigma": "سیستم‌های دیزاین پیشرفته در فیگما",
     "newsletter": {
       "badge": "خبرنامه هفتگی",
       "title": "با ما به‌روز بمان",
@@ -795,6 +795,7 @@
     "pendingApproval": "نظر شما ثبت شد و پس از بررسی نمایش داده می‌شود",
     "loginToComment": "برای ارسال نظر ابتدا وارد شوید",
     "loadMoreComments": "نظرات بیشتر",
+    "loadMoreBlogs": "مقالات بیشتر",
     "noComments": "اولین نظر را شما بنویسید!",
     "postNotFound": "مقاله مورد نظر یافت نشد."
   },
@@ -1963,7 +1964,8 @@
         "publishedDescription": "با فعال بودن، مقاله برای همه کاربران قابل مشاهده است",
         "submitCreate": "انتشار مقاله",
         "submitEdit": "ذخیره تغییرات",
-        "cancel": "انصراف"
+        "cancel": "انصراف",
+        "postNotFound": "مقاله مورد نظر یافت نشد."
       },
       "confirmDelete": {
         "title": "حذف مقاله",

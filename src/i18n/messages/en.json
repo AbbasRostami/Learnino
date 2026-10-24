@@ -128,14 +128,14 @@
     "rights": "Learnino - All rights reserved.",
     "developedBy": "Designed & Developed by",
     "highlightTitle": "Learnino",
-    "courseHtmlCss": "Complete HTML & CSS Course",
-    "courseJavascript": "Modern JavaScript Course",
-    "courseReactNext": "Advanced React & Next.js",
-    "coursePython": "Project-based Python Course",
+    "courseReactNext": "React 19 & Next.js 15 Masterclass",
+    "courseJavascript": "Complete JS & TypeScript Bootcamp",
+    "coursePython": "Python for Machine Learning & Data Science",
+    "courseCleanCode": "Clean Code & Design Patterns",
     "linkLearningPaths": "Programming Learning Paths",
-    "linkSql": "SQL Database Course",
     "linkBlog": "Blog & Articles",
-    "linkFaq": "FAQ",
+    "linkAbout": "About Learnino",
+    "courseFigma": "Advanced Design Systems in Figma",
     "newsletter": {
       "badge": "Weekly Newsletter",
       "title": "Stay in the loop",
@@ -795,6 +795,7 @@
     "pendingApproval": "Your comment was submitted and will appear after review",
     "loginToComment": "Please login to leave a comment",
     "loadMoreComments": "Load More Comments",
+    "loadMoreBlogs": "Load More Blogs",
     "noComments": "Be the first to comment!",
     "postNotFound": "Article not found."
   },
@@ -1960,7 +1961,8 @@
         "publishedDescription": "When enabled, the article is visible to all users",
         "submitCreate": "Publish Article",
         "submitEdit": "Save Changes",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "postNotFound": "Article not found."
       },
       "confirmDelete": {
         "title": "Delete Article",
