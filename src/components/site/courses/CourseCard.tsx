@@ -114,7 +114,7 @@ export function CourseCard({ course, priority = false }: CourseCardProps) {
 
         <div className="h-11 md:h-13 mb-2 flex items-start overflow-hidden">
           <h3
-            className="line-clamp-2 text-base md:text-lg font-bold text-foreground leading-snug group-hover:text-primary transition-colors"
+            className="line-clamp-2 text-base font-bold text-foreground leading-snug group-hover:text-primary transition-colors"
             itemProp="name"
           >
             <Link href={`/courses/${course?.slug}`}>{course?.title}</Link>

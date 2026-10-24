@@ -14,7 +14,6 @@ import {
 import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
@@ -26,8 +25,17 @@ const danaFont = localFont({
   display: "swap",
 });
 
-const interFont = Inter({
-  subsets: ["latin"],
+const interFont = localFont({
+  src: [
+    {
+      path: "./../../../public/fonts/Inter-Variable.ttf",
+      style: "normal",
+    },
+    {
+      path: "./../../../public/fonts/Inter-Italic-Variable.ttf",
+      style: "italic",
+    },
+  ],
   variable: "--font-inter",
   display: "swap",
 });
