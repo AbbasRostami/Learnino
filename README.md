@@ -15,6 +15,7 @@
 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
 <img src="https://img.shields.io/badge/Tailwind_CSS_v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS v4" />
 <img src="https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=shadcnui&logoColor=white" alt="shadcn/ui" />
+<img src="https://img.shields.io/badge/Base_UI-161618?style=for-the-badge&logo=baseui&logoColor=white" alt="Base UI" />
 
 <br />
 
@@ -45,6 +46,9 @@
 
 <a href="https://learnino.vercel.app" target="_blank">
   <img src="https://img.shields.io/badge/🌐_Live_Site-learnino.vercel.app-4f46e5?style=for-the-badge" alt="Live Site" />
+</a>
+<a href="https://learnino.vercel.app/en/admin-login" target="_blank">
+  <img src="https://img.shields.io/badge/🛡️_Admin_Login-/en/admin--login-433E38?style=for-the-badge" alt="Admin Login" />
 </a>
 <a href="https://github.com/AbbasRostami/Course-Shop-Express-JS" target="_blank">
   <img src="https://img.shields.io/badge/🔌_Backend_API-Course--Shop--Express--JS-433E38?style=for-the-badge" alt="Backend API" />
@@ -116,7 +120,7 @@ The UI/UX design was crafted from scratch — the visual language, component sty
 - Profile overview with enrollment stats
 - My courses — enrolled courses list
 - Order history with cancellation
-- Wallet — balance, charge via Zarinpal, full transaction history (Jalali/Persian calendar dates)
+- Wallet — balance, charge via Zarinpal, full transaction history (Persian locale dates via native Intl)
 - Favorites — bookmarked courses and blog posts
 - Comments — user's own comment history
 - Settings — profile update with avatar upload
@@ -143,9 +147,9 @@ The UI/UX design was crafted from scratch — the visual language, component sty
 - 🛡️ **Security headers** — X-Frame-Options, HSTS, Content-Type-Options, Permissions-Policy, Referrer-Policy
 - 📦 **PWA-ready** — Web app manifest with maskable icons
 - 🔔 **Toast notifications** — Sonner with locale-aware positioning
-- 🎬 **Smooth animations** — Framer Motion for page transitions, hover effects, and scroll reveals
+- 🎬 **Smooth animations** — Motion for page transitions, hover effects, and scroll reveals
 - 🧼 **HTML sanitization** — Isomorphic DOMPurify for safe rich-text rendering
-- 📅 **Jalali calendar** — Persian date formatting via jalaali-js
+- 📅 **Persian date formatting** — Native Intl API for locale-aware dates (fa-IR / en-US)
 
 ---
 
@@ -158,15 +162,16 @@ The UI/UX design was crafted from scratch — the visual language, component sty
 | **UI Library** | React 19 | Component-based UI |
 | **Styling** | Tailwind CSS v4 | Utility-first CSS with `@theme` tokens |
 | **Component System** | shadcn/ui v4 (base-nova) | 50+ accessible primitives, RTL-enabled |
+| **UI Primitives** | @base-ui/react 1 | Headless accessible component primitives |
 | **Internationalization** | next-intl 4 | Bilingual (fa/en) with locale routing |
-| **Data Fetching** | TanStack Query 5 | Server-state caching, mutations, devtools |
+| **Data Fetching** | TanStack Query 5 | Server-state caching, mutations |
 | **API Client** | up-fetch 2 | Fetch wrapper with auto token refresh |
 | **State Management** | Zustand 5 | Auth state with persist middleware |
 | **URL State** | nuqs 2 | Type-safe URL query parameter management |
 | **Forms** | react-hook-form 7 | Performant form handling |
 | **Validation** | Zod 4 | Schema validation for forms and inputs |
 | **Rich Text Editor** | TipTap 3 | Blog post editor with 15+ extensions |
-| **Animations** | Framer Motion 13 | Page transitions and micro-interactions |
+| **Animations** | Motion 13 | Page transitions and micro-interactions |
 | **Charts** | Recharts 3 | Admin dashboard analytics visualizations |
 | **Carousels** | Embla Carousel 8 | Autoplay-enabled course/teacher carousels |
 | **Theming** | next-themes 0.4 | Dark/light mode with system detection |
@@ -174,9 +179,10 @@ The UI/UX design was crafted from scratch — the visual language, component sty
 | **Toasts** | sonner 2 | Rich, accessible notifications |
 | **JWT** | jose 6 | Edge-compatible JWT verification in middleware |
 | **HTML Sanitization** | isomorphic-dompurify 4 | Safe rich-text rendering |
-| **Date Formatting** | jalaali-js 2 | Persian/Jalali calendar conversion |
+| **Date Formatting** | Native Intl API | Locale-aware dates (fa-IR / en-US) |
 | **Command Palette** | cmdk 1 | Searchable command interface |
 | **Resizable Panels** | react-resizable-panels 4 | Adjustable panel layouts |
+| **OTP Input** | input-otp 1 | Email verification & password reset codes |
 | **Compiler** | babel-plugin-react-compiler 1.0 | Automatic memoization & optimization |
 | **Unit Testing** | Vitest 5 | Fast test runner with jsdom |
 | **Component Testing** | Testing Library | User-event interaction testing |
@@ -185,7 +191,7 @@ The UI/UX design was crafted from scratch — the visual language, component sty
 | **Linting** | ESLint 9 + eslint-config-next | Code quality and Next.js best practices |
 | **Package Manager** | pnpm 12 | Fast, disk-efficient package management |
 | **Containerization** | Docker | Multi-stage build with standalone output |
-| **CI/CD** | GitHub Actions | Automated test and build pipeline |
+| **CI/CD** | GitHub Actions | Automated test, build, and deploy pipeline |
 
 ---
 
@@ -252,7 +258,7 @@ learnino/
 │   │   └── sitemap.ts                      # Dynamic sitemap (courses, posts, teachers)
 │   │
 │   ├── components/
-│   │   ├── ui/                             # 50+ shadcn/ui primitives
+│   │   ├── ui/                             # 50+ shadcn/ui primitives (Base UI)
 │   │   ├── shared/                         # AppBreadcrumb, Carousel, SafeHtml
 │   │   ├── layout/                         # Navbar, Footer
 │   │   ├── providers/                      # QueryProvider, ThemeProvider
@@ -310,7 +316,7 @@ learnino/
 │   │
 │   ├── store/
 │   │   ├── authStore.ts                    # Zustand auth state (persisted)
-│   │   └── AdminSidebarContext.tsx         # Admin sidebar UI context
+│   │   └── AdminSidebarContext.tsx         # Zustand admin sidebar UI store
 │   │
 │   ├── types/                              # TypeScript types by domain
 │   ├── utils/                              # formatters, formData helpers
@@ -326,7 +332,10 @@ learnino/
 │   └── fixtures/                           # test data
 │
 ├── public/
-│   ├── fonts/Dana.ttf                      # Persian font (local)
+│   ├── fonts/
+│   │   ├── Dana.ttf                       # Persian font (local)
+│   │   ├── Inter-Variable.ttf            # English font (local, variable)
+│   │   └── Inter-Italic-Variable.ttf      # English italic (local, variable)
 │   └── logo/                               # Brand logos (EN/FA, light/dark)
 │
 ├── .github/workflows/ci.yml                # GitHub Actions CI pipeline
@@ -423,7 +432,7 @@ Every API interaction is a React Query hook in `src/services/`. This provides:
 - Automatic caching and background refetching
 - Optimistic updates for mutations
 - Loading/error states handled declaratively
-- DevTools integration for debugging server state
+- Type-safe query keys and mutation invalidation
 
 ---
 
@@ -433,7 +442,7 @@ Learnino is fully bilingual with **Persian (fa)** as the default locale and **En
 
 - **Routing** — Locale is part of the URL (`/fa/courses`, `/en/courses`) via `next-intl` routing
 - **Direction** — Persian uses RTL, English uses LTR, handled by `DirectionProvider`
-- **Fonts** — Dana (local, Persian) and Inter (Google, English) loaded with `next/font`
+- **Fonts** — Dana (local, Persian) and Inter (local variable, English) loaded with `next/font`
 - **Translations** — All UI strings in `src/i18n/messages/fa.json` and `en.json`
 - **Cookie persistence** — Locale preference stored in `NEXT_LOCALE` cookie (1 year expiry)
 - **Locale-aware UI** — Toast position, date formats, and layout directions adapt automatically
@@ -468,6 +477,8 @@ Authentication is handled through a dual-token JWT system integrated with the ba
 | `ADMIN` | Read-only admin panel + comment moderation |
 | `SUPER_ADMIN` | Full admin panel — all CRUD operations |
 
+> **Admin Login:** The admin panel has a dedicated login page separate from the student login. Access it at [learnino.vercel.app/en/admin-login](https://learnino.vercel.app/en/admin-login) — only `ADMIN` and `SUPER_ADMIN` roles are admitted.
+
 ---
 
 ## 🎨 Design System & Theming
@@ -490,7 +501,7 @@ The theme is defined in `globals.css` using Tailwind v4's `@theme` directive wit
 
 ### Component Library
 
-50+ shadcn/ui primitives configured with the **base-nova** style, RTL support, and CSS variables for theming. Components are fully accessible (ARIA-compliant) and keyboard-navigable.
+50+ shadcn/ui primitives configured with the **base-nova** style (powered by [Base UI](https://base-ui.com) headless primitives, not Radix), with RTL support and CSS variables for theming. Components are fully accessible (ARIA-compliant) and keyboard-navigable.
 
 ### Custom Components
 
@@ -533,10 +544,10 @@ Every page generates rich metadata via `generateMetadata`:
 ### Performance Optimizations
 
 - **React Compiler** — Enabled with `reactCompiler: true` and `cacheComponents: true` for automatic memoization
-- **Image optimization** — Cloudinary remote patterns with quality presets (65–90)
+- **Image optimization** — Cloudinary remote patterns with quality presets (65–95)
 - **Standalone output** — Optimized Docker builds with minimal production image
 - **Code splitting** — App Router automatic per-route code splitting
-- **Font optimization** — `next/font` with `display: swap`
+- **Font optimization** — `next/font` with `display: swap` (both fonts self-hosted locally)
 
 ### Security Headers
 
@@ -559,7 +570,7 @@ Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
 | URL query params | nuqs 2 | Admin tables, filters, pagination |
 | Form state | react-hook-form 7 | All forms |
 | Form validation | Zod 4 | `src/schemas/` |
-| Admin sidebar UI | React Context | `src/store/AdminSidebarContext.tsx` |
+| Admin sidebar UI | Zustand store | `src/store/AdminSidebarContext.tsx` |
 
 The auth store uses Zustand's `persist` middleware with the key `"auth-storage"`, tracking `isAuthenticated` state that the API client updates on login, logout, and token refresh failure.
 
@@ -727,16 +738,34 @@ The easiest deployment path is [Vercel](https://vercel.com):
 
 ## ⚙️ CI/CD Pipeline
 
-The GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push and pull request to `main`/`master`:
+The GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push to `main`/`master`. It's a full CI/CD pipeline that tests, builds, and deploys to Vercel automatically:
 
 ```
-Checkout → Setup pnpm → Setup Node 22 → Install (frozen-lockfile) → Test (vitest) → Build (Next.js)
+Checkout → Setup pnpm → Setup Node 22 → Install (frozen-lockfile)
+  → Test (Vitest) → Wake Render Backend → Link Vercel Project
+  → Build (Next.js) → Deploy to Vercel (production)
 ```
 
-The pipeline ensures:
-- ✅ All unit and integration tests pass
-- ✅ The production build succeeds without errors
-- ✅ Dependencies are locked via `pnpm-lock.yaml`
+**Pipeline steps:**
+
+| Step | Description |
+|---|---|
+| Install | `pnpm install --frozen-lockfile` for reproducible builds |
+| Test | `pnpm test:run` — all unit and integration tests must pass |
+| Wake Backend | `curl` to the Render-hosted backend to spin it up before build |
+| Build | `pnpm build` with `NEXT_PUBLIC_*` and `JWT_ACCESS_SECRET` env vars |
+| Deploy | `npx vercel --prod` — automatic production deployment to Vercel |
+
+**Required GitHub secrets:**
+
+| Secret | Purpose |
+|---|---|
+| `VERCEL_TOKEN` | Vercel deployment token |
+| `VERCEL_ORG_ID` | Vercel organization ID |
+| `VERCEL_PROJECT_ID` | Vercel project ID |
+| `NEXT_PUBLIC_APP_URL` | Frontend URL for SEO metadata |
+| `NEXT_PUBLIC_API_BASE_URL` | Backend API URL |
+| `JWT_ACCESS_SECRET` | JWT secret for middleware (must match backend) |
 
 ---
 
