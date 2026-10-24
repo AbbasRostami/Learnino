@@ -27,7 +27,7 @@
 
 <br />
 
-<img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white" alt="Framer Motion" />
+<img src="https://img.shields.io/badge/Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white" alt="Motion" />
 <img src="https://img.shields.io/badge/next--intl-000000?style=for-the-badge&logoColor=white" alt="next-intl" />
 <img src="https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white" alt="PWA" />
 <img src="https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white" alt="Vitest" />
@@ -52,16 +52,6 @@
 
 <br />
 <br />
-
-<a href="https://github.com/AbbasRostami/learnino/issues">
-  <img src="https://img.shields.io/badge/Report_Bug-dc2626?style=for-the-badge" alt="Report Bug" />
-</a>
-<a href="https://github.com/AbbasRostami/learnino/issues">
-  <img src="https://img.shields.io/badge/Request_Feature-4f46e5?style=for-the-badge" alt="Request Feature" />
-</a>
-<a href="https://github.com/AbbasRostami/learnino">
-  <img src="https://img.shields.io/badge/⭐_Star_Repo-facc15?style=for-the-badge" alt="Star this repo" />
-</a>
 
 </div>
 
