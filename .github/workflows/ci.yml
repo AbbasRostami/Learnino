@@ -37,6 +37,7 @@ jobs:
         env:
           NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
           NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}api
           JWT_ACCESS_SECRET: ${{ secrets.JWT_ACCESS_SECRET }}
 
       - name: Deploy to Vercel
