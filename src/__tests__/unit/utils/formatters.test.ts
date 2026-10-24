@@ -26,15 +26,15 @@ describe("formatNumber", () => {
     expect(formatNumber("abc")).toBe("-");
   });
 
-  it("should format a number with Persian locale by default", () => {
+  it("should format a number with English locale by default", () => {
     const result = formatNumber(1000000);
-    expect(result).toContain("۱");
-    expect(result).toContain("۰");
+    expect(result).toBe("1,000,000");
   });
 
-  it("should format a number with English locale when specified", () => {
-    expect(formatNumber(1000000, "en")).toBe("1,000,000");
-    expect(formatNumber(1000000, "en-US")).toBe("1,000,000");
+  it("should format a number with Persian locale when specified", () => {
+    const result = formatNumber(1000000, "fa");
+    expect(result).toContain("۱");
+    expect(result).toContain("۰");
   });
 
   it("should format zero correctly in both locales", () => {
