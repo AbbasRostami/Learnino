@@ -38,7 +38,7 @@ export function FooterBrand() {
   ];
 
   return (
-    <div className="lg:col-span-5 flex flex-col gap-5">
+    <div className="flex flex-col gap-5">
       <Logo />
 
       <p className="text-sm text-muted-foreground leading-relaxed max-w-md">
