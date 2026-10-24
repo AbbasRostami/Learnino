@@ -3,12 +3,11 @@
 import { AppBreadcrumb } from "@/components/shared/AppBreadcrumb";
 import { Button } from "@/components/ui/button";
 import { useAdminTableParams } from "@/hooks/useAdminTableParams";
-import { useCourses } from "@/services";
-import type { Course, GetCoursesParams, GetCoursesResponse } from "@/types";
+import { useInfiniteCourses } from "@/services";
+import type { GetCoursesParams, GetCoursesResponse } from "@/types";
 import { Loader2, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs";
-import { useState } from "react";
 
 import { CourseCardSkeleton } from "./CourseCardSkeleton";
 import { CoursesFilters } from "./CoursesFilters";
@@ -23,8 +22,6 @@ interface CoursesPageClientProps {
 
 export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
   const t = useTranslations("course");
-  const [allCourses, setAllCourses] = useState<Course[]>([]);
-  const [hasLoadedMore, setHasLoadedMore] = useState(false);
 
   const {
     params,
@@ -44,22 +41,21 @@ export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
     },
   });
 
-  const { data, isLoading, isFetching } = useCourses({
-    ...apiParams,
-    page: hasLoadedMore ? undefined : params.page,
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteCourses(apiParams);
 
-  const currentData = data?.data ?? initialData;
-  const courses = hasLoadedMore ? allCourses : (currentData?.items ?? []);
-  const pagination = currentData?.pagination;
-  const totalPages = pagination
-    ? Math.ceil(pagination.total / pagination.limit)
-    : 1;
-  const hasMore = pagination ? params.page < totalPages : false;
+  const courses =
+    data?.pages.flatMap((page) => page?.data?.items ?? []) ??
+    initialData?.items ??
+    [];
 
-  const showSkeleton = isLoading && !initialData;
+  const totalResults =
+    data?.pages[0]?.data?.pagination?.total ??
+    initialData?.pagination?.total ??
+    0;
 
-  const isEmpty = !showSkeleton && courses?.length === 0;
+  const showSkeleton = isLoading && !initialData && courses.length === 0;
+  const isEmpty = !showSkeleton && courses.length === 0;
 
   const hasActiveFilters = Boolean(
     (params.categories && params.categories.length > 0) ||
@@ -68,11 +64,6 @@ export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
     params.maxPrice != null ||
     (searchValue && searchValue.trim().length > 0),
   );
-
-  const handleLoadMore = () => {
-    setHasLoadedMore(true);
-    setAllCourses([...courses, ...(data?.data?.items ?? [])]);
-  };
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
@@ -112,7 +103,7 @@ export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
 
         <div className="min-w-0">
           <CoursesToolbar
-            resultsCount={pagination?.total ?? 0}
+            resultsCount={totalResults}
             searchValue={searchValue}
             sortBy={params.sortBy}
             order={params.order}
@@ -144,9 +135,9 @@ export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
             />
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
-              {courses?.map((course, index) => (
+              {courses.map((course, index) => (
                 <CoursesListCard
-                  key={course?.id}
+                  key={course.id}
                   course={course}
                   priority={index < 3}
                   index={index}
@@ -155,16 +146,18 @@ export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
             </div>
           )}
 
-          {hasMore && !showSkeleton && !isEmpty && (
+          {hasNextPage && !showSkeleton && !isEmpty && (
             <div className="mt-10 flex justify-center">
               <Button
                 variant="outline"
                 size="lg"
-                onClick={handleLoadMore}
-                disabled={isFetching}
+                onClick={() => fetchNextPage()}
+                disabled={isFetchingNextPage}
                 className="rounded-full px-8 gap-2 shadow-xs hover:shadow-md transition-shadow font-bold cursor-pointer"
               >
-                {isFetching && <Loader2 className="h-4 w-4 animate-spin" />}
+                {isFetchingNextPage && (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                )}
                 <span>{t("loadMore")}</span>
               </Button>
             </div>

@@ -4,12 +4,11 @@ import { AppBreadcrumb } from "@/components/shared/AppBreadcrumb";
 import { PostsGridSkeleton } from "@/components/skeleton";
 import { Button } from "@/components/ui/button";
 import { useAdminTableParams } from "@/hooks/useAdminTableParams";
-import { usePosts } from "@/services";
+import { useInfinitePosts } from "@/services";
 import type { GetPostsParams, Post } from "@/types";
 import { Loader2, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { parseAsString } from "nuqs";
-import { useState } from "react";
 import { BlogFilters } from "./BlogFilters";
 import { BlogPostCard } from "./BlogPostCard";
 import { EmptyBlogState } from "./EmptyBlogState";
@@ -24,8 +23,6 @@ export function BlogPageClient({
   locale,
 }: BlogPageClientProps) {
   const t = useTranslations("blog");
-  const [allPosts, setAllPosts] = useState<Post[]>(initialPosts);
-  const [hasLoadedMore, setHasLoadedMore] = useState(false);
 
   const { params, apiParams, searchValue, setSearch, setFilter } =
     useAdminTableParams<GetPostsParams>({
@@ -35,27 +32,15 @@ export function BlogPageClient({
       },
     });
 
-  const { data, isLoading, isFetching } = usePosts({
-    ...apiParams,
-    page: hasLoadedMore ? undefined : params.page,
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfinitePosts(apiParams);
 
-  const posts = hasLoadedMore
-    ? allPosts
-    : initialPosts.length > 0 && !params.search && !params.category
-      ? initialPosts
-      : (data?.data?.items ?? []);
+  const posts =
+    data?.pages.flatMap((page) => page?.data?.items ?? []) ?? initialPosts;
 
-  const pagination = data?.data?.pagination;
-  const totalPages = pagination
-    ? Math.ceil(pagination.total / pagination.limit)
-    : 1;
-  const hasMore = pagination ? params.page < totalPages : false;
-
-  const handleLoadMore = () => {
-    setHasLoadedMore(true);
-    setAllPosts([...posts, ...(data?.data?.items ?? [])]);
-  };
+  const showSkeleton =
+    isLoading && initialPosts.length === 0 && posts.length === 0;
+  const isEmpty = !showSkeleton && posts.length === 0;
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -92,13 +77,13 @@ export function BlogPageClient({
         }
       />
 
-      {isLoading ? (
+      {showSkeleton ? (
         <PostsGridSkeleton count={6} showHeader={false} />
-      ) : posts?.length === 0 ? (
+      ) : isEmpty ? (
         <EmptyBlogState />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts?.map((post, index) => (
+          {posts.map((post, index) => (
             <BlogPostCard
               key={post?.id}
               post={post}
@@ -110,17 +95,19 @@ export function BlogPageClient({
         </div>
       )}
 
-      {hasMore && !isLoading && (
+      {hasNextPage && !showSkeleton && !isEmpty && (
         <div className="mt-12 flex justify-center">
           <Button
             variant="outline"
             size="lg"
-            onClick={handleLoadMore}
-            disabled={isFetching}
+            onClick={() => fetchNextPage()}
+            disabled={isFetchingNextPage}
             className="rounded-full px-8 cursor-pointer gap-2 shadow-sm font-bold"
           >
-            {isFetching ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-            <span>{t("loadMoreComments")}</span>
+            {isFetchingNextPage ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : null}
+            <span>{t("loadMoreBlogs")}</span>
           </Button>
         </div>
       )}

@@ -42,7 +42,7 @@ export function BlogPostCard({
     >
       <Link
         href={`/blog/${post?.slug}`}
-        className="relative block aspect-16/10 w-full overflow-hidden bg-muted rounded-t-[2rem] p-1.5"
+        className="relative block aspect-16/10 w-full overflow-hidden rounded-t-[2rem] p-1.5"
         aria-label={post?.title}
       >
         <div className="relative h-full w-full overflow-hidden rounded-[1.5rem]">
@@ -54,7 +54,7 @@ export function BlogPostCard({
               priority={priority}
               quality={75}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-110 motion-reduce:transition-none"
+              className="object-fill transition-transform duration-700 group-hover:scale-110 motion-reduce:transition-none"
               itemProp="image"
             />
           ) : (
@@ -92,7 +92,7 @@ export function BlogPostCard({
         </div>
 
         <h2
-          className="mb-3 line-clamp-2 text-lg font-black text-foreground leading-tight group-hover:text-primary transition-colors min-h-12"
+          className="mb-3 line-clamp-2 text-base font-black text-foreground leading-tight group-hover:text-primary transition-colors min-h-12"
           itemProp="headline"
         >
           <Link href={`/blog/${post?.slug}`}>{post?.title}</Link>

@@ -120,7 +120,7 @@ export function CoursesListCard({
         </div>
 
         <h2
-          className="mb-2 line-clamp-2 text-base md:text-[17px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors min-h-12"
+          className="mb-2 line-clamp-2 text-base font-black text-foreground leading-snug group-hover:text-primary transition-colors min-h-12"
           itemProp="name"
         >
           <Link
@@ -145,7 +145,7 @@ export function CoursesListCard({
                     fill
                     quality={85}
                     sizes="32px"
-                    className="object-cover"
+                    className="object-fill"
                   />
                 ) : (
                   <div className="flex h-full items-center justify-center bg-primary/10 text-primary-700 dark:text-primary-300 text-xs font-bold">
