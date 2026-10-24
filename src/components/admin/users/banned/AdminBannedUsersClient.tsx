@@ -162,7 +162,7 @@ export function AdminBannedUsersClient() {
           href="/admin/users"
           className={cn(
             buttonVariants({ variant: "outline" }),
-            "rounded-xl h-11 gap-2 cursor-pointer shadow-xs",
+            "rounded-md h-9 gap-2 cursor-pointer shadow-xs",
           )}
         >
           <ArrowLeft className="h-4 w-4 rtl:rotate-180" />

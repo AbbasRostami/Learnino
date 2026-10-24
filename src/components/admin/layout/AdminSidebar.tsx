@@ -255,7 +255,8 @@ function SidebarProfile({
                   src={profile.avatar}
                   alt={userName}
                   fill
-                  sizes="40px"
+                  sizes="60px"
+                  quality={75}
                   className="object-cover"
                 />
               ) : (

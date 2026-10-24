@@ -24,14 +24,14 @@ export function AdminPageHeader({
       <div className="flex items-center gap-3">
         <div
           className={cn(
-            "flex h-12 w-12 items-center justify-center rounded-2xl shadow-xs",
+            "flex h-8 w-8 items-center justify-center rounded-2xl shadow-xs",
             iconColor,
           )}
         >
-          <Icon className="h-6 w-6" aria-hidden="true" />
+          <Icon className="h-4 w-4" aria-hidden="true" />
         </div>
         <div>
-          <h1 className="text-2xl font-black text-foreground">{title}</h1>
+          <h1 className="text-xl font-black text-foreground">{title}</h1>
           {subtitle && (
             <p className="text-xs text-muted-foreground mt-1">{subtitle}</p>
           )}

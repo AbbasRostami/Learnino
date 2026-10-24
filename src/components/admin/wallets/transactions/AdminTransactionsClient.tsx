@@ -1,6 +1,10 @@
 "use client";
 
-import { AdminDataTable, AdminPageHeader, AdminPagination } from "@/components/admin/shared";
+import {
+  AdminDataTable,
+  AdminPageHeader,
+  AdminPagination,
+} from "@/components/admin/shared";
 import { buttonVariants } from "@/components/ui/button";
 import { useAdminTableParams } from "@/hooks/useAdminTableParams";
 import { Link } from "@/i18n/routing";
@@ -53,7 +57,7 @@ export function AdminTransactionsClient() {
             href="/admin/wallets"
             className={cn(
               buttonVariants({ variant: "outline" }),
-              "rounded-xl h-11 gap-2 cursor-pointer shadow-xs",
+              "rounded-md h-9 gap-2 cursor-pointer shadow-xs",
             )}
           >
             <ArrowLeft className="h-4 w-4 rtl:rotate-180" />

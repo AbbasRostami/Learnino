@@ -64,7 +64,7 @@ export function AdminWalletsClient() {
             href="/admin/wallets/transactions"
             className={cn(
               buttonVariants({ variant: "outline" }),
-              "rounded-xl h-11 gap-2 cursor-pointer shadow-xs border-primary/20 text-primary hover:bg-primary/10",
+              "rounded-md h-9 gap-2 cursor-pointer shadow-xs border-primary/20 text-primary hover:bg-primary/10",
             )}
           >
             <ArrowLeftRight className="h-4 w-4" />

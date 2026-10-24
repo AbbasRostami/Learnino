@@ -1,6 +1,6 @@
 "use client";
 
-import { AdminConfirmDialog } from "@/components/admin/shared";
+import { AdminConfirmDialog, AdminPageHeader } from "@/components/admin/shared";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -89,44 +89,35 @@ export function AdminOrderDetailClient({
 
   return (
     <div className="flex flex-col gap-6 max-w-6xl mx-auto w-full">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-border/50">
-        <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-xs">
-            <ShoppingBag className="h-6 w-6" aria-hidden="true" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-black text-foreground">
-              {t("detail.title")}
-            </h1>
-            <p className="text-xs text-muted-foreground mt-1">
-              {t("detail.subtitle")}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {isPending && (
-            <Button
-              variant="destructive"
-              onClick={() => setCancelOpen(true)}
-              className="rounded-xl h-11 gap-2 cursor-pointer bg-rose-600 hover:bg-rose-700 text-white"
-            >
-              <XCircle className="h-4 w-4" />
-              <span>{t("actions.cancelOrder")}</span>
-            </Button>
-          )}
-          <Link
-            href="/admin/orders"
-            className={cn(
-              buttonVariants({ variant: "outline" }),
-              "rounded-xl h-11 gap-2 cursor-pointer shadow-xs",
+      <AdminPageHeader
+        title={t("detail.title")}
+        subtitle={t("detail.subtitle")}
+        icon={ShoppingBag}
+        actions={
+          <div className="flex items-center gap-2">
+            {isPending && (
+              <Button
+                variant="destructive"
+                onClick={() => setCancelOpen(true)}
+                className="rounded-xl h-11 gap-2 cursor-pointer bg-rose-600 hover:bg-rose-700 text-white"
+              >
+                <XCircle className="h-4 w-4" />
+                <span>{t("actions.cancelOrder")}</span>
+              </Button>
             )}
-          >
-            <ArrowLeft className="h-4 w-4 rtl:rotate-180" />
-            <span>{t("actions.backToList")}</span>
-          </Link>
-        </div>
-      </div>
+            <Link
+              href="/admin/orders"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "rounded-md h-9 gap-2 cursor-pointer shadow-xs",
+              )}
+            >
+              <ArrowLeft className="h-4 w-4 rtl:rotate-180" />
+              <span>{t("actions.backToList")}</span>
+            </Link>
+          </div>
+        }
+      />
 
       <OrderInfoCards order={order} t={t} locale={locale} />
 

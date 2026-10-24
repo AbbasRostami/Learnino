@@ -62,7 +62,7 @@ export function AdminDiscountsClient() {
         actions={
           <Button
             onClick={() => setFormOpen(true)}
-            className="rounded-xl h-11 gap-2 cursor-pointer shadow-xs bg-primary hover:bg-primary/90 text-white"
+            className="rounded-md h-9 gap-2 cursor-pointer shadow-xs bg-primary hover:bg-primary/90 text-white"
           >
             <Plus className="h-4 w-4" />
             <span>{t("createNew")}</span>
