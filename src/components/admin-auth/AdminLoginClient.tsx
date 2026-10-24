@@ -45,8 +45,8 @@ export function AdminLoginClient() {
   } = useForm<AdminLoginInput>({
     resolver: zodResolver(adminLoginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "test@learnino.com",
+      password: "123456",
     },
   });
 
