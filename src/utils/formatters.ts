@@ -1,6 +1,6 @@
 export function formatNumber(
   num?: number | string | null,
-  locale: string = "fa",
+  locale: string = "en",
 ): string {
   if (num === null || num === undefined || num === "") return "-";
 
