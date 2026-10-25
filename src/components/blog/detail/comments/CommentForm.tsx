@@ -79,7 +79,7 @@ export function CommentForm({
           disabled={
             isSubmitting || !!errors?.content || contentValue.trim().length < 2
           }
-          className="rounded-full cursor-pointer px-6 gap-2 shadow-md hover:shadow-lg transition-all bg-primary text-primary-foreground"
+          className="rounded-full cursor-pointer py-4 px-4 gap-2 shadow-md hover:shadow-lg transition-all bg-primary text-primary-foreground"
           size="sm"
         >
           {isSubmitting ? (

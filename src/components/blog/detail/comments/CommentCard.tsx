@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useCommentReaction } from "@/services";
 import { useAuthStore } from "@/store/authStore";
@@ -9,7 +10,6 @@ import { Loader2, Reply, ThumbsDown, ThumbsUp } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { CommentForm } from "./CommentForm";
-import { Button } from "@/components/ui/button";
 
 interface CommentCardProps {
   comment: CommentTreeItem;
@@ -81,14 +81,15 @@ export function CommentCard({
 
         <div className="flex items-center gap-3 mt-2 ms-2">
           <Button
+            variant="outline"
             type="button"
             onClick={() => handleReaction("LIKE")}
             disabled={isReacting}
             className={cn(
               "flex items-center gap-1 text-xs transition-colors cursor-pointer disabled:opacity-50",
               comment?.reactions?.myReaction === "LIKE"
-                ? "text-emerald-600 dark:text-emerald-400 font-bold"
-                : "text-muted-foreground hover:text-emerald-600 dark:hover:text-emerald-400",
+                ? "bg-emerald-100 text-emerald-700 dark:text-emerald-400"
+                : "text-muted-foreground hover:text-foreground",
             )}
           >
             {isLikePending ? (
@@ -105,14 +106,15 @@ export function CommentCard({
           </Button>
 
           <Button
+            variant="outline"
             type="button"
             onClick={() => handleReaction("DISLIKE")}
             disabled={isReacting}
             className={cn(
               "flex items-center gap-1 text-xs transition-colors cursor-pointer disabled:opacity-50",
               comment?.reactions?.myReaction === "DISLIKE"
-                ? "text-rose-600 dark:text-rose-400 font-bold"
-                : "text-muted-foreground hover:text-rose-600 dark:hover:text-rose-400",
+                ? "bg-rose-100 text-destructive dark:text-rose-400"
+                : "text-muted-foreground hover:text-foreground",
             )}
           >
             {isDislikePending ? (
@@ -131,6 +133,7 @@ export function CommentCard({
 
           {isAuthenticated && depth < 2 && (
             <Button
+              variant="secondary"
               type="button"
               onClick={() => onReply(isReplying ? null : comment?.id)}
               className="flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-primary transition-colors cursor-pointer"

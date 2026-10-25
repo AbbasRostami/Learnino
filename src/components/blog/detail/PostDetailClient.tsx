@@ -103,7 +103,7 @@ export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
                 priority
                 quality={90}
                 sizes="(max-width: 768px) 100vw, 800px"
-                className="object-cover"
+                className="object-fill"
                 itemProp="image"
               />
             ) : (

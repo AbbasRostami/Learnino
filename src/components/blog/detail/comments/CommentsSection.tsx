@@ -106,7 +106,7 @@ export function CommentsSection({ postSlug, postId }: CommentsSectionProps) {
         </div>
       ) : (
         <div className="flex flex-col gap-5">
-          {comments.map((comment) => (
+          {comments?.map((comment) => (
             <CommentCard
               key={comment?.id}
               comment={comment}
