@@ -102,7 +102,7 @@ describe("getCreatePostSchema", () => {
   });
 
   it("should fail when Persian content stripped of HTML is less than 10 characters", () => {
-    const shortContent = "<p><strong>hi</strong></p>"; // stripped = "hi" (2 chars)
+    const shortContent = "<p><strong>hi</strong></p>";
     const result = schema.safeParse(
       createValidPostData({ contentFa: shortContent }),
     );
