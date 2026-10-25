@@ -14,16 +14,16 @@ export function BreadcrumbJsonLd({ items }: BreadcrumbJsonLdProps) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: items.map((item, index) => ({
+    itemListElement: items?.map((item, index) => ({
       "@type": "ListItem",
       position: index + 1,
-      name: item.name,
-      ...(item.url && { item: `${SEO_CONFIG.baseUrl}${item.url}` }),
+      name: item?.name,
+      ...(item?.url && { item: `${SEO_CONFIG.baseUrl}${item?.url}` }),
     })),
   };
 
   const uniqueId = items
-    .map((i) => i.name)
+    .map((i) => i?.name)
     .join("-")
     .replace(/\s+/g, "");
 
