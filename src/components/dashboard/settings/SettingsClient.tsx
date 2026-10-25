@@ -3,12 +3,24 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AtSign, KeyRound, Palette, Settings2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { SettingsAppearance } from "./SettingsAppearance";
 import { SettingsChangeEmail } from "./SettingsChangeEmail";
 import { SettingsChangePassword } from "./SettingsChangePassword";
 
 export function SettingsClient() {
   const t = useTranslations("dashboard");
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get("tab");
+
+  const [activeTab, setActiveTab] = useState<string>("appearance");
+
+  useEffect(() => {
+    if (tabParam && ["appearance", "password", "email"].includes(tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, [tabParam]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -26,28 +38,19 @@ export function SettingsClient() {
         </div>
       </div>
 
-      <Tabs defaultValue="appearance" className="w-full">
-        <TabsList className="flex flex-wrap w-full sm:w-fit rounded-2xl p-1 bg-muted/50 mb-6 h-auto">
-          <TabsTrigger
-            value="appearance"
-            className="rounded-xl text-xs font-bold gap-1.5 px-4 py-2"
-          >
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList>
+          <TabsTrigger value="appearance" className="cursor-pointer">
             <Palette className="h-3.5 w-3.5" aria-hidden="true" />
             <span>{t("tabAppearance")}</span>
           </TabsTrigger>
 
-          <TabsTrigger
-            value="password"
-            className="rounded-xl text-xs font-bold gap-1.5 px-4 py-2"
-          >
+          <TabsTrigger value="password" className="cursor-pointer">
             <KeyRound className="h-3.5 w-3.5" aria-hidden="true" />
             <span>{t("tabPassword")}</span>
           </TabsTrigger>
 
-          <TabsTrigger
-            value="email"
-            className="rounded-xl text-xs font-bold gap-1.5 px-4 py-2"
-          >
+          <TabsTrigger value="email" className="cursor-pointer">
             <AtSign className="h-3.5 w-3.5" aria-hidden="true" />
             <span>{t("tabEmail")}</span>
           </TabsTrigger>

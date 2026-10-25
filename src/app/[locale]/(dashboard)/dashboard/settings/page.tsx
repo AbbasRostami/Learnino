@@ -1,6 +1,7 @@
 import { SettingsClient } from "@/components/dashboard/settings/SettingsClient";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 
 export async function generateMetadata({
   params,
@@ -24,5 +25,9 @@ export default async function SettingsPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <SettingsClient />;
+  return (
+    <Suspense fallback={null}>
+      <SettingsClient />
+    </Suspense>
+  );
 }

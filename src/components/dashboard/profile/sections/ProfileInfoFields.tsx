@@ -87,7 +87,7 @@ export function ProfileInfoFields({
             {t("emailLabel")}
           </FieldLabel>
           <Link
-            href="/dashboard/settings"
+            href="/dashboard/settings?tab=email"
             className="text-xs font-bold text-primary hover:underline inline-flex items-center gap-1"
           >
             <span>{t("changeEmailLink")}</span>
