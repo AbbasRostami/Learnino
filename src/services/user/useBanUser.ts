@@ -22,6 +22,7 @@ export const useBanUser = ({ onSuccessCallback }: UseBanUserOptions = {}) => {
       toast.success(response.data.message || t("banSuccess"));
 
       queryClient.invalidateQueries({ queryKey: ["admin", "users"] });
+      queryClient.invalidateQueries({ queryKey: ["admin", "blacklist"] });
       queryClient.invalidateQueries({
         queryKey: ["admin", "users", userId],
       });
