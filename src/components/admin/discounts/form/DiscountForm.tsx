@@ -75,13 +75,13 @@ export function DiscountForm({ onSuccess, onCancel }: DiscountFormProps) {
                   className="rounded-xl"
                 >
                   <SelectGroup>
-                    {typeOptions.map((opt) => (
+                    {typeOptions?.map((opt) => (
                       <SelectItem
-                        key={opt.value}
-                        value={opt.value}
+                        key={opt?.value}
+                        value={opt?.value}
                         className="text-xs font-bold cursor-pointer"
                       >
-                        {opt.label}
+                        {opt?.label}
                       </SelectItem>
                     ))}
                   </SelectGroup>

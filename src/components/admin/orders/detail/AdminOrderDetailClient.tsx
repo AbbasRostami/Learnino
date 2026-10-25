@@ -230,7 +230,7 @@ export function AdminOrderDetailClient({
 
         {order?.items?.length ? (
           <div className="flex flex-col gap-3">
-            {order.items.map((item) => (
+            {order?.items?.map((item) => (
               <div
                 key={item?.id}
                 className="flex items-center justify-between gap-4 p-3 rounded-2xl border border-border/40 bg-background/80 hover:bg-muted/30 transition-colors"
