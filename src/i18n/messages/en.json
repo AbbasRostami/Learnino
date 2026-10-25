@@ -374,6 +374,9 @@
     "comments": "Comments",
     "currency": "Toman",
 
+    "checkingStatus": "Checking status...",
+    "alreadyEnrolled": "You are enrolled in this course",
+
     "emptyTitle": "No courses available yet",
     "emptyDescription": "Newly published courses will show up here.",
     "emptyFilteredTitle": "No courses match your filters",
@@ -1232,7 +1235,7 @@
       },
       "table": {
         "user": "User",
-        "contact": "Contact",
+        "contact": "Email",
         "role": "Role",
         "status": "Status",
         "stats": "Stats",
