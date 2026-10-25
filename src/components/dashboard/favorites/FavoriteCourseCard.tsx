@@ -5,6 +5,7 @@ import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { getCategoryStyle } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";
+import { FavoriteCourse } from "@/types";
 import { formatNumber } from "@/utils/formatters";
 import {
   BookOpen,
@@ -19,7 +20,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 interface FavoriteCourseCardProps {
-  courseData: any;
+  courseData: FavoriteCourse;
   onRemove: () => void;
   isRemoving: boolean;
   index: number;

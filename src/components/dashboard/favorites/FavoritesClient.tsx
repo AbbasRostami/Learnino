@@ -74,11 +74,8 @@ export function FavoritesClient() {
 
       <Tabs defaultValue="courses" className="w-full">
         <div className="flex justify-center sm:justify-start mb-8">
-          <TabsList className="inline-flex h-12 rounded-2xl p-1 cursor-pointer bg-card border border-border/50 shadow-sm">
-            <TabsTrigger
-              value="courses"
-              className="rounded-xl cursor-pointer px-5 text-xs font-bold gap-2 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none"
-            >
+          <TabsList>
+            <TabsTrigger value="courses" className="cursor-pointer">
               <BookOpen className="h-4 w-4" aria-hidden="true" />
               <span>{tFav("tabCourses")}</span>
               {coursesCountReady ? (
@@ -90,10 +87,7 @@ export function FavoritesClient() {
               )}
             </TabsTrigger>
 
-            <TabsTrigger
-              value="posts"
-              className="rounded-xl cursor-pointer px-5 text-xs font-bold gap-2 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none"
-            >
+            <TabsTrigger value="posts" className="cursor-pointer">
               <FileText className="h-4 w-4" aria-hidden="true" />
               <span>{tFav("tabPosts")}</span>
               {postsCountReady ? (
