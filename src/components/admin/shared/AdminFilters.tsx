@@ -88,7 +88,7 @@ export function AdminFilters({
                   }
                 }}
               >
-                <SelectTrigger className="h-11 w-full rounded-xl text-xs font-bold bg-background border-border/60 hover:bg-muted/40 transition-colors px-3.5 justify-between">
+                <SelectTrigger className="h-11! cursor-pointer w-full rounded-xl text-xs font-bold bg-background border-border/60 hover:bg-muted/40 transition-colors px-3.5 justify-between">
                   <SelectValue
                     placeholder={filter.placeholder}
                     className="text-start truncate font-bold text-foreground"

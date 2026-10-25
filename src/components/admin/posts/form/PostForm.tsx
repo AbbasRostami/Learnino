@@ -111,19 +111,13 @@ export function PostForm({ post, onSuccess, onCancel }: PostFormProps) {
         )}
       </div>
 
-      <Tabs defaultValue="fa" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 rounded-xl p-1 bg-muted/60">
-          <TabsTrigger
-            value="fa"
-            className="rounded-lg text-xs font-black gap-2 cursor-pointer data-[state=active]:bg-background data-[state=active]:shadow-xs"
-          >
+      <Tabs defaultValue="fa" className="w-full p-2">
+        <TabsList className="grid w-full grid-cols-2 rounded-xl p-1">
+          <TabsTrigger value="fa" className="cursor-pointer">
             <Languages className="h-4 w-4" />
             <span>فارسی</span>
           </TabsTrigger>
-          <TabsTrigger
-            value="en"
-            className="rounded-lg text-xs font-black gap-2 cursor-pointer data-[state=active]:bg-background data-[state=active]:shadow-xs"
-          >
+          <TabsTrigger value="en" className="cursor-pointer">
             <Languages className="h-4 w-4" />
             <span>English</span>
           </TabsTrigger>
