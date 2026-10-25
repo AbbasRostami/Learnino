@@ -1,4 +1,7 @@
-import DOMPurify from "isomorphic-dompurify";
+"use client";
+
+import DOMPurify from "dompurify";
+import React, { useEffect, useState } from "react";
 
 interface SafeHtmlProps {
   html: string;
@@ -79,6 +82,28 @@ const ALLOWED_ATTR = [
   "disabled",
 ];
 
+const SANITIZE_CONFIG = {
+  ALLOWED_TAGS,
+  ALLOWED_ATTR,
+  ALLOW_DATA_ATTR: false,
+  ALLOW_UNKNOWN_PROTOCOLS: false,
+  KEEP_CONTENT: true,
+  SAFE_FOR_TEMPLATES: false,
+  ADD_ATTR: ["target", "rel"],
+  FORBID_TAGS: ["script", "style", "iframe", "object", "embed", "form"],
+  FORBID_ATTR: [
+    "onerror",
+    "onload",
+    "onclick",
+    "onmouseover",
+    "onfocus",
+    "onblur",
+    "onchange",
+    "onsubmit",
+    "formaction",
+  ],
+};
+
 export function SafeHtml({
   html,
   className,
@@ -87,45 +112,38 @@ export function SafeHtml({
 }: SafeHtmlProps) {
   if (!html || typeof html !== "string") return null;
 
-  const sanitized = DOMPurify.sanitize(html, {
-    ALLOWED_TAGS,
-    ALLOWED_ATTR,
-    ALLOW_DATA_ATTR: false,
-    ALLOW_UNKNOWN_PROTOCOLS: false,
-    KEEP_CONTENT: true,
-    SAFE_FOR_TEMPLATES: false,
-    ADD_ATTR: ["target", "rel"],
-    FORBID_TAGS: ["script", "style", "iframe", "object", "embed", "form"],
-    FORBID_ATTR: [
-      "onerror",
-      "onload",
-      "onclick",
-      "onmouseover",
-      "onfocus",
-      "onblur",
-      "onchange",
-      "onsubmit",
-      "formaction",
-    ],
-  });
+  const [sanitizedHtml, setSanitizedHtml] = useState<string>(html);
 
-  if (!sanitized) return null;
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const clean = DOMPurify.sanitize(html, SANITIZE_CONFIG);
+      setSanitizedHtml(clean);
+    }
+  }, [html]);
 
   return (
     <Component
       className={className}
       itemProp={itemProp}
-      dangerouslySetInnerHTML={{ __html: sanitized }}
+      dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+      suppressHydrationWarning
     />
   );
 }
 
 export function stripHtml(html: string, maxLength?: number): string {
-  if (!html) return "";
-  const clean = DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: [],
-    ALLOWED_ATTR: [],
-  });
-  const trimmed = clean.replace(/\s+/g, " ").trim();
-  return maxLength ? trimmed.slice(0, maxLength) : trimmed;
+  if (!html || typeof html !== "string") return "";
+
+  const clean = html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  return maxLength ? clean.slice(0, maxLength) : clean;
 }
