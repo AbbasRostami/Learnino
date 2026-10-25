@@ -3,11 +3,12 @@
 import { CoursesListCard } from "@/components/courses/list/CoursesListCard";
 import { AppBreadcrumb } from "@/components/shared/AppBreadcrumb";
 import { useTeacher } from "@/services";
-import { TeacherCourse, TeacherWithCourses } from "@/types";
+import type { Course, TeacherCourse, TeacherWithCourses } from "@/types";
 import { BookOpen, Globe, GraduationCap, Sparkles, Users } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import type { ComponentType } from "react";
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 interface TeacherProfileClientProps {
@@ -155,6 +156,7 @@ export function TeacherProfileClient({
             </div>
           </div>
         </motion.div>
+
         <section
           aria-labelledby="teacher-courses-title"
           className="max-w-7xl mx-auto"
@@ -184,13 +186,22 @@ export function TeacherProfileClient({
               viewport={{ once: true, margin: "-50px" }}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              {teacher?.courses?.map((course: any, index: number) => (
+              {teacher?.courses?.map((course: TeacherCourse, index: number) => (
                 <motion.div
                   key={course?.id}
                   variants={prefersReducedMotion ? undefined : itemVariants}
                 >
                   <CoursesListCard
-                    course={{ ...course, teacher }}
+                    course={
+                      {
+                        ...course,
+                        teacher,
+                        stats: {
+                          enrollments: course.studentsCount ?? 0,
+                          comments: 0,
+                        },
+                      } as unknown as Course
+                    }
                     priority={index < 4}
                     index={index}
                   />
@@ -211,15 +222,13 @@ export function TeacherProfileClient({
   );
 }
 
-function SocialButton({
-  icon: Icon,
-  href,
-  label,
-}: {
-  icon: any;
+interface SocialButtonProps {
+  icon: ComponentType<{ className?: string }>;
   href: string;
   label: string;
-}) {
+}
+
+function SocialButton({ icon: Icon, href, label }: SocialButtonProps) {
   return (
     <a
       href={href}
