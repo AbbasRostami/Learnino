@@ -134,7 +134,7 @@ export function CoursesFilters({
         </div>
         <div className="flex flex-col gap-1.5 max-h-64 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-border">
           {isCategoriesLoading
-            ? [65, 45, 75, 50, 85].map((width, index) => (
+            ? [65, 45, 75, 50, 85]?.map((width, index) => (
                 <div
                   key={index}
                   className="flex items-center justify-between px-3 h-9.5 rounded-xl border border-transparent bg-muted/30"

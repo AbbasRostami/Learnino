@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useAddToCart, useEnrollFreeCourse } from "@/services";
@@ -36,7 +35,6 @@ export function CoursePriceCard({
 }: CoursePriceCardProps) {
   const t = useTranslations("course");
   const tCart = useTranslations("cart");
-  const locale = useLocale();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
   const { mutate: addToCart, isPending: isAdding } = useAddToCart({});
@@ -139,14 +137,14 @@ export function CoursePriceCard({
               className="w-full rounded-2xl h-12 gap-2 text-xs font-bold"
             >
               <Loader2 className="h-4 w-4 animate-spin" />
-              <span>در حال بررسی وضعیت...</span>
+              <span>{t("checkingStatus")}</span>
             </Button>
           ) : isEnrolled ? (
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400">
                 <CheckCircle2 className="h-5 w-5 shrink-0" aria-hidden="true" />
                 <span className="text-xs sm:text-sm font-black">
-                  شما دانشجوی این دوره هستید
+                  {t("alreadyEnrolled")}
                 </span>
               </div>
               <Link

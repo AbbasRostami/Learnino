@@ -105,13 +105,14 @@ export function CourseCommentCard({
 
         <div className="flex items-center gap-3 mt-1.5 ms-2">
           <Button
+            variant="outline"
             type="button"
             onClick={() => handleReaction("LIKE")}
             disabled={isReacting}
             className={cn(
               "flex items-center gap-1 text-xs font-bold transition-all cursor-pointer disabled:opacity-50 hover:scale-105",
               comment?.reactions?.myReaction === "LIKE"
-                ? "text-emerald-600 dark:text-emerald-400"
+                ? "bg-emerald-100 text-emerald-700 dark:text-emerald-400"
                 : "text-muted-foreground hover:text-foreground",
             )}
             aria-label="پسندیدن"
@@ -125,13 +126,14 @@ export function CourseCommentCard({
           </Button>
 
           <Button
+            variant="outline"
             type="button"
             onClick={() => handleReaction("DISLIKE")}
             disabled={isReacting}
             className={cn(
               "flex items-center gap-1 text-xs font-bold transition-all cursor-pointer disabled:opacity-50 hover:scale-105",
               comment?.reactions?.myReaction === "DISLIKE"
-                ? "text-destructive"
+                ? "bg-rose-100 text-destructive dark:text-rose-400"
                 : "text-muted-foreground hover:text-foreground",
             )}
             aria-label="نپسندیدن"
@@ -146,6 +148,7 @@ export function CourseCommentCard({
 
           {isAuthenticated && depth < 2 && (
             <Button
+              variant="secondary"
               type="button"
               onClick={() => onReply(isReplying ? null : comment?.id)}
               className="flex items-center gap-1 text-xs font-black text-muted-foreground hover:text-primary transition-colors cursor-pointer"
@@ -172,7 +175,7 @@ export function CourseCommentCard({
           <div className="mt-4 flex flex-col gap-3">
             {comment?.replies?.map((reply) => (
               <CourseCommentCard
-                key={reply.id}
+                key={reply?.id}
                 comment={reply}
                 replyToId={replyToId}
                 onReply={onReply}

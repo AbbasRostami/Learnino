@@ -85,13 +85,13 @@ export function CoursesToolbar({
             </div>
 
             <div className="flex items-center gap-1.5 shrink-0">
-              {SORT_OPTIONS.map((option) => {
-                const isActive = currentSortValue === option.value;
+              {SORT_OPTIONS?.map((option) => {
+                const isActive = currentSortValue === option?.value;
                 return (
                   <Button
-                    key={option.value}
+                    key={option?.value}
                     type="button"
-                    onClick={() => handleSortChange(option.value)}
+                    onClick={() => handleSortChange(option?.value)}
                     className={cn(
                       "px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 border",
                       isActive
@@ -99,7 +99,7 @@ export function CoursesToolbar({
                         : "bg-card/70 text-muted-foreground hover:bg-muted hover:text-foreground border-border/50",
                     )}
                   >
-                    {t(option.labelKey)}
+                    {t(option?.labelKey)}
                   </Button>
                 );
               })}

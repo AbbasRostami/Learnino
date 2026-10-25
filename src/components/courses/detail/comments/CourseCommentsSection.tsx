@@ -122,9 +122,9 @@ export function CourseCommentsSection({
         </div>
       ) : (
         <div className="flex flex-col gap-6">
-          {comments.map((comment) => (
+          {comments?.map((comment) => (
             <CourseCommentCard
-              key={comment.id}
+              key={comment?.id}
               comment={comment}
               replyToId={replyToId}
               onReply={setReplyToId}

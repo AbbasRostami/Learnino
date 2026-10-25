@@ -135,9 +135,9 @@ export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
             />
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
-              {courses.map((course, index) => (
+              {courses?.map((course, index) => (
                 <CoursesListCard
-                  key={course.id}
+                  key={course?.id}
                   course={course}
                   priority={index < 3}
                   index={index}

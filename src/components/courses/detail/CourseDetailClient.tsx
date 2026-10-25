@@ -115,7 +115,7 @@ export function CourseDetailClient({
                   priority
                   quality={90}
                   sizes="(max-width: 1024px) 100vw, 800px"
-                  className="object-cover"
+                  className="object-fill"
                   itemProp="image"
                 />
               </div>
@@ -164,7 +164,7 @@ export function CourseDetailClient({
             <CoursePriceCard
               course={course}
               slug={slug}
-              isLoadingCourse={isLoading || isFetching}
+              isLoadingCourse={isLoading}
             />
           </aside>
         </div>

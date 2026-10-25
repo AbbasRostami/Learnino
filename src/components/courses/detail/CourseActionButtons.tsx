@@ -77,6 +77,7 @@ export function CourseActionButtons({
     <div className="flex flex-wrap items-center gap-2">
       <div className="flex items-center gap-1.5 rounded-full p-1 bg-muted/50 dark:bg-muted/30 border border-border/40 shadow-xs">
         <Button
+          variant="ghost"
           type="button"
           onClick={() => handleReaction("LIKE")}
           disabled={isReacting}
@@ -84,7 +85,7 @@ export function CourseActionButtons({
             "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer disabled:opacity-50",
             course?.reactions?.myReaction === "LIKE"
               ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400 shadow-sm"
-              : "text-muted-foreground hover:bg-background hover:text-foreground",
+              : "text-muted-foreground hover:bg-background",
           )}
           aria-label={t("like")}
         >
@@ -102,6 +103,7 @@ export function CourseActionButtons({
         </Button>
 
         <Button
+          variant="ghost"
           type="button"
           onClick={() => handleReaction("DISLIKE")}
           disabled={isReacting}
@@ -128,6 +130,7 @@ export function CourseActionButtons({
       </div>
 
       <Button
+        variant="ghost"
         type="button"
         onClick={handleFavorite}
         disabled={isFavPending}
@@ -149,6 +152,7 @@ export function CourseActionButtons({
       </Button>
 
       <Button
+        variant="ghost"
         type="button"
         onClick={handleShare}
         className={cn(

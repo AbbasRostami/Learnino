@@ -38,9 +38,9 @@ export function CourseFeatures() {
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {FEATURES.map((feature, index) => (
+        {FEATURES?.map((feature, index) => (
           <motion.div
-            key={feature.key}
+            key={feature?.key}
             initial={prefersReducedMotion ? undefined : { opacity: 0, y: 10 }}
             whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
@@ -48,9 +48,9 @@ export function CourseFeatures() {
             className="flex items-center gap-3 p-3 rounded-2xl border border-border/40 bg-background/50 hover:bg-muted/40 transition-colors"
           >
             <div
-              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${feature.bg}`}
+              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${feature?.bg}`}
             >
-              <feature.icon className={`h-5 w-5 ${feature.color}`} aria-hidden="true" />
+              <feature.icon className={`h-5 w-5 ${feature?.color}`} aria-hidden="true" />
             </div>
             <span className="text-sm font-bold text-foreground">
               {t(`features.${feature.key}`)}
