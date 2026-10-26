@@ -14,7 +14,14 @@ type ChangeFrequency =
   | "yearly"
   | "never";
 
-function createLocalizedEntry(
+interface BaseEntity {
+  id: string;
+  slug: string;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+function createStaticLocalizedEntry(
   path: string,
   lastModified: Date = new Date(),
   changeFrequency: ChangeFrequency = "weekly",
@@ -50,96 +57,140 @@ function createLocalizedEntry(
   });
 }
 
-async function fetchAllCourses() {
+function createDynamicLocalizedEntries<T extends BaseEntity>(
+  itemsFa: T[],
+  itemsEn: T[],
+  basePath: "courses" | "blog" | "teachers",
+  priority: number = 0.8,
+  changeFrequency: ChangeFrequency = "weekly",
+): MetadataRoute.Sitemap {
+  const enMap = new Map(itemsEn.map((item) => [item.id, item]));
+  const entries: MetadataRoute.Sitemap = [];
+
+  itemsFa.forEach((itemFa) => {
+    const itemEn = enMap.get(itemFa.id);
+
+    const slugFa = itemFa.slug;
+    const slugEn = itemEn?.slug || itemFa.slug;
+    console.log(`Creating sitemap entry for ${basePath}: FA slug = ${slugFa}, EN slug = ${slugEn}`);
+
+    const encodedSlugFa = encodeURIComponent(decodeURIComponent(slugFa));
+    const encodedSlugEn = encodeURIComponent(decodeURIComponent(slugEn));
+
+    const urlFa = `${SEO_CONFIG.baseUrl}/fa/${basePath}/${encodedSlugFa}`;
+    const urlEn = `${SEO_CONFIG.baseUrl}/en/${basePath}/${encodedSlugEn}`;
+    const lastModified = new Date(itemFa.updatedAt || itemFa.createdAt);
+
+    const alternates = {
+      languages: {
+        fa: urlFa,
+        en: urlEn,
+        "x-default": urlFa,
+      },
+    };
+
+    entries.push({
+      url: urlFa,
+      lastModified,
+      changeFrequency,
+      priority,
+      alternates,
+    });
+
+    entries.push({
+      url: urlEn,
+      lastModified,
+      changeFrequency,
+      priority,
+      alternates,
+    });
+  });
+
+  return entries;
+}
+
+async function fetchCourses(locale: "fa" | "en") {
   try {
     const res = await api<GetCoursesResponse>("/courses", {
       params: { limit: 1000 },
+      headers: { "Accept-Language": locale },
     });
     return res?.data?.items ?? [];
   } catch (error) {
-    console.error("[Sitemap API] fetchAllCourses failed:", error);
+    console.error(`[Sitemap API] fetchCourses (${locale}) failed:`, error);
     return [];
   }
 }
 
-async function fetchAllPosts() {
+async function fetchPosts(locale: "fa" | "en") {
   try {
     const res = await api<GetPostsResponse>("/posts", {
       params: { limit: 1000 },
+      headers: { "Accept-Language": locale },
     });
     return res?.data?.items ?? [];
   } catch (error) {
-    console.error("[Sitemap API] fetchAllPosts failed:", error);
+    console.error(`[Sitemap API] fetchPosts (${locale}) failed:`, error);
     return [];
   }
 }
 
-async function fetchAllTeachers() {
+async function fetchTeachers(locale: "fa" | "en") {
   try {
     const res = await api<GetTeachersResponse>("/teachers", {
       params: { limit: 100 },
+      headers: { "Accept-Language": locale },
     });
     return res?.data?.items ?? [];
   } catch (error) {
-    console.error("[Sitemap API] fetchAllTeachers failed:", error);
+    console.error(`[Sitemap API] fetchTeachers (${locale}) failed:`, error);
     return [];
   }
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
-    ...createLocalizedEntry("/", new Date(), "daily", 1.0),
-    ...createLocalizedEntry("/courses", new Date(), "daily", 0.9),
-    ...createLocalizedEntry("/blog", new Date(), "daily", 0.9),
-    ...createLocalizedEntry("/learning-paths", new Date(), "weekly", 0.8),
-    ...createLocalizedEntry("/about", new Date(), "monthly", 0.6),
-    ...createLocalizedEntry("/contact", new Date(), "monthly", 0.5),
+    ...createStaticLocalizedEntry("/", new Date(), "daily", 1.0),
+    ...createStaticLocalizedEntry("/courses", new Date(), "daily", 0.9),
+    ...createStaticLocalizedEntry("/blog", new Date(), "daily", 0.9),
+    ...createStaticLocalizedEntry("/learning-paths", new Date(), "weekly", 0.8),
+    ...createStaticLocalizedEntry("/about", new Date(), "monthly", 0.6),
+    ...createStaticLocalizedEntry("/contact", new Date(), "monthly", 0.5),
   ];
 
-  let courseRoutes: MetadataRoute.Sitemap = [];
-  try {
-    const courses = await fetchAllCourses();
-    courseRoutes = courses.flatMap((course) =>
-      createLocalizedEntry(
-        `/courses/${encodeURIComponent(course.slug)}`,
-        new Date(course.updatedAt || course.createdAt),
-        "weekly",
-        0.9,
-      ),
-    );
-  } catch (error) {
-    console.error("[Sitemap Generator] Processing courses failed:", error);
-  }
+  const [
+    [coursesFa, coursesEn],
+    [postsFa, postsEn],
+    [teachersFa, teachersEn],
+  ] = await Promise.all([
+    Promise.all([fetchCourses("fa"), fetchCourses("en")]),
+    Promise.all([fetchPosts("fa"), fetchPosts("en")]),
+    Promise.all([fetchTeachers("fa"), fetchTeachers("en")]),
+  ]);
 
-  let postRoutes: MetadataRoute.Sitemap = [];
-  try {
-    const posts = await fetchAllPosts();
-    postRoutes = posts.flatMap((post) =>
-      createLocalizedEntry(
-        `/blog/${encodeURIComponent(post.slug)}`,
-        new Date(post.updatedAt || post.createdAt),
-        "weekly",
-        0.8,
-      ),
-    );
-  } catch (error) {
-    console.error("[Sitemap Generator] Processing posts failed:", error);
-  }
+  const courseRoutes = createDynamicLocalizedEntries(
+    coursesFa,
+    coursesEn,
+    "courses",
+    0.9,
+    "weekly",
+  );
 
-  let teacherRoutes: MetadataRoute.Sitemap = [];
-  try {
-    const teachers = await fetchAllTeachers();
-    teacherRoutes = teachers.flatMap((teacher) =>
-      createLocalizedEntry(
-        `/teachers/${encodeURIComponent(teacher.slug)}`,
-        new Date(teacher.updatedAt || teacher.createdAt),
-        "monthly",
-        0.7,
-      ),
-    );
-  } catch (error) {
-    console.error("[Sitemap Generator] Processing teachers failed:", error);
-  }
+  const postRoutes = createDynamicLocalizedEntries(
+    postsFa,
+    postsEn,
+    "blog",
+    0.8,
+    "weekly",
+  );
+
+  const teacherRoutes = createDynamicLocalizedEntries(
+    teachersFa,
+    teachersEn,
+    "teachers",
+    0.7,
+    "monthly",
+  );
 
   return [...staticRoutes, ...courseRoutes, ...postRoutes, ...teacherRoutes];
 }
