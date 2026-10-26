@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export function PostDetailSkeleton() {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-12">
+      <div className=" container mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-12">
         <div className="min-w-0">
           <header className="mb-8 space-y-4">
             <Skeleton className="h-6 w-24 rounded-full" />

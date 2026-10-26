@@ -41,21 +41,14 @@ export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
     },
   });
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteCourses(apiParams);
-
-  const courses =
-    data?.pages.flatMap((page) => page?.data?.items ?? []) ??
-    initialData?.items ??
-    [];
-
-  const totalResults =
-    data?.pages[0]?.data?.pagination?.total ??
-    initialData?.pagination?.total ??
-    0;
-
-  const showSkeleton = isLoading && !initialData && courses.length === 0;
-  const isEmpty = !showSkeleton && courses.length === 0;
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isFetching,
+  } = useInfiniteCourses(apiParams);
 
   const hasActiveFilters = Boolean(
     (params.categories && params.categories.length > 0) ||
@@ -64,6 +57,18 @@ export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
     params.maxPrice != null ||
     (searchValue && searchValue.trim().length > 0),
   );
+
+  const courses =
+    data?.pages.flatMap((page) => page?.data?.items ?? []) ??
+    (!hasActiveFilters ? (initialData?.items ?? []) : []);
+
+  const totalResults =
+    data?.pages[0]?.data?.pagination?.total ??
+    (!hasActiveFilters ? initialData?.pagination?.total : undefined) ??
+    0;
+
+  const showSkeleton = isLoading || (isFetching && !data);
+  const isEmpty = !showSkeleton && courses.length === 0;
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">

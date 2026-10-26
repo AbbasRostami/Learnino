@@ -2,63 +2,28 @@ import { api } from "@/lib/upfetch";
 import type { GetPostBySlugResponse, GetPostsResponse, Post } from "@/types";
 import { cacheLife, cacheTag } from "next/cache";
 
-async function fetchLatestPostsData(
-  locale: string,
-  limit: number,
-): Promise<Post[]> {
-  "use cache";
-  cacheLife("hours");
-  cacheTag("posts", "latest-posts");
-
-  try {
-    const res = await api<GetPostsResponse>("/posts", {
-      params: {
-        limit,
-        sortBy: "createdAt",
-        order: "desc",
-      },
-      headers: { "Accept-Language": locale },
-    });
-
-    return res.data?.items ?? [];
-  } catch (error) {
-    console.warn(`[Posts Server Fetch Warning for locale: ${locale}]`, error);
-    return [];
-  }
-}
-
 export async function getLatestPostsServer(
   locale: string = "fa",
   limit: number = 3,
 ): Promise<Post[]> {
-  return await fetchLatestPostsData(locale, limit);
-}
-
-async function fetchPostBySlugData(
-  locale: string,
-  rawSlug: string,
-): Promise<Post | null> {
-  "use cache";
-  cacheLife("hours");
-
-  const decodedSlug = decodeURIComponent(rawSlug);
-  cacheTag("posts", `post-${decodedSlug}`);
-
   try {
-    const res = await api<GetPostBySlugResponse>(
-      `/posts/${encodeURIComponent(decodedSlug)}`,
-      {
-        headers: { "Accept-Language": locale },
-      },
-    );
+    const fetchCached = async () => {
+      "use cache";
+      cacheLife("hours");
+      cacheTag("posts", "latest-posts");
 
-    return res.data?.post ?? null;
+      const res = await api<GetPostsResponse>("/posts", {
+        params: { limit, sortBy: "createdAt", order: "desc" },
+        headers: { "Accept-Language": locale },
+      });
+
+      return res.data?.items ?? [];
+    };
+
+    return await fetchCached();
   } catch (error) {
-    console.warn(
-      `[Post Detail Server Fetch Warning for slug: ${rawSlug}]`,
-      error,
-    );
-    return null;
+    console.error(`[Latest Posts Server Fetch Error]`, error);
+    return [];
   }
 }
 
@@ -66,5 +31,35 @@ export async function getPostBySlugServer(
   locale: string = "fa",
   slug: string,
 ): Promise<Post | null> {
-  return await fetchPostBySlugData(locale, slug);
+  const fetchCached = async () => {
+    "use cache";
+    cacheLife("hours");
+    cacheTag("posts", `post-${slug}`);
+
+    try {
+      const encodedSlug = encodeURIComponent(decodeURIComponent(slug));
+      const res = await api<GetPostBySlugResponse>(`/posts/${encodedSlug}`, {
+        headers: { "Accept-Language": locale },
+      });
+
+      return res.data?.post ?? null;
+    } catch (error: unknown) {
+      if (
+        error &&
+        typeof error === "object" &&
+        "status" in error &&
+        (error as { status?: number }).status === 404
+      ) {
+        return null;
+      }
+      console.error(`[Post Detail Fetch Error]`, error);
+      throw error;
+    }
+  };
+
+  try {
+    return await fetchCached();
+  } catch {
+    return null;
+  }
 }

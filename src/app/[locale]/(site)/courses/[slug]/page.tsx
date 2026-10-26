@@ -70,47 +70,55 @@ export async function generateMetadata({
   params: Promise<{ locale: Locale; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const course = await getCourseBySlugServer(locale, slug);
 
-  if (!course) {
+  try {
+    const course = await getCourseBySlugServer(locale, slug);
+
+    if (!course) {
+      return {
+        title: locale === "fa" ? "دوره یافت نشد" : "Course Not Found",
+        robots: PRIVATE_ROBOTS,
+      };
+    }
+
+    const description = cleanMetaDescription(course?.description || "");
+    const title = course?.title;
+    const rawImageUrl = course?.imageUrl || SEO_CONFIG.defaultImages.og;
+    const ogImageUrl = rawImageUrl.startsWith("http")
+      ? rawImageUrl
+      : getFullUrl(rawImageUrl);
+    const fullPageUrl = getFullUrl(`/courses/${slug}`, locale);
+
     return {
-      title: locale === "fa" ? "دوره یافت نشد" : "Course Not Found",
+      title,
+      description,
+      openGraph: getDefaultOpenGraph(locale, {
+        type: "website",
+        title,
+        description,
+        url: fullPageUrl,
+        images: [
+          {
+            url: ogImageUrl,
+            width: 1200,
+            height: 630,
+            alt: title,
+          },
+        ],
+      }),
+      twitter: getDefaultTwitter(locale, {
+        title,
+        description,
+        images: [ogImageUrl],
+      }),
+      alternates: getAlternates(`/courses/${slug}`, locale),
+    };
+  } catch {
+    return {
+      title: locale === "fa" ? "خطا در دریافت اطلاعات" : "Error Loading Course",
       robots: PRIVATE_ROBOTS,
     };
   }
-
-  const description = cleanMetaDescription(course?.description || "");
-  const title = course?.title;
-  const rawImageUrl = course?.imageUrl || SEO_CONFIG.defaultImages.og;
-  const ogImageUrl = rawImageUrl.startsWith("http")
-    ? rawImageUrl
-    : getFullUrl(rawImageUrl);
-  const fullPageUrl = getFullUrl(`/courses/${slug}`, locale);
-
-  return {
-    title,
-    description,
-    openGraph: getDefaultOpenGraph(locale, {
-      type: "website",
-      title,
-      description,
-      url: fullPageUrl,
-      images: [
-        {
-          url: ogImageUrl,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-    }),
-    twitter: getDefaultTwitter(locale, {
-      title,
-      description,
-      images: [ogImageUrl],
-    }),
-    alternates: getAlternates(`/courses/${slug}`, locale),
-  };
 }
 
 export default async function CourseDetailPage({

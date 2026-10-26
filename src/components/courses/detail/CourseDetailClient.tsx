@@ -29,7 +29,7 @@ export function CourseDetailClient({
   const tNav = useTranslations("nav");
   const locale = useLocale();
 
-  const { data, isLoading, isFetching } = useCourse(slug, initialCourse);
+  const { data, isLoading } = useCourse(slug, initialCourse);
   const course = data?.data?.course ?? initialCourse;
   const style = course?.category
     ? getCategoryStyle(course?.category?.slug)

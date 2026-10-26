@@ -30,6 +30,7 @@ async function CoursesListSection({
   const sp = await searchParamsPromise;
 
   const page = sp.page ? parseInt(sp.page, 10) : 1;
+
   const categories = Array.isArray(sp.categories)
     ? sp.categories
     : sp.categories

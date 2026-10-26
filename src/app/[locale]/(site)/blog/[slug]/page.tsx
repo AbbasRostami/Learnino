@@ -4,6 +4,7 @@ import { PostDetailSkeleton } from "@/components/skeleton";
 import {
   cleanMetaDescription,
   getAlternates,
+  PRIVATE_ROBOTS,
   SEO_CONFIG,
   type Locale,
 } from "@/lib/seo";
@@ -51,53 +52,62 @@ export async function generateMetadata({
   params: Promise<{ locale: Locale; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const post = await getPostBySlugServer(locale, slug);
 
-  if (!post) {
+  try {
+    const post = await getPostBySlugServer(locale, slug);
+
+    if (!post) {
+      return {
+        title: locale === "fa" ? "مقاله یافت نشد" : "Article Not Found",
+        robots: PRIVATE_ROBOTS,
+      };
+    }
+
+    const description = cleanMetaDescription(post?.content || "");
+    const isFa = locale === "fa";
+    const ogImage = post?.imageUrl || "/logo/Main-Logo.png";
+
     return {
-      title: locale === "fa" ? "مقاله یافت نشد" : "Article Not Found",
-      robots: { index: false, follow: false },
+      title: post?.title,
+      description,
+
+      openGraph: {
+        type: "article",
+        title: post?.title,
+        description,
+        url: `/${locale}/blog/${slug}`,
+        images: [
+          {
+            url: ogImage,
+            width: 1200,
+            height: 630,
+            alt: post?.title,
+          },
+        ],
+        locale: isFa ? "fa_IR" : "en_US",
+        siteName: SEO_CONFIG.siteName[locale],
+        publishedTime: post?.createdAt,
+        modifiedTime: post?.updatedAt || post?.createdAt,
+        authors: [SEO_CONFIG.author.name],
+        tags: post?.category ? [post?.category?.name] : [],
+      },
+
+      twitter: {
+        card: "summary_large_image",
+        title: post?.title,
+        description,
+        images: [ogImage],
+      },
+
+      alternates: getAlternates(`/blog/${slug}`, locale),
+    };
+  } catch {
+    return {
+      title:
+        locale === "fa" ? "خطا در دریافت اطلاعات" : "Error Loading Article",
+      robots: PRIVATE_ROBOTS,
     };
   }
-
-  const description = cleanMetaDescription(post?.content || "");
-  const isFa = locale === "fa";
-  const ogImage = post?.imageUrl || "/logo/Main-Logo.png";
-
-  return {
-    title: post?.title,
-    description,
-
-    openGraph: {
-      type: "article",
-      title: post?.title,
-      description,
-      url: `/${locale}/blog/${slug}`,
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: post?.title,
-        },
-      ],
-      locale: isFa ? "fa_IR" : "en_US",
-      siteName: SEO_CONFIG.siteName[locale],
-      publishedTime: post?.createdAt,
-      modifiedTime: post?.updatedAt || post?.createdAt,
-      authors: [SEO_CONFIG.author.name],
-      tags: post?.category ? [post?.category?.name] : [],
-    },
-
-    twitter: {
-      card: "summary_large_image",
-      title: post?.title,
-      description,
-      images: [ogImage],
-    },
-
-    alternates: getAlternates(`/blog/${slug}`, locale),
-  };
 }
 
 export default async function PostDetailPage({

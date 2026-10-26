@@ -22,7 +22,7 @@ interface PostCardProps {
 export function PostCard({ post, priority = false }: PostCardProps) {
   const t = useTranslations("posts");
   const format = useFormatter();
-  const style = post?.category ? getCategoryStyle(post?.category.slug) : null;
+  const style = post?.category ? getCategoryStyle(post?.category?.slug) : null;
 
   return (
     <article
