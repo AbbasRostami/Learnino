@@ -48,6 +48,15 @@ const VALUES = [
 export function AboutValues() {
   const t = useTranslations("aboutPage.values");
 
+  const delayClasses = [
+    "[animation-delay:0ms]",
+    "[animation-delay:80ms]",
+    "[animation-delay:160ms]",
+    "[animation-delay:240ms]",
+    "[animation-delay:320ms]",
+    "[animation-delay:400ms]",
+  ];
+
   return (
     <section
       aria-labelledby="about-values-title"
@@ -93,8 +102,7 @@ export function AboutValues() {
           {VALUES.map((value, index) => (
             <article
               key={value.key}
-              style={{ animationDelay: `${index * 80}ms` }}
-              className="group flex gap-4 p-6 rounded-2xl border border-border/50 bg-card hover:border-primary/30 hover:shadow-lg transition-all duration-300 animate-in fade-in-0 slide-in-from-bottom-4 fill-mode-backwards motion-reduce:animate-none"
+              className={`group flex gap-4 p-6 rounded-2xl border border-border/50 bg-card hover:border-primary/30 hover:shadow-lg transition-all duration-300 animate-in fade-in-0 slide-in-from-bottom-4 fill-mode-backwards motion-reduce:animate-none ${delayClasses[index % delayClasses.length]}`}
             >
               <div
                 className={`shrink-0 flex h-12 w-12 items-center justify-center rounded-xl ${value.bg} group-hover:scale-110 transition-transform motion-reduce:group-hover:scale-100`}

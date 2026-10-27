@@ -33,6 +33,13 @@ const STATS = [
 export function AboutStats() {
   const t = useTranslations("aboutPage.stats");
 
+  const delayClasses = [
+    "[animation-delay:0ms]",
+    "[animation-delay:100ms]",
+    "[animation-delay:200ms]",
+    "[animation-delay:300ms]",
+  ];
+
   return (
     <section
       aria-labelledby="about-stats-title"
@@ -47,8 +54,7 @@ export function AboutStats() {
           {STATS.map((stat, index) => (
             <div
               key={stat.key}
-              style={{ animationDelay: `${index * 100}ms` }}
-              className="group relative flex flex-col items-center text-center p-6 rounded-3xl border border-border/50 bg-card hover:border-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-in fade-in-0 slide-in-from-bottom-4 fill-mode-backwards motion-reduce:animate-none"
+              className={`group relative flex flex-col items-center text-center p-6 rounded-3xl border border-border/50 bg-card hover:border-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-in fade-in-0 slide-in-from-bottom-4 fill-mode-backwards motion-reduce:animate-none ${delayClasses[index % delayClasses.length]}`}
             >
               <div
                 className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br ${stat.color} mb-4 shadow-lg group-hover:scale-110 transition-transform motion-reduce:group-hover:scale-100`}

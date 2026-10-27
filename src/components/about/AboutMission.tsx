@@ -12,6 +12,12 @@ const CARDS = [
 export function AboutMission() {
   const t = useTranslations("aboutPage.mission");
 
+  const delayClasses = [
+    "[animation-delay:0ms]",
+    "[animation-delay:150ms]",
+    "[animation-delay:300ms]",
+  ];
+
   return (
     <section aria-labelledby="about-mission-title" className="py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,8 +49,7 @@ export function AboutMission() {
           {CARDS.map((card, index) => (
             <article
               key={card.key}
-              style={{ animationDelay: `${index * 150}ms` }}
-              className="group relative overflow-hidden rounded-3xl border border-border/50 bg-card p-8 hover:border-primary/30 hover:shadow-2xl transition-all duration-500 animate-in fade-in-0 slide-in-from-bottom-6 fill-mode-backwards motion-reduce:animate-none"
+              className={`group relative overflow-hidden rounded-3xl border border-border/50 bg-card p-8 hover:border-primary/30 hover:shadow-2xl transition-all duration-500 animate-in fade-in-0 slide-in-from-bottom-6 fill-mode-backwards motion-reduce:animate-none ${delayClasses[index % delayClasses.length]}`}
             >
               <div
                 className={`absolute -top-20 -right-20 h-40 w-40 rounded-full bg-linear-to-br ${card.gradient} opacity-0 group-hover:opacity-20 blur-3xl transition-opacity duration-500`}
