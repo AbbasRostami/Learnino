@@ -96,9 +96,9 @@ export function CoursesFilters({
             <Filter className="h-4 w-4" aria-hidden="true" />
           </div>
           <div>
-            <h3 className="text-sm font-black text-foreground">
+            <h2 className="text-sm font-black text-foreground">
               {t("filters")}
-            </h3>
+            </h2>
             {activeFiltersCount > 0 && (
               <p className="text-xs text-primary font-bold mt-0.5">
                 {t("activeFilters", { count: activeFiltersCount })}
@@ -134,17 +134,21 @@ export function CoursesFilters({
         </div>
         <div className="flex flex-col gap-1.5 max-h-64 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-border">
           {isCategoriesLoading
-            ? [65, 45, 75, 50, 85]?.map((width, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between px-3 h-9.5 rounded-xl border border-transparent bg-muted/30"
-                >
-                  <Skeleton
-                    className="h-3.5 rounded-md bg-primary/15 dark:bg-primary/20"
-                    style={{ width: `${width}%` }}
-                  />
-                </div>
-              ))
+            ? ["w-[65%]", "w-[45%]", "w-[75%]", "w-[50%]", "w-[85%]"]?.map(
+                (widthClass, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between px-3 h-9.5 rounded-xl border border-transparent bg-muted/30"
+                  >
+                    <Skeleton
+                      className={cn(
+                        "h-3.5 rounded-md bg-primary/15 dark:bg-primary/20",
+                        widthClass,
+                      )}
+                    />
+                  </div>
+                ),
+              )
             : categoriesList?.map((cat) => {
                 const isActive = selectedCategories.includes(cat?.slug);
                 return (

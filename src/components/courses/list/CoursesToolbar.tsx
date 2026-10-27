@@ -57,7 +57,7 @@ export function CoursesToolbar({
               value={searchValue}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder={t("searchPlaceholder")}
-              className="h-10 rounded-2xl pr-9 ltr:pl-9 ltr:pr-9 text-xs shadow-xs border-border/60 focus-visible:ring-primary/20 bg-card/60 backdrop-blur-sm [&::-webkit-search-cancel-button]:hidden"
+              className="h-10 rounded-2xl pr-9 ltr:pl-9 ltr:pr-9 text-xs shadow-xs border-border/60 focus-visible:ring-primary/20 bg-card/60 [&::-webkit-search-cancel-button]:hidden"
               aria-label={t("searchPlaceholder")}
             />
             {searchValue && (

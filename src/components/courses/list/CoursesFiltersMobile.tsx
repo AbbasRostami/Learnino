@@ -37,7 +37,7 @@ export function CoursesFiltersMobile(props: CoursesFiltersMobileProps) {
   return (
     <Sheet>
       <SheetTrigger
-        className="inline-flex items-center justify-center w-full h-11 gap-2 rounded-2xl relative border border-border/60 bg-card/60 backdrop-blur-sm lg:hidden text-sm font-bold text-foreground transition-colors hover:bg-accent hover:text-accent-foreground outline-none cursor-pointer"
+        className="inline-flex items-center justify-center w-full h-11 gap-2 rounded-2xl relative border border-border/60 bg-card/60 lg:hidden text-sm font-bold text-foreground transition-colors hover:bg-accent hover:text-accent-foreground outline-none cursor-pointer"
         aria-label={t("openFilters")}
       >
         <Filter className="h-4 w-4" />

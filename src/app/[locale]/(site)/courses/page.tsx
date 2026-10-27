@@ -73,8 +73,8 @@ export async function generateMetadata({
       : baseTitle;
 
   const description = isFa
-    ? "کاتالوگ کامل دوره‌های تخصصی برنامه‌نویسی لرنینو. React, Next.js, JavaScript, Python و بیشتر."
-    : "Complete catalog of specialized programming courses. React, Next.js, JavaScript, Python and more.";
+    ? "صفحه کامل دوره‌های تخصصی برنامه‌ نویسی لرنینو. React, Next.js, JavaScript, Python و بیشتر."
+    : "Complete page of specialized programming courses. React, Next.js, JavaScript, Python and more.";
 
   return {
     title,
