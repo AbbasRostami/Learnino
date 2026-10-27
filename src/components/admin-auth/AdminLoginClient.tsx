@@ -64,24 +64,11 @@ export function AdminLoginClient() {
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -inset-e-40 h-96 w-96 rounded-full bg-primary/20 blur-3xl animate-pulse" />
-        <div
-          className="absolute -bottom-40 -inset-s-40 h-96 w-96 rounded-full bg-brand-accent/20 blur-3xl animate-pulse"
-          style={{ animationDelay: "1s" }}
-        />
-        <div
-          className="absolute top-1/2 inset-s-1/2 -translate-x-1/2 -translate-y-1/2 h-125 w-125 rounded-full bg-primary/5 blur-3xl animate-pulse"
-          style={{ animationDelay: "2s" }}
-        />
+        <div className="absolute -bottom-40 -inset-s-40 h-96 w-96 rounded-full bg-brand-accent/20 blur-3xl animate-pulse [animation-delay:1s]" />
+        <div className="absolute top-1/2 inset-s-1/2 -translate-x-1/2 -translate-y-1/2 h-125 w-125 rounded-full bg-primary/5 blur-3xl animate-pulse [animation-delay:2s]" />
       </div>
 
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.02] dark:opacity-[0.05]"
-        style={{
-          backgroundImage: `linear-gradient(currentColor 1px, transparent 1px),
-                            linear-gradient(90deg, currentColor 1px, transparent 1px)`,
-          backgroundSize: "40px 40px",
-        }}
-      />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.02] dark:opacity-[0.05] bg-[linear-gradient(currentColor_1px,transparent_1px),linear-gradient(90deg,currentColor_1px,transparent_1px)] bg-size-[40px_40px]" />
 
       <div className="relative z-10 w-full max-w-md">
         <Link
