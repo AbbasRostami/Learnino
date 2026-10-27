@@ -2,6 +2,7 @@
 
 import {
   AdminConfirmDialog,
+  AdminQueryError,
   AdminStatsGrid,
   type StatCardConfig,
 } from "@/components/admin/shared";
@@ -46,7 +47,7 @@ export function AdminUserDetailClient({ userId }: AdminUserDetailClientProps) {
 
   const [banDialogOpen, setBanDialogOpen] = useState(false);
 
-  const { data, isLoading } = useUserDetails(userId);
+  const { data, isLoading, isError, refetch } = useUserDetails(userId);
   const user = data?.data?.user;
 
   const { mutate: banUser, isPending: isBanPending } = useBanUser({
@@ -54,6 +55,8 @@ export function AdminUserDetailClient({ userId }: AdminUserDetailClientProps) {
   });
 
   if (isLoading) return <UserDetailSkeleton />;
+
+  if (isError) return <AdminQueryError onRetry={() => void refetch()} />;
 
   if (!user) {
     return (
@@ -252,25 +255,27 @@ export function AdminUserDetailClient({ userId }: AdminUserDetailClientProps) {
         <AdminStatsGrid stats={statsCards} columns={6} />
       </div>
 
-      <AdminConfirmDialog
-        open={banDialogOpen}
-        onOpenChange={setBanDialogOpen}
-        variant="destructive"
-        icon={ShieldOff}
-        title={t("confirmBan.title")}
-        confirmLabel={t("confirmBan.confirm")}
-        cancelLabel={t("confirmBan.cancel")}
-        isPending={isBanPending}
-        onConfirm={() => banUser(user?.id)}
-        description={
-          <>
-            {t("confirmBan.description")}
-            <span className="block mt-2 p-2 rounded-lg bg-muted text-foreground font-bold">
-              {displayName}
-            </span>
-          </>
-        }
-      />
+      {user.role !== "ADMIN" && (
+        <AdminConfirmDialog
+          open={banDialogOpen}
+          onOpenChange={setBanDialogOpen}
+          variant="destructive"
+          icon={ShieldOff}
+          title={t("confirmBan.title")}
+          confirmLabel={t("confirmBan.confirm")}
+          cancelLabel={t("confirmBan.cancel")}
+          isPending={isBanPending}
+          onConfirm={() => banUser(user.id)}
+          description={
+            <>
+              {t("confirmBan.description")}
+              <span className="block mt-2 p-2 rounded-lg bg-muted text-foreground font-bold">
+                {displayName}
+              </span>
+            </>
+          }
+        />
+      )}
     </div>
   );
 }

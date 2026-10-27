@@ -41,7 +41,8 @@ export function AdminPostsClient() {
     },
   });
 
-  const { data, isLoading, isFetching } = useAdminPosts(apiParams);
+  const { data, isLoading, isFetching, isError, refetch } =
+    useAdminPosts(apiParams);
 
   const posts = data?.data?.items ?? [];
   const pagination = data?.data?.pagination;
@@ -94,6 +95,8 @@ export function AdminPostsClient() {
         columns={columns}
         data={posts}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={() => void refetch()}
         emptyStateMessage={t("table.noPostsFound")}
         emptyStateDescription={t("table.noPostsDescription")}
       />

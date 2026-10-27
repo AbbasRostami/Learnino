@@ -37,7 +37,8 @@ export function AdminWalletsClient() {
     },
   });
 
-  const { data, isLoading, isFetching } = useAdminWallets(apiParams);
+  const { data, isLoading, isFetching, isError, refetch } =
+    useAdminWallets(apiParams);
 
   const wallets = data?.data?.items ?? [];
   const pagination = data?.data?.pagination;
@@ -87,6 +88,8 @@ export function AdminWalletsClient() {
         columns={columns}
         data={wallets}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={() => void refetch()}
         enableSorting
         emptyStateMessage={t("table.noWalletsFound")}
         emptyStateDescription={t("table.noWalletsDescription")}

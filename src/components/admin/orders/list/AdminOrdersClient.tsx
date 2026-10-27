@@ -35,7 +35,8 @@ export function AdminOrdersClient() {
     },
   });
 
-  const { data, isLoading, isFetching } = useAdminOrders(apiParams);
+  const { data, isLoading, isFetching, isError, refetch } =
+    useAdminOrders(apiParams);
 
   const orders = data?.data?.items ?? [];
   const pagination = data?.data?.pagination;
@@ -71,6 +72,8 @@ export function AdminOrdersClient() {
         columns={columns}
         data={orders}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={() => void refetch()}
         enableSorting
         emptyStateMessage={t("table.noOrdersFound")}
         emptyStateDescription={t("table.noOrdersDescription")}

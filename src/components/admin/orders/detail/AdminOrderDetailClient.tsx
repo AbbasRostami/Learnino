@@ -1,6 +1,10 @@
 "use client";
 
-import { AdminConfirmDialog, AdminPageHeader } from "@/components/admin/shared";
+import {
+  AdminConfirmDialog,
+  AdminPageHeader,
+  AdminQueryError,
+} from "@/components/admin/shared";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -37,7 +41,7 @@ export function AdminOrderDetailClient({
   const locale = useLocale();
   const [cancelOpen, setCancelOpen] = useState(false);
 
-  const { data, isLoading } = useAdminOrderDetails(orderId);
+  const { data, isLoading, isError, refetch } = useAdminOrderDetails(orderId);
   const order = data?.data?.order;
 
   const { mutate: cancelOrder, isPending: isCancelling } = useAdminCancelOrder({
@@ -57,6 +61,10 @@ export function AdminOrderDetailClient({
         <Skeleton className="h-80 rounded-2xl" />
       </div>
     );
+  }
+
+  if (isError) {
+    return <AdminQueryError onRetry={() => void refetch()} />;
   }
 
   if (!order) {

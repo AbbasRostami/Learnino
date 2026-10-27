@@ -42,7 +42,8 @@ export function AdminCategoriesClient() {
     },
   });
 
-  const { data, isLoading, isFetching } = useAdminCategories(apiParams);
+  const { data, isLoading, isFetching, isError, refetch } =
+    useAdminCategories(apiParams);
 
   const categories = data?.data?.items ?? [];
   const pagination = data?.data?.pagination;
@@ -98,6 +99,8 @@ export function AdminCategoriesClient() {
         columns={columns}
         data={categories}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={() => void refetch()}
         enableSorting
         emptyStateMessage={t("table.noCategoriesFound")}
         emptyStateDescription={t("table.noCategoriesDescription")}

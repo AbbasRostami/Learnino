@@ -33,7 +33,8 @@ export function AdminCommentsClient() {
     },
   });
 
-  const { data, isLoading, isFetching } = useAdminComments(apiParams);
+  const { data, isLoading, isFetching, isError, refetch } =
+    useAdminComments(apiParams);
 
   const comments = data?.data?.items ?? [];
   const pagination = data?.data?.pagination;
@@ -69,6 +70,8 @@ export function AdminCommentsClient() {
         columns={columns}
         data={comments}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={() => void refetch()}
         emptyStateMessage={t("table.noCommentsFound")}
         emptyStateDescription={t("table.noCommentsDescription")}
       />

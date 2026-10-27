@@ -5,6 +5,7 @@ export * from "./AdminEmptyState";
 export * from "./AdminFilters";
 export * from "./AdminPageHeader";
 export * from "./AdminPagination";
+export * from "./AdminQueryError";
 export * from "./AdminResponsiveDialog";
 export * from "./AdminSearchInput";
 export * from "./AdminSortableHeader";

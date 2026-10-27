@@ -1,6 +1,9 @@
 "use client";
 
-import { AdminPageHeader } from "@/components/admin/shared";
+import {
+  AdminPageHeader,
+  AdminQueryError,
+} from "@/components/admin/shared";
 import { buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link, useRouter } from "@/i18n/routing";
@@ -18,10 +21,12 @@ export function AdminEditCourseClient({ slug }: AdminEditCourseClientProps) {
   const t = useTranslations("admin.courses.form");
   const router = useRouter();
 
-  const { data, isLoading } = useAdminCourseDetails(slug);
+  const { data, isLoading, isError, refetch } = useAdminCourseDetails(slug);
   const course = data?.data?.course;
 
-  return (
+  return isError ? (
+    <AdminQueryError onRetry={() => void refetch()} />
+  ) : (
     <div className="flex flex-col gap-6 max-w-6xl mx-auto w-full">
       <AdminPageHeader
         title={t("editTitle")}

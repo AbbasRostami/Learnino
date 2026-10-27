@@ -43,7 +43,8 @@ export function AdminCoursesClient() {
     },
   });
 
-  const { data, isLoading, isFetching } = useAdminCourses(apiParams);
+  const { data, isLoading, isFetching, isError, refetch } =
+    useAdminCourses(apiParams);
 
   const courses = data?.data?.items ?? [];
   const pagination = data?.data?.pagination;
@@ -99,6 +100,8 @@ export function AdminCoursesClient() {
         columns={columns}
         data={courses}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={() => void refetch()}
         emptyStateMessage={t("table.noCoursesFound")}
         emptyStateDescription={t("table.noCoursesDescription")}
       />

@@ -1358,6 +1358,9 @@
       "applyFilters": "Apply Filters"
     },
     "table": {
+      "errorTitle": "Failed to load data",
+      "errorDescription": "A server error occurred while fetching the information. Please check your connection and try again.",
+
       "columnsVisibility": "Column Visibility",
       "selectAll": "Select All",
       "clearAll": "Clear All",
@@ -1376,6 +1379,7 @@
       "noDataDescription": "Click to add new data",
       "loading": "Loading data...",
       "error": "Error loading data",
+      "retry": "Try again",
       "actions": "Actions",
       "id": "ID",
       "createdAt": "Created At",

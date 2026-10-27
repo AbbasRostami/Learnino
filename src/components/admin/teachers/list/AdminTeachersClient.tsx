@@ -42,7 +42,8 @@ export function AdminTeachersClient() {
     },
   });
 
-  const { data, isLoading, isFetching } = useAdminTeachers(apiParams);
+  const { data, isLoading, isFetching, isError, refetch } =
+    useAdminTeachers(apiParams);
 
   const teachers = data?.data?.items ?? [];
   const pagination = data?.data?.pagination;
@@ -96,6 +97,8 @@ export function AdminTeachersClient() {
         columns={columns}
         data={teachers}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={() => void refetch()}
         enableSorting
         emptyStateMessage={t("table.noTeachersFound")}
         emptyStateDescription={t("table.noTeachersDescription")}

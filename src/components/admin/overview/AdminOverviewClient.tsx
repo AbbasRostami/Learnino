@@ -2,7 +2,7 @@
 
 import { useAdminOverview, useProfile } from "@/services";
 import { useLocale, useTranslations } from "next-intl";
-import { ReadOnlyBanner } from "../shared";
+import { AdminQueryError, ReadOnlyBanner } from "../shared";
 import { AdminOverviewSkeleton } from "./AdminOverviewSkeleton";
 import { OverviewStatsGrid } from "./OverviewStatsGrid";
 import { OverviewWelcomeBanner } from "./OverviewWelcomeBanner";
@@ -22,8 +22,11 @@ export function AdminOverviewClient() {
   const profile = profileData?.data?.profile;
   const userName = profile?.name || profile?.email?.split("@")?.[0] || "Admin";
 
-  const { data: overviewData, isLoading } = useAdminOverview();
+  const { data: overviewData, isLoading, isError, refetch } =
+    useAdminOverview();
   const data = overviewData?.data;
+
+  if (isError) return <AdminQueryError onRetry={() => void refetch()} />;
 
   if (isLoading || !data) {
     return <AdminOverviewSkeleton />;

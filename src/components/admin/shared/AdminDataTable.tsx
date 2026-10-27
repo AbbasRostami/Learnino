@@ -27,12 +27,15 @@ import { Settings2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 import { AdminEmptyState } from "./AdminEmptyState";
+import { AdminQueryError } from "./AdminQueryError";
 import { AdminTableSkeleton } from "./AdminTableSkeleton";
 
 interface AdminDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   isLoading?: boolean;
+  isError?: boolean;
+  onRetry?: () => void;
   emptyStateMessage?: string;
   emptyStateDescription?: string;
   emptyStateActionLabel?: string;
@@ -46,6 +49,8 @@ export function AdminDataTable<TData, TValue>({
   columns,
   data,
   isLoading = false,
+  isError = false,
+  onRetry,
   emptyStateMessage,
   emptyStateDescription,
   emptyStateActionLabel,
@@ -109,6 +114,12 @@ export function AdminDataTable<TData, TValue>({
         </div>
       )}
 
+      {isError && data.length > 0 && (
+        <div className="rounded-2xl border border-rose-500/30 bg-rose-500/5">
+          <AdminQueryError onRetry={onRetry} />
+        </div>
+      )}
+
       <div className="w-full overflow-hidden rounded-3xl border border-border/50 bg-card/60 backdrop-blur-md shadow-xs">
         <div className="overflow-x-auto">
           <Table className="w-full">
@@ -157,6 +168,15 @@ export function AdminDataTable<TData, TValue>({
                     ))}
                   </TableRow>
                 ))
+              ) : isError ? (
+                <TableRow className="hover:bg-transparent">
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-64 text-center align-middle"
+                  >
+                    <AdminQueryError onRetry={onRetry} />
+                  </TableCell>
+                </TableRow>
               ) : (
                 <TableRow className="hover:bg-transparent">
                   <TableCell

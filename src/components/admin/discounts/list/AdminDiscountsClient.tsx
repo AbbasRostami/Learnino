@@ -37,7 +37,8 @@ export function AdminDiscountsClient() {
     },
   });
 
-  const { data, isLoading, isFetching } = useDiscounts(apiParams);
+  const { data, isLoading, isFetching, isError, refetch } =
+    useDiscounts(apiParams);
 
   const discounts = data?.data?.items ?? [];
   const pagination = data?.data?.pagination;
@@ -82,6 +83,8 @@ export function AdminDiscountsClient() {
         columns={columns}
         data={discounts}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={() => void refetch()}
         enableSorting
         emptyStateMessage={t("table.noDiscountsFound")}
         emptyStateDescription={t("table.noDiscountsDescription")}

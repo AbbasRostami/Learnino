@@ -1,6 +1,9 @@
 "use client";
 
-import { AdminPageHeader } from "@/components/admin/shared";
+import {
+  AdminPageHeader,
+  AdminQueryError,
+} from "@/components/admin/shared";
 import { buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link, useRouter } from "@/i18n/routing";
@@ -18,10 +21,12 @@ export function AdminEditPostClient({ slug }: AdminEditPostClientProps) {
   const t = useTranslations("admin.posts.form");
   const router = useRouter();
 
-  const { data, isLoading } = useAdminPostDetails(slug);
+  const { data, isLoading, isError, refetch } = useAdminPostDetails(slug);
   const post = data?.data?.post;
 
-  return (
+  return isError ? (
+    <AdminQueryError onRetry={() => void refetch()} />
+  ) : (
     <div className="flex flex-col gap-6 max-w-7xl mx-auto w-full">
       <AdminPageHeader
         title={t("editTitle")}

@@ -29,7 +29,8 @@ export function AdminTransactionsClient() {
       },
     });
 
-  const { data, isLoading, isFetching } = useAdminTransactions(apiParams);
+  const { data, isLoading, isFetching, isError, refetch } =
+    useAdminTransactions(apiParams);
 
   const transactions = data?.data?.items ?? [];
   const pagination = data?.data?.pagination;
@@ -78,6 +79,8 @@ export function AdminTransactionsClient() {
         columns={columns}
         data={transactions}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={() => void refetch()}
         enableSorting
         emptyStateMessage={t("table.noTransactionsFound")}
         emptyStateDescription={t("table.noTransactionsDescription")}

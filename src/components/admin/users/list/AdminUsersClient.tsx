@@ -38,7 +38,7 @@ export function AdminUsersClient() {
     },
   });
 
-  const { data, isLoading, isFetching } = useUsers(apiParams);
+  const { data, isLoading, isFetching, isError, refetch } = useUsers(apiParams);
   const users = data?.data?.items ?? [];
   const pagination = data?.data?.pagination;
 
@@ -93,6 +93,8 @@ export function AdminUsersClient() {
         columns={columns}
         data={users}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={() => void refetch()}
         emptyStateMessage={t("table.noUsersFound")}
         emptyStateDescription={t("table.noUsersDescription")}
       />

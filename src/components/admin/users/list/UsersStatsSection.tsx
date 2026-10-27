@@ -1,6 +1,10 @@
 "use client";
 
-import { AdminStatsGrid, type StatCardConfig } from "@/components/admin/shared";
+import {
+  AdminQueryError,
+  AdminStatsGrid,
+  type StatCardConfig,
+} from "@/components/admin/shared";
 import { useAdminUsersStats } from "@/services";
 import { Shield, UserCheck, UserPlus, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -8,7 +12,7 @@ import { useTranslations } from "next-intl";
 export function UsersStatsSection() {
   const t = useTranslations("admin.users.overviewStats");
 
-  const { data, isLoading } = useAdminUsersStats();
+  const { data, isLoading, isError, refetch } = useAdminUsersStats();
   const stats = data?.data?.user;
 
   const cards: StatCardConfig[] = [
@@ -48,6 +52,8 @@ export function UsersStatsSection() {
       bgHover: "from-amber-500/10 to-transparent",
     },
   ];
+
+  if (isError) return <AdminQueryError onRetry={() => void refetch()} />;
 
   return <AdminStatsGrid stats={cards} isLoading={isLoading} columns={4} />;
 }

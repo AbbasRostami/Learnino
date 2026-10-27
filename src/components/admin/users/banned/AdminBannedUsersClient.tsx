@@ -26,7 +26,7 @@ export function AdminBannedUsersClient() {
 
   const [selectedUser, setSelectedUser] = useState<BannedUser | null>(null);
 
-  const { data, isLoading, isFetching } = useBannedUsers({
+  const { data, isLoading, isFetching, isError, refetch } = useBannedUsers({
     page: params?.page,
     limit: params?.limit,
   });
@@ -174,6 +174,8 @@ export function AdminBannedUsersClient() {
         columns={columns}
         data={users}
         isLoading={isLoading}
+        isError={isError}
+        onRetry={() => void refetch()}
         emptyStateMessage={t("banned.noBannedUsers")}
         emptyStateDescription={t("banned.noBannedUsersDescription")}
       />
