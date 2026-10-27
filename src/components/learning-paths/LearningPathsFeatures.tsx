@@ -33,6 +33,13 @@ const FEATURES = [
 export function LearningPathsFeatures() {
   const t = useTranslations("learningPathsPage.features");
 
+  const delayClasses = [
+    "[animation-delay:0ms]",
+    "[animation-delay:100ms]",
+    "[animation-delay:200ms]",
+    "[animation-delay:300ms]",
+  ];
+
   return (
     <section
       aria-labelledby="lp-features-title"
@@ -47,8 +54,7 @@ export function LearningPathsFeatures() {
           {FEATURES.map((feature, index) => (
             <div
               key={feature.key}
-              style={{ animationDelay: `${index * 100}ms` }}
-              className="group flex flex-col items-center text-center p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-300 animate-in fade-in-0 slide-in-from-bottom-4 fill-mode-backwards motion-reduce:animate-none"
+              className={`group flex flex-col items-center text-center p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-300 animate-in fade-in-0 slide-in-from-bottom-4 fill-mode-backwards motion-reduce:animate-none ${delayClasses[index % delayClasses.length]}`}
             >
               <div
                 className={`flex h-12 w-12 items-center justify-center rounded-xl ${feature.bg} mb-3 group-hover:scale-110 transition-transform motion-reduce:group-hover:scale-100`}

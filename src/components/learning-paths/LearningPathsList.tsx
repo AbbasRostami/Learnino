@@ -12,6 +12,15 @@ export function LearningPathsList() {
   const tLevels = useTranslations("learningPathsPage.levels");
   const tDetails = useTranslations("learningPathsPage.pathDetails");
 
+  const delayClasses = [
+    "[animation-delay:0ms]",
+    "[animation-delay:120ms]",
+    "[animation-delay:240ms]",
+    "[animation-delay:360ms]",
+    "[animation-delay:480ms]",
+    "[animation-delay:600ms]",
+  ];
+
   return (
     <section aria-labelledby="lp-list-title" className="py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,8 +52,10 @@ export function LearningPathsList() {
           {LEARNING_PATHS.map((path, index) => (
             <article
               key={path.slug}
-              style={{ animationDelay: `${index * 120}ms` }}
-              className="group relative overflow-hidden rounded-3xl border border-border/60 bg-card hover:border-primary/30 hover:shadow-2xl transition-all duration-500 animate-in fade-in-0 slide-in-from-bottom-6 fill-mode-backwards motion-reduce:animate-none"
+              className={cn(
+                "group relative overflow-hidden rounded-3xl border border-border/60 bg-card hover:border-primary/30 hover:shadow-2xl transition-all duration-500 animate-in fade-in-0 slide-in-from-bottom-6 fill-mode-backwards motion-reduce:animate-none",
+                delayClasses[index % delayClasses.length],
+              )}
             >
               <div
                 className={cn(
@@ -62,7 +73,7 @@ export function LearningPathsList() {
                 aria-hidden="true"
               />
 
-              <div className="relative p-8">
+              <div className="relative p-4">
                 <div className="flex items-start justify-between gap-4 mb-6">
                   <div
                     className={cn(

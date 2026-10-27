@@ -13,6 +13,13 @@ const STEPS = [
 export function LearningPathsHowItWorks() {
   const t = useTranslations("learningPathsPage.howItWorks");
 
+  const delayClasses = [
+    "[animation-delay:0ms]",
+    "[animation-delay:150ms]",
+    "[animation-delay:300ms]",
+    "[animation-delay:450ms]",
+  ];
+
   return (
     <section
       aria-labelledby="lp-how-title"
@@ -50,8 +57,7 @@ export function LearningPathsHowItWorks() {
             {STEPS.map((step, index) => (
               <div
                 key={step.key}
-                style={{ animationDelay: `${index * 150}ms` }}
-                className="relative flex flex-col items-center text-center animate-in fade-in-0 slide-in-from-bottom-6 fill-mode-backwards motion-reduce:animate-none"
+                className={`relative flex flex-col items-center text-center animate-in fade-in-0 slide-in-from-bottom-6 fill-mode-backwards motion-reduce:animate-none ${delayClasses[index % delayClasses.length]}`}
               >
                 <div className="relative z-10">
                   <div
