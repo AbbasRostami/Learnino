@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import type { EmblaCarouselType, EmblaOptionsType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import React, { useCallback, useEffect, useState } from "react";
 
 interface CarouselProps {
@@ -18,6 +18,7 @@ interface CarouselProps {
   containerClassName?: string;
   headerContent?: React.ReactNode;
   actionContent?: React.ReactNode;
+  dotAriaLabel?: (index: number) => string;
 }
 
 export function Carousel({
@@ -29,9 +30,11 @@ export function Carousel({
   showDots = true,
   className,
   containerClassName,
+  dotAriaLabel,
 }: CarouselProps) {
   const locale = useLocale();
   const dir = locale === "fa" ? "rtl" : "ltr";
+  const t = useTranslations("common");
 
   const mergedOptions: EmblaOptionsType = {
     direction: dir,
@@ -95,7 +98,7 @@ export function Carousel({
 
   return (
     <div
-      className={cn("relative", className)}
+      className={cn("relative w-full max-w-full overflow-hidden", className)}
       role="region"
       aria-roledescription="carousel"
       dir={dir}
@@ -107,7 +110,7 @@ export function Carousel({
       </div>
 
       {(showDots || showControls) && (
-        <div className="mt-4 flex justify-center items-center gap-4">
+        <div className="mt-4 flex justify-center items-center gap-4 max-w-full px-2">
           {/* <div className="flex items-center justify-start">
             {showControls && (
               <Button
@@ -125,7 +128,7 @@ export function Carousel({
             )}
           </div> */}
 
-          <div className="flex items-center justify-center gap-1">
+          <div className="flex flex-wrap items-center justify-center gap-0.5 max-w-full">
             {showDots &&
               scrollSnaps.length > 1 &&
               scrollSnaps.map((_, index) => (
@@ -133,8 +136,12 @@ export function Carousel({
                   key={index}
                   type="button"
                   onClick={() => scrollTo(index)}
-                  aria-label={`رفتن به اسلاید ${index + 1}`}
-                  className="p-2 flex items-center justify-center cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full"
+                  aria-label={
+                    dotAriaLabel
+                      ? dotAriaLabel(index + 1)
+                      : t("goToSlide", { slide: index + 1 })
+                  }
+                  className="p-1.5 flex items-center justify-center cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full"
                 >
                   <span
                     className={cn(

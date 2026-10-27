@@ -4,7 +4,8 @@
     "loading": "در حال بارگذاری...",
     "error": "خطایی رخ داد",
     "retry": "تلاش مجدد",
-    "toman": "تومان"
+    "toman": "تومان",
+    "goToSlide": "رفتن به اسلاید {slide}"
   },
   "error": {
     "notFound": {

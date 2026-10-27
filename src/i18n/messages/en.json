@@ -4,7 +4,8 @@
     "loading": "Loading...",
     "error": "An error occurred",
     "retry": "Retry",
-    "toman": "Toman"
+    "toman": "Toman",
+    "goToSlide": "Go to slide {slide}"
   },
   "error": {
     "notFound": {
