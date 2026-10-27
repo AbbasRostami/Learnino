@@ -58,7 +58,7 @@ export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
               <Link
                 href={`/blog?category=${post?.category?.slug}`}
                 className={cn(
-                  "inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold mb-6 transition-colors hover:opacity-80 shadow-xs",
+                  "inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-black mb-6 transition-colors hover:opacity-90 shadow-xs border border-current/20",
                   style.badgeColor,
                 )}
               >
@@ -72,7 +72,7 @@ export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
             </h1>
 
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground border-b border-border/40 pb-6 mb-6">
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 font-medium">
                 <Calendar className="h-4 w-4" aria-hidden="true" />
                 <time dateTime={post?.createdAt} itemProp="datePublished">
                   {formatRelativeTime(post?.createdAt, locale)}
@@ -101,9 +101,9 @@ export function PostDetailClient({ slug, initialPost }: PostDetailClientProps) {
                 alt={post?.title}
                 fill
                 priority
-                quality={90}
+                quality={85}
                 sizes="(max-width: 768px) 100vw, 800px"
-                className="object-fill"
+                className="object-cover"
                 itemProp="image"
               />
             ) : (

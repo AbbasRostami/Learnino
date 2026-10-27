@@ -39,7 +39,7 @@ export function BlogFilters({
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder={t("searchPlaceholder")}
-          className="h-11 rounded-2xl pr-10 ltr:pl-10 ltr:pr-3 shadow-xs border-border/60 focus-visible:ring-primary/20 bg-card/60 backdrop-blur-sm [&::-webkit-search-cancel-button]:hidden"
+          className="h-11 rounded-2xl pr-10 ltr:pl-10 ltr:pr-3 shadow-xs border-border/60 focus-visible:ring-primary/20 bg-card [&::-webkit-search-cancel-button]:hidden"
         />
         {searchTerm && (
           <Button
@@ -54,12 +54,13 @@ export function BlogFilters({
 
       <div className="flex flex-wrap items-center gap-2 overflow-x-auto no-scrollbar pb-1">
         <Button
+          variant="ghost"
           type="button"
           onClick={() => onCategoryChange(null)}
           className={cn(
             "px-4 py-2 rounded-full text-xs font-bold border transition-all cursor-pointer whitespace-nowrap",
             !selectedCategory
-              ? "bg-primary text-primary-foreground border-primary shadow-sm"
+              ? "bg-primary text-primary-foreground border-primary shadow-xs"
               : "bg-card border-border/60 text-muted-foreground hover:border-primary hover:text-primary",
           )}
         >
@@ -68,7 +69,7 @@ export function BlogFilters({
 
         {categories?.map((cat) => (
           <Button
-            variant="outline"
+            variant="ghost"
             key={cat?.id}
             type="button"
             onClick={() =>
@@ -79,7 +80,7 @@ export function BlogFilters({
             className={cn(
               "px-4 py-2 rounded-full text-xs font-bold border transition-all cursor-pointer whitespace-nowrap",
               selectedCategory === cat?.slug
-                ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                ? "bg-primary text-primary-foreground border-primary shadow-xs"
                 : "bg-card border-border/60 text-muted-foreground hover:border-primary hover:text-primary",
             )}
           >

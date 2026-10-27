@@ -26,7 +26,6 @@ interface BlogPostCardProps {
 export function BlogPostCard({
   post,
   priority = false,
-  index = 0,
   locale,
 }: BlogPostCardProps) {
   const t = useTranslations("blog");
@@ -35,8 +34,7 @@ export function BlogPostCard({
 
   return (
     <article
-      style={{ animationDelay: `${Math.min(index * 50, 300)}ms` }}
-      className="group flex flex-col h-full overflow-hidden rounded-[2rem] border border-border/50 bg-card/60 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:border-primary/40 animate-in fade-in-0 slide-in-from-bottom-4 fill-mode-backwards motion-reduce:animate-none motion-reduce:hover:transform-none"
+      className="group flex flex-col h-full overflow-hidden rounded-[2rem] border border-border/60 bg-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:border-primary/40 motion-reduce:hover:transform-none"
       itemScope
       itemType="https://schema.org/BlogPosting"
     >
@@ -54,7 +52,7 @@ export function BlogPostCard({
               priority={priority}
               quality={75}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-fill transition-transform duration-700 group-hover:scale-110 motion-reduce:transition-none"
+              className="object-cover transition-transform duration-700 group-hover:scale-110 motion-reduce:transition-none"
               itemProp="image"
             />
           ) : (
@@ -76,7 +74,7 @@ export function BlogPostCard({
           {post?.category && style && (
             <span
               className={cn(
-                "text-xs font-black px-3 py-1 rounded-full border border-current/20 shadow-sm",
+                "text-xs font-black px-3 py-1 rounded-full border border-current/20 shadow-xs",
                 style.badgeColor,
               )}
             >
@@ -125,6 +123,7 @@ export function BlogPostCard({
             className="flex items-center gap-1.5 text-xs font-black text-primary group-hover:gap-2.5 transition-all bg-primary/10 hover:bg-primary hover:text-white px-3 py-1.5 rounded-full"
           >
             <span>{t("readMore")}</span>
+            <span className="sr-only">: {post?.title}</span>
             <ArrowRight
               className="h-3.5 w-3.5 rtl:rotate-180"
               aria-hidden="true"
