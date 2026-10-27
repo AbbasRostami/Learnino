@@ -38,14 +38,7 @@ export function PaymentFailedClient({
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-rose-500/20 dark:bg-rose-500/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-orange-500/20 dark:bg-orange-500/10 rounded-full blur-3xl" />
-        <div
-          className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
-          style={{
-            backgroundImage:
-              "linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
+        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-[linear-gradient(currentColor_1px,transparent_1px),linear-gradient(90deg,currentColor_1px,transparent_1px)] bg-size-[40px_40px]" />
       </div>
 
       <motion.div
@@ -120,9 +113,7 @@ export function PaymentFailedClient({
                       <span className="font-semibold shrink-0">
                         {t("authorityLabel")}:
                       </span>
-                      <span
-                        className="font-bold text-foreground truncate"
-                      >
+                      <span className="font-bold text-foreground truncate">
                         {authority}
                       </span>
                     </div>
