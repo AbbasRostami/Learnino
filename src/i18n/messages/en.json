@@ -1000,6 +1000,11 @@
   },
   "dashboard": {
     "title": "User Panel",
+    "queryError": {
+      "title": "We couldn't load this information",
+      "description": "Check your connection and try again.",
+      "retry": "Try again"
+    },
     "welcome": "Hi {name}",
     "welcomeSubtitle": "Welcome to your dashboard",
     "quickActions": "Quick Actions",

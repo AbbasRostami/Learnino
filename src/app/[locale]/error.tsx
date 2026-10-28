@@ -3,20 +3,22 @@
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
+import * as Sentry from "@sentry/nextjs";
 import { AlertTriangle, Home, RefreshCw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
 export default function Error({
   error,
-  retry,
+  reset, 
 }: {
   error: Error & { digest?: string };
-  retry: () => void;
+  reset: () => void;
 }) {
   const t = useTranslations("error.serverError");
 
   useEffect(() => {
+    Sentry.captureException(error);
     console.error("[App Error]", error.message, "Digest:", error.digest);
   }, [error]);
 
@@ -36,17 +38,15 @@ export default function Error({
       </p>
 
       {error.digest && (
-        <p
-          className="text-xs text-muted-foreground/60 mb-8"
-          dir="ltr"
-        >
+        <p className="text-xs text-muted-foreground/60 mb-8" dir="ltr">
           Error ID: {error.digest}
         </p>
       )}
 
       <div className="flex flex-col sm:flex-row items-center gap-3">
         <button
-          onClick={retry}
+          type="button"
+          onClick={reset}
           className={cn(
             buttonVariants({ size: "lg" }),
             "rounded-full gap-2 px-8 shadow-lg shadow-primary/20 cursor-pointer font-bold",
