@@ -1,6 +1,7 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { DashboardQueryError } from "@/components/dashboard/shared/DashboardQueryError";
 import { cn } from "@/lib/utils";
 import type { ProfileOverviewResponse } from "@/types";
 import {
@@ -17,11 +18,17 @@ import { useTranslations } from "next-intl";
 interface OverviewStatsGridProps {
   overview: ProfileOverviewResponse["data"]["overview"] | undefined;
   isLoading: boolean;
+  isError?: boolean;
+  isRetrying?: boolean;
+  onRetry?: () => void;
 }
 
 export function OverviewStatsGrid({
   overview,
   isLoading,
+  isError = false,
+  isRetrying = false,
+  onRetry,
 }: OverviewStatsGridProps) {
   const t = useTranslations("dashboard.stats");
   const prefersReducedMotion = useReducedMotion();
@@ -90,6 +97,15 @@ export function OverviewStatsGrid({
           </div>
         ))}
       </div>
+    );
+  }
+
+  if (isError && onRetry) {
+    return (
+      <DashboardQueryError
+        onRetry={onRetry}
+        isRetrying={isRetrying}
+      />
     );
   }
 

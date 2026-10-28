@@ -1,5 +1,6 @@
 "use client";
 
+import { DashboardQueryError } from "@/components/dashboard/shared/DashboardQueryError";
 import { AtSign, Mail } from "lucide-react";
 import { useChangeEmailForm } from "./hooks/useChangeEmailForm";
 import { ChangeEmailRequestStep } from "./sections/ChangeEmailRequestStep";
@@ -10,6 +11,9 @@ export function SettingsChangeEmail() {
     t,
     tDashboard,
     currentEmail,
+    isProfileError,
+    isProfileFetching,
+    refetchProfile,
     step,
     pendingEmail,
     timer,
@@ -52,7 +56,13 @@ export function SettingsChangeEmail() {
         </div>
       )}
 
-      {step === "request" ? (
+      {isProfileError ? (
+        <DashboardQueryError
+          compact
+          onRetry={() => void refetchProfile()}
+          isRetrying={isProfileFetching}
+        />
+      ) : step === "request" ? (
         <ChangeEmailRequestStep
           requestForm={requestForm}
           onSubmitRequest={onSubmitRequest}

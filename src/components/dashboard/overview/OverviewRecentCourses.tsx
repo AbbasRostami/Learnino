@@ -1,6 +1,7 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { DashboardQueryError } from "@/components/dashboard/shared/DashboardQueryError";
 import { Link } from "@/i18n/routing";
 import { useMyEnrolledCourses } from "@/services";
 import { ArrowLeft, BookOpen, PlayCircle } from "lucide-react";
@@ -10,7 +11,8 @@ import Image from "next/image";
 export function OverviewRecentCourses() {
   const t = useTranslations("dashboard");
 
-  const { data, isLoading } = useMyEnrolledCourses({ page: 1, limit: 3 });
+  const { data, isLoading, isError, isFetching, refetch } =
+    useMyEnrolledCourses({ page: 1, limit: 3 });
   const items = data?.data?.items ?? [];
 
   return (
@@ -41,6 +43,12 @@ export function OverviewRecentCourses() {
             <Skeleton key={i} className="h-16 rounded-2xl" />
           ))}
         </div>
+      ) : isError ? (
+        <DashboardQueryError
+          compact
+          onRetry={() => void refetch()}
+          isRetrying={isFetching}
+        />
       ) : items?.length === 0 ? (
         <div className="flex flex-col items-center py-8 text-center gap-2">
           <BookOpen className="h-10 w-10 text-muted-foreground/30" />
@@ -51,7 +59,7 @@ export function OverviewRecentCourses() {
           {items?.map((enrollment) => (
             <Link
               key={enrollment?.id}
-              href={`/dashboard/my-courses/${enrollment?.course?.slug}`}
+              href={`/courses/${enrollment?.course?.slug}`}
               className="group flex items-center gap-3 p-2 rounded-2xl hover:bg-muted/40 transition-colors"
             >
               <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-xl bg-muted">

@@ -36,7 +36,6 @@ export function ProfileAvatarField({
   fileInputRef,
   isDeleting,
   onAvatarChange,
-  onClearSelection,
   onDeleteAvatar,
 }: ProfileAvatarFieldProps) {
   const t = useTranslations("dashboard");

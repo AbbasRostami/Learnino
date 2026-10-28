@@ -1,6 +1,7 @@
 "use client";
 
 import { DashboardPagination } from "@/components/dashboard/shared/DashboardPagination";
+import { DashboardQueryError } from "@/components/dashboard/shared/DashboardQueryError";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocale } from "@/hooks/useLocale";
@@ -49,11 +50,19 @@ export function WalletClient() {
   const [amountToman, setAmountToman] = useState<number>(100_000);
   const [page, setPage] = useState(1);
 
-  const { data: walletData, isLoading: isWalletLoading } = useWallet();
+  const {
+    data: walletData,
+    isLoading: isWalletLoading,
+    isError: isWalletError,
+    isFetching: isWalletFetching,
+    refetch: refetchWallet,
+  } = useWallet();
   const {
     data: txData,
     isLoading: isTxLoading,
     isFetching: isTxFetching,
+    isError: isTxError,
+    refetch: refetchTransactions,
   } = useTransactions({ page, limit: 10 });
   const { mutate: chargeWallet, isPending: isCharging } = useChargeWallet();
 
@@ -105,7 +114,12 @@ export function WalletClient() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6">
-        {isWalletLoading || balanceToman === undefined ? (
+        {isWalletError ? (
+          <DashboardQueryError
+            onRetry={() => void refetchWallet()}
+            isRetrying={isWalletFetching}
+          />
+        ) : isWalletLoading || balanceToman === undefined ? (
           <WalletBalanceSkeleton />
         ) : (
           <motion.div
@@ -272,6 +286,11 @@ export function WalletClient() {
               <TransactionSkeleton key={i} />
             ))}
           </div>
+        ) : isTxError ? (
+          <DashboardQueryError
+            onRetry={() => void refetchTransactions()}
+            isRetrying={isTxFetching}
+          />
         ) : transactions.length === 0 ? (
           <div className="flex flex-col items-center py-12 border border-dashed border-border/60 rounded-3xl bg-card/40 gap-2">
             <Info className="h-8 w-8 text-muted-foreground/40" />

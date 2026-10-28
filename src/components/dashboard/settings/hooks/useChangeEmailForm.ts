@@ -23,7 +23,12 @@ export function useChangeEmailForm() {
   const t = useTranslations("auth");
   const tDashboard = useTranslations("dashboard");
 
-  const { data: profileData } = useProfile();
+  const {
+    data: profileData,
+    isError: isProfileError,
+    isFetching: isProfileFetching,
+    refetch: refetchProfile,
+  } = useProfile();
   const currentEmail = profileData?.data?.profile?.email;
 
   const [step, setStep] = useState<Step>("request");
@@ -149,6 +154,9 @@ export function useChangeEmailForm() {
     t,
     tDashboard,
     currentEmail,
+    isProfileError,
+    isProfileFetching,
+    refetchProfile,
     step,
     pendingEmail,
     timer,

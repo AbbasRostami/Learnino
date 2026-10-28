@@ -3,24 +3,25 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AtSign, KeyRound, Palette, Settings2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 import { SettingsAppearance } from "./SettingsAppearance";
 import { SettingsChangeEmail } from "./SettingsChangeEmail";
 import { SettingsChangePassword } from "./SettingsChangePassword";
 
+type SettingsTab = "appearance" | "password" | "email";
+const SETTINGS_TABS: SettingsTab[] = ["appearance", "password", "email"];
+
+const isSettingsTab = (value: string): value is SettingsTab =>
+  SETTINGS_TABS.some((tab) => tab === value);
+
 export function SettingsClient() {
   const t = useTranslations("dashboard");
-  const searchParams = useSearchParams();
-  const tabParam = searchParams.get("tab");
-
-  const [activeTab, setActiveTab] = useState<string>("appearance");
-
-  useEffect(() => {
-    if (tabParam && ["appearance", "password", "email"].includes(tabParam)) {
-      setActiveTab(tabParam);
-    }
-  }, [tabParam]);
+  const [activeTab, setActiveTab] = useQueryState(
+    "tab",
+    parseAsStringEnum(SETTINGS_TABS)
+      .withDefault("appearance")
+      .withOptions({ shallow: true, history: "replace" }),
+  );
 
   return (
     <div className="flex flex-col gap-6">
@@ -38,7 +39,15 @@ export function SettingsClient() {
         </div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+      <Tabs
+        value={activeTab}
+        onValueChange={(value) => {
+          if (isSettingsTab(value)) {
+            void setActiveTab(value);
+          }
+        }}
+        className="w-full"
+      >
         <TabsList>
           <TabsTrigger value="appearance" className="cursor-pointer">
             <Palette className="h-3.5 w-3.5" aria-hidden="true" />

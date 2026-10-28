@@ -1,6 +1,7 @@
 "use client";
 
 import { DashboardPagination } from "@/components/dashboard/shared/DashboardPagination";
+import { DashboardQueryError } from "@/components/dashboard/shared/DashboardQueryError";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -27,12 +28,16 @@ export function FavoritesClient() {
     data: coursesData,
     isLoading: isCoursesLoading,
     isFetching: isCoursesFetching,
+    isError: isCoursesError,
+    refetch: refetchCourses,
   } = useMyFavoriteCourses({ page: coursesPage, limit: 6 });
 
   const {
     data: postsData,
     isLoading: isPostsLoading,
     isFetching: isPostsFetching,
+    isError: isPostsError,
+    refetch: refetchPosts,
   } = useMyFavoritePosts({ page: postsPage, limit: 6 });
 
   const { mutate: toggleCourseFav, isPending: isTogglingCourse } =
@@ -53,8 +58,9 @@ export function FavoritesClient() {
     : 1;
 
   const coursesCountReady =
-    !isCoursesLoading && coursesPagination !== undefined;
-  const postsCountReady = !isPostsLoading && postsPagination !== undefined;
+    !isCoursesLoading && !isCoursesError && coursesPagination !== undefined;
+  const postsCountReady =
+    !isPostsLoading && !isPostsError && postsPagination !== undefined;
 
   return (
     <div className="flex flex-col gap-6">
@@ -82,9 +88,9 @@ export function FavoritesClient() {
                 <span className="bg-background  cursor-pointer px-2 py-0.5 rounded-full text-xs shadow-sm ml-1 rtl:mr-1">
                   {coursesPagination?.total ?? 0}
                 </span>
-              ) : (
+              ) : !isCoursesError ? (
                 <Skeleton className="h-4 w-5 rounded-full ml-1 rtl:mr-1" />
-              )}
+              ) : null}
             </TabsTrigger>
 
             <TabsTrigger value="posts" className="cursor-pointer">
@@ -94,9 +100,9 @@ export function FavoritesClient() {
                 <span className="bg-background cursor-pointer px-2 py-0.5 rounded-full text-xs shadow-sm ml-1 rtl:mr-1">
                   {postsPagination?.total ?? 0}
                 </span>
-              ) : (
+              ) : !isPostsError ? (
                 <Skeleton className="h-4 w-5 rounded-full ml-1 rtl:mr-1" />
-              )}
+              ) : null}
             </TabsTrigger>
           </TabsList>
         </div>
@@ -108,6 +114,11 @@ export function FavoritesClient() {
                 <FavoritesCardSkeleton key={i} />
               ))}
             </div>
+          ) : isCoursesError ? (
+            <DashboardQueryError
+              onRetry={() => void refetchCourses()}
+              isRetrying={isCoursesFetching}
+            />
           ) : favoriteCourses?.length === 0 ? (
             <div className="text-center py-16 border border-dashed border-border/60 rounded-3xl text-xs text-muted-foreground font-bold bg-card/40">
               {tFav("emptyCourses")}
@@ -143,6 +154,11 @@ export function FavoritesClient() {
                 <FavoritesCardSkeleton key={i} />
               ))}
             </div>
+          ) : isPostsError ? (
+            <DashboardQueryError
+              onRetry={() => void refetchPosts()}
+              isRetrying={isPostsFetching}
+            />
           ) : favoritePosts?.length === 0 ? (
             <div className="text-center py-16 border border-dashed border-border/60 rounded-3xl text-xs text-muted-foreground font-bold bg-card/40">
               {tFav("emptyPosts")}

@@ -1,23 +1,34 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { DashboardQueryError } from "@/components/dashboard/shared/DashboardQueryError";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
-import { useProfileOverview } from "@/services";
 import { formatNumber } from "@/utils/formatters";
 import { ArrowLeft, Wallet, Zap } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 
-export function OverviewWalletCard() {
+interface OverviewWalletCardProps {
+  balance: number | undefined;
+  isLoading: boolean;
+  isError: boolean;
+  isRetrying: boolean;
+  onRetry: () => void;
+}
+
+export function OverviewWalletCard({
+  balance,
+  isLoading,
+  isError,
+  isRetrying,
+  onRetry,
+}: OverviewWalletCardProps) {
   const t = useTranslations("dashboard");
   const tCart = useTranslations("cart");
   const locale = useLocale();
   const prefersReducedMotion = useReducedMotion();
-
-  const { data, isLoading } = useProfileOverview();
-  const balance = data?.data?.overview?.wallet?.balance;
 
   return (
     <motion.div
@@ -41,7 +52,13 @@ export function OverviewWalletCard() {
               {t("stats.walletBalance")}
             </div>
 
-            {isLoading || balance === undefined ? (
+            {isError ? (
+              <DashboardQueryError
+                compact
+                onRetry={onRetry}
+                isRetrying={isRetrying}
+              />
+            ) : isLoading || balance === undefined ? (
               <Skeleton className="h-8 w-36 rounded-xl bg-emerald-500/20 animate-pulse my-1" />
             ) : (
               <div className="text-3xl font-black text-foreground">

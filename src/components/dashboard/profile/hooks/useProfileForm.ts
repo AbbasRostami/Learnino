@@ -2,7 +2,7 @@
 
 import { getUpdateProfileSchema } from "@/schemas";
 import { useDeleteAvatar, useUpdateProfile } from "@/services";
-import type { UserProfile } from "@/types";
+import type { UpdateProfilePayload, UserProfile } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
@@ -54,10 +54,11 @@ export function useProfileForm({ profile }: UseProfileFormOptions) {
   const phoneValue = form?.watch("phone");
   const avatarValue = form?.watch("avatar");
 
-  const isDirty =
+  const isDirty = Boolean(
     (nameValue && nameValue !== (profile?.name || "")) ||
-    (phoneValue && phoneValue !== (profile?.phone || "")) ||
-    avatarValue instanceof File;
+      phoneValue !== (profile?.phone || "") ||
+      avatarValue instanceof File,
+  );
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e?.target?.files?.[0];
@@ -91,12 +92,12 @@ export function useProfileForm({ profile }: UseProfileFormOptions) {
   };
 
   const onSubmit = (values: ProfileFormValues) => {
-    const payload: Record<string, unknown> = {};
+    const payload: UpdateProfilePayload = {};
 
     if (values?.name && values?.name !== profile?.name) {
       payload.name = values.name;
     }
-    if (values?.phone && values?.phone !== profile?.phone) {
+    if (values?.phone !== (profile?.phone || "")) {
       payload.phone = values.phone;
     }
     if (values?.avatar instanceof File) {

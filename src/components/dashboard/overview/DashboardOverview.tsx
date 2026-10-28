@@ -9,20 +9,49 @@ import { OverviewStatsGrid } from "./OverviewStatsGrid";
 import { OverviewWalletCard } from "./OverviewWalletCard";
 
 export function DashboardOverview() {
-  const { data: profileData, isLoading: isProfileLoading } = useProfile();
-  const { data: overviewData, isLoading: isOverviewLoading } =
-    useProfileOverview();
+  const {
+    data: profileData,
+    isLoading: isProfileLoading,
+    isError: isProfileError,
+    isFetching: isProfileFetching,
+    refetch: refetchProfile,
+  } = useProfile();
+  const {
+    data: overviewData,
+    isLoading: isOverviewLoading,
+    isError: isOverviewError,
+    isFetching: isOverviewFetching,
+    refetch: refetchOverview,
+  } = useProfileOverview();
 
   const profile = profileData?.data?.profile;
   const overview = overviewData?.data?.overview;
 
   return (
     <div className="flex flex-col gap-6">
-      <OverviewGreeting profile={profile} isLoading={isProfileLoading} />
+      <OverviewGreeting
+        profile={profile}
+        isLoading={isProfileLoading}
+        isError={isProfileError}
+        isRetrying={isProfileFetching}
+        onRetry={() => void refetchProfile()}
+      />
 
-      <OverviewStatsGrid overview={overview} isLoading={isOverviewLoading} />
+      <OverviewStatsGrid
+        overview={overview}
+        isLoading={isOverviewLoading}
+        isError={isOverviewError}
+        isRetrying={isOverviewFetching}
+        onRetry={() => void refetchOverview()}
+      />
 
-      <OverviewWalletCard />
+      <OverviewWalletCard
+        balance={overview?.wallet?.balance}
+        isLoading={isOverviewLoading}
+        isError={isOverviewError}
+        isRetrying={isOverviewFetching}
+        onRetry={() => void refetchOverview()}
+      />
 
       <OverviewQuickActions />
 

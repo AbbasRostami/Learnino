@@ -1,6 +1,7 @@
 "use client";
 
 import { DashboardPagination } from "@/components/dashboard/shared/DashboardPagination";
+import { DashboardQueryError } from "@/components/dashboard/shared/DashboardQueryError";
 import { Button } from "@/components/ui/button";
 import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
@@ -25,7 +26,8 @@ export function MyCoursesClient() {
   const prefersReducedMotion = useReducedMotion();
   const [page, setPage] = useState(1);
 
-  const { data, isLoading } = useMyEnrolledCourses({ page, limit: 6 });
+  const { data, isLoading, isError, isFetching, refetch } =
+    useMyEnrolledCourses({ page, limit: 6 });
   const items = data?.data?.items ?? [];
   const pagination = data?.data?.pagination;
   const totalPages = pagination
@@ -58,6 +60,11 @@ export function MyCoursesClient() {
             <MyCoursesCardSkeleton key={i} />
           ))}
         </div>
+      ) : isError ? (
+        <DashboardQueryError
+          onRetry={() => void refetch()}
+          isRetrying={isFetching}
+        />
       ) : items?.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center gap-4 rounded-3xl border border-dashed border-border/60 bg-card/40">
           <BookOpen className="h-12 w-12 text-muted-foreground/30" />
@@ -88,7 +95,7 @@ export function MyCoursesClient() {
                 className="group relative flex flex-col overflow-hidden rounded-3xl border border-border/50 bg-card/60 backdrop-blur-md shadow-xs hover:shadow-xl hover:border-primary/30 transition-all"
               >
                 <Link
-                  href={`/dashboard/my-courses/${course?.slug}`}
+                  href={`/courses/${course?.slug}`}
                   className="relative aspect-16/10 w-full overflow-hidden bg-muted"
                 >
                   {course?.imageUrl ? (
@@ -130,7 +137,7 @@ export function MyCoursesClient() {
 
                   <h2 className="text-base font-bold text-foreground line-clamp-2 mb-3 group-hover:text-primary transition-colors min-h-12">
                     <Link
-                      href={`/dashboard/my-courses/${course?.slug}`}
+                      href={`/courses/${course?.slug}`}
                       className="hover:underline underline-offset-2"
                     >
                       {course?.title}
@@ -162,11 +169,11 @@ export function MyCoursesClient() {
                       className="rounded-xl h-9 px-3 text-xs font-bold gap-1 shadow-md shadow-primary/20 shrink-0 cursor-pointer"
                     >
                       <Link
-                        href={`/dashboard/my-courses/${course?.slug}`}
+                        href={`/courses/${course?.slug}`}
                         className="inline-flex items-center gap-1"
                       >
                         <PlayCircle className="h-3.5 w-3.5" />
-                        <span>{t("enterCourse")}</span>
+                        <span>{t("details")}</span>
                       </Link>
                     </Button>
                   </div>

@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { getCategoryStyle } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";
@@ -35,7 +34,6 @@ export function FavoriteCourseCard({
   const t = useTranslations("course");
   const tCart = useTranslations("cart");
   const tDashboard = useTranslations("dashboard");
-  const locale = useLocale();
   const prefersReducedMotion = useReducedMotion();
 
   const style = courseData?.category

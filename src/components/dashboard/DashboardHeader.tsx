@@ -31,12 +31,12 @@ export function DashboardHeader({
   const t = useTranslations("dashboard");
 
   return (
-    <header className="flex items-center justify-between gap-4">
-      <div className="flex-1 min-w-0">
+    <header className="flex flex-col-reverse md:flex-row justify-between gap-0.5 md:gap-4">
+      <div className="flex-1 items-end min-w-0">
         <AppBreadcrumb />
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-end gap-2">
         <ThemeToggle />
         <LanguageToggle />
 

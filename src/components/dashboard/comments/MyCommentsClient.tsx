@@ -1,6 +1,7 @@
 "use client";
 
 import { DashboardPagination } from "@/components/dashboard/shared/DashboardPagination";
+import { DashboardQueryError } from "@/components/dashboard/shared/DashboardQueryError";
 import { useDeleteComment, useMyComments } from "@/services";
 import { MessageSquare } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -12,7 +13,10 @@ export function MyCommentsClient() {
   const t = useTranslations("dashboard");
   const [page, setPage] = useState(1);
 
-  const { data, isLoading, isFetching } = useMyComments({ page, limit: 10 });
+  const { data, isLoading, isFetching, isError, refetch } = useMyComments({
+    page,
+    limit: 10,
+  });
   const {
     mutate: deleteComment,
     isPending: isDeleting,
@@ -49,6 +53,11 @@ export function MyCommentsClient() {
             <MyCommentsCardSkeleton key={i} />
           ))}
         </div>
+      ) : isError ? (
+        <DashboardQueryError
+          onRetry={() => void refetch()}
+          isRetrying={isFetching}
+        />
       ) : items.length === 0 ? (
         <div className="text-center py-16 border border-dashed border-border/60 rounded-3xl text-xs text-muted-foreground font-bold bg-card/40">
           {t("empty.comments")}

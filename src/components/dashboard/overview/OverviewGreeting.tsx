@@ -1,6 +1,7 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { DashboardQueryError } from "@/components/dashboard/shared/DashboardQueryError";
 import { cn } from "@/lib/utils";
 import type { UserProfileResponse } from "@/types";
 import { Sparkles } from "lucide-react";
@@ -10,11 +11,17 @@ import { useLocale, useTranslations } from "next-intl";
 interface OverviewGreetingProps {
   profile: UserProfileResponse["data"]["profile"] | undefined;
   isLoading?: boolean;
+  isError?: boolean;
+  isRetrying?: boolean;
+  onRetry?: () => void;
 }
 
 export function OverviewGreeting({
   profile,
   isLoading = false,
+  isError = false,
+  isRetrying = false,
+  onRetry,
 }: OverviewGreetingProps) {
   const t = useTranslations("dashboard");
   const locale = useLocale();
@@ -60,7 +67,13 @@ export function OverviewGreeting({
             <span>{timeGreeting}</span>
           </div>
 
-          {isLoading || !profile ? (
+          {(isError || (!isLoading && !profile)) && onRetry ? (
+            <DashboardQueryError
+              compact
+              onRetry={onRetry}
+              isRetrying={isRetrying}
+            />
+          ) : isLoading || !profile ? (
             <div className="space-y-2 my-2">
               <Skeleton className="h-8 w-64 rounded-2xl bg-primary/20 animate-pulse" />
               <Skeleton className="h-4 w-48 rounded-xl bg-primary/10 animate-pulse" />

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { DashboardQueryError } from "@/components/dashboard/shared/DashboardQueryError";
 import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
@@ -50,13 +51,22 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
   const locale = useLocale();
   const prefersReducedMotion = useReducedMotion();
 
-  const { data, isLoading } = useOrder(orderId);
+  const { data, isLoading, isError, isFetching, refetch } = useOrder(orderId);
   const { mutate: cancelOrder, isPending: isCancelling } = useCancelOrder({});
 
   const order = data?.data?.order;
 
   if (isLoading) {
     return <OrderDetailSkeleton />;
+  }
+
+  if (isError) {
+    return (
+      <DashboardQueryError
+        onRetry={() => void refetch()}
+        isRetrying={isFetching}
+      />
+    );
   }
 
   if (!order) {

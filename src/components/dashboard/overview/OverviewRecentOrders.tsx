@@ -1,6 +1,7 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { DashboardQueryError } from "@/components/dashboard/shared/DashboardQueryError";
 import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
@@ -21,7 +22,10 @@ export function OverviewRecentOrders() {
   const tCart = useTranslations("cart");
   const locale = useLocale();
 
-  const { data, isLoading } = useMyOrders({ page: 1, limit: 3 });
+  const { data, isLoading, isError, isFetching, refetch } = useMyOrders({
+    page: 1,
+    limit: 3,
+  });
   const items = data?.data?.items ?? [];
 
   return (
@@ -52,6 +56,12 @@ export function OverviewRecentOrders() {
             <Skeleton key={i} className="h-16 rounded-2xl" />
           ))}
         </div>
+      ) : isError ? (
+        <DashboardQueryError
+          compact
+          onRetry={() => void refetch()}
+          isRetrying={isFetching}
+        />
       ) : items?.length === 0 ? (
         <div className="flex flex-col items-center py-8 text-center gap-2">
           <Package className="h-10 w-10 text-muted-foreground/30" />

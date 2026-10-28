@@ -1,6 +1,7 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { DashboardQueryError } from "@/components/dashboard/shared/DashboardQueryError";
 import { Link, usePathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useLogout, useProfile } from "@/services";
@@ -55,7 +56,13 @@ export function DashboardSidebar({ onNavigate }: DashboardSidebarProps) {
   const pathname = usePathname();
   const resetAuth = useAuthStore((s) => s.resetAuth);
 
-  const { data: profileData, isLoading } = useProfile();
+  const {
+    data: profileData,
+    isLoading,
+    isError,
+    isFetching,
+    refetch,
+  } = useProfile();
   const profile = profileData?.data?.profile;
 
   const { mutate: logout, isPending: isLoggingOut } = useLogout({
@@ -88,6 +95,12 @@ export function DashboardSidebar({ onNavigate }: DashboardSidebarProps) {
               <Skeleton className="h-3 w-36 rounded-md bg-muted animate-pulse" />
             </div>
           </>
+        ) : isError ? (
+          <DashboardQueryError
+            compact
+            onRetry={() => void refetch()}
+            isRetrying={isFetching}
+          />
         ) : (
           <>
             <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-2xl border-2 border-background bg-muted shadow-md ring-2 ring-primary/20">

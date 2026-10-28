@@ -1,6 +1,7 @@
 "use client";
 
 import { useProfile } from "@/services";
+import { DashboardQueryError } from "@/components/dashboard/shared/DashboardQueryError";
 import { UserCircle2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ProfileSkeleton } from "./ProfileSkeleton";
@@ -10,11 +11,29 @@ import { ProfileHeroCard } from "./sections/ProfileHeroCard";
 export function ProfileClient() {
   const t = useTranslations("dashboard");
 
-  const { data, isLoading } = useProfile();
+  const { data, isLoading, isError, isFetching, refetch } = useProfile();
   const profile = data?.data?.profile;
 
-  if (isLoading || !profile) {
+  if (isLoading) {
     return <ProfileSkeleton />;
+  }
+
+  if (isError) {
+    return (
+      <DashboardQueryError
+        onRetry={() => void refetch()}
+        isRetrying={isFetching}
+      />
+    );
+  }
+
+  if (!profile) {
+    return (
+      <DashboardQueryError
+        onRetry={() => void refetch()}
+        isRetrying={isFetching}
+      />
+    );
   }
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import { DashboardPagination } from "@/components/dashboard/shared/DashboardPagination";
+import { DashboardQueryError } from "@/components/dashboard/shared/DashboardQueryError";
 import { Button } from "@/components/ui/button";
 import { useLocale } from "@/hooks/useLocale";
 import { Link } from "@/i18n/routing";
@@ -62,7 +63,7 @@ export function OrdersListClient() {
     undefined,
   );
 
-  const { data, isLoading, isFetching } = useMyOrders({
+  const { data, isLoading, isFetching, isError, refetch } = useMyOrders({
     page,
     limit: 10,
     status: statusFilter,
@@ -78,6 +79,11 @@ export function OrdersListClient() {
   const totalPages = pagination
     ? Math.ceil(pagination?.total / pagination?.limit)
     : 1;
+
+  const handleStatusFilterChange = (status?: OrderStatus) => {
+    setStatusFilter(status);
+    setPage(1);
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -101,7 +107,7 @@ export function OrdersListClient() {
         <div className="flex items-center gap-1 p-1 rounded-2xl bg-muted/50 border border-border/40 text-xs shrink-0 overflow-x-auto">
           <Button
             type="button"
-            onClick={() => setStatusFilter(undefined)}
+            onClick={() => handleStatusFilterChange()}
             className={cn(
               "px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer whitespace-nowrap",
               !statusFilter
@@ -116,7 +122,7 @@ export function OrdersListClient() {
               variant="ghost"
               key={st}
               type="button"
-              onClick={() => setStatusFilter(st)}
+              onClick={() => handleStatusFilterChange(st)}
               className={cn(
                 "font-semibold cursor-pointer whitespace-nowrap",
                 statusFilter === st
@@ -136,6 +142,11 @@ export function OrdersListClient() {
             <OrderListCardSkeleton key={i} />
           ))}
         </div>
+      ) : isError ? (
+        <DashboardQueryError
+          onRetry={() => void refetch()}
+          isRetrying={isFetching}
+        />
       ) : items?.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center gap-3 rounded-3xl border border-dashed border-border/60 bg-card/40">
           <Package className="h-12 w-12 text-muted-foreground/30" />
