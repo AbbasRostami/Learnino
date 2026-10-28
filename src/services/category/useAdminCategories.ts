@@ -9,7 +9,7 @@ export const useAdminCategories = (params: AdminCategoriesParams = {}) => {
   return useQuery<AdminCategoriesResponse>({
     queryKey: ["admin", "categories", locale, params],
     queryFn: () =>
-      api<AdminCategoriesResponse>("/categories/adminhhh", {
+      api<AdminCategoriesResponse>("/categories/admin", {
         params,
         headers: {
           "Accept-Language": locale,

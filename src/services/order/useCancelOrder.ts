@@ -2,7 +2,7 @@ import { api } from "@/lib/upfetch";
 import type { CancelOrderResponse } from "@/types";
 import type { ApiError } from "@/types/api/error.types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 
 interface UseCancelOrderOptions {
@@ -13,6 +13,7 @@ export const useCancelOrder = ({
   onSuccessCallback,
 }: UseCancelOrderOptions = {}) => {
   const t = useTranslations("order");
+  const locale = useLocale();
   const queryClient = useQueryClient();
 
   return useMutation<CancelOrderResponse, ApiError, string>({
@@ -26,7 +27,7 @@ export const useCancelOrder = ({
 
       queryClient.invalidateQueries({ queryKey: ["my-orders"] });
       queryClient.invalidateQueries({
-        queryKey: ["orders", "detail", orderId],
+        queryKey: ["orders", "detail", locale, orderId],
       });
 
       onSuccessCallback?.();

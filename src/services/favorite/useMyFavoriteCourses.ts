@@ -13,7 +13,10 @@ export const useMyFavoriteCourses = (params: GetFavoriteCoursesParams = {}) => {
 
   return useQuery<GetFavoriteCoursesResponse>({
     queryKey: ["favorite-courses", locale, params],
-    queryFn: () => api<GetFavoriteCoursesResponse>("/favorites/courses"),
+    queryFn: () =>
+      api<GetFavoriteCoursesResponse>("/favorites/courses", {
+        params,
+      }),
     enabled: isAuthenticated,
     staleTime: 60 * 1000,
     placeholderData: (prev) => prev,
