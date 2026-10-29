@@ -1,10 +1,13 @@
 import { api } from "@/lib/upfetch";
 import type { GetPostsParams, GetPostsResponse } from "@/types";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useLocale } from "next-intl";
 
 export const usePosts = (params: GetPostsParams = {}) => {
+  const locale = useLocale();
+
   return useQuery<GetPostsResponse>({
-    queryKey: ["posts", "public", params],
+    queryKey: ["posts", "public", locale, params],
     queryFn: () =>
       api<GetPostsResponse>("/posts", {
         params,
@@ -15,10 +18,11 @@ export const usePosts = (params: GetPostsParams = {}) => {
 };
 
 export const useInfinitePosts = (params: GetPostsParams = {}) => {
+  const locale = useLocale();
   const { page: _page, ...restParams } = params;
 
   return useInfiniteQuery<GetPostsResponse>({
-    queryKey: ["posts", "public", "infinite", restParams],
+    queryKey: ["posts", "public", "infinite", locale, restParams],
     queryFn: ({ pageParam = 1 }) =>
       api<GetPostsResponse>("/posts", {
         params: {
