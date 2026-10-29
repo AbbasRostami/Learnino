@@ -29,14 +29,15 @@
 <br />
 
 <img src="https://img.shields.io/badge/Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white" alt="Motion" />
+<img src="https://img.shields.io/badge/Sentry-362D59?style=for-the-badge&logo=sentry&logoColor=white" alt="Sentry" />
 <img src="https://img.shields.io/badge/next--intl-000000?style=for-the-badge&logoColor=white" alt="next-intl" />
 <img src="https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white" alt="PWA" />
 <img src="https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white" alt="Vitest" />
 <img src="https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white" alt="Cypress" />
-<img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white" alt="ESLint" />
 
 <br />
 
+<img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white" alt="ESLint" />
 <img src="https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=white" alt="pnpm" />
 <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
 <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Actions" />
@@ -56,6 +57,16 @@
 
 <br />
 <br />
+
+<a href="https://github.com/AbbasRostami/learnino/issues">
+  <img src="https://img.shields.io/badge/Report_Bug-dc2626?style=for-the-badge" alt="Report Bug" />
+</a>
+<a href="https://github.com/AbbasRostami/learnino/issues">
+  <img src="https://img.shields.io/badge/Request_Feature-4f46e5?style=for-the-badge" alt="Request Feature" />
+</a>
+<a href="https://github.com/AbbasRostami/learnino">
+  <img src="https://img.shields.io/badge/⭐_Star_Repo-facc15?style=for-the-badge" alt="Star this repo" />
+</a>
 
 </div>
 
@@ -99,7 +110,7 @@ The UI/UX design was crafted from scratch — the visual language, component sty
 
 ### 🌐 Public Site
 - **Home page** — Hero section, category showcase, featured & free course carousels, teacher highlights, learning paths, blog teasers, testimonials, and CTA
-- **Course catalog** — Filterable, paginated course listing with search, category, and level filters
+- **Course catalog** — Filterable, paginated course listing with search, category, and level filters, infinite scrolling
 - **Course detail** — Full course info, teacher bio, comments with nested replies, like/dislike reactions, enroll and add-to-cart actions
 - **Blog** — Paginated post listing with rich-text content rendering (sanitized HTML), category filtering, and individual post pages
 - **Teacher profiles** — Instructor pages with bio, avatar, and associated courses
@@ -114,6 +125,7 @@ The UI/UX design was crafted from scratch — the visual language, component sty
 - Forgot password and reset password flows
 - Change email and change password flows
 - Separate admin login page with role-based redirect
+- Login redirect support — `redirectTo` query param for post-login navigation
 - JWT tokens managed via HttpOnly cookies with automatic refresh on 401
 
 ### 📊 Student Dashboard
@@ -123,7 +135,7 @@ The UI/UX design was crafted from scratch — the visual language, component sty
 - Wallet — balance, charge via Zarinpal, full transaction history (Persian locale dates via native Intl)
 - Favorites — bookmarked courses and blog posts
 - Comments — user's own comment history
-- Settings — profile update with avatar upload
+- Settings — profile update with avatar upload, tabbed interface (appearance, email change)
 
 ### 🛡️ Admin Panel
 - **Dashboard overview** — Revenue, user, course, order, enrollment, and engagement stats with charts
@@ -144,11 +156,14 @@ The UI/UX design was crafted from scratch — the visual language, component sty
 - 🔍 **SEO-optimized** — Metadata, sitemap, robots, JSON-LD structured data, Open Graph, Twitter cards
 - ⚡ **React Compiler** — Enabled with cache components for automatic optimization
 - 🖼️ **Image optimization** — Next.js Image with Cloudinary remote patterns and quality presets
+- 🏷️ **Cache & Revalidation** — Server-side `"use cache"` with `cacheTag` / `cacheLife` and on-demand revalidation via server actions
 - 🛡️ **Security headers** — X-Frame-Options, HSTS, Content-Type-Options, Permissions-Policy, Referrer-Policy
 - 📦 **PWA-ready** — Web app manifest with maskable icons
+- 🐛 **Error monitoring** — Sentry integration for server, edge, and client error tracking with session replay
+- 🚨 **Unified error handling** — `QueryErrorState`, `DashboardQueryError`, and `AdminQueryError` components with retry support across all data-driven pages
 - 🔔 **Toast notifications** — Sonner with locale-aware positioning
 - 🎬 **Smooth animations** — Motion for page transitions, hover effects, and scroll reveals
-- 🧼 **HTML sanitization** — Isomorphic DOMPurify for safe rich-text rendering
+- 🧼 **HTML sanitization** — DOMPurify with comprehensive allowlist config for safe rich-text rendering
 - 📅 **Persian date formatting** — Native Intl API for locale-aware dates (fa-IR / en-US)
 
 ---
@@ -157,7 +172,7 @@ The UI/UX design was crafted from scratch — the visual language, component sty
 
 | Category | Technology | Purpose |
 |---|---|---|
-| **Framework** | Next.js 16 | App Router, RSC, image optimization, middleware |
+| **Framework** | Next.js 16 | App Router, RSC, image optimization, middleware, `"use cache"` |
 | **Language** | TypeScript 5 | Type-safe development (strict mode) |
 | **UI Library** | React 19 | Component-based UI |
 | **Styling** | Tailwind CSS v4 | Utility-first CSS with `@theme` tokens |
@@ -178,11 +193,12 @@ The UI/UX design was crafted from scratch — the visual language, component sty
 | **Icons** | lucide-react + react-icons | Comprehensive icon sets |
 | **Toasts** | sonner 2 | Rich, accessible notifications |
 | **JWT** | jose 6 | Edge-compatible JWT verification in middleware |
-| **HTML Sanitization** | isomorphic-dompurify 4 | Safe rich-text rendering |
+| **HTML Sanitization** | DOMPurify 3 | Safe rich-text rendering with allowlist |
 | **Date Formatting** | Native Intl API | Locale-aware dates (fa-IR / en-US) |
 | **Command Palette** | cmdk 1 | Searchable command interface |
 | **Resizable Panels** | react-resizable-panels 4 | Adjustable panel layouts |
 | **OTP Input** | input-otp 1 | Email verification & password reset codes |
+| **Error Monitoring** | Sentry 11 (@sentry/nextjs) | Server, edge & client error tracking, session replay |
 | **Compiler** | babel-plugin-react-compiler 1.0 | Automatic memoization & optimization |
 | **Unit Testing** | Vitest 5 | Fast test runner with jsdom |
 | **Component Testing** | Testing Library | User-event interaction testing |
@@ -253,20 +269,27 @@ learnino/
 │   │   │   └── layout.tsx                 # Root locale layout (providers + fonts)
 │   │   │
 │   │   ├── globals.css                    # Tailwind v4 theme + design tokens
+│   │   ├── global-error.tsx               # Global error boundary (Sentry capture)
 │   │   ├── manifest.ts                     # PWA web app manifest
 │   │   ├── robots.ts                       # Dynamic robots.txt
 │   │   └── sitemap.ts                      # Dynamic sitemap (courses, posts, teachers)
 │   │
+│   ├── actions/
+│   │   └── revalidate.ts                  # Server actions for cache revalidation
+│   │
 │   ├── components/
 │   │   ├── ui/                             # 50+ shadcn/ui primitives (Base UI)
-│   │   ├── shared/                         # AppBreadcrumb, Carousel, SafeHtml
+│   │   ├── shared/                         # AppBreadcrumb, Carousel, SafeHtml,
+│   │   │                                   # QueryErrorState (retry-able error UI)
 │   │   ├── layout/                         # Navbar, Footer
 │   │   ├── providers/                      # QueryProvider, ThemeProvider
 │   │   ├── seo/                            # JSON-LD (Organization, Course, Article, etc.)
 │   │   ├── site/                           # Home page sections (hero, courses, teachers...)
 │   │   ├── auth/                           # Login/register form components
 │   │   ├── admin/                          # Admin panel components
+│   │   │   └── shared/                     # AdminQueryError, AdminDataTable
 │   │   ├── dashboard/                      # Student dashboard components
+│   │   │   └── shared/                     # DashboardQueryError
 │   │   ├── blog/                           # Blog list & detail components
 │   │   ├── cart/                           # Cart components
 │   │   ├── courses/                        # Course list & detail components
@@ -288,7 +311,8 @@ learnino/
 │   │
 │   ├── lib/
 │   │   ├── utils.ts                        # cn() class merge utility
-│   │   ├── upfetch.ts                      # API client with auto token refresh
+│   │   ├── upfetch.ts                      # API client with auto token refresh,
+│   │   │                                   # serializeParams, isApiErrorStatus
 │   │   ├── seo/                            # SEO config & metadata helpers
 │   │   ├── category-icons.ts               # Category icon mappings
 │   │   ├── learning-paths.ts               # Learning path definitions
@@ -296,17 +320,21 @@ learnino/
 │   │
 │   ├── schemas/                            # Zod validation schemas by domain
 │   │
-│   ├── services/                           # React Query hooks by domain
+│   ├── services/                           # React Query hooks + server-side cached fetchers
 │   │   ├── auth/                            # login, register, refresh, verify, etc.
-│   │   ├── course/                          # CRUD, publish toggle
+│   │   ├── course/                          # CRUD, publish toggle + cached server fetchers
+│   │   │   └── courses.ts                   # "use cache" with cacheTag/cacheLife
 │   │   ├── cart/                            # add, remove, clear, discount
 │   │   ├── order/                           # checkout, history, cancel
 │   │   ├── wallet/                          # balance, charge, transactions
 │   │   ├── enrollment/                      # enroll, my courses
 │   │   ├── comment/                         # create, moderate, reactions
-│   │   ├── post/                            # blog CRUD, editor upload
-│   │   ├── category/                        # CRUD, visibility toggle
-│   │   ├── teacher/                         # CRUD, visibility toggle
+│   │   ├── post/                            # blog CRUD, editor upload + cached fetchers
+│   │   │   └── posts.ts                     # "use cache" with cacheTag/cacheLife
+│   │   ├── category/                       # CRUD, visibility toggle + cached fetchers
+│   │   │   └── categories.ts                # "use cache" with cacheTag/cacheLife
+│   │   ├── teacher/                         # CRUD, visibility toggle + cached fetchers
+│   │   │   └── teachers.ts                  # "use cache" with cacheTag/cacheLife
 │   │   ├── user/                            # profile, ban/unban
 │   │   ├── discount/                        # create, toggle, delete
 │   │   ├── favorite/                        # toggle, my favorites
@@ -321,7 +349,12 @@ learnino/
 │   ├── types/                              # TypeScript types by domain
 │   ├── utils/                              # formatters, formData helpers
 │   ├── proxy.ts                            # Next.js middleware (i18n + JWT auth)
+│   ├── instrumentation.ts                  # Sentry server/edge registration
+│   ├── instrumentation-client.ts           # Sentry client init + session replay
 │   └── __tests__/                          # Vitest unit & integration tests
+│
+├── sentry.server.config.ts                 # Sentry server-side config
+├── sentry.edge.config.ts                   # Sentry edge runtime config
 │
 ├── cypress/
 │   ├── e2e/                                # E2E test specs
@@ -341,7 +374,7 @@ learnino/
 ├── .github/workflows/ci.yml                # GitHub Actions CI pipeline
 ├── Dockerfile                              # Multi-stage production build
 ├── docker-compose.yml                      # Docker Compose config
-├── next.config.ts                          # Next.js config (intl, rewrites, headers)
+├── next.config.ts                          # Next.js config (intl, Sentry, rewrites, headers)
 ├── eslint.config.mjs                       # ESLint config
 ├── postcss.config.mjs                      # PostCSS (Tailwind v4)
 ├── components.json                          # shadcn/ui config (base-nova, RTL)
@@ -357,7 +390,8 @@ Each feature domain (services, schemas, types) follows a consistent, scalable st
 
 ```
 services/<domain>/
-├── use<Action>.ts          # React Query hook (useQuery / useMutation)
+├── <entity>.ts              # Server-side cached fetchers ("use cache" + cacheTag)
+├── use<Action>.ts           # React Query hook (useQuery / useMutation)
 └── ...
 
 schemas/<domain>/
@@ -424,6 +458,64 @@ QueryProvider              ← TanStack Query client
 - **Environment-aware** — Server uses absolute backend URL; client uses `/api` proxy (via Next.js rewrites)
 - **Timeout** — 6s on server, 50s on client
 - **Error parsing** — Extracts localized error messages from API responses
+- **Serialize params** — Custom `serializeParams` handles arrays and null/empty values cleanly
+- **Error type guard** — `isApiErrorStatus(error, status)` helper for checking HTTP status in catch blocks
+
+### Server-Side Caching & Revalidation
+
+Public-facing data uses Next.js `"use cache"` directive with `cacheTag` and `cacheLife` from `next/cache`:
+
+| Domain | Cache Tags | Cache Lifespan |
+|---|---|---|
+| Courses (featured/free) | `courses`, `featured-courses`, `free-courses` | hours |
+| Courses (list) | `courses-list` | minutes |
+| Course detail | `courses`, `course-{slug}` | minutes |
+| Posts (latest) | `posts`, `latest-posts` | hours |
+| Post detail | `posts`, `post-{slug}` | minutes |
+| Teachers (top) | `teachers`, `top-teachers` | hours |
+| Teacher detail | `teachers`, `teacher-{slug}` | minutes |
+| Categories | `categories` | days |
+
+**On-demand revalidation** is handled by server actions in `src/actions/revalidate.ts`:
+
+| Action | Invalidated Tags |
+|---|---|
+| `revalidateCoursesAction` | `courses`, `courses-list` |
+| `revalidatePostsAction` | `posts` |
+| `revalidateTeachersAction` | `teachers`, `courses`, `courses-list` |
+| `revalidateCategoriesAction` | `categories`, `courses`, `courses-list`, `posts` |
+
+Admin mutations (create, update, delete) trigger the relevant revalidation action to refresh cached data immediately.
+
+### Error Handling
+
+A three-tier error handling system keeps every page resilient:
+
+| Component | Scope | Features |
+|---|---|---|
+| `global-error.tsx` | App shell crash | Bilingual message, Sentry capture, retry button |
+| `QueryErrorState` | Public site pages | Retry button, compact mode, localized messages |
+| `DashboardQueryError` | Student dashboard | Retry button, compact mode, destructive styling |
+| `AdminQueryError` | Admin panel | Elaborate animated UI, retry with rotation |
+
+All error states use `useTranslations` for localized messages and provide retry buttons that re-trigger the failed query.
+
+### Error Monitoring (Sentry)
+
+Sentry is integrated across all three runtimes via `@sentry/nextjs`:
+
+| File | Runtime | Purpose |
+|---|---|---|
+| `sentry.server.config.ts` | Node.js | Server-side error capture |
+| `sentry.edge.config.ts` | Edge | Middleware / edge function errors |
+| `src/instrumentation-client.ts` | Browser | Client errors + session replay |
+| `src/instrumentation.ts` | Registration | Conditionally loads server/edge config |
+
+- **Session replay** enabled on client (10% sessions, 100% on error)
+- **Router transitions** tracked via `onRouterTransitionStart`
+- **Request errors** captured via `onRequestError`
+- **Source maps** uploaded with `widenClientFileUpload: true` in production builds
+- **Tree-shaking** removes debug logging in production
 
 ### Service Layer
 
@@ -446,6 +538,7 @@ Learnino is fully bilingual with **Persian (fa)** as the default locale and **En
 - **Translations** — All UI strings in `src/i18n/messages/fa.json` and `en.json`
 - **Cookie persistence** — Locale preference stored in `NEXT_LOCALE` cookie (1 year expiry)
 - **Locale-aware UI** — Toast position, date formats, and layout directions adapt automatically
+- **Server-side locale** — Cached server fetchers pass `Accept-Language` header for locale-aware API responses
 
 ```tsx
 // Navigation helpers typed for locale routing
@@ -507,9 +600,12 @@ The theme is defined in `globals.css` using Tailwind v4's `@theme` directive wit
 
 | Component | Purpose |
 |---|---|
-| `SafeHtml` | Renders sanitized HTML (DOMPurify) for blog content |
+| `SafeHtml` | Renders sanitized HTML via DOMPurify with comprehensive allowlist |
 | `Carousel` | Embla-powered carousel with autoplay |
 | `AppBreadcrumb` | Locale-aware breadcrumb navigation |
+| `QueryErrorState` | Retryable error UI for public pages |
+| `DashboardQueryError` | Retryable error UI for dashboard pages |
+| `AdminQueryError` | Retryable error UI for admin pages with animated styling |
 | JSON-LD components | Structured data for Organization, WebSite, Course, Article, Breadcrumb |
 
 ---
@@ -544,6 +640,7 @@ Every page generates rich metadata via `generateMetadata`:
 ### Performance Optimizations
 
 - **React Compiler** — Enabled with `reactCompiler: true` and `cacheComponents: true` for automatic memoization
+- **`"use cache"`** — Server-side data caching with `cacheLife` (minutes/hours/days) and `cacheTag` for on-demand invalidation
 - **Image optimization** — Cloudinary remote patterns with quality presets (65–95)
 - **Standalone output** — Optimized Docker builds with minimal production image
 - **Code splitting** — App Router automatic per-route code splitting
@@ -566,11 +663,13 @@ Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
 | Concern | Tool | Location |
 |---|---|---|
 | Server state (API data) | TanStack Query 5 | `src/services/` |
+| Server-side cached data | Next.js `"use cache"` | `src/services/*/` cached fetchers |
 | Auth state | Zustand 5 (persisted) | `src/store/authStore.ts` |
 | URL query params | nuqs 2 | Admin tables, filters, pagination |
 | Form state | react-hook-form 7 | All forms |
 | Form validation | Zod 4 | `src/schemas/` |
 | Admin sidebar UI | Zustand store | `src/store/AdminSidebarContext.tsx` |
+| Cache invalidation | Server Actions | `src/actions/revalidate.ts` |
 
 The auth store uses Zustand's `persist` middleware with the key `"auth-storage"`, tracking `isAuthenticated` state that the API client updates on login, logout, and token refresh failure.
 
@@ -625,6 +724,8 @@ The app will start on `http://localhost:3000`.
 
 > **Note:** `NEXT_PUBLIC_*` variables are exposed to the browser and must be set at build time. For Docker builds, pass them as build args.
 
+> **Sentry:** The DSN is configured directly in `sentry.server.config.ts`, `sentry.edge.config.ts`, and `src/instrumentation-client.ts`. The Sentry build plugin uses `.sentryclirc` or environment-based auth tokens for source map uploads in CI.
+
 ---
 
 ## 📝 Available Scripts
@@ -632,7 +733,7 @@ The app will start on `http://localhost:3000`.
 | Script | Command | Description |
 |---|---|---|
 | **Development** | `pnpm run dev` | Start Next.js dev server with hot reload |
-| **Build** | `pnpm run build` | Production build |
+| **Build** | `pnpm run build` | Production build (includes Sentry source map upload) |
 | **Start** | `pnpm run start` | Start production server |
 | **Lint** | `pnpm run lint` | Run ESLint |
 | **Test** | `pnpm run test` | Run Vitest in watch mode |
@@ -743,7 +844,7 @@ The GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push to `
 ```
 Checkout → Setup pnpm → Setup Node 22 → Install (frozen-lockfile)
   → Test (Vitest) → Wake Render Backend → Link Vercel Project
-  → Build (Next.js) → Deploy to Vercel (production)
+  → Build (Next.js + Sentry) → Deploy to Vercel (production)
 ```
 
 **Pipeline steps:**
