@@ -22,13 +22,17 @@ import { useLogin } from "@/services";
 
 type FormValues = z.infer<ReturnType<typeof getLoginSchema>>;
 
-export default function LoginForm() {
+interface LoginFormProps {
+  redirectTo?: string;
+}
+
+export default function LoginForm({ redirectTo = "/" }: LoginFormProps) {
   const t = useTranslations("auth");
   const schema = getLoginSchema(t);
   const [showPassword, setShowPassword] = useState(false);
 
   const { mutate: loginUser, isPending } = useLogin({
-    redirectTo: "/",
+    redirectTo,
   });
 
   const form = useForm<FormValues>({
