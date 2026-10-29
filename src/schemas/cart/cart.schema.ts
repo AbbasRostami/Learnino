@@ -26,6 +26,10 @@ export const getApplyDiscountSchema = (t: CartT) =>
       .regex(DISCOUNT_CODE_REGEX, t("validation.codePattern")),
   });
 
+export type ApplyDiscountFormValues = z.infer<
+  ReturnType<typeof getApplyDiscountSchema>
+>;
+
 export const getSyncCartSchema = (t: CartT) =>
   z.object({
     courseIds: z

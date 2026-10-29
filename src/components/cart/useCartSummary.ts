@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "@/i18n/routing";
+import { ApplyDiscountFormValues, getApplyDiscountSchema } from "@/schemas";
 import {
   useApplyDiscount,
   useCheckoutWallet,
@@ -10,8 +11,10 @@ import {
 } from "@/services";
 import { useAuthStore } from "@/store/authStore";
 import type { GetCartResponse } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export function useCartSummary(
@@ -21,7 +24,6 @@ export function useCartSummary(
   const router = useRouter();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
-  const [discountCode, setDiscountCode] = useState("");
   const [paymentMethod, setPaymentMethod] = useState<"ZARINPAL" | "WALLET">(
     "ZARINPAL",
   );
@@ -29,9 +31,14 @@ export function useCartSummary(
   const { data: walletData } = useWallet();
   const walletBalance = walletData?.data?.wallet?.balance ?? 0;
 
+  const discountForm = useForm<ApplyDiscountFormValues>({
+    resolver: zodResolver(getApplyDiscountSchema(t)),
+    defaultValues: { code: "" },
+  });
+
   const { mutate: applyDiscount, isPending: isApplyingDiscount } =
     useApplyDiscount({
-      onSuccessCallback: () => setDiscountCode(""),
+      onSuccessCallback: () => discountForm.reset(),
     });
 
   const { mutate: removeDiscount, isPending: isRemovingDiscount } =
@@ -63,18 +70,14 @@ export function useCartSummary(
     setPaymentMethod(method);
   };
 
-  const handleApplyDiscount = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!discountCode.trim()) return;
-
+  const handleApplyDiscount = discountForm.handleSubmit((data) => {
     if (!isAuthenticated) {
       toast.info(t("loginRequiredDiscount"));
       router.push("/login?redirectTo=%2Fcart");
       return;
     }
-
-    applyDiscount({ code: discountCode });
-  };
+    applyDiscount({ code: data.code });
+  });
 
   const handleCheckout = () => {
     if (!isAuthenticated) {
@@ -98,8 +101,7 @@ export function useCartSummary(
 
   return {
     isAuthenticated,
-    discountCode,
-    setDiscountCode,
+    discountForm,
     paymentMethod,
     walletBalance,
     isApplyingDiscount,

@@ -18,6 +18,9 @@ import {
   X,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Controller } from "react-hook-form";
+import { Field, FieldError } from "../ui/field";
+import { Input } from "../ui/input";
 import { useCartSummary } from "./useCartSummary";
 
 interface CartSummarySidebarProps {
@@ -31,8 +34,7 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
 
   const {
     isAuthenticated,
-    discountCode,
-    setDiscountCode,
+    discountForm,
     paymentMethod,
     walletBalance,
     isApplyingDiscount,
@@ -94,39 +96,52 @@ export function CartSummarySidebar({ cart }: CartSummarySidebarProps) {
           </div>
         ) : (
           <form onSubmit={handleApplyDiscount} className="relative group">
-            <div className="relative flex items-center rounded-2xl border border-border/60 bg-background focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all overflow-hidden shadow-xs">
-              <input
-                id="discount"
-                data-testid="coupon-input"
-                type="text"
-                value={discountCode}
-                onChange={(e) => setDiscountCode(e.target.value)}
-                placeholder={t("discountPlaceholder")}
-                className="flex-1 min-w-0 h-11 bg-transparent px-4 text-xs font-semibold text-foreground placeholder:text-muted-foreground/70 focus:outline-none disabled:opacity-50 uppercase"
-                disabled={isApplyingDiscount}
-              />
+            <Controller
+              name="code"
+              control={discountForm.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid} className="gap-1.5">
+                  <div className="flex items-start gap-2">
+                    <Input
+                      {...field}
+                      id="discount"
+                      data-testid="coupon-input"
+                      placeholder={t("discountPlaceholder")}
+                      className="flex-1 h-11 rounded-2xl bg-muted/40 border-border/60 text-xs font-semibold uppercase tracking-wider focus-visible:bg-background disabled:opacity-50"
+                      disabled={isApplyingDiscount}
+                    />
 
-              <Button
-                type="submit"
-                data-testid="coupon-submit-btn"
-                disabled={isApplyingDiscount || !discountCode}
-                className={cn(
-                  "shrink-0 h-9 me-1 px-4 rounded-xl text-xs font-black transition-all cursor-pointer inline-flex items-center justify-center gap-1.5",
-                  discountCode && !isApplyingDiscount
-                    ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm hover:shadow-md"
-                    : "bg-muted text-muted-foreground cursor-not-allowed",
-                )}
-              >
-                {isApplyingDiscount ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <>
-                    <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-                    <span>{t("applyDiscount")}</span>
-                  </>
-                )}
-              </Button>
-            </div>
+                    <Button
+                      type="submit"
+                      data-testid="coupon-submit-btn"
+                      disabled={isApplyingDiscount || !field.value}
+                      className={cn(
+                        "shrink-0 h-11 px-5 rounded-2xl text-xs font-black transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 shadow-xs",
+                        field.value && !isApplyingDiscount
+                          ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                          : "bg-muted text-muted-foreground/50 cursor-not-allowed",
+                      )}
+                    >
+                      {isApplyingDiscount ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <>
+                          <Sparkles
+                            className="h-3.5 w-3.5"
+                            aria-hidden="true"
+                          />
+                          <span>{t("applyDiscount")}</span>
+                        </>
+                      )}
+                    </Button>
+                  </div>
+
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
           </form>
         )}
       </div>
