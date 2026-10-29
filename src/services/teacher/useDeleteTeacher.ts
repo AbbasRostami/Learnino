@@ -1,3 +1,4 @@
+import { revalidateTeachersAction } from "@/actions/revalidate";
 import { api } from "@/lib/upfetch";
 import type { ApiError, DeleteTeacherResponse } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -20,11 +21,13 @@ export const useDeleteTeacher = ({
         method: "DELETE",
       }),
 
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       toast.success(response?.data?.message || t("deleteSuccess"));
 
       queryClient.invalidateQueries({ queryKey: ["teachers"] });
       queryClient.invalidateQueries({ queryKey: ["admin", "teachers"] });
+
+      void revalidateTeachersAction();
 
       onSuccessCallback?.();
     },

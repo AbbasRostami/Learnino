@@ -10,7 +10,7 @@ export async function CategoriesSection() {
 
   const categories = await getPublicCategoriesServer(locale);
 
-  if (!categories || categories?.length === 0) return null;
+  if (categories.length === 0) return null;
 
   return (
     <section

@@ -1,4 +1,4 @@
-import { api } from "@/lib/upfetch";
+import { api, isApiErrorStatus } from "@/lib/upfetch";
 import type {
   GetTeacherBySlugResponse,
   GetTeachersResponse,
@@ -19,52 +19,46 @@ async function fetchTopTeachersData(
     headers: { "Accept-Language": locale },
   });
 
-  return res.data?.items ?? [];
+  return res.data.items;
 }
 
 export async function getTopTeachersServer(
   locale: string = "fa",
   limit: number = 8,
 ): Promise<TeacherListItem[]> {
-  try {
-    return await fetchTopTeachersData(locale, limit);
-  } catch (error) {
-    console.error(`[Top Teachers Server Fetch Error]`, error);
-    return [];
-  }
+  return await fetchTopTeachersData(locale, limit);
 }
 
 async function fetchTeacherBySlugData(
   locale: string,
-  rawSlug: string,
+  slug: string,
 ): Promise<GetTeacherBySlugResponse["data"]["teacher"] | null> {
   "use cache";
-  cacheLife("hours");
+  cacheLife("minutes");
 
-  const decodedSlug = decodeURIComponent(rawSlug);
-  cacheTag("teachers", `teacher-${decodedSlug}`);
+  cacheTag("teachers", `teacher-${slug}`);
 
   const res = await api<GetTeacherBySlugResponse>(
-    `/teachers/${encodeURIComponent(decodedSlug)}`,
+    `/teachers/${encodeURIComponent(slug)}`,
     {
       headers: { "Accept-Language": locale },
     },
   );
 
-  return res.data?.teacher ?? null;
+  return res.data.teacher;
 }
 
 export async function getTeacherBySlugServer(
   locale: string = "fa",
   slug: string,
-) {
+): Promise<GetTeacherBySlugResponse["data"]["teacher"] | null> {
   try {
     return await fetchTeacherBySlugData(locale, slug);
   } catch (error) {
-    console.error(
-      `[Teacher Detail Server Fetch Error for slug: ${slug}]`,
-      error,
-    );
-    return null;
+    if (isApiErrorStatus(error, 404)) {
+      return null;
+    }
+
+    throw error;
   }
 }

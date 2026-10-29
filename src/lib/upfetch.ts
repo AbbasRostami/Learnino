@@ -128,6 +128,15 @@ interface RejectedApiError extends Error {
   data?: unknown;
 }
 
+export function isApiErrorStatus(error: unknown, status: number): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "status" in error &&
+    error.status === status
+  );
+}
+
 export const api = up(authenticatedFetch, () => ({
   baseUrl: API_BASE_URL,
   credentials: "include",

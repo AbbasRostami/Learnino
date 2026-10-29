@@ -1,3 +1,4 @@
+import { revalidateTeachersAction } from "@/actions/revalidate";
 import { api } from "@/lib/upfetch";
 import type {
   ApiError,
@@ -29,12 +30,14 @@ export const useToggleTeacherVisibility = ({
         body: { show },
       }),
 
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       toast.success(response.data.message || t("visibilityToggleSuccess"));
 
       queryClient.invalidateQueries({ queryKey: ["teachers"] });
       queryClient.invalidateQueries({ queryKey: ["admin", "teachers"] });
       queryClient.invalidateQueries({ queryKey: ["courses"] });
+
+      void revalidateTeachersAction();
 
       onSuccessCallback?.();
     },

@@ -1,3 +1,4 @@
+import { revalidateCoursesAction } from "@/actions/revalidate";
 import { api } from "@/lib/upfetch";
 import type {
   ApiError,
@@ -31,6 +32,8 @@ export const useUpdateCourse = ({
 
       queryClient.invalidateQueries({ queryKey: ["courses"] });
       queryClient.invalidateQueries({ queryKey: ["admin", "courses"] });
+
+      void revalidateCoursesAction();
 
       onSuccessCallback?.();
     },

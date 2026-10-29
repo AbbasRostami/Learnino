@@ -1,3 +1,4 @@
+import { revalidateCategoriesAction } from "@/actions/revalidate";
 import { api } from "@/lib/upfetch";
 import { ApiError, DeleteCategoryResponse } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -20,11 +21,13 @@ export const useDeleteCategory = ({
         method: "DELETE",
       }),
 
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       toast.success(response.data.message || t("deleteSuccess"));
 
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       queryClient.invalidateQueries({ queryKey: ["admin", "categories"] });
+
+      void revalidateCategoriesAction();
 
       onSuccessCallback?.();
     },

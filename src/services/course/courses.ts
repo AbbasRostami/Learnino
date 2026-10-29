@@ -1,4 +1,4 @@
-import { api } from "@/lib/upfetch";
+import { api, isApiErrorStatus } from "@/lib/upfetch";
 import type {
   Course,
   GetCourseBySlugResponse,
@@ -10,73 +10,58 @@ export async function getFeaturedCoursesServer(
   locale: string = "fa",
   limit: number = 8,
 ): Promise<Course[]> {
-  try {
-    const fetchCached = async () => {
-      "use cache";
-      cacheLife("hours");
-      cacheTag("courses", "featured-courses");
+  const fetchCached = async () => {
+    "use cache";
+    cacheLife("hours");
+    cacheTag("courses", "featured-courses");
 
-      const res = await api<GetCoursesResponse>("/courses", {
-        params: { limit, sortBy: "createdAt", order: "desc" },
-        headers: { "Accept-Language": locale },
-      });
+    const res = await api<GetCoursesResponse>("/courses", {
+      params: { limit, sortBy: "createdAt", order: "desc" },
+      headers: { "Accept-Language": locale },
+    });
 
-      return res.data?.items ?? [];
-    };
+    return res.data.items;
+  };
 
-    return await fetchCached();
-  } catch (error) {
-    console.error(`[Featured Courses Server Fetch Error]`, error);
-    return [];
-  }
+  return await fetchCached();
 }
 
 export async function getFreeCoursesServer(
   locale: string = "fa",
   limit: number = 8,
 ): Promise<Course[]> {
-  try {
-    const fetchCached = async () => {
-      "use cache";
-      cacheLife("hours");
-      cacheTag("courses", "free-courses");
+  const fetchCached = async () => {
+    "use cache";
+    cacheLife("hours");
+    cacheTag("courses", "free-courses");
 
-      const res = await api<GetCoursesResponse>("/courses", {
-        params: { limit, maxPrice: 0, sortBy: "createdAt", order: "desc" },
-        headers: { "Accept-Language": locale },
-      });
+    const res = await api<GetCoursesResponse>("/courses", {
+      params: { limit, maxPrice: 0, sortBy: "createdAt", order: "desc" },
+      headers: { "Accept-Language": locale },
+    });
 
-      return res.data?.items ?? [];
-    };
+    return res.data.items;
+  };
 
-    return await fetchCached();
-  } catch (error) {
-    console.error(`[Free Courses Server Fetch Error]`, error);
-    return [];
-  }
+  return await fetchCached();
 }
 
 export async function getCoursesServer(
   locale: string = "fa",
   params: Record<string, unknown> = {},
-): Promise<GetCoursesResponse | null> {
-  try {
-    const fetchCached = async () => {
-      "use cache";
-      cacheLife("minutes");
-      cacheTag("courses-list");
+): Promise<GetCoursesResponse> {
+  const fetchCached = async () => {
+    "use cache";
+    cacheLife("minutes");
+    cacheTag("courses-list");
 
-      return await api<GetCoursesResponse>("/courses", {
-        params,
-        headers: { "Accept-Language": locale },
-      });
-    };
+    return await api<GetCoursesResponse>("/courses", {
+      params,
+      headers: { "Accept-Language": locale },
+    });
+  };
 
-    return await fetchCached();
-  } catch (error) {
-    console.error(`[Courses List Server Fetch Error]`, error);
-    return null;
-  }
+  return await fetchCached();
 }
 
 export async function getCourseBySlugServer(
@@ -85,36 +70,25 @@ export async function getCourseBySlugServer(
 ): Promise<Course | null> {
   const fetchCached = async () => {
     "use cache";
-    cacheLife("hours");
+    cacheLife("minutes");
     cacheTag("courses", `course-${slug}`);
 
     try {
-      const encodedSlug = encodeURIComponent(decodeURIComponent(slug));
       const res = await api<GetCourseBySlugResponse>(
-        `/courses/${encodedSlug}`,
+        `/courses/${encodeURIComponent(slug)}`,
         {
           headers: { "Accept-Language": locale },
         },
       );
 
-      return res.data?.course ?? null;
+      return res.data.course;
     } catch (error: unknown) {
-      if (
-        error &&
-        typeof error === "object" &&
-        "status" in error &&
-        (error as { status?: number }).status === 404
-      ) {
+      if (isApiErrorStatus(error, 404)) {
         return null;
       }
-      console.error(`[Course Detail Fetch Error]`, error);
       throw error;
     }
   };
 
-  try {
-    return await fetchCached();
-  } catch {
-    return null;
-  }
+  return await fetchCached();
 }

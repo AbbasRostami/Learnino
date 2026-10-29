@@ -9,7 +9,7 @@ export async function FreeCoursesSection() {
 
   const courses = await getFreeCoursesServer(locale, 8);
 
-  if (!courses || courses?.length === 0) return null;
+  if (courses.length === 0) return null;
 
   return (
     <section

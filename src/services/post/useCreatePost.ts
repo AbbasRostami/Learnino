@@ -1,3 +1,4 @@
+import { revalidatePostsAction } from "@/actions/revalidate";
 import { api } from "@/lib/upfetch";
 import type { ApiError, CreatePostPayload, CreatePostResponse } from "@/types";
 import { objectToFormData } from "@/utils/formData";
@@ -22,7 +23,7 @@ export const useCreatePost = ({
         body: objectToFormData(data),
       }),
 
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       toast.success(response.data.message || t("createSuccess"));
 
       queryClient.invalidateQueries({ queryKey: ["posts"] });
@@ -30,6 +31,8 @@ export const useCreatePost = ({
       queryClient.invalidateQueries({
         queryKey: ["admin", "overview", "posts"],
       });
+
+      void revalidatePostsAction();
 
       onSuccessCallback?.(response.data.post.id);
     },

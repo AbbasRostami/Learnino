@@ -1,3 +1,4 @@
+import { revalidatePostsAction } from "@/actions/revalidate";
 import { api } from "@/lib/upfetch";
 import type { ApiError, UpdatePostPayload, UpdatePostResponse } from "@/types";
 import { objectToFormData } from "@/utils/formData";
@@ -22,11 +23,13 @@ export const useUpdatePost = ({
         body: objectToFormData(data),
       }),
 
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       toast.success(response.data.message || t("updateSuccess"));
 
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       queryClient.invalidateQueries({ queryKey: ["admin", "posts"] });
+
+      void revalidatePostsAction();
 
       onSuccessCallback?.();
     },

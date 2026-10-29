@@ -15,19 +15,11 @@ async function fetchCategoriesData(
     },
   });
 
-  return res.data?.categories ?? [];
+  return res.data.categories;
 }
 
 export async function getPublicCategoriesServer(
   locale: string = "fa",
 ): Promise<CategoryWithCount[]> {
-  try {
-    return await fetchCategoriesData(locale);
-  } catch (error) {
-    console.error(
-      `[Categories Server Fetch Error for locale: ${locale}]`,
-      error,
-    );
-    return [];
-  }
+  return await fetchCategoriesData(locale);
 }

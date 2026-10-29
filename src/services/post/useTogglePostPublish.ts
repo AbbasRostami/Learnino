@@ -1,3 +1,4 @@
+import { revalidatePostsAction } from "@/actions/revalidate";
 import { api } from "@/lib/upfetch";
 import type {
   ApiError,
@@ -29,7 +30,7 @@ export const useTogglePostPublish = ({
         body: { published },
       }),
 
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       toast.success(response.data.message || t("publishToggleSuccess"));
 
       queryClient.invalidateQueries({ queryKey: ["posts"] });
@@ -37,6 +38,8 @@ export const useTogglePostPublish = ({
       queryClient.invalidateQueries({
         queryKey: ["admin", "overview", "posts"],
       });
+
+      void revalidatePostsAction();
 
       onSuccessCallback?.();
     },

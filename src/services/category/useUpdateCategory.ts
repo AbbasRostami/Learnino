@@ -1,10 +1,10 @@
+import { revalidateCategoriesAction } from "@/actions/revalidate";
 import { api } from "@/lib/upfetch";
 import {
   ApiError,
   UpdateCategoryPayload,
   UpdateCategoryResponse,
 } from "@/types";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -26,7 +26,7 @@ export const useUpdateCategory = ({
         body,
       }),
 
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       toast.success(response.data.message || t("updateSuccess"));
 
       queryClient.invalidateQueries({ queryKey: ["categories"] });
@@ -34,6 +34,8 @@ export const useUpdateCategory = ({
       queryClient.invalidateQueries({
         queryKey: ["categories", "detail", response.data.category.slug],
       });
+
+      void revalidateCategoriesAction();
 
       onSuccessCallback?.();
     },

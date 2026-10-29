@@ -1,3 +1,4 @@
+import { revalidateCoursesAction } from "@/actions/revalidate";
 import { api } from "@/lib/upfetch";
 import type {
   ApiError,
@@ -29,7 +30,7 @@ export const useToggleCoursePublish = ({
         body: { published },
       }),
 
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       toast.success(response.data.message || t("publishToggleSuccess"));
 
       queryClient.invalidateQueries({ queryKey: ["courses"] });
@@ -37,6 +38,8 @@ export const useToggleCoursePublish = ({
       queryClient.invalidateQueries({
         queryKey: ["admin", "overview", "courses"],
       });
+
+      void revalidateCoursesAction();
 
       onSuccessCallback?.();
     },

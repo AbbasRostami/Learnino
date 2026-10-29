@@ -9,7 +9,7 @@ export async function LatestPostsSection() {
 
   const posts = await getLatestPostsServer(locale, 6);
 
-  if (!posts || posts?.length === 0) return null;
+  if (posts.length === 0) return null;
 
   return (
     <section

@@ -1,3 +1,4 @@
+import { revalidateTeachersAction } from "@/actions/revalidate";
 import { api } from "@/lib/upfetch";
 import type {
   ApiError,
@@ -26,10 +27,14 @@ export const useCreateTeacher = ({
         body: objectToFormData(data),
       }),
 
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       toast.success(response?.data?.message || t("createSuccess"));
+
       queryClient.invalidateQueries({ queryKey: ["teachers"] });
       queryClient.invalidateQueries({ queryKey: ["admin", "teachers"] });
+
+      void revalidateTeachersAction();
+
       onSuccessCallback?.();
     },
 

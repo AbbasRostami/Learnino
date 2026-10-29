@@ -1,3 +1,4 @@
+import { revalidateCoursesAction } from "@/actions/revalidate";
 import { api } from "@/lib/upfetch";
 import type {
   ApiError,
@@ -26,7 +27,7 @@ export const useCreateCourse = ({
         body: objectToFormData(data),
       }),
 
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       toast.success(response.data.message || t("createSuccess"));
 
       queryClient.invalidateQueries({ queryKey: ["courses"] });
@@ -34,6 +35,8 @@ export const useCreateCourse = ({
       queryClient.invalidateQueries({
         queryKey: ["admin", "overview", "courses"],
       });
+
+      void revalidateCoursesAction();
 
       onSuccessCallback?.(response.data.course.id);
     },

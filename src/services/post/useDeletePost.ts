@@ -1,3 +1,4 @@
+import { revalidatePostsAction } from "@/actions/revalidate";
 import { api } from "@/lib/upfetch";
 import type { ApiError, DeletePostResponse } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -20,7 +21,7 @@ export const useDeletePost = ({
         method: "DELETE",
       }),
 
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       toast.success(response.data.message || t("deleteSuccess"));
 
       queryClient.invalidateQueries({ queryKey: ["posts"] });
@@ -28,6 +29,8 @@ export const useDeletePost = ({
       queryClient.invalidateQueries({
         queryKey: ["admin", "overview", "posts"],
       });
+
+      void revalidatePostsAction();
 
       onSuccessCallback?.();
     },

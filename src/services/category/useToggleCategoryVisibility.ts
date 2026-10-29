@@ -1,10 +1,10 @@
+import { revalidateCategoriesAction } from "@/actions/revalidate";
 import { api } from "@/lib/upfetch";
 import {
   ApiError,
   ToggleCategoryVisibilityPayload,
   ToggleCategoryVisibilityResponse,
 } from "@/types";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -30,13 +30,15 @@ export const useToggleCategoryVisibility = ({
         body: { show },
       }),
 
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       toast.success(response.data.message || t("visibilityToggleSuccess"));
 
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       queryClient.invalidateQueries({ queryKey: ["admin", "categories"] });
       queryClient.invalidateQueries({ queryKey: ["courses"] });
       queryClient.invalidateQueries({ queryKey: ["posts"] });
+
+      void revalidateCategoriesAction();
 
       onSuccessCallback?.();
     },

@@ -1,3 +1,4 @@
+import { revalidateCategoriesAction } from "@/actions/revalidate";
 import { api } from "@/lib/upfetch";
 import {
   ApiError,
@@ -25,11 +26,13 @@ export const useCreateCategory = ({
         body: data,
       }),
 
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       toast.success(response.data.message || t("createSuccess"));
 
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       queryClient.invalidateQueries({ queryKey: ["admin", "categories"] });
+
+      void revalidateCategoriesAction();
 
       onSuccessCallback?.(response.data.category.id);
     },

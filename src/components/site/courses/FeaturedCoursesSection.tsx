@@ -9,7 +9,7 @@ export async function FeaturedCoursesSection() {
 
   const courses = await getFeaturedCoursesServer(locale, 8);
 
-  if (!courses || courses?.length === 0) return null;
+  if (courses.length === 0) return null;
 
   return (
     <section

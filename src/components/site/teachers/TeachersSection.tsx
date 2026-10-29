@@ -9,7 +9,7 @@ export async function TeachersSection() {
 
   const teachers = await getTopTeachersServer(locale, 8);
 
-  if (!teachers || teachers?.length === 0) return null;
+  if (teachers.length === 0) return null;
 
   return (
     <section
