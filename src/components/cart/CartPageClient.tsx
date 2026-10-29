@@ -1,6 +1,7 @@
 "use client";
 
 import { AppBreadcrumb } from "@/components/shared/AppBreadcrumb";
+import { QueryErrorState } from "@/components/shared/QueryErrorState";
 import { Button } from "@/components/ui/button";
 import { useGuestCart } from "@/hooks/useGuestCart";
 import { useCart, useClearCart, useRemoveFromCart } from "@/services";
@@ -19,7 +20,13 @@ export function CartPageClient() {
   const t = useTranslations("cart");
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
-  const { data: cartData, isLoading } = useCart();
+  const {
+    data: cartData,
+    isLoading,
+    isError,
+    isFetching,
+    refetch,
+  } = useCart();
   const { mutate: clearCart, isPending: isClearing } = useClearCart({});
   const { mutate: removeFromCart, isPending: isRemoving } = useRemoveFromCart();
   const { guestItems, removeGuestItem, clearGuestCart, isReady } =
@@ -49,6 +56,7 @@ export function CartPageClient() {
 
   const shouldShowEmpty =
     !isLoading &&
+    !isError &&
     (isAuthenticated
       ? items.length === 0
       : isReady && guestItems?.length === 0);
@@ -119,8 +127,16 @@ export function CartPageClient() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_400px] gap-6 lg:gap-8 items-start">
-        <div className="flex flex-col gap-4 min-w-0">
-          {isFetchingData
+        {isAuthenticated && isError ? (
+          <QueryErrorState
+            onRetry={() => void refetch()}
+            isRetrying={isFetching}
+            className="lg:col-span-2"
+          />
+        ) : (
+          <>
+            <div className="flex flex-col gap-4 min-w-0">
+              {isFetchingData
             ? Array.from({ length: 2 }).map((_, i) => (
                 <CartItemSkeleton key={i} />
               ))
@@ -132,15 +148,17 @@ export function CartPageClient() {
                   isRemoving={isRemoving}
                 />
               ))}
-        </div>
+            </div>
 
-        <aside className="lg:sticky lg:top-24">
-          {isFetchingData ? (
-            <CartSidebarSkeleton />
-          ) : (
-            <CartSummarySidebar cart={displayCart} />
-          )}
-        </aside>
+            <aside className="lg:sticky lg:top-24">
+              {isFetchingData ? (
+                <CartSidebarSkeleton />
+              ) : (
+                <CartSummarySidebar cart={displayCart} />
+              )}
+            </aside>
+          </>
+        )}
       </div>
     </div>
   );

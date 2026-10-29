@@ -1,6 +1,7 @@
 "use client";
 
 import { AppBreadcrumb } from "@/components/shared/AppBreadcrumb";
+import { QueryErrorState } from "@/components/shared/QueryErrorState";
 import { PostsGridSkeleton } from "@/components/skeleton";
 import { Button } from "@/components/ui/button";
 import { useAdminTableParams } from "@/hooks/useAdminTableParams";
@@ -32,14 +33,31 @@ export function BlogPageClient({
       },
     });
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfinitePosts(apiParams);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+    isFetching,
+    refetch,
+  } = useInfinitePosts(apiParams);
 
-  const posts =
-    data?.pages.flatMap((page) => page?.data?.items ?? []) ?? initialPosts;
+  const hasActiveFilters = Boolean(
+    searchValue.trim() ||
+      params.category ||
+      params.sortBy !== "createdAt" ||
+      params.order !== "desc",
+  );
+  const posts = data
+    ? data.pages.flatMap((page) => page?.data?.items ?? [])
+    : hasActiveFilters
+      ? []
+      : initialPosts;
 
   const showSkeleton =
-    isLoading && initialPosts.length === 0 && posts.length === 0;
+    isLoading && posts.length === 0;
   const isEmpty = !showSkeleton && posts.length === 0;
 
   return (
@@ -79,6 +97,11 @@ export function BlogPageClient({
 
       {showSkeleton ? (
         <PostsGridSkeleton count={6} showHeader={false} />
+      ) : isError && posts.length === 0 ? (
+        <QueryErrorState
+          onRetry={() => void refetch()}
+          isRetrying={isFetching}
+        />
       ) : isEmpty ? (
         <EmptyBlogState />
       ) : (
@@ -95,7 +118,16 @@ export function BlogPageClient({
         </div>
       )}
 
-      {hasNextPage && !showSkeleton && !isEmpty && (
+      {isError && posts.length > 0 && (
+        <QueryErrorState
+          compact
+          onRetry={() => void refetch()}
+          isRetrying={isFetching}
+          className="mt-6"
+        />
+      )}
+
+      {hasNextPage && !showSkeleton && !isEmpty && !isError && (
         <div className="mt-12 flex justify-center">
           <Button
             variant="outline"

@@ -8,6 +8,7 @@ import { parseAsString, useQueryState } from "nuqs";
 import { useEffect, useRef, useState } from "react";
 
 import { Input } from "@/components/ui/input";
+import { QueryErrorState } from "@/components/shared/QueryErrorState";
 import { useDebouncedParam } from "@/hooks/useDebouncedParam";
 import { useSearch } from "@/services";
 
@@ -30,7 +31,7 @@ export function SearchInput() {
     350,
   );
 
-  const { data, isLoading } = useSearch(q);
+  const { data, isLoading, isError, isFetching, refetch } = useSearch(q);
   const searchResult = data?.data;
 
   const hasCourses = (searchResult?.courses?.length ?? 0) > 0;
@@ -101,13 +102,21 @@ export function SearchInput() {
             </div>
           )}
 
-          {!isLoading && !hasResults && (
+          {!isLoading && isError && (
+            <QueryErrorState
+              compact
+              onRetry={() => void refetch()}
+              isRetrying={isFetching}
+            />
+          )}
+
+          {!isLoading && !isError && !hasResults && (
             <div className="py-8 text-center text-sm text-muted-foreground">
               {t("noResults", { query: inputValue })}
             </div>
           )}
 
-          {!isLoading && hasResults && (
+          {!isLoading && !isError && hasResults && (
             <div className="space-y-4">
               {hasCourses && (
                 <div>

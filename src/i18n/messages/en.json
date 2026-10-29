@@ -4,6 +4,11 @@
     "loading": "Loading...",
     "error": "An error occurred",
     "retry": "Retry",
+    "queryError": {
+      "title": "Couldn't load the information",
+      "description": "Check your internet connection and try again.",
+      "retry": "Try again"
+    },
     "toman": "Toman",
     "goToSlide": "Go to slide {slide}"
   },

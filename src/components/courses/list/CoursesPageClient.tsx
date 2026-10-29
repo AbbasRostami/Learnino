@@ -1,6 +1,7 @@
 "use client";
 
 import { AppBreadcrumb } from "@/components/shared/AppBreadcrumb";
+import { QueryErrorState } from "@/components/shared/QueryErrorState";
 import { Button } from "@/components/ui/button";
 import { useAdminTableParams } from "@/hooks/useAdminTableParams";
 import { useInfiniteCourses } from "@/services";
@@ -48,6 +49,8 @@ export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
     isFetchingNextPage,
     isLoading,
     isFetching,
+    isError,
+    refetch,
   } = useInfiniteCourses(apiParams);
 
   const hasActiveFilters = Boolean(
@@ -133,6 +136,11 @@ export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
 
           {showSkeleton ? (
             <CourseCardSkeleton count={6} />
+          ) : isError && courses.length === 0 ? (
+            <QueryErrorState
+              onRetry={() => void refetch()}
+              isRetrying={isFetching}
+            />
           ) : isEmpty ? (
             <EmptyCoursesState
               hasActiveFilters={hasActiveFilters}
@@ -151,7 +159,16 @@ export function CoursesPageClient({ initialData }: CoursesPageClientProps) {
             </div>
           )}
 
-          {hasNextPage && !showSkeleton && !isEmpty && (
+          {isError && courses.length > 0 && (
+            <QueryErrorState
+              compact
+              onRetry={() => void refetch()}
+              isRetrying={isFetching}
+              className="mt-6"
+            />
+          )}
+
+          {hasNextPage && !showSkeleton && !isEmpty && !isError && (
             <div className="mt-10 flex justify-center">
               <Button
                 variant="outline"

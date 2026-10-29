@@ -57,7 +57,7 @@ export function useCartSummary(
   const handleSelectPaymentMethod = (method: "ZARINPAL" | "WALLET") => {
     if (method === "WALLET" && !isAuthenticated) {
       toast.info(t("loginRequired"));
-      router.push("/login");
+      router.push("/login?redirectTo=%2Fcart");
       return;
     }
     setPaymentMethod(method);
@@ -69,7 +69,7 @@ export function useCartSummary(
 
     if (!isAuthenticated) {
       toast.info(t("loginRequiredDiscount"));
-      router.push("/login");
+      router.push("/login?redirectTo=%2Fcart");
       return;
     }
 
@@ -79,7 +79,7 @@ export function useCartSummary(
   const handleCheckout = () => {
     if (!isAuthenticated) {
       toast.info(t("loginRequiredCheckout"));
-      router.push("/login");
+      router.push("/login?redirectTo=%2Fcart");
       return;
     }
 
