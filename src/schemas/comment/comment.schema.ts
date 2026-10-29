@@ -3,39 +3,51 @@ import { z } from "zod";
 
 type CommentT = ReturnType<typeof useTranslations<"comment">>;
 
+export const getCommentFormSchema = (t: CommentT) =>
+  z.object({
+    content: z
+      .string()
+      .trim()
+      .min(2, t("validation.contentMin"))
+      .max(1000, t("validation.contentMax")),
+  });
+
+export type CommentFormValues = z.infer<
+  ReturnType<typeof getCommentFormSchema>
+>;
+
+export const getCreateCommentBaseSchema = (t: CommentT) =>
+  getCommentFormSchema(t).extend({
+    courseId: z.string().uuid(t("validation.invalidCourseUuid")).optional(),
+    postId: z.string().uuid(t("validation.invalidPostUuid")).optional(),
+    parentId: z.string().uuid(t("validation.invalidParentUuid")).optional(),
+  });
+
 export const getCreateCommentSchema = (t: CommentT) =>
-  z
-    .object({
-      content: z
-        .string()
-        .trim()
-        .min(2, t("validation.contentMin"))
-        .max(1000, t("validation.contentMax")),
+  getCreateCommentBaseSchema(t).superRefine((data, ctx) => {
+    const hasCourse = Boolean(data.courseId);
+    const hasPost = Boolean(data.postId);
 
-      courseId: z.string().uuid(t("validation.invalidCourseUuid")).optional(),
-      postId: z.string().uuid(t("validation.invalidPostUuid")).optional(),
-      parentId: z.string().uuid(t("validation.invalidParentUuid")).optional(),
-    })
-    .superRefine((data, ctx) => {
-      const hasCourse = Boolean(data.courseId);
-      const hasPost = Boolean(data.postId);
+    if (!hasCourse && !hasPost) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: t("validation.targetRequired"),
+        path: ["courseId"],
+      });
+    }
 
-      if (!hasCourse && !hasPost) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: t("validation.targetRequired"),
-          path: ["courseId"],
-        });
-      }
+    if (hasCourse && hasPost) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: t("validation.bothTargetsProvided"),
+        path: ["postId"],
+      });
+    }
+  });
 
-      if (hasCourse && hasPost) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: t("validation.bothTargetsProvided"),
-          path: ["postId"],
-        });
-      }
-    });
+export type CreateCommentPayload = z.infer<
+  ReturnType<typeof getCreateCommentSchema>
+>;
 
 export const getCommentSlugParamsSchema = (t: CommentT) =>
   z.object({

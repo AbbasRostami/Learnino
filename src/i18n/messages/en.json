@@ -803,6 +803,8 @@
     "cancelReply": "Cancel Reply",
     "pendingApproval": "Your comment was submitted and will appear after review",
     "loginToComment": "Please login to leave a comment",
+    "loginToCommentDescription": "Log in to leave a comment and join the discussion.",
+    "loginToCommentButton": "Log in to your account",
     "loadMoreComments": "Load More Comments",
     "loadMoreBlogs": "Load More Blogs",
     "noComments": "Be the first to comment!",

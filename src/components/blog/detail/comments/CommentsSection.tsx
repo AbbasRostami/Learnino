@@ -79,7 +79,7 @@ export function CommentsSection({ postSlug, postId }: CommentsSectionProps) {
               {t("loginToComment")}
             </p>
             <p className="text-sm text-muted-foreground">
-              برای ثبت دیدگاه و شرکت در بحث، لطفاً وارد حساب کاربری خود شوید.
+              {t("loginToCommentDescription")}
             </p>
           </div>
           <Link
@@ -90,7 +90,7 @@ export function CommentsSection({ postSlug, postId }: CommentsSectionProps) {
             )}
           >
             <LogIn className="h-4 w-4" />
-            <span>ورود به حساب کاربری</span>
+            <span>{t("loginToCommentButton")}</span>
           </Link>
         </div>
       )}

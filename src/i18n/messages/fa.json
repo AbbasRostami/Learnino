@@ -803,6 +803,8 @@
     "cancelReply": "لغو پاسخ",
     "pendingApproval": "نظر شما ثبت شد و پس از بررسی نمایش داده می‌شود",
     "loginToComment": "برای ارسال نظر ابتدا وارد شوید",
+    "loginToCommentDescription": "برای ثبت دیدگاه و شرکت در بحث، لطفاً وارد حساب کاربری خود شوید.",
+    "loginToCommentButton": "ورود به حساب کاربری",
     "loadMoreComments": "نظرات بیشتر",
     "loadMoreBlogs": "مقالات بیشتر",
     "noComments": "اولین نظر را شما بنویسید!",
