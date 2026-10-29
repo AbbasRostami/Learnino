@@ -1,18 +1,25 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
 import { FileText, ImagePlus, Trash2, Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import type { FieldError as RHFFieldError } from "react-hook-form";
 
 interface PostImageFieldProps {
   currentImageUrl?: string | null;
   value?: File | null;
   onChange: (file: File | null) => void;
   disabled?: boolean;
-  error?: string;
+  invalid?: boolean;
+  error?: RHFFieldError;
 }
 
 export function PostImageField({
@@ -20,6 +27,7 @@ export function PostImageField({
   value,
   onChange,
   disabled,
+  invalid,
   error,
 }: PostImageFieldProps) {
   const t = useTranslations("admin.posts.form");
@@ -38,10 +46,8 @@ export function PostImageField({
   const displayUrl = preview || currentImageUrl || "";
 
   return (
-    <div className="flex flex-col gap-2">
-      <label className="text-xs font-bold text-foreground">
-        {t("imageLabel")}
-      </label>
+    <Field data-invalid={invalid}>
+      <FieldLabel className="text-xs font-bold">{t("imageLabel")}</FieldLabel>
 
       <div className="flex items-center gap-4 p-4 rounded-2xl border border-border/50 bg-muted/30">
         <div className="relative h-20 w-28 shrink-0 overflow-hidden rounded-xl border-2 border-background shadow-md ring-2 ring-primary/20 bg-muted">
@@ -100,9 +106,7 @@ export function PostImageField({
               </Button>
             )}
           </div>
-          <p className="text-xs text-muted-foreground font-semibold">
-            {t("imageHint")}
-          </p>
+          <FieldDescription>{t("imageHint")}</FieldDescription>
         </div>
 
         <input
@@ -118,9 +122,7 @@ export function PostImageField({
         />
       </div>
 
-      {error && (
-        <span className={cn("text-xs font-bold text-rose-500")}>{error}</span>
-      )}
-    </div>
+      {invalid && error && <FieldError errors={[error]} />}
+    </Field>
   );
 }

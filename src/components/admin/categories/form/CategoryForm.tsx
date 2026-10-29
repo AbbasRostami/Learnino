@@ -1,8 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import type { CategoryWithCount } from "@/types";
@@ -29,127 +35,153 @@ export function CategoryForm({
     onSuccess,
   });
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = form;
-
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={form.handleSubmit(onSubmit)}
       className="flex flex-col gap-4 py-2"
-      noValidate
     >
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div className="space-y-1.5">
-          <Label htmlFor="nameFa" className="text-xs font-bold">
-            {t("nameFaLabel")}{" "}
-            {!isEdit && <span className="text-rose-500">*</span>}
-          </Label>
-          <Input
-            id="nameFa"
-            {...register("nameFa")}
-            placeholder={t("nameFaPlaceholder")}
-            className="h-11 rounded-xl text-xs font-semibold bg-background border-border/60"
-            dir="rtl"
-            disabled={isPending}
-            aria-invalid={!!errors?.nameFa}
-          />
-          {errors?.nameFa?.message && (
-            <span className="text-xs font-bold text-rose-500">
-              {errors?.nameFa?.message}
-            </span>
-          )}
-        </div>
-
-        <div className="space-y-1.5">
-          <Label htmlFor="nameEn" className="text-xs font-bold">
-            {t("nameEnLabel")}{" "}
-            {!isEdit && <span className="text-rose-500">*</span>}
-          </Label>
-          <Input
-            id="nameEn"
-            {...register("nameEn")}
-            placeholder={t("nameEnPlaceholder")}
-            className="h-11 rounded-xl text-xs font-semibold bg-background border-border/60"
-            dir="ltr"
-            disabled={isPending}
-            aria-invalid={!!errors?.nameEn}
-          />
-          {errors?.nameEn?.message && (
-            <span className="text-xs font-bold text-rose-500">
-              {errors.nameEn.message}
-            </span>
-          )}
-        </div>
-      </div>
-
-      <div className="space-y-1.5">
-        <Label htmlFor="descriptionFa" className="text-xs font-bold">
-          {t("descriptionFaLabel")}
-        </Label>
-        <Textarea
-          id="descriptionFa"
-          {...register("descriptionFa")}
-          placeholder={t("descriptionFaPlaceholder")}
-          rows={3}
-          className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2 resize-none"
-          dir="rtl"
-          disabled={isPending}
-        />
-        {errors?.descriptionFa?.message && (
-          <span className="text-xs font-bold text-rose-500">
-            {errors.descriptionFa.message}
-          </span>
-        )}
-      </div>
-
-      <div className="space-y-1.5">
-        <Label htmlFor="descriptionEn" className="text-xs font-bold">
-          {t("descriptionEnLabel")}
-        </Label>
-        <Textarea
-          id="descriptionEn"
-          {...register("descriptionEn")}
-          placeholder={t("descriptionEnPlaceholder")}
-          rows={3}
-          className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2 resize-none"
-          dir="ltr"
-          disabled={isPending}
-        />
-        {errors?.descriptionEn?.message && (
-          <span className="text-xs font-bold text-rose-500">
-            {errors?.descriptionEn?.message}
-          </span>
-        )}
-      </div>
-
-      {!isEdit && (
-        <div className="flex items-start gap-3 p-3 rounded-2xl border border-border/50 bg-muted/30">
+      <FieldGroup>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Controller
-            control={control}
-            name="show"
-            render={({ field }) => (
-              <Switch
-                id="show"
-                checked={!!field.value}
-                onCheckedChange={field.onChange}
-                disabled={isPending}
-              />
+            name="nameFa"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid} className="gap-1.5">
+                <FieldLabel htmlFor="nameFa" className="text-xs font-bold">
+                  {t("nameFaLabel")} <span className="text-rose-500">*</span>
+                </FieldLabel>
+                <Input
+                  {...field}
+                  id="nameFa"
+                  placeholder={t("nameFaPlaceholder")}
+                  className="h-11 rounded-xl text-xs font-semibold bg-background border-border/60"
+                  dir="rtl"
+                  disabled={isPending}
+                  aria-invalid={fieldState.invalid}
+                />
+                {fieldState.invalid && (
+                  <FieldError id="nameFa-error" errors={[fieldState.error]} />
+                )}
+              </Field>
             )}
           />
-          <div className="flex flex-col gap-1 flex-1 min-w-0">
-            <Label htmlFor="show" className="text-xs font-bold cursor-pointer">
-              {t("showLabel")}
-            </Label>
-            <p className="text-xs text-muted-foreground font-semibold leading-relaxed">
-              {t("showDescription")}
-            </p>
-          </div>
+
+          <Controller
+            name="nameEn"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid} className="gap-1.5">
+                <FieldLabel htmlFor="nameEn" className="text-xs font-bold">
+                  {t("nameEnLabel")} <span className="text-rose-500">*</span>
+                </FieldLabel>
+                <Input
+                  {...field}
+                  id="nameEn"
+                  placeholder={t("nameEnPlaceholder")}
+                  className="h-11 rounded-xl text-xs font-semibold bg-background border-border/60"
+                  dir="ltr"
+                  disabled={isPending}
+                  aria-invalid={fieldState.invalid}
+                />
+                {fieldState.invalid && (
+                  <FieldError id="nameEn-error" errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
         </div>
-      )}
+
+        <Controller
+          name="descriptionFa"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid} className="gap-1.5">
+              <FieldLabel htmlFor="descriptionFa" className="text-xs font-bold">
+                {t("descriptionFaLabel")}
+              </FieldLabel>
+              <Textarea
+                {...field}
+                id="descriptionFa"
+                placeholder={t("descriptionFaPlaceholder")}
+                rows={3}
+                className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2 resize-none"
+                dir="rtl"
+                disabled={isPending}
+                aria-invalid={fieldState.invalid}
+              />
+              {fieldState.invalid && (
+                <FieldError
+                  id="descriptionFa-error"
+                  errors={[fieldState.error]}
+                />
+              )}
+            </Field>
+          )}
+        />
+
+        <Controller
+          name="descriptionEn"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid} className="gap-1.5">
+              <FieldLabel htmlFor="descriptionEn" className="text-xs font-bold">
+                {t("descriptionEnLabel")}
+              </FieldLabel>
+              <Textarea
+                {...field}
+                id="descriptionEn"
+                placeholder={t("descriptionEnPlaceholder")}
+                rows={3}
+                className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2 resize-none"
+                dir="ltr"
+                disabled={isPending}
+                aria-invalid={fieldState.invalid}
+              />
+              {fieldState.invalid && (
+                <FieldError
+                  id="descriptionEn-error"
+                  errors={[fieldState.error]}
+                />
+              )}
+            </Field>
+          )}
+        />
+
+        {!isEdit && (
+          <Controller
+            name="show"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field
+                data-invalid={fieldState.invalid}
+                className="flex-row items-start gap-3 p-3 rounded-2xl border border-border/50 bg-muted/30"
+              >
+                <Switch
+                  id="show"
+                  name={field.name}
+                  checked={field.value}
+                  onBlur={field.onBlur}
+                  onCheckedChange={field.onChange}
+                  disabled={isPending}
+                  aria-invalid={fieldState.invalid}
+                />
+                <div className="flex flex-col gap-1 flex-1 min-w-0">
+                  <FieldLabel
+                    htmlFor="show"
+                    className="text-xs font-bold cursor-pointer"
+                  >
+                    {t("showLabel")}
+                  </FieldLabel>
+                  <FieldDescription>{t("showDescription")}</FieldDescription>
+                  {fieldState.invalid && (
+                    <FieldError id="show-error" errors={[fieldState.error]} />
+                  )}
+                </div>
+              </Field>
+            )}
+          />
+        )}
+      </FieldGroup>
 
       <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 mt-2">
         <Button

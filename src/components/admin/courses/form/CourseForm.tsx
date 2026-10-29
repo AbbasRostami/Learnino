@@ -1,8 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -52,109 +58,113 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
       className="flex flex-col gap-4 py-2"
       noValidate
     >
-      <Controller
-        control={control}
-        name="image"
-        render={({ field }) => (
-          <CourseImageField
-            currentImageUrl={course?.imageUrl}
-            value={(field.value as File | null) ?? null}
-            onChange={field.onChange}
-            disabled={isPending}
-            error={errors?.image?.message}
-          />
-        )}
-      />
+      <FieldGroup>
+        <Controller
+          control={control}
+          name="image"
+          render={({ field, fieldState }) => (
+            <CourseImageField
+              currentImageUrl={course?.imageUrl}
+              value={field.value ?? null}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+              disabled={isPending}
+              error={fieldState.error?.message}
+              invalid={fieldState.invalid}
+            />
+          )}
+        />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div className="space-y-1.5">
-          <Label htmlFor="titleFa" className="text-xs font-bold">
-            {t("titleFaLabel")}{" "}
-            {!isEdit && <span className="text-rose-500">*</span>}
-          </Label>
-          <Input
-            id="titleFa"
-            {...register("titleFa")}
-            placeholder={t("titleFaPlaceholder")}
-            className="h-11 rounded-xl text-xs font-semibold bg-background border-border/60"
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <Field data-invalid={!!errors.titleFa} className="gap-1.5">
+            <FieldLabel htmlFor="titleFa" className="text-xs font-bold">
+              {t("titleFaLabel")}{" "}
+              {!isEdit && <span className="text-rose-500">*</span>}
+            </FieldLabel>
+            <Input
+              id="titleFa"
+              {...register("titleFa")}
+              placeholder={t("titleFaPlaceholder")}
+              className="h-11 rounded-xl text-xs font-semibold bg-background border-border/60"
+              dir="rtl"
+              disabled={isPending}
+              aria-invalid={!!errors.titleFa}
+            />
+            {errors.titleFa && (
+              <FieldError id="titleFa-error" errors={[errors.titleFa]} />
+            )}
+          </Field>
+
+          <Field data-invalid={!!errors.titleEn} className="gap-1.5">
+            <FieldLabel htmlFor="titleEn" className="text-xs font-bold">
+              {t("titleEnLabel")}{" "}
+              {!isEdit && <span className="text-rose-500">*</span>}
+            </FieldLabel>
+            <Input
+              id="titleEn"
+              {...register("titleEn")}
+              placeholder={t("titleEnPlaceholder")}
+              className="h-11 rounded-xl text-xs font-semibold bg-background border-border/60"
+              dir="ltr"
+              disabled={isPending}
+              aria-invalid={!!errors.titleEn}
+            />
+            {errors.titleEn && (
+              <FieldError id="titleEn-error" errors={[errors.titleEn]} />
+            )}
+          </Field>
+        </div>
+
+        <Field data-invalid={!!errors.descriptionFa} className="gap-1.5">
+          <FieldLabel htmlFor="descriptionFa" className="text-xs font-bold">
+            {t("descriptionFaLabel")}
+          </FieldLabel>
+          <Textarea
+            id="descriptionFa"
+            {...register("descriptionFa")}
+            placeholder={t("descriptionFaPlaceholder")}
+            rows={3}
+            className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2"
             dir="rtl"
             disabled={isPending}
-            aria-invalid={!!errors?.titleFa}
+            aria-invalid={!!errors.descriptionFa}
           />
-          {errors?.titleFa?.message && (
-            <span className="text-xs font-bold text-rose-500">
-              {errors?.titleFa?.message}
-            </span>
+          {errors.descriptionFa && (
+            <FieldError
+              id="descriptionFa-error"
+              errors={[errors.descriptionFa]}
+            />
           )}
-        </div>
+        </Field>
 
-        <div className="space-y-1.5">
-          <Label htmlFor="titleEn" className="text-xs font-bold">
-            {t("titleEnLabel")}{" "}
-            {!isEdit && <span className="text-rose-500">*</span>}
-          </Label>
-          <Input
-            id="titleEn"
-            {...register("titleEn")}
-            placeholder={t("titleEnPlaceholder")}
-            className="h-11 rounded-xl text-xs font-semibold bg-background border-border/60"
+        <Field data-invalid={!!errors.descriptionEn} className="gap-1.5">
+          <FieldLabel htmlFor="descriptionEn" className="text-xs font-bold">
+            {t("descriptionEnLabel")}
+          </FieldLabel>
+          <Textarea
+            id="descriptionEn"
+            {...register("descriptionEn")}
+            placeholder={t("descriptionEnPlaceholder")}
+            rows={3}
+            className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2"
             dir="ltr"
             disabled={isPending}
-            aria-invalid={!!errors?.titleEn}
+            aria-invalid={!!errors.descriptionEn}
           />
-          {errors?.titleEn?.message && (
-            <span className="text-xs font-bold text-rose-500">
-              {errors?.titleEn?.message}
-            </span>
+          {errors.descriptionEn && (
+            <FieldError
+              id="descriptionEn-error"
+              errors={[errors.descriptionEn]}
+            />
           )}
-        </div>
-      </div>
-
-      <div className="space-y-1.5">
-        <Label htmlFor="descriptionFa" className="text-xs font-bold">
-          {t("descriptionFaLabel")}
-        </Label>
-        <Textarea
-          id="descriptionFa"
-          {...register("descriptionFa")}
-          placeholder={t("descriptionFaPlaceholder")}
-          rows={3}
-          className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2"
-          dir="rtl"
-          disabled={isPending}
-        />
-        {errors?.descriptionFa?.message && (
-          <span className="text-xs font-bold text-rose-500">
-            {errors?.descriptionFa?.message}
-          </span>
-        )}
-      </div>
-
-      <div className="space-y-1.5">
-        <Label htmlFor="descriptionEn" className="text-xs font-bold">
-          {t("descriptionEnLabel")}
-        </Label>
-        <Textarea
-          id="descriptionEn"
-          {...register("descriptionEn")}
-          placeholder={t("descriptionEnPlaceholder")}
-          rows={3}
-          className="w-full rounded-xl text-xs font-semibold bg-background border border-border/60 px-3 py-2"
-          dir="ltr"
-          disabled={isPending}
-        />
-        {errors?.descriptionEn?.message && (
-          <span className="text-xs font-bold text-rose-500">
-            {errors?.descriptionEn?.message}
-          </span>
-        )}
-      </div>
+        </Field>
+      </FieldGroup>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div className="space-y-1.5">
-          <Label htmlFor="price" className="text-xs font-bold">
+        <Field data-invalid={!!errors.price} className="gap-1.5">
+          <FieldLabel htmlFor="price" className="text-xs font-bold">
             {t("priceLabel")}
-          </Label>
+          </FieldLabel>
           <Input
             id="price"
             type="number"
@@ -165,61 +175,72 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
             className="h-11 py-0 rounded-xl text-xs font-bold bg-background border-border/60 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             dir="ltr"
             disabled={isPending}
-            aria-invalid={!!errors?.price}
+            aria-invalid={!!errors.price}
           />
-          {errors?.price?.message && (
-            <span className="text-xs font-bold text-rose-500">
-              {errors?.price?.message}
-            </span>
+          {errors.price && (
+            <FieldError id="price-error" errors={[errors.price]} />
           )}
-        </div>
+        </Field>
 
-        <div className="space-y-1.5">
-          <Label className="text-xs font-bold">{t("levelLabel")}</Label>
+        <Field data-invalid={!!errors.level} className="gap-1.5">
+          <FieldLabel htmlFor="level" className="text-xs font-bold">
+            {t("levelLabel")}
+          </FieldLabel>
           <Controller
             control={control}
             name="level"
-            render={({ field }) => (
-              <Select
-                items={levelOptions}
-                value={field.value || "BEGINNER"}
-                onValueChange={field.onChange}
-              >
-                <SelectTrigger className="h-11 w-full rounded-xl text-xs font-bold bg-background border-border/60">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent
-                  alignItemWithTrigger={false}
-                  className="rounded-xl"
+            render={({ field, fieldState }) => (
+              <>
+                <Select
+                  items={levelOptions}
+                  value={field.value || "BEGINNER"}
+                  onValueChange={field.onChange}
+                  disabled={isPending}
                 >
-                  <SelectGroup>
-                    {levelOptions?.map((opt) => (
-                      <SelectItem
-                        key={opt?.value}
-                        value={opt?.value}
-                        className="text-xs font-bold cursor-pointer"
-                      >
-                        {opt?.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+                  <SelectTrigger
+                    id="level"
+                    className="h-11 w-full rounded-xl text-xs font-bold bg-background border-border/60"
+                    aria-invalid={fieldState.invalid}
+                    onBlur={field.onBlur}
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent
+                    alignItemWithTrigger={false}
+                    className="rounded-xl"
+                  >
+                    <SelectGroup>
+                      {levelOptions?.map((opt) => (
+                        <SelectItem
+                          key={opt?.value}
+                          value={opt?.value}
+                          className="text-xs font-bold cursor-pointer"
+                        >
+                          {opt?.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {fieldState.error && (
+                  <FieldError id="level-error" errors={[fieldState.error]} />
+                )}
+              </>
             )}
           />
-        </div>
+        </Field>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div className="space-y-1.5">
-          <Label className="text-xs font-bold">
-            {t("categoryLabel")}{" "}
-            {!isEdit && <span className="text-rose-500">*</span>}
-          </Label>
-          <Controller
-            control={control}
-            name="categoryId"
-            render={({ field }) => (
+        <Controller
+          control={control}
+          name="categoryId"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid} className="gap-1.5">
+              <FieldLabel htmlFor="categoryId" className="text-xs font-bold">
+                {t("categoryLabel")}{" "}
+                {!isEdit && <span className="text-rose-500">*</span>}
+              </FieldLabel>
               <Select
                 items={[
                   { value: "", label: t("categoryPlaceholder") },
@@ -227,10 +248,13 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
                 ]}
                 value={field.value || ""}
                 onValueChange={field.onChange}
+                disabled={isPending}
               >
                 <SelectTrigger
+                  id="categoryId"
                   className="h-11 w-full rounded-xl text-xs font-bold bg-background border-border/60"
-                  aria-invalid={!!errors?.categoryId}
+                  aria-invalid={fieldState.invalid}
+                  onBlur={field.onBlur}
                 >
                   <SelectValue placeholder={t("categoryPlaceholder")} />
                 </SelectTrigger>
@@ -251,24 +275,22 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-            )}
-          />
-          {errors?.categoryId?.message && (
-            <span className="text-xs font-bold text-rose-500">
-              {errors.categoryId.message}
-            </span>
+              {fieldState.error && (
+                <FieldError id="categoryId-error" errors={[fieldState.error]} />
+              )}
+            </Field>
           )}
-        </div>
+        />
 
-        <div className="space-y-1.5">
-          <Label className="text-xs font-bold">
-            {t("teacherLabel")}{" "}
-            {!isEdit && <span className="text-rose-500">*</span>}
-          </Label>
-          <Controller
-            control={control}
-            name="teacherId"
-            render={({ field }) => (
+        <Controller
+          control={control}
+          name="teacherId"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid} className="gap-1.5">
+              <FieldLabel htmlFor="teacherId" className="text-xs font-bold">
+                {t("teacherLabel")}{" "}
+                {!isEdit && <span className="text-rose-500">*</span>}
+              </FieldLabel>
               <Select
                 items={[
                   { value: "", label: t("teacherPlaceholder") },
@@ -276,10 +298,13 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
                 ]}
                 value={field.value || ""}
                 onValueChange={field.onChange}
+                disabled={isPending}
               >
                 <SelectTrigger
+                  id="teacherId"
                   className="h-11 w-full rounded-xl text-xs font-bold bg-background border-border/60"
-                  aria-invalid={!!errors?.teacherId}
+                  aria-invalid={fieldState.invalid}
+                  onBlur={field.onBlur}
                 >
                   <SelectValue placeholder={t("teacherPlaceholder")} />
                 </SelectTrigger>
@@ -300,41 +325,51 @@ export function CourseForm({ course, onSuccess, onCancel }: CourseFormProps) {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-            )}
-          />
-          {errors?.teacherId?.message && (
-            <span className="text-xs font-bold text-rose-500">
-              {errors?.teacherId?.message}
-            </span>
-          )}
-        </div>
-      </div>
-
-      <div className="flex items-start gap-3 p-3 rounded-2xl border border-border/50 bg-muted/30">
-        <Controller
-          control={control}
-          name="published"
-          render={({ field }) => (
-            <Switch
-              id="published"
-              checked={!!field.value}
-              onCheckedChange={field.onChange}
-              disabled={isPending}
-            />
+              {fieldState.error && (
+                <FieldError id="teacherId-error" errors={[fieldState.error]} />
+              )}
+            </Field>
           )}
         />
-        <div className="flex flex-col gap-1 flex-1 min-w-0">
-          <Label
-            htmlFor="published"
-            className="text-xs font-bold cursor-pointer"
-          >
-            {t("publishedLabel")}
-          </Label>
-          <p className="text-xs text-muted-foreground font-semibold leading-relaxed">
-            {t("publishedDescription")}
-          </p>
-        </div>
       </div>
+
+      <Controller
+        control={control}
+        name="published"
+        render={({ field, fieldState }) => (
+          <Field
+            data-invalid={fieldState.invalid}
+            className="flex-row items-start gap-3 p-3 rounded-2xl border border-border/50 bg-muted/30"
+          >
+            <Switch
+              id="published"
+              name={field.name}
+              checked={!!field.value}
+              onBlur={field.onBlur}
+              onCheckedChange={field.onChange}
+              disabled={isPending}
+              aria-invalid={fieldState.invalid}
+            />
+            <div className="flex flex-col gap-1 flex-1 min-w-0">
+              <FieldLabel
+                htmlFor="published"
+                className="text-xs font-bold cursor-pointer"
+              >
+                {t("publishedLabel")}
+              </FieldLabel>
+              <FieldDescription
+                id="published-description"
+                className="text-xs font-semibold leading-relaxed"
+              >
+                {t("publishedDescription")}
+              </FieldDescription>
+              {fieldState.error && (
+                <FieldError id="published-error" errors={[fieldState.error]} />
+              )}
+            </div>
+          </Field>
+        )}
+      />
 
       <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 mt-2">
         <Button

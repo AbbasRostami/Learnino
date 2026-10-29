@@ -2,7 +2,12 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
 import { ImagePlus, Trash2, Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
@@ -12,8 +17,10 @@ interface TeacherAvatarFieldProps {
   fallbackName?: string;
   value?: File | null;
   onChange: (file: File | null) => void;
+  onBlur?: () => void;
   disabled?: boolean;
   error?: string;
+  invalid?: boolean;
 }
 
 export function TeacherAvatarField({
@@ -21,8 +28,10 @@ export function TeacherAvatarField({
   fallbackName,
   value,
   onChange,
+  onBlur,
   disabled,
   error,
+  invalid = false,
 }: TeacherAvatarFieldProps) {
   const t = useTranslations("admin.teachers.form");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -41,10 +50,13 @@ export function TeacherAvatarField({
   const initial = (fallbackName || "?").charAt(0).toUpperCase();
 
   return (
-    <div className="flex flex-col gap-2">
-      <label className="text-xs font-bold text-foreground">
+    <Field data-invalid={invalid} className="gap-1.5">
+      <FieldLabel
+        htmlFor="teacher-avatar-file"
+        className="text-xs font-bold text-foreground"
+      >
         {t("avatarLabel")}
-      </label>
+      </FieldLabel>
 
       <div className="flex items-center gap-4 p-4 rounded-2xl border border-border/50 bg-muted/30">
         <Avatar className="h-20 w-20 border-2 border-background shadow-md ring-2 ring-primary/20 shrink-0">
@@ -61,6 +73,7 @@ export function TeacherAvatarField({
               variant="outline"
               size="sm"
               disabled={disabled}
+              aria-invalid={invalid}
               onClick={() => inputRef.current?.click()}
               className="rounded-xl h-9 gap-1.5 text-xs font-bold cursor-pointer"
             >
@@ -95,17 +108,24 @@ export function TeacherAvatarField({
             )}
           </div>
 
-          <p className="text-xs text-muted-foreground font-semibold">
+          <FieldDescription
+            id="teacher-avatar-hint"
+            className="text-xs font-semibold"
+          >
             {t("avatarHint")}
-          </p>
+          </FieldDescription>
         </div>
 
         <input
+          id="teacher-avatar-file"
           ref={inputRef}
           type="file"
           accept="image/jpeg,image/jpg,image/png,image/webp"
-          hidden
+          className="sr-only"
+          tabIndex={-1}
           disabled={disabled}
+          onBlur={onBlur}
+          aria-invalid={invalid}
           onChange={(e) => {
             const file = e.target.files?.[0] ?? null;
             onChange(file);
@@ -114,8 +134,8 @@ export function TeacherAvatarField({
       </div>
 
       {error && (
-        <span className={cn("text-xs font-bold text-rose-500")}>{error}</span>
+        <FieldError id="teacher-avatar-error" errors={[{ message: error }]} />
       )}
-    </div>
+    </Field>
   );
 }

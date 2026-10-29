@@ -219,7 +219,7 @@ export function TiptapEditor({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showSource, setShowSource] = useState(false);
   const [isHeadingList, setIsHeadingList] = useState(false);
-  const [, setForceRender] = useState(0);
+  const [charCount, setCharCount] = useState(0);
 
   const headingDropdownRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -263,8 +263,13 @@ export function TiptapEditor({
       CharacterCount,
     ],
     content: value,
-    onTransaction: () => {
-      setForceRender((prev) => prev + 1);
+    onCreate: ({ editor }) => {
+      setCharCount(editor.storage.characterCount.characters());
+    },
+    onTransaction: ({ editor, transaction }) => {
+      if (transaction.docChanged) {
+        setCharCount(editor.storage.characterCount.characters());
+      }
     },
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
@@ -358,8 +363,6 @@ export function TiptapEditor({
     }
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
-
-  const charCount = editor?.storage?.characterCount?.characters?.() ?? 0;
 
   if (!editor) return null;
 
