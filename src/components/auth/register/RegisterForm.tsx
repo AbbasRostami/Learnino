@@ -148,9 +148,12 @@ export default function RegisterForm({ onSuccess }: Props) {
                   <Button
                     variant="ghost"
                     type="button"
-                    onClick={() => setShowPassword((prev) => !prev)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setShowPassword((prev) => !prev);
+                    }}
                     disabled={isPending}
-                    className="absolute top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer left-3 ltr:left-auto ltr:right-3 h-auto p-0 hover:bg-transparent"
+                    className="absolute top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer left-3 ltr:left-auto ltr:right-3"
                     aria-label={
                       showPassword ? "Hide password" : "Show password"
                     }

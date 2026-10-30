@@ -131,10 +131,14 @@ export default function LoginForm({ redirectTo = "/" }: LoginFormProps) {
                   />
                   <Button
                     variant="ghost"
+                    size="icon"
                     type="button"
-                    onClick={() => setShowPassword((prev) => !prev)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setShowPassword((prev) => !prev);
+                    }}
                     disabled={isPending}
-                    className="absolute top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer left-3 ltr:left-auto ltr:right-3"
+                    className="absolute top-1.5 h-8 w-8 p-0 text-muted-foreground hover:text-foreground transition-colors cursor-pointer left-1.5 ltr:left-auto ltr:right-1.5"
                     aria-label={
                       showPassword ? "Hide password" : "Show password"
                     }
