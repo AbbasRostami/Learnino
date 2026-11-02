@@ -41,8 +41,8 @@ export function CoursesFilters({
     Boolean(search) ||
     Boolean(level) ||
     Boolean(published) ||
-    sortBy !== "createdAt" ||
-    order !== "desc";
+    Boolean(sortBy) ||
+    Boolean(order);
 
   const filters: FilterSelectConfig[] = [
     {
