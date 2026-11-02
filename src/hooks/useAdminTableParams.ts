@@ -40,8 +40,8 @@ export function useAdminTableParams<
     page: parseAsInteger.withDefault(1),
     limit: parseAsInteger.withDefault(defaultLimit),
     search: parseAsString.withDefault(""),
-    sortBy: parseAsString.withDefault("createdAt"),
-    order: parseAsString.withDefault("desc"),
+    sortBy: parseAsString.withDefault(""),
+    order: parseAsString.withDefault(""),
     ...(customParsers as TParsers),
   };
 
@@ -100,8 +100,8 @@ export function useAdminTableParams<
   const resetFilters = () => {
     const resetObj: Record<string, null | number | string> = {
       search: null,
-      sortBy: "createdAt",
-      order: "desc",
+      sortBy: "",
+      order: "",
       page: 1,
     };
 
