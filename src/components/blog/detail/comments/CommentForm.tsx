@@ -7,7 +7,6 @@ import { getCommentFormSchema, type CommentFormValues } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Send } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 
 interface CommentFormProps {
@@ -27,14 +26,14 @@ export function CommentForm({
 }: CommentFormProps) {
   const t = useTranslations("comment");
 
-  const formSchema = useMemo(() => getCommentFormSchema(t), [t]);
+  const formSchema = getCommentFormSchema(t);
 
   const {
     register,
     handleSubmit,
     watch,
     reset,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
   } = useForm<CommentFormValues>({
     resolver: zodResolver(formSchema),
     mode: "onChange",
@@ -77,7 +76,7 @@ export function CommentForm({
         </span>
         <Button
           type="submit"
-          disabled={isSubmitting || !isValid}
+          disabled={isSubmitting || !isValid || !isDirty}
           className="rounded-full cursor-pointer py-4 px-4 gap-2 shadow-md hover:shadow-lg transition-all bg-primary text-primary-foreground"
           size="sm"
         >
