@@ -8,44 +8,30 @@ interface AdminSortableHeaderProps<TData, TValue = unknown> {
   column: Column<TData, TValue>;
   label: string;
   className?: string;
-  onSortChange?: (field: string) => void;
-  field?: string;
 }
 
 export function AdminSortableHeader<TData, TValue = unknown>({
   column,
   label,
   className,
-  onSortChange,
-  field,
 }: AdminSortableHeaderProps<TData, TValue>) {
   const sorted = column.getIsSorted();
 
-  const handleClick = () => {
-    if (onSortChange && field) {
-      onSortChange(field);
-    } else {
-      column.toggleSorting(sorted === "asc");
-    }
-  };
-
   return (
-    <button
-      type="button"
-      onClick={handleClick}
+    <div
       className={cn(
-        "inline-flex items-center gap-1.5 hover:text-foreground cursor-pointer font-bold select-none text-xs",
+        "inline-flex items-center gap-1.5 font-bold text-xs transition-colors",
         className,
       )}
     >
       <span>{label}</span>
       {sorted === "asc" ? (
-        <ArrowUp className="h-3.5 w-3.5 text-primary" />
+        <ArrowUp className="h-3.5 w-3.5 text-primary shrink-0 transition-transform" />
       ) : sorted === "desc" ? (
-        <ArrowDown className="h-3.5 w-3.5 text-primary" />
+        <ArrowDown className="h-3.5 w-3.5 text-primary shrink-0 transition-transform" />
       ) : (
-        <ArrowUpDown className="h-3.5 w-3.5 text-muted-foreground/60" />
+        <ArrowUpDown className="h-3.5 w-3.5 text-muted-foreground/60 shrink-0" />
       )}
-    </button>
+    </div>
   );
 }

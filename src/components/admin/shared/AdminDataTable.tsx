@@ -1,12 +1,6 @@
 "use client";
 
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Table,
   TableBody,
   TableCell,
@@ -14,18 +8,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import {
   flexRender,
   getCoreRowModel,
-  getSortedRowModel,
   useReactTable,
   type ColumnDef,
+  type OnChangeFn,
   type SortingState,
-  type VisibilityState,
 } from "@tanstack/react-table";
-import { Settings2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { AdminEmptyState } from "./AdminEmptyState";
 import { AdminQueryError } from "./AdminQueryError";
 import { AdminTableSkeleton } from "./AdminTableSkeleton";
@@ -41,8 +34,9 @@ interface AdminDataTableProps<TData, TValue> {
   emptyStateActionLabel?: string;
   emptyStateActionHref?: string;
   toolbar?: ReactNode;
-  enableColumnVisibility?: boolean;
   enableSorting?: boolean;
+  sorting?: SortingState;
+  onSortingChange?: OnChangeFn<SortingState>;
 }
 
 export function AdminDataTable<TData, TValue>({
@@ -56,63 +50,27 @@ export function AdminDataTable<TData, TValue>({
   emptyStateActionLabel,
   emptyStateActionHref,
   toolbar,
-  enableColumnVisibility = false,
-  enableSorting = false,
+  enableSorting = true,
+  sorting,
+  onSortingChange,
 }: AdminDataTableProps<TData, TValue>) {
   const t = useTranslations("admin.table");
-
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
   const table = useReactTable({
     data,
     columns,
     state: {
       sorting,
-      columnVisibility,
     },
-    onSortingChange: setSorting,
-    onColumnVisibilityChange: setColumnVisibility,
+    enableSorting,
+    onSortingChange,
+    manualSorting: true,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: enableSorting ? getSortedRowModel() : undefined,
   });
 
   return (
     <div className="w-full flex flex-col gap-4">
-      {(toolbar || enableColumnVisibility) && (
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          {toolbar && <div className="flex-1 w-full">{toolbar}</div>}
-
-          {enableColumnVisibility && (
-            <DropdownMenu>
-              <DropdownMenuTrigger className="inline-flex items-center gap-2 h-11 px-4 rounded-xl border border-border bg-card text-xs font-bold cursor-pointer hover:bg-muted transition-colors shrink-0">
-                <Settings2 className="h-4 w-4" />
-                <span>{t("columnsVisibility")}</span>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="rounded-xl p-1.5 w-48"
-              >
-                {table
-                  .getAllColumns()
-                  .filter((c) => c.getCanHide())
-                  .map((column) => (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(v) => column.toggleVisibility(!!v)}
-                      className="text-xs font-bold rounded-lg cursor-pointer"
-                    >
-                      {typeof column.columnDef.header === "string"
-                        ? column.columnDef.header
-                        : column.id}
-                    </DropdownMenuCheckboxItem>
-                  ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
-        </div>
-      )}
+      {toolbar && <div className="w-full">{toolbar}</div>}
 
       {isError && data.length > 0 && (
         <div className="rounded-2xl border border-rose-500/30 bg-rose-500/5">
@@ -129,19 +87,32 @@ export function AdminDataTable<TData, TValue>({
                   key={headerGroup.id}
                   className="border-border/40 hover:bg-transparent"
                 >
-                  {headerGroup.headers.map((header) => (
-                    <TableHead
-                      key={header.id}
-                      className="h-12 px-4 text-start align-middle font-bold text-muted-foreground whitespace-nowrap text-xs uppercase tracking-wider"
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </TableHead>
-                  ))}
+                  {headerGroup.headers.map((header) => {
+                    const canSort = header.column.getCanSort();
+
+                    return (
+                      <TableHead
+                        key={header.id}
+                        onClick={
+                          canSort
+                            ? header.column.getToggleSortingHandler()
+                            : undefined
+                        }
+                        className={cn(
+                          "h-12 px-4 text-start align-middle font-bold text-muted-foreground whitespace-nowrap text-xs uppercase tracking-wider transition-colors",
+                          canSort &&
+                            "cursor-pointer select-none hover:bg-muted/50 hover:text-foreground",
+                        )}
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
+                      </TableHead>
+                    );
+                  })}
                 </TableRow>
               ))}
             </TableHeader>
@@ -153,7 +124,7 @@ export function AdminDataTable<TData, TValue>({
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    className="border-border/40 hover:bg-muted/30 transition-colors cursor-default"
+                    className="border-border/40 hover:bg-muted/30 transition-colors"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
@@ -168,27 +139,22 @@ export function AdminDataTable<TData, TValue>({
                     ))}
                   </TableRow>
                 ))
-              ) : isError ? (
-                <TableRow className="hover:bg-transparent">
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-64 text-center align-middle"
-                  >
-                    <AdminQueryError onRetry={onRetry} />
-                  </TableCell>
-                </TableRow>
               ) : (
                 <TableRow className="hover:bg-transparent">
                   <TableCell
                     colSpan={columns.length}
                     className="h-64 text-center align-middle"
                   >
-                    <AdminEmptyState
-                      message={emptyStateMessage || t("noData")}
-                      description={emptyStateDescription}
-                      actionLabel={emptyStateActionLabel}
-                      actionHref={emptyStateActionHref}
-                    />
+                    {isError ? (
+                      <AdminQueryError onRetry={onRetry} />
+                    ) : (
+                      <AdminEmptyState
+                        message={emptyStateMessage || t("noData")}
+                        description={emptyStateDescription}
+                        actionLabel={emptyStateActionLabel}
+                        actionHref={emptyStateActionHref}
+                      />
+                    )}
                   </TableCell>
                 </TableRow>
               )}

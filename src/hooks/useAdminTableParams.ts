@@ -1,4 +1,7 @@
+"use client";
+
 import { useDebouncedParam } from "@/hooks/useDebouncedParam";
+import type { OnChangeFn, SortingState } from "@tanstack/react-table";
 import {
   parseAsInteger,
   parseAsString,
@@ -97,11 +100,38 @@ export function useAdminTableParams<
     }
   };
 
+  const sorting: SortingState = params.sortBy
+    ? [{ id: params.sortBy, desc: params.order === "desc" }]
+    : [];
+
+  const onSortingChange: OnChangeFn<SortingState> = (updaterOrValue) => {
+    const nextState =
+      typeof updaterOrValue === "function"
+        ? updaterOrValue(sorting)
+        : updaterOrValue;
+
+    const currentSort = nextState?.[0];
+
+    if (!currentSort) {
+      setParams({
+        sortBy: null,
+        order: null,
+        page: 1,
+      } as unknown as SetParamsArg);
+    } else {
+      setParams({
+        sortBy: currentSort.id,
+        order: currentSort.desc ? "desc" : "asc",
+        page: 1,
+      } as unknown as SetParamsArg);
+    }
+  };
+
   const resetFilters = () => {
-    const resetObj: Record<string, null | number | string> = {
+    const resetObj: Record<string, null | number> = {
       search: null,
-      sortBy: "",
-      order: "",
+      sortBy: null,
+      order: null,
       page: 1,
     };
 
@@ -124,6 +154,8 @@ export function useAdminTableParams<
     setLimit,
     setFilter,
     setSort,
+    sorting,
+    onSortingChange,
     resetFilters,
   };
 }
