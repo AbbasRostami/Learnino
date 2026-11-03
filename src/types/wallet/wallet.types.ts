@@ -61,9 +61,12 @@ export type GetTransactionsParams = PaginationParams & {
   type?: TransactionType;
 };
 
-export type GetAdminWalletsParams = PaginationSearchParams & {
+export type GetAdminWalletsParams = PaginationParams & {
   minBalance?: number;
   maxBalance?: number;
+  search?: string;
+  sortBy?: "user" | "email" | "balance" | "updatedAt" | "createdAt";
+  order?: "asc" | "desc";
 };
 
 export type GetAdminTransactionsParams = PaginationParams & {
@@ -72,6 +75,8 @@ export type GetAdminTransactionsParams = PaginationParams & {
   userId?: string;
   startDate?: string;
   endDate?: string;
+  sortBy?: "user" | "amount" | "type" | "status" | "createdAt";
+  order?: "asc" | "desc";
 };
 
 export type ChargeWalletPayload = {

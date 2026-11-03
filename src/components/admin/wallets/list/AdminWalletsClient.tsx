@@ -30,6 +30,8 @@ export function AdminWalletsClient() {
     setSearch,
     setFilter,
     resetFilters,
+    sorting,
+    onSortingChange,
   } = useAdminTableParams<GetAdminWalletsParams>({
     customParsers: {
       minBalance: parseAsInteger,
@@ -78,6 +80,8 @@ export function AdminWalletsClient() {
         search={searchValue}
         minBalance={params.minBalance}
         maxBalance={params.maxBalance}
+        sortBy={params.sortBy}
+        order={params.order}
         onSearchChange={setSearch}
         onMinBalanceChange={(v) => setFilter("minBalance", v)}
         onMaxBalanceChange={(v) => setFilter("maxBalance", v)}
@@ -85,12 +89,14 @@ export function AdminWalletsClient() {
       />
 
       <AdminDataTable
+        key={`${params.sortBy}-${params.order}`}
         columns={columns}
         data={wallets}
         isLoading={isLoading}
         isError={isError}
         onRetry={() => void refetch()}
-        enableSorting
+        sorting={sorting}
+        onSortingChange={onSortingChange}
         emptyStateMessage={t("table.noWalletsFound")}
         emptyStateDescription={t("table.noWalletsDescription")}
       />

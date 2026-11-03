@@ -44,8 +44,10 @@ export const getTransactionsColumns = ({
     {
       id: "user",
       accessorKey: "user.name",
-      enableSorting: false,
-      header: () => <span>{t("table.user")}</span>,
+      enableSorting: true,
+      header: ({ column }) => (
+        <AdminSortableHeader column={column} label={t("table.user")} />
+      ),
       cell: ({ row }) => {
         const u = row?.original?.user;
         if (!u) return <span className="text-xs text-muted-foreground">—</span>;

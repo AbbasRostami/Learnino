@@ -14,20 +14,28 @@ import { GetAdminTransactionsParams, TX_STATUSES, TX_TYPES } from "@/types";
 import { ArrowLeft, ArrowLeftRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { parseAsStringEnum } from "nuqs";
-import { TransactionsFilters } from "./TransactionsFilters";
 import { getTransactionsColumns } from "./columns";
+import { TransactionsFilters } from "./TransactionsFilters";
 
 export function AdminTransactionsClient() {
   const t = useTranslations("admin.wallets");
   const locale = useLocale();
 
-  const { params, apiParams, setPage, setLimit, setFilter, resetFilters } =
-    useAdminTableParams<GetAdminTransactionsParams>({
-      customParsers: {
-        status: parseAsStringEnum([...TX_STATUSES]),
-        type: parseAsStringEnum([...TX_TYPES]),
-      },
-    });
+  const {
+    params,
+    apiParams,
+    setPage,
+    setLimit,
+    setFilter,
+    resetFilters,
+    sorting,
+    onSortingChange,
+  } = useAdminTableParams<GetAdminTransactionsParams>({
+    customParsers: {
+      status: parseAsStringEnum([...TX_STATUSES]),
+      type: parseAsStringEnum([...TX_TYPES]),
+    },
+  });
 
   const { data, isLoading, isFetching, isError, refetch } =
     useAdminTransactions(apiParams);
@@ -70,18 +78,22 @@ export function AdminTransactionsClient() {
       <TransactionsFilters
         status={params.status}
         type={params.type}
+        sortBy={params.sortBy}
+        order={params.order}
         onStatusChange={(v) => setFilter("status", v)}
         onTypeChange={(v) => setFilter("type", v)}
         onResetFilters={resetFilters}
       />
 
       <AdminDataTable
+        key={`${params.sortBy}-${params.order}`}
         columns={columns}
         data={transactions}
         isLoading={isLoading}
         isError={isError}
         onRetry={() => void refetch()}
-        enableSorting
+        sorting={sorting}
+        onSortingChange={onSortingChange}
         emptyStateMessage={t("table.noTransactionsFound")}
         emptyStateDescription={t("table.noTransactionsDescription")}
       />

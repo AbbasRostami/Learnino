@@ -10,6 +10,8 @@ interface WalletsFiltersProps {
   search: string;
   minBalance: number;
   maxBalance: number;
+  sortBy?: string;
+  order?: string;
   onSearchChange: (value: string) => void;
   onMinBalanceChange: (value: number | null) => void;
   onMaxBalanceChange: (value: number | null) => void;
@@ -20,6 +22,8 @@ export function WalletsFilters({
   search,
   minBalance,
   maxBalance,
+  sortBy,
+  order,
   onSearchChange,
   onMinBalanceChange,
   onMaxBalanceChange,
@@ -28,7 +32,12 @@ export function WalletsFilters({
   const t = useTranslations("admin.wallets.filters");
   const tCommon = useTranslations("admin.filters");
 
-  const hasActiveFilters = Boolean(search) || minBalance > 0 || maxBalance > 0;
+  const hasActiveFilters =
+    Boolean(search) ||
+    minBalance > 0 ||
+    maxBalance > 0 ||
+    Boolean(sortBy) ||
+    Boolean(order);
 
   return (
     <div className="flex flex-col gap-3 p-4 sm:p-5 rounded-3xl border border-border/50 bg-card/60 backdrop-blur-md shadow-xs">
@@ -47,7 +56,9 @@ export function WalletsFilters({
             min={0}
             value={minBalance || ""}
             onChange={(e) =>
-              onMinBalanceChange(e.target.value ? Number(e.target.value) : null)
+              onMinBalanceChange(
+                e.target.value ? Number(e.target.value) : null,
+              )
             }
             placeholder={t("minBalancePlaceholder")}
             className="h-11 rounded-xl text-xs font-bold bg-background border-border/60"
@@ -60,7 +71,9 @@ export function WalletsFilters({
             min={0}
             value={maxBalance || ""}
             onChange={(e) =>
-              onMaxBalanceChange(e.target.value ? Number(e.target.value) : null)
+              onMaxBalanceChange(
+                e.target.value ? Number(e.target.value) : null,
+              )
             }
             placeholder={t("maxBalancePlaceholder")}
             className="h-11 rounded-xl text-xs font-bold bg-background border-border/60"

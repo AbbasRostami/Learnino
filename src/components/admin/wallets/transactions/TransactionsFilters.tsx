@@ -9,6 +9,8 @@ import { useTranslations } from "next-intl";
 interface TransactionsFiltersProps {
   status: string;
   type: string;
+  sortBy?: string;
+  order?: string;
   onStatusChange: (value: string) => void;
   onTypeChange: (value: string) => void;
   onResetFilters: () => void;
@@ -17,13 +19,16 @@ interface TransactionsFiltersProps {
 export function TransactionsFilters({
   status,
   type,
+  sortBy,
+  order,
   onStatusChange,
   onTypeChange,
   onResetFilters,
 }: TransactionsFiltersProps) {
   const t = useTranslations("admin.wallets.filters");
 
-  const hasActiveFilters = Boolean(status) || Boolean(type);
+  const hasActiveFilters =
+    Boolean(status) || Boolean(type) || Boolean(sortBy) || Boolean(order);
 
   const filters: FilterSelectConfig[] = [
     {
