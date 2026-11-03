@@ -37,41 +37,37 @@ export const getCategoriesColumns = ({
       ),
     },
     {
-      id: "name",
       accessorKey: "name",
-      enableSorting: true,
       header: ({ column }) => (
         <AdminSortableHeader column={column} label={t("table.name")} />
       ),
       cell: ({ row }) => {
-        const cat = row?.original;
+        const cat = row.original;
         return (
           <div className="flex flex-col gap-1 min-w-40">
             <span className="text-sm font-black text-foreground truncate">
-              {cat?.name}
+              {cat.name}
             </span>
             <span className="text-xs text-muted-foreground truncate" dir="ltr">
-              /{cat?.slug}
+              /{cat.slug}
             </span>
           </div>
         );
       },
     },
     {
-      id: "description",
       accessorKey: "description",
       enableSorting: false,
       header: () => <span>{t("table.description")}</span>,
       cell: ({ row }) => (
         <span className="text-xs text-muted-foreground line-clamp-2 max-w-xs font-semibold">
-          {row?.original?.description || "—"}
+          {row.original?.description || "—"}
         </span>
       ),
     },
     {
       id: "coursesCount",
       accessorFn: (row) => row._count?.courses ?? 0,
-      enableSorting: true,
       header: ({ column }) => (
         <AdminSortableHeader column={column} label={t("stats.courses")} />
       ),
@@ -87,26 +83,23 @@ export const getCategoriesColumns = ({
     {
       id: "postsCount",
       accessorFn: (row) => row._count?.posts ?? 0,
-      enableSorting: true,
       header: ({ column }) => (
         <AdminSortableHeader column={column} label={t("stats.posts")} />
       ),
       cell: ({ row }) => (
         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-accent/10 text-brand-accent border border-brand-accent/20 text-xs font-black">
           <FileText className="h-3 w-3" />
-          <span>{formatNumber(row?.original?._count?.posts ?? 0, locale)}</span>
+          <span>{formatNumber(row.original?._count?.posts ?? 0, locale)}</span>
         </div>
       ),
     },
     {
-      id: "visibility",
       accessorKey: "show",
-      enableSorting: true,
       header: ({ column }) => (
         <AdminSortableHeader column={column} label={t("table.visibility")} />
       ),
       cell: ({ row }) => {
-        const isActive = row?.original?.show;
+        const isActive = row.original?.show;
         return (
           <span
             className={cn(
@@ -127,9 +120,7 @@ export const getCategoriesColumns = ({
       },
     },
     {
-      id: "createdAt",
       accessorKey: "createdAt",
-      enableSorting: true,
       header: ({ column }) => (
         <AdminSortableHeader column={column} label={t("table.createdAt")} />
       ),
@@ -138,14 +129,12 @@ export const getCategoriesColumns = ({
       ),
     },
     {
-      id: "updatedAt",
       accessorKey: "updatedAt",
-      enableSorting: true,
       header: ({ column }) => (
         <AdminSortableHeader column={column} label={t("table.updatedAt")} />
       ),
       cell: ({ row }) => (
-        <AdminDateCell dateStr={row?.original?.updatedAt} locale={locale} />
+        <AdminDateCell dateStr={row.original?.updatedAt} locale={locale} />
       ),
     },
     {
@@ -153,7 +142,7 @@ export const getCategoriesColumns = ({
       enableSorting: false,
       header: () => <span className="sr-only">{t("table.actions")}</span>,
       cell: ({ row }) => (
-        <CategoryActionsCell category={row?.original} t={t} onEdit={onEdit} />
+        <CategoryActionsCell category={row.original} t={t} onEdit={onEdit} />
       ),
     },
   ];

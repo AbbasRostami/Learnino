@@ -35,6 +35,8 @@ export function AdminCategoriesClient() {
     setLimit,
     setSearch,
     setFilter,
+    sorting,
+    onSortingChange,
     resetFilters,
   } = useAdminTableParams<AdminCategoriesParams>({
     customParsers: {
@@ -90,18 +92,22 @@ export function AdminCategoriesClient() {
       <CategoriesFilters
         search={searchValue}
         show={params.show}
+        sortBy={params.sortBy}
+        order={params.order}
         onSearchChange={setSearch}
         onShowChange={(v) => setFilter("show", v)}
         onResetFilters={resetFilters}
       />
 
       <AdminDataTable
+        key={`${params.sortBy}-${params.order}`}
         columns={columns}
         data={categories}
         isLoading={isLoading}
         isError={isError}
         onRetry={() => void refetch()}
-        enableSorting
+        sorting={sorting}
+        onSortingChange={onSortingChange}
         emptyStateMessage={t("table.noCategoriesFound")}
         emptyStateDescription={t("table.noCategoriesDescription")}
       />

@@ -9,6 +9,8 @@ import { useTranslations } from "next-intl";
 interface CategoriesFiltersProps {
   search: string;
   show: string;
+  sortBy: string | null;
+  order: string | null;
   onSearchChange: (value: string) => void;
   onShowChange: (value: string) => void;
   onResetFilters: () => void;
@@ -17,13 +19,16 @@ interface CategoriesFiltersProps {
 export function CategoriesFilters({
   search,
   show,
+  sortBy,
+  order,
   onSearchChange,
   onShowChange,
   onResetFilters,
 }: CategoriesFiltersProps) {
   const t = useTranslations("admin.categories.filters");
 
-  const hasActiveFilters = Boolean(search) || Boolean(show);
+  const hasActiveFilters =
+    Boolean(search) || Boolean(show) || Boolean(sortBy) || Boolean(order);
 
   const filters: FilterSelectConfig[] = [
     {
