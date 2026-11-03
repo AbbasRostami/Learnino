@@ -1,3 +1,5 @@
+// src/components/course/detail/comments/CourseCommentsSection.tsx
+
 "use client";
 
 import { CommentForm } from "@/components/blog/detail/comments/CommentForm";
@@ -45,7 +47,7 @@ export function CourseCommentsSection({
   const comments = data?.data?.items ?? [];
   const pagination = data?.data?.pagination;
   const hasMore = pagination
-    ? page < Math.ceil(pagination.total / pagination.limit)
+    ? page < Math.ceil(pagination?.total / pagination?.limit)
     : false;
 
   const handleSubmit = (content: string, parentId?: string) => {
@@ -71,7 +73,7 @@ export function CourseCommentsSection({
             className="text-lg font-black text-foreground"
           >
             {t("comments")}
-            {pagination?.total ? ` (${pagination.total})` : ""}
+            {pagination?.total ? ` (${pagination?.total})` : ""}
           </h2>
         </div>
       </div>
@@ -95,8 +97,7 @@ export function CourseCommentsSection({
               {t("loginToComment")}
             </p>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              برای ثبت دیدگاه، پرسش درباره دوره یا پاسخ به نظر دیگران وارد حساب
-              کاربری خود شوید.
+              {t("loginToCommentDescription")}
             </p>
           </div>
           <Link
@@ -107,7 +108,7 @@ export function CourseCommentsSection({
             )}
           >
             <LogIn className="h-4 w-4" />
-            <span>ورود به حساب کاربری</span>
+            <span>{t("loginToCommentButton")}</span>
           </Link>
         </div>
       )}
