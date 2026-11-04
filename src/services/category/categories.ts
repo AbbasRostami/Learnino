@@ -21,5 +21,10 @@ async function fetchCategoriesData(
 export async function getPublicCategoriesServer(
   locale: string = "fa",
 ): Promise<CategoryWithCount[]> {
-  return await fetchCategoriesData(locale);
+  try {
+    return await fetchCategoriesData(locale);
+  } catch (error) {
+    console.error("[getPublicCategoriesServer Timeout/Error]:", error);
+    return [];
+  }
 }

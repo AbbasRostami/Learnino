@@ -140,7 +140,7 @@ export function isApiErrorStatus(error: unknown, status: number): boolean {
 export const api = up(authenticatedFetch, () => ({
   baseUrl: API_BASE_URL,
   credentials: "include",
-  timeout: isServer ? 6000 : 50000,
+  timeout: isServer ? 30000 : 50000,
   headers: {
     Accept: "application/json",
     "Accept-Language": getCurrentLocale(),

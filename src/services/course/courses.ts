@@ -23,7 +23,12 @@ export async function getFeaturedCoursesServer(
     return res.data.items;
   };
 
-  return await fetchCached();
+  try {
+    return await fetchCached();
+  } catch (error) {
+    console.error("[getFeaturedCoursesServer Error]:", error);
+    return [];
+  }
 }
 
 export async function getFreeCoursesServer(
@@ -43,7 +48,12 @@ export async function getFreeCoursesServer(
     return res.data.items;
   };
 
-  return await fetchCached();
+  try {
+    return await fetchCached();
+  } catch (error) {
+    console.error("[getFreeCoursesServer Error]:", error);
+    return [];
+  }
 }
 
 export async function getCoursesServer(

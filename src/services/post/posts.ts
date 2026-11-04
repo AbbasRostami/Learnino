@@ -19,7 +19,12 @@ export async function getLatestPostsServer(
     return res.data.items;
   };
 
-  return await fetchCached();
+  try {
+    return await fetchCached();
+  } catch (error) {
+    console.error("[getLatestPostsServer Error]:", error);
+    return [];
+  }
 }
 
 export async function getPostBySlugServer(

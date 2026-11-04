@@ -26,7 +26,12 @@ export async function getTopTeachersServer(
   locale: string = "fa",
   limit: number = 8,
 ): Promise<TeacherListItem[]> {
-  return await fetchTopTeachersData(locale, limit);
+  try {
+    return await fetchTopTeachersData(locale, limit);
+  } catch (error) {
+    console.error("[getTopTeachersServer Error]:", error);
+    return [];
+  }
 }
 
 async function fetchTeacherBySlugData(
@@ -58,7 +63,6 @@ export async function getTeacherBySlugServer(
     if (isApiErrorStatus(error, 404)) {
       return null;
     }
-
     throw error;
   }
 }
