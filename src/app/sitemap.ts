@@ -67,19 +67,18 @@ function createDynamicLocalizedEntries<T extends BaseEntity>(
   const enMap = new Map(itemsEn.map((item) => [item.id, item]));
   const entries: MetadataRoute.Sitemap = [];
 
-  itemsFa.forEach((itemFa) => {
+  itemsFa?.forEach((itemFa) => {
     const itemEn = enMap.get(itemFa.id);
 
-    const slugFa = itemFa.slug;
-    const slugEn = itemEn?.slug || itemFa.slug;
-    console.log(`Creating sitemap entry for ${basePath}: FA slug = ${slugFa}, EN slug = ${slugEn}`);
+    const slugFa = itemFa?.slug;
+    const slugEn = itemEn?.slug || itemFa?.slug;
 
     const encodedSlugFa = encodeURIComponent(decodeURIComponent(slugFa));
     const encodedSlugEn = encodeURIComponent(decodeURIComponent(slugEn));
 
     const urlFa = `${SEO_CONFIG.baseUrl}/fa/${basePath}/${encodedSlugFa}`;
     const urlEn = `${SEO_CONFIG.baseUrl}/en/${basePath}/${encodedSlugEn}`;
-    const lastModified = new Date(itemFa.updatedAt || itemFa.createdAt);
+    const lastModified = new Date(itemFa?.updatedAt || itemFa?.createdAt);
 
     const alternates = {
       languages: {
@@ -158,15 +157,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...createStaticLocalizedEntry("/contact", new Date(), "monthly", 0.5),
   ];
 
-  const [
-    [coursesFa, coursesEn],
-    [postsFa, postsEn],
-    [teachersFa, teachersEn],
-  ] = await Promise.all([
-    Promise.all([fetchCourses("fa"), fetchCourses("en")]),
-    Promise.all([fetchPosts("fa"), fetchPosts("en")]),
-    Promise.all([fetchTeachers("fa"), fetchTeachers("en")]),
-  ]);
+  const [[coursesFa, coursesEn], [postsFa, postsEn], [teachersFa, teachersEn]] =
+    await Promise.all([
+      Promise.all([fetchCourses("fa"), fetchCourses("en")]),
+      Promise.all([fetchPosts("fa"), fetchPosts("en")]),
+      Promise.all([fetchTeachers("fa"), fetchTeachers("en")]),
+    ]);
 
   const courseRoutes = createDynamicLocalizedEntries(
     coursesFa,
