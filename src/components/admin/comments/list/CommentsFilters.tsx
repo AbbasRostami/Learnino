@@ -9,6 +9,8 @@ import { useTranslations } from "next-intl";
 interface CommentsFiltersProps {
   search: string;
   status: string;
+  sortBy?: string;
+  order?: string;
   onSearchChange: (value: string) => void;
   onStatusChange: (value: string) => void;
   onResetFilters: () => void;
@@ -17,12 +19,16 @@ interface CommentsFiltersProps {
 export function CommentsFilters({
   search,
   status,
+  sortBy,
+  order,
   onSearchChange,
   onStatusChange,
   onResetFilters,
 }: CommentsFiltersProps) {
   const t = useTranslations("admin.comments.filters");
-  const hasActiveFilters = Boolean(search) || Boolean(status);
+
+  const hasActiveFilters =
+    Boolean(search) || Boolean(status) || Boolean(sortBy) || Boolean(order);
 
   const filters: FilterSelectConfig[] = [
     {

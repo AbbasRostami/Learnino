@@ -27,6 +27,8 @@ export function AdminCommentsClient() {
     setSearch,
     setFilter,
     resetFilters,
+    sorting,
+    onSortingChange,
   } = useAdminTableParams<GetAdminCommentsParams>({
     customParsers: {
       status: parseAsStringEnum([...COMMENT_STATUSES]),
@@ -57,21 +59,25 @@ export function AdminCommentsClient() {
         }
         icon={MessageSquare}
       />
-
       <CommentsFilters
         search={searchValue}
         status={params.status ?? ""}
+        sortBy={params.sortBy}
+        order={params.order}
         onSearchChange={setSearch}
         onStatusChange={(v) => setFilter("status", v)}
         onResetFilters={resetFilters}
       />
 
       <AdminDataTable
+        key={`${params.sortBy}-${params.order}`}
         columns={columns}
         data={comments}
         isLoading={isLoading}
         isError={isError}
         onRetry={() => void refetch()}
+        sorting={sorting}
+        onSortingChange={onSortingChange}
         emptyStateMessage={t("table.noCommentsFound")}
         emptyStateDescription={t("table.noCommentsDescription")}
       />

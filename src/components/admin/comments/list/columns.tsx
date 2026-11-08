@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminDateCell, AdminSortableHeader } from "@/components/admin/shared";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Popover,
@@ -21,7 +22,6 @@ import {
   ThumbsUp,
   XCircle,
 } from "lucide-react";
-import { AdminDateCell } from "../../shared";
 import { CommentActionsCell } from "./CommentActionsCell";
 
 interface ColumnsProps {
@@ -168,9 +168,11 @@ export const getCommentsColumns = ({
       },
     },
     {
-      id: "stats",
-      enableSorting: false,
-      header: () => <span>{t("table.stats")}</span>,
+      id: "repliesCount",
+      enableSorting: true,
+      header: ({ column }) => (
+        <AdminSortableHeader column={column} label={t("table.stats")} />
+      ),
       cell: ({ row }) => {
         const stats = row.original?.stats;
         return (
@@ -195,8 +197,11 @@ export const getCommentsColumns = ({
     },
     {
       id: "status",
-      enableSorting: false,
-      header: () => <span>{t("table.status")}</span>,
+      accessorKey: "status",
+      enableSorting: true,
+      header: ({ column }) => (
+        <AdminSortableHeader column={column} label={t("table.status")} />
+      ),
       cell: ({ row }) => {
         const status = row.original?.status ?? "PENDING";
         const styles: Record<string, string> = {
@@ -229,8 +234,11 @@ export const getCommentsColumns = ({
     },
     {
       id: "createdAt",
-      enableSorting: false,
-      header: () => <span>{t("table.createdAt")}</span>,
+      accessorKey: "createdAt",
+      enableSorting: true,
+      header: ({ column }) => (
+        <AdminSortableHeader column={column} label={t("table.createdAt")} />
+      ),
       cell: ({ row }) => (
         <AdminDateCell dateStr={row.original?.createdAt} locale={locale} />
       ),
