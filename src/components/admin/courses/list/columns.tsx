@@ -23,6 +23,7 @@ interface ColumnsProps {
   locale?: string;
   page?: number;
   limit?: number;
+  titleSortBy?: "titleFa" | "titleEn";
   onEdit: (course: Course) => void;
 }
 
@@ -31,6 +32,7 @@ export const getCoursesColumns = ({
   locale = "fa",
   page = 1,
   limit = 10,
+  titleSortBy,
   onEdit,
 }: ColumnsProps): ColumnDef<Course>[] => {
   const fmt = (n: number) => formatNumber(n, locale);
@@ -54,7 +56,7 @@ export const getCoursesColumns = ({
       ),
     },
     {
-      id: "course",
+      id: titleSortBy ?? (locale === "en" ? "titleEn" : "titleFa"),
       accessorKey: "title",
       enableSorting: true,
       header: ({ column }) => (

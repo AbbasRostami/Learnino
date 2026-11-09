@@ -36,6 +36,8 @@ export function AdminCoursesClient() {
     setSearch,
     setFilter,
     resetFilters,
+    sorting,
+    onSortingChange,
   } = useAdminTableParams<GetAdminCoursesParams>({
     customParsers: {
       level: parseAsStringEnum([...COURSE_LEVELS]),
@@ -54,6 +56,10 @@ export function AdminCoursesClient() {
     locale,
     page: params.page,
     limit: params.limit,
+    titleSortBy:
+      params.sortBy === "titleFa" || params.sortBy === "titleEn"
+        ? params.sortBy
+        : undefined,
     onEdit: (course: Course) =>
       router.push(`/admin/courses/${course?.slug || course?.id}`),
   });
@@ -97,11 +103,14 @@ export function AdminCoursesClient() {
       />
 
       <AdminDataTable
+        key={`${params.sortBy}-${params.order}`}
         columns={columns}
         data={courses}
         isLoading={isLoading}
         isError={isError}
         onRetry={() => void refetch()}
+        sorting={sorting}
+        onSortingChange={onSortingChange}
         emptyStateMessage={t("table.noCoursesFound")}
         emptyStateDescription={t("table.noCoursesDescription")}
       />

@@ -76,7 +76,8 @@ export function CoursesFilters({
       options: [
         { value: "createdAt", label: t("sortCreatedAt") },
         { value: "price", label: t("sortPrice") },
-        { value: "titleFa", label: t("sortTitle") },
+        { value: "titleFa", label: t("sortTitleFa") },
+        { value: "titleEn", label: t("sortTitleEn") },
       ],
     },
     {
