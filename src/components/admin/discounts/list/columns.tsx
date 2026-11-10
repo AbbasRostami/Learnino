@@ -84,7 +84,7 @@ export const getDiscountsColumns = ({
       ),
     },
     {
-      id: "usage",
+      id: "usedCount",
       accessorKey: "usedCount",
       enableSorting: true,
       header: ({ column }) => (
@@ -120,7 +120,7 @@ export const getDiscountsColumns = ({
       ),
     },
     {
-      id: "status",
+      id: "active",
       accessorKey: "active",
       enableSorting: true,
       header: ({ column }) => (

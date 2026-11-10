@@ -9,6 +9,8 @@ import { useTranslations } from "next-intl";
 interface DiscountsFiltersProps {
   search: string;
   active: string;
+  sortBy?: string;
+  order?: string;
   onSearchChange: (value: string) => void;
   onActiveChange: (value: string) => void;
   onResetFilters: () => void;
@@ -17,12 +19,15 @@ interface DiscountsFiltersProps {
 export function DiscountsFilters({
   search,
   active,
+  sortBy,
+  order,
   onSearchChange,
   onActiveChange,
   onResetFilters,
 }: DiscountsFiltersProps) {
   const t = useTranslations("admin.discounts.filters");
-  const hasActiveFilters = Boolean(search) || Boolean(active);
+  const hasActiveFilters =
+    Boolean(search) || Boolean(active) || Boolean(sortBy) || Boolean(order);
 
   const filters: FilterSelectConfig[] = [
     {

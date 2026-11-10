@@ -26,6 +26,8 @@ export function AdminDiscountsClient() {
     params,
     searchValue,
     apiParams,
+    sorting,
+    onSortingChange,
     setPage,
     setLimit,
     setSearch,
@@ -74,18 +76,22 @@ export function AdminDiscountsClient() {
       <DiscountsFilters
         search={searchValue}
         active={params.active}
+        sortBy={params.sortBy}
+        order={params.order}
         onSearchChange={setSearch}
         onActiveChange={(v) => setFilter("active", v)}
         onResetFilters={resetFilters}
       />
 
       <AdminDataTable
+        key={`${params.sortBy}-${params.order}`}
         columns={columns}
         data={discounts}
         isLoading={isLoading}
         isError={isError}
         onRetry={() => void refetch()}
-        enableSorting
+        sorting={sorting}
+        onSortingChange={onSortingChange}
         emptyStateMessage={t("table.noDiscountsFound")}
         emptyStateDescription={t("table.noDiscountsDescription")}
       />
