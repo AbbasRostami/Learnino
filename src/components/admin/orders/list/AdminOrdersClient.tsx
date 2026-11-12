@@ -29,6 +29,8 @@ export function AdminOrdersClient() {
     setSearch,
     setFilter,
     resetFilters,
+    sorting,
+    onSortingChange,
   } = useAdminTableParams<GetAdminOrdersParams>({
     customParsers: {
       status: parseAsStringEnum([...ORDER_STATUSES]),
@@ -63,18 +65,22 @@ export function AdminOrdersClient() {
       <OrdersFilters
         search={searchValue}
         status={params.status}
+        sortBy={params.sortBy}
+        order={params.order}
         onSearchChange={setSearch}
         onStatusChange={(v) => setFilter("status", v)}
         onResetFilters={resetFilters}
       />
 
       <AdminDataTable
+        key={`${params.sortBy}-${params.order}`}
         columns={columns}
         data={orders}
         isLoading={isLoading}
         isError={isError}
         onRetry={() => void refetch()}
-        enableSorting
+        sorting={sorting}
+        onSortingChange={onSortingChange}
         emptyStateMessage={t("table.noOrdersFound")}
         emptyStateDescription={t("table.noOrdersDescription")}
       />

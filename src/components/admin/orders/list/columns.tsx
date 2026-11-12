@@ -45,7 +45,7 @@ export const getOrdersColumns = ({
       ),
     },
     {
-      id: "orderId",
+      id: "id",
       accessorKey: "id",
       enableSorting: true,
       header: ({ column }) => (
