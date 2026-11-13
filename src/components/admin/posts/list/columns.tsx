@@ -1,6 +1,6 @@
 "use client";
 
-import { AdminDateCell } from "@/components/admin/shared";
+import { AdminDateCell, AdminSortableHeader } from "@/components/admin/shared";
 import { cn } from "@/lib/utils";
 import type { Post } from "@/types";
 import { formatNumber } from "@/utils/formatters";
@@ -38,9 +38,12 @@ export const getPostsColumns = ({
       ),
     },
     {
-      id: "post",
-      enableSorting: false,
-      header: () => <span>{t("table.post")}</span>,
+      id: "title",
+      accessorKey: "title",
+      enableSorting: true,
+      header: ({ column }) => (
+        <AdminSortableHeader column={column} label={t("table.post")} />
+      ),
       cell: ({ row }) => {
         const post = row?.original;
         return (
@@ -87,9 +90,12 @@ export const getPostsColumns = ({
       ),
     },
     {
-      id: "comments",
-      enableSorting: false,
-      header: () => <span>{t("table.comments")}</span>,
+      id: "commentsCount",
+      accessorKey: "stats.comments",
+      enableSorting: true,
+      header: ({ column }) => (
+        <AdminSortableHeader column={column} label={t("table.comments")} />
+      ),
       cell: ({ row }) => (
         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20 text-xs font-black">
           <MessageCircle className="h-3 w-3" />
@@ -100,9 +106,12 @@ export const getPostsColumns = ({
       ),
     },
     {
-      id: "status",
-      enableSorting: false,
-      header: () => <span>{t("table.status")}</span>,
+      id: "published",
+      accessorKey: "published",
+      enableSorting: true,
+      header: ({ column }) => (
+        <AdminSortableHeader column={column} label={t("table.status")} />
+      ),
       cell: ({ row }) => {
         const published = row?.original.published;
         return (
@@ -126,8 +135,11 @@ export const getPostsColumns = ({
     },
     {
       id: "createdAt",
-      enableSorting: false,
-      header: () => <span>{t("table.createdAt")}</span>,
+      accessorKey: "createdAt",
+      enableSorting: true,
+      header: ({ column }) => (
+        <AdminSortableHeader column={column} label={t("table.createdAt")} />
+      ),
       cell: ({ row }) => (
         <AdminDateCell dateStr={row?.original?.createdAt} locale={locale} />
       ),

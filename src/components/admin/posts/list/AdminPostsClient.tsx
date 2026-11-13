@@ -35,6 +35,8 @@ export function AdminPostsClient() {
     setSearch,
     setFilter,
     resetFilters,
+    sorting,
+    onSortingChange,
   } = useAdminTableParams<GetAdminPostsParams>({
     customParsers: {
       published: parseAsStringEnum([...VISIBILITY_OPTIONS]),
@@ -92,11 +94,14 @@ export function AdminPostsClient() {
       />
 
       <AdminDataTable
+        key={`${params.sortBy}-${params.order}`}
         columns={columns}
         data={posts}
         isLoading={isLoading}
         isError={isError}
         onRetry={() => void refetch()}
+        sorting={sorting}
+        onSortingChange={onSortingChange}
         emptyStateMessage={t("table.noPostsFound")}
         emptyStateDescription={t("table.noPostsDescription")}
       />

@@ -33,10 +33,7 @@ export function PostsFilters({
   const tFilters = useTranslations("admin.filters");
 
   const hasActiveFilters =
-    Boolean(search) ||
-    Boolean(published) ||
-    sortBy !== "createdAt" ||
-    order !== "desc";
+    Boolean(search) || Boolean(published) || Boolean(sortBy) || Boolean(order);
 
   const filters: FilterSelectConfig[] = [
     {
