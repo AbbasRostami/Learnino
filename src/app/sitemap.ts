@@ -1,3 +1,4 @@
+import { safeEncodeSlug } from "@/lib/seo";
 import { SEO_CONFIG } from "@/lib/seo/config";
 import { api } from "@/lib/upfetch";
 import type { GetCoursesResponse } from "@/types/course/course.types";
@@ -73,8 +74,8 @@ function createDynamicLocalizedEntries<T extends BaseEntity>(
     const slugFa = itemFa?.slug;
     const slugEn = itemEn?.slug || itemFa?.slug;
 
-    const encodedSlugFa = encodeURIComponent(decodeURIComponent(slugFa));
-    const encodedSlugEn = encodeURIComponent(decodeURIComponent(slugEn));
+    const encodedSlugFa = safeEncodeSlug(slugFa);
+    const encodedSlugEn = safeEncodeSlug(slugEn);
 
     const urlFa = `${SEO_CONFIG.baseUrl}/fa/${basePath}/${encodedSlugFa}`;
     const urlEn = `${SEO_CONFIG.baseUrl}/en/${basePath}/${encodedSlugEn}`;
@@ -154,7 +155,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...createStaticLocalizedEntry("/blog", new Date(), "daily", 0.9),
     ...createStaticLocalizedEntry("/learning-paths", new Date(), "weekly", 0.8),
     ...createStaticLocalizedEntry("/about", new Date(), "monthly", 0.6),
-    ...createStaticLocalizedEntry("/contact", new Date(), "monthly", 0.5),
   ];
 
   const [[coursesFa, coursesEn], [postsFa, postsEn], [teachersFa, teachersEn]] =

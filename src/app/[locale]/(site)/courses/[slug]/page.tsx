@@ -2,11 +2,12 @@ import { CourseDetailClient } from "@/components/courses/detail";
 import { BreadcrumbJsonLd, CourseJsonLd } from "@/components/seo";
 import {
   cleanMetaDescription,
-  getAlternates,
   getDefaultOpenGraph,
   getDefaultTwitter,
+  getDynamicAlternates,
   getFullUrl,
   PRIVATE_ROBOTS,
+  safeEncodeSlug,
   SEO_CONFIG,
   type Locale,
 } from "@/lib/seo";
@@ -83,11 +84,13 @@ export async function generateMetadata({
 
     const description = cleanMetaDescription(course?.description || "");
     const title = course?.title;
+    const encodedSlug = safeEncodeSlug(course?.slug);
+    const fullPageUrl = getFullUrl(`/courses/${encodedSlug}`, locale);
+
     const rawImageUrl = course?.imageUrl || SEO_CONFIG.defaultImages.og;
     const ogImageUrl = rawImageUrl.startsWith("http")
       ? rawImageUrl
       : getFullUrl(rawImageUrl);
-    const fullPageUrl = getFullUrl(`/courses/${slug}`, locale);
 
     return {
       title,
@@ -111,7 +114,12 @@ export async function generateMetadata({
         description,
         images: [ogImageUrl],
       }),
-      alternates: getAlternates(`/courses/${slug}`, locale),
+      alternates: getDynamicAlternates({
+        basePath: "courses",
+        currentLocale: locale,
+        slugFa: course?.slug,
+        slugEn: course?.slug,
+      }),
     };
   } catch {
     return {

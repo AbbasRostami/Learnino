@@ -51,7 +51,8 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: ["GPTBot", "ChatGPT-User", "CCBot", "anthropic-ai"],
-        disallow: ["/"],
+        disallow: ["/admin", "/dashboard", "/api/", "/cart"],
+        allow: "/",
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

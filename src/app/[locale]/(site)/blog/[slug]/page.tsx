@@ -3,8 +3,10 @@ import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/seo";
 import { PostDetailSkeleton } from "@/components/skeleton";
 import {
   cleanMetaDescription,
-  getAlternates,
+  getDynamicAlternates,
+  getFullUrl,
   PRIVATE_ROBOTS,
+  safeEncodeSlug,
   SEO_CONFIG,
   type Locale,
 } from "@/lib/seo";
@@ -37,7 +39,7 @@ async function PostDetailSection({ paramsPromise }: PostSectionProps) {
         items={[
           { name: tNav("home"), url: `/${locale}` },
           { name: tNav("blog"), url: `/${locale}/blog` },
-          { name: post.title },
+          { name: post?.title },
         ]}
       />
 
@@ -63,43 +65,51 @@ export async function generateMetadata({
       };
     }
 
-    const description = cleanMetaDescription(post?.content || "");
+    const description = cleanMetaDescription(post.content || "");
     const isFa = locale === "fa";
-    const ogImage = post?.imageUrl || "/logo/Main-Logo.png";
+    const encodedSlug = safeEncodeSlug(post.slug);
+    const fullPageUrl = getFullUrl(`/blog/${encodedSlug}`, locale);
+
+    const rawImageUrl = post.imageUrl || SEO_CONFIG.defaultImages.og;
+    const ogImage = rawImageUrl.startsWith("http")
+      ? rawImageUrl
+      : getFullUrl(rawImageUrl);
 
     return {
-      title: post?.title,
+      title: post.title,
       description,
-
       openGraph: {
         type: "article",
-        title: post?.title,
+        title: post.title,
         description,
-        url: `/${locale}/blog/${slug}`,
+        url: fullPageUrl,
         images: [
           {
             url: ogImage,
             width: 1200,
             height: 630,
-            alt: post?.title,
+            alt: post.title,
           },
         ],
         locale: isFa ? "fa_IR" : "en_US",
         siteName: SEO_CONFIG.siteName[locale],
-        publishedTime: post?.createdAt,
-        modifiedTime: post?.updatedAt || post?.createdAt,
+        publishedTime: post.createdAt,
+        modifiedTime: post.updatedAt || post.createdAt,
         authors: [SEO_CONFIG.author.name],
-        tags: post?.category ? [post?.category?.name] : [],
+        tags: post.category ? [post.category.name] : [],
       },
-
       twitter: {
         card: "summary_large_image",
-        title: post?.title,
+        title: post.title,
         description,
         images: [ogImage],
       },
-
-      alternates: getAlternates(`/blog/${slug}`, locale),
+      alternates: getDynamicAlternates({
+        basePath: "blog",
+        currentLocale: locale,
+        slugFa: post.slug,
+        slugEn: post.slug,
+      }),
     };
   } catch {
     return {

@@ -3,7 +3,10 @@ import { TeacherProfileSkeleton } from "@/components/skeleton";
 import { TeacherProfileClient } from "@/components/teachers/TeacherProfileClient";
 import {
   cleanMetaDescription,
-  getAlternates,
+  getDynamicAlternates,
+  getFullUrl,
+  PRIVATE_ROBOTS,
+  safeEncodeSlug,
   SEO_CONFIG,
   type Locale,
 } from "@/lib/seo";
@@ -53,16 +56,23 @@ export async function generateMetadata({
   if (!teacher || !teacher.show) {
     return {
       title: locale === "fa" ? "مدرس یافت نشد" : "Teacher Not Found",
-      robots: { index: false, follow: false },
+      robots: PRIVATE_ROBOTS,
     };
   }
 
   const description = cleanMetaDescription(teacher.bio || "");
   const isFa = locale === "fa";
-
   const title = isFa
     ? `${teacher.name} - مدرس`
     : `${teacher.name} - Instructor`;
+
+  const encodedSlug = safeEncodeSlug(teacher.slug);
+  const fullPageUrl = getFullUrl(`/teachers/${encodedSlug}`, locale);
+
+  const rawAvatar = teacher.avatar || SEO_CONFIG.defaultImages.og;
+  const ogImage = rawAvatar.startsWith("http")
+    ? rawAvatar
+    : getFullUrl(rawAvatar);
 
   return {
     title,
@@ -71,10 +81,10 @@ export async function generateMetadata({
       type: "profile",
       title,
       description,
-      url: `/${locale}/teachers/${slug}`,
+      url: fullPageUrl,
       images: [
         {
-          url: teacher.avatar || "/logo/Main-Logo.png",
+          url: ogImage,
           width: teacher.avatar ? 400 : 1200,
           height: teacher.avatar ? 400 : 630,
           alt: teacher.name,
@@ -87,9 +97,14 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: teacher.avatar ? [teacher.avatar] : [],
+      images: [ogImage],
     },
-    alternates: getAlternates(`/teachers/${slug}`, locale),
+    alternates: getDynamicAlternates({
+      basePath: "teachers",
+      currentLocale: locale,
+      slugFa: teacher.slug,
+      slugEn: teacher.slug,
+    }),
   };
 }
 

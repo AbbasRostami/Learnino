@@ -20,12 +20,17 @@ export function getAlternates(path: string, currentLocale: Locale) {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   const cleanPath = normalizedPath === "/" ? "" : normalizedPath;
 
+  const encodedPath = cleanPath
+    .split("/")
+    .map((segment) => encodeURIComponent(decodeURIComponent(segment)))
+    .join("/");
+
   return {
-    canonical: `${SEO_CONFIG.baseUrl}/${currentLocale}${cleanPath}`,
+    canonical: `/${currentLocale}${encodedPath}`,
     languages: {
-      fa: `${SEO_CONFIG.baseUrl}/fa${cleanPath}`,
-      en: `${SEO_CONFIG.baseUrl}/en${cleanPath}`,
-      "x-default": `${SEO_CONFIG.baseUrl}/fa${cleanPath}`,
+      fa: `/fa${encodedPath}`,
+      en: `/en${encodedPath}`,
+      "x-default": `/fa${encodedPath}`,
     },
   };
 }
@@ -92,4 +97,40 @@ export const PRIVATE_ROBOTS: Metadata["robots"] = {
 
 export function serializeJsonLd(data: Record<string, unknown>): string {
   return JSON.stringify(data).replace(/</g, "\\u003c").replace(/>/g, "\\u003e");
+}
+
+export function safeEncodeSlug(slug: string): string {
+  if (!slug) return "";
+  try {
+    return encodeURIComponent(decodeURIComponent(slug));
+  } catch {
+    return encodeURIComponent(slug);
+  }
+}
+
+export function getDynamicAlternates({
+  basePath,
+  currentLocale,
+  slugFa,
+  slugEn,
+}: {
+  basePath: "blog" | "courses" | "teachers";
+  currentLocale: Locale;
+  slugFa: string;
+  slugEn?: string;
+}) {
+  const encodedFa = safeEncodeSlug(slugFa);
+  const encodedEn = slugEn ? safeEncodeSlug(slugEn) : encodedFa;
+
+  const urlFa = `${SEO_CONFIG.baseUrl}/fa/${basePath}/${encodedFa}`;
+  const urlEn = `${SEO_CONFIG.baseUrl}/en/${basePath}/${encodedEn}`;
+
+  return {
+    canonical: currentLocale === "fa" ? urlFa : urlEn,
+    languages: {
+      fa: urlFa,
+      en: urlEn,
+      "x-default": urlFa,
+    },
+  };
 }
