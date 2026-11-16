@@ -1,6 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+} from "@/components/ui/pagination";
 import {
   Select,
   SelectContent,
@@ -12,9 +18,8 @@ import {
 import { useLocale } from "@/hooks/useLocale";
 import { cn } from "@/lib/utils";
 import { formatNumber } from "@/utils/formatters";
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-
 interface AdminPaginationProps {
   currentPage: number;
   limit: number;
@@ -126,70 +131,88 @@ export function AdminPagination({
       </div>
 
       <div className="flex items-center gap-1">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage <= 1 || isLoading}
-          className="h-8 w-8 rounded-xl cursor-pointer bg-card border-border/60 hover:bg-muted"
-          aria-label="Previous Page"
-        >
-          {isRtl ? (
-            <ChevronRight className="h-4 w-4" />
-          ) : (
-            <ChevronLeft className="h-4 w-4" />
-          )}
-        </Button>
-
-        <div className="flex items-center gap-1">
-          {getPageNumbers().map((page, index) => {
-            if (page === "ellipsis") {
-              return (
-                <div
-                  key={`ellipsis-${index}`}
-                  className="h-8 w-8 flex items-center justify-center text-muted-foreground"
-                >
-                  <MoreHorizontal className="h-3.5 w-3.5" />
-                </div>
-              );
-            }
-
-            const isActive = page === currentPage;
-
-            return (
-              <Button
-                key={page}
-                variant={isActive ? "default" : "outline"}
+        <Pagination className="w-auto mx-0">
+          <PaginationContent className="gap-1">
+            <PaginationItem>
+              <PaginationLink
                 size="icon"
-                onClick={() => onPageChange(page as number)}
-                disabled={isLoading}
+                aria-label="Previous Page"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (currentPage > 1 && !isLoading)
+                    onPageChange(currentPage - 1);
+                }}
                 className={cn(
-                  "h-8 w-8 rounded-xl text-xs font-bold cursor-pointer transition-all",
-                  isActive
-                    ? "bg-primary text-primary-foreground shadow-xs"
-                    : "bg-card border-border/60 hover:bg-muted text-foreground",
+                  "h-8 w-8 rounded-xl cursor-pointer bg-card border border-border/60 hover:bg-muted transition-all",
+                  (currentPage <= 1 || isLoading) &&
+                    "pointer-events-none opacity-50",
                 )}
               >
-                {formatNumber(page as number)}
-              </Button>
-            );
-          })}
-        </div>
+                {isRtl ? (
+                  <ChevronRight className="h-4 w-4" />
+                ) : (
+                  <ChevronLeft className="h-4 w-4" />
+                )}
+              </PaginationLink>
+            </PaginationItem>
 
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage >= totalPages || isLoading}
-          className="h-8 w-8 rounded-xl cursor-pointer bg-card border-border/60 hover:bg-muted"
-          aria-label="Next Page"
-        >
-          {isRtl ? (
-            <ChevronLeft className="h-4 w-4" />
-          ) : (
-            <ChevronRight className="h-4 w-4" />
-          )}
-        </Button>
+            {getPageNumbers().map((page, index) => {
+              if (page === "ellipsis") {
+                return (
+                  <PaginationItem key={`ellipsis-${index}`}>
+                    <PaginationEllipsis className="h-8 w-8 flex items-center justify-center text-muted-foreground" />
+                  </PaginationItem>
+                );
+              }
+
+              const isActive = page === currentPage;
+
+              return (
+                <PaginationItem key={page}>
+                  <PaginationLink
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (!isLoading && !isActive) onPageChange(page as number);
+                    }}
+                    isActive={isActive}
+                    className={cn(
+                      "h-8 w-8 rounded-xl text-xs font-bold cursor-pointer transition-all border",
+                      isActive
+                        ? "bg-primary text-primary-foreground border-primary shadow-xs hover:bg-primary/90 hover:text-primary-foreground"
+                        : "bg-card border-border/60 hover:bg-muted text-foreground",
+                      isLoading && "pointer-events-none opacity-50",
+                    )}
+                  >
+                    {formatNumber(page as number, locale)}
+                  </PaginationLink>
+                </PaginationItem>
+              );
+            })}
+
+            <PaginationItem>
+              <PaginationLink
+                size="icon"
+                aria-label="Next Page"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (currentPage < totalPages && !isLoading)
+                    onPageChange(currentPage + 1);
+                }}
+                className={cn(
+                  "h-8 w-8 rounded-xl cursor-pointer bg-card border border-border/60 hover:bg-muted transition-all",
+                  (currentPage >= totalPages || isLoading) &&
+                    "pointer-events-none opacity-50",
+                )}
+              >
+                {isRtl ? (
+                  <ChevronLeft className="h-4 w-4" />
+                ) : (
+                  <ChevronRight className="h-4 w-4" />
+                )}
+              </PaginationLink>
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );
