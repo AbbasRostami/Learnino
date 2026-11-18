@@ -38,7 +38,7 @@ export const getTeachersColumns = ({
       ),
     },
     {
-      id: "teacher",
+      id: "name",
       accessorKey: "name",
       enableSorting: true,
       header: ({ column }) => (
@@ -98,7 +98,7 @@ export const getTeachersColumns = ({
       ),
     },
     {
-      id: "visibility",
+      id: "show",
       accessorKey: "show",
       enableSorting: true,
       header: ({ column }) => (

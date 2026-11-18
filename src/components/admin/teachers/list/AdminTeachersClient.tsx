@@ -36,6 +36,8 @@ export function AdminTeachersClient() {
     setSearch,
     setFilter,
     resetFilters,
+    sorting,
+    onSortingChange,
   } = useAdminTableParams<GetAdminTeachersParams>({
     customParsers: {
       show: parseAsStringEnum([...VISIBILITY_OPTIONS]),
@@ -88,18 +90,22 @@ export function AdminTeachersClient() {
       <TeachersFilters
         search={searchValue}
         show={params.show}
+        sortBy={params.sortBy}
+        order={params.order}
         onSearchChange={setSearch}
         onShowChange={(v) => setFilter("show", v)}
         onResetFilters={resetFilters}
       />
 
       <AdminDataTable
+        key={`${params.sortBy}-${params.order}`}
         columns={columns}
         data={teachers}
         isLoading={isLoading}
         isError={isError}
         onRetry={() => void refetch()}
-        enableSorting
+        sorting={sorting}
+        onSortingChange={onSortingChange}
         emptyStateMessage={t("table.noTeachersFound")}
         emptyStateDescription={t("table.noTeachersDescription")}
       />

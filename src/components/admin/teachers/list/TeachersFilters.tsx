@@ -9,6 +9,8 @@ import { useTranslations } from "next-intl";
 interface TeachersFiltersProps {
   search: string;
   show: string;
+  sortBy: string;
+  order: string;
   onSearchChange: (value: string) => void;
   onShowChange: (value: string) => void;
   onResetFilters: () => void;
@@ -17,12 +19,15 @@ interface TeachersFiltersProps {
 export function TeachersFilters({
   search,
   show,
+  sortBy,
+  order,
   onSearchChange,
   onShowChange,
   onResetFilters,
 }: TeachersFiltersProps) {
   const t = useTranslations("admin.teachers.filters");
-  const hasActiveFilters = Boolean(search) || Boolean(show);
+  const hasActiveFilters =
+    Boolean(search) || Boolean(show) || Boolean(sortBy) || Boolean(order);
 
   const filters: FilterSelectConfig[] = [
     {
