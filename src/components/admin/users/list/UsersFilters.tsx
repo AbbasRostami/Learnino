@@ -37,11 +37,7 @@ export function UsersFilters({
   const tFilters = useTranslations("admin.filters");
 
   const hasActiveFilters =
-    Boolean(search) ||
-    Boolean(role) ||
-    Boolean(isVerified) ||
-    sortBy !== "createdAt" ||
-    order !== "desc";
+    Boolean(search) || Boolean(role) || Boolean(isVerified);
 
   const filters: FilterSelectConfig[] = [
     {

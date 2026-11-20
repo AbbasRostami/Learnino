@@ -1,5 +1,3 @@
-// src/components/admin/users/list/columns.tsx
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AdminUserListItem } from "@/types";
 import { formatNumber } from "@/utils/formatters";
@@ -24,9 +22,6 @@ interface ColumnsProps {
   locale?: string;
   page?: number;
   limit?: number;
-  sortBy?: string;
-  order?: string;
-  onSortChange?: (field: string) => void;
 }
 
 export const getUsersColumns = ({
@@ -51,7 +46,7 @@ export const getUsersColumns = ({
       ),
     },
     {
-      id: "user",
+      id: "name",
       accessorKey: "name",
       enableSorting: true,
       header: ({ column }) => (
@@ -83,7 +78,7 @@ export const getUsersColumns = ({
       },
     },
     {
-      id: "contact",
+      id: "email",
       accessorKey: "email",
       enableSorting: true,
       header: ({ column }) => (

@@ -31,6 +31,8 @@ export function AdminUsersClient() {
     setSearch,
     setFilter,
     resetFilters,
+    sorting,
+    onSortingChange,
   } = useAdminTableParams<ListUsersParams>({
     customParsers: {
       role: parseAsStringEnum([...USER_ROLES]),
@@ -79,8 +81,8 @@ export function AdminUsersClient() {
         search={searchValue}
         role={params.role}
         isVerified={params.isVerified}
-        sortBy={params.sortBy}
-        order={params.order}
+        sortBy={params.sortBy ?? ""}
+        order={params.order ?? ""}
         onSearchChange={setSearch}
         onRoleChange={(v) => setFilter("role", v)}
         onVerifiedChange={(v) => setFilter("isVerified", v)}
@@ -90,11 +92,14 @@ export function AdminUsersClient() {
       />
 
       <AdminDataTable
+        key={`${params.sortBy}-${params.order}`}
         columns={columns}
         data={users}
         isLoading={isLoading}
         isError={isError}
         onRetry={() => void refetch()}
+        sorting={sorting}
+        onSortingChange={onSortingChange}
         emptyStateMessage={t("table.noUsersFound")}
         emptyStateDescription={t("table.noUsersDescription")}
       />
