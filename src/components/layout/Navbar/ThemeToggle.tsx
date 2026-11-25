@@ -10,7 +10,7 @@ import { Monitor, Moon, Sun } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createPortal } from "react-dom";
 
 const ANIMATION_DURATION = 1.2;
@@ -20,14 +20,9 @@ export function ThemeToggle() {
   const { setTheme, theme, resolvedTheme, systemTheme } = useTheme();
   const t = useTranslations("theme");
 
-  const [mounted, setMounted] = useState(false);
   const [animatingTheme, setAnimatingTheme] = useState<"light" | "dark" | null>(
     null,
   );
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleThemeChange = (newTheme: "light" | "dark" | "system") => {
     const targetTheme =
@@ -51,14 +46,10 @@ export function ThemeToggle() {
     }, ANIMATION_DURATION * 1000);
   };
 
-  if (!mounted) {
-    return <div className="h-9 w-9 rounded-full bg-accent/40 animate-pulse" />;
-  }
-
   const isDarkTarget = animatingTheme === "dark";
 
   const animationPortal =
-    mounted && typeof document !== "undefined"
+    typeof document !== "undefined"
       ? createPortal(
           <AnimatePresence>
             {animatingTheme && (
