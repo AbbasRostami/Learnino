@@ -3,7 +3,7 @@ import { TeacherProfileSkeleton } from "@/components/skeleton";
 import { TeacherProfileClient } from "@/components/teachers/TeacherProfileClient";
 import {
   cleanMetaDescription,
-  getDynamicAlternates,
+  getDynamicCanonical,
   getFullUrl,
   PRIVATE_ROBOTS,
   safeEncodeSlug,
@@ -13,7 +13,7 @@ import {
 import { getTeacherBySlugServer } from "@/services/teacher/teachers";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { Suspense } from "react";
 
 interface TeacherSectionProps {
@@ -32,6 +32,12 @@ async function TeacherDetailSection({ paramsPromise }: TeacherSectionProps) {
     notFound();
   }
 
+  const decodedUrlSlug = decodeURIComponent(slug);
+  const decodedTeacherSlug = decodeURIComponent(teacher.slug);
+  if (decodedUrlSlug !== decodedTeacherSlug) {
+    permanentRedirect(`/${locale}/teachers/${safeEncodeSlug(teacher.slug)}`);
+  }
+
   return (
     <>
       <BreadcrumbJsonLd
@@ -40,7 +46,7 @@ async function TeacherDetailSection({ paramsPromise }: TeacherSectionProps) {
           { name: teacher.name },
         ]}
       />
-      <TeacherProfileClient slug={slug} initialTeacher={teacher} />
+      <TeacherProfileClient slug={teacher.slug} initialTeacher={teacher} />
     </>
   );
 }
@@ -53,23 +59,26 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const teacher = await getTeacherBySlugServer(locale, slug);
 
-  if (!teacher || !teacher.show) {
+  if (!teacher || !teacher?.show) {
     return {
       title: locale === "fa" ? "مدرس یافت نشد" : "Teacher Not Found",
       robots: PRIVATE_ROBOTS,
     };
   }
 
-  const description = cleanMetaDescription(teacher.bio || "");
+  const canonicalSlug = teacher?.slug;
+  const description = cleanMetaDescription(teacher?.bio || "");
   const isFa = locale === "fa";
   const title = isFa
-    ? `${teacher.name} - مدرس`
-    : `${teacher.name} - Instructor`;
+    ? `${teacher?.name} - مدرس`
+    : `${teacher?.name} - Instructor`;
 
-  const encodedSlug = safeEncodeSlug(teacher.slug);
-  const fullPageUrl = getFullUrl(`/teachers/${encodedSlug}`, locale);
+  const fullPageUrl = getFullUrl(
+    `/teachers/${safeEncodeSlug(canonicalSlug)}`,
+    locale,
+  );
 
-  const rawAvatar = teacher.avatar || SEO_CONFIG.defaultImages.og;
+  const rawAvatar = teacher?.avatar || SEO_CONFIG.defaultImages.og;
   const ogImage = rawAvatar.startsWith("http")
     ? rawAvatar
     : getFullUrl(rawAvatar);
@@ -85,9 +94,9 @@ export async function generateMetadata({
       images: [
         {
           url: ogImage,
-          width: teacher.avatar ? 400 : 1200,
-          height: teacher.avatar ? 400 : 630,
-          alt: teacher.name,
+          width: teacher?.avatar ? 400 : 1200,
+          height: teacher?.avatar ? 400 : 630,
+          alt: teacher?.name,
         },
       ],
       locale: isFa ? "fa_IR" : "en_US",
@@ -99,11 +108,10 @@ export async function generateMetadata({
       description,
       images: [ogImage],
     },
-    alternates: getDynamicAlternates({
+    alternates: getDynamicCanonical({
       basePath: "teachers",
-      currentLocale: locale,
-      slugFa: teacher.slug,
-      slugEn: teacher.slug,
+      locale,
+      canonicalSlug,
     }),
   };
 }

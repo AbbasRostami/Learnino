@@ -11,12 +11,12 @@ export const SEO_CONFIG = {
   },
 
   tagline: {
-    fa: "پلتفرم آموزش برنامه‌نویسی",
+    fa: "پلتفرم آموزش برنامه‌ نویسی",
     en: "Programming Education Platform",
   },
 
   description: {
-    fa: "لرنینو، پلتفرم تخصصی آموزش برنامه‌نویسی و توسعه نرم‌افزار. از صفر تا ورود به بازار کار با دوره‌های پروژه‌محور و اساتید مجرب.",
+    fa: "لرنینو، پلتفرم تخصصی آموزش برنامه‌ نویسی و توسعه نرم‌افزار. از صفر تا ورود به بازار کار با دوره‌های پروژه‌ محور و اساتید مجرب.",
     en: "Learnino is a specialized platform for programming and software development education. From zero to job-ready with project-based courses.",
   },
 

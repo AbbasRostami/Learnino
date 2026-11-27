@@ -9,6 +9,15 @@ export function cleanMetaDescription(html: string, maxLength = 155): string {
     .slice(0, maxLength);
 }
 
+export function safeEncodeSlug(slug: string): string {
+  if (!slug) return "";
+  try {
+    return encodeURIComponent(decodeURIComponent(slug));
+  } catch {
+    return encodeURIComponent(slug);
+  }
+}
+
 export function getFullUrl(path: string, locale?: Locale): string {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   const cleanPath = normalizedPath === "/" ? "" : normalizedPath;
@@ -18,20 +27,41 @@ export function getFullUrl(path: string, locale?: Locale): string {
 
 export function getAlternates(path: string, currentLocale: Locale) {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  const cleanPath = normalizedPath === "/" ? "" : normalizedPath;
+  const cleanPathWithoutQuery =
+    normalizedPath.split("?")[0] === "/" ? "" : normalizedPath.split("?")[0];
 
-  const encodedPath = cleanPath
+  const encodedPath = cleanPathWithoutQuery
     .split("/")
-    .map((segment) => encodeURIComponent(decodeURIComponent(segment)))
+    .map((segment) => safeEncodeSlug(segment))
     .join("/");
 
+  const urlFa = `${SEO_CONFIG.baseUrl}/fa${encodedPath}`;
+  const urlEn = `${SEO_CONFIG.baseUrl}/en${encodedPath}`;
+
   return {
-    canonical: `/${currentLocale}${encodedPath}`,
+    canonical: currentLocale === "fa" ? urlFa : urlEn,
     languages: {
-      fa: `/fa${encodedPath}`,
-      en: `/en${encodedPath}`,
-      "x-default": `/fa${encodedPath}`,
+      fa: urlFa,
+      en: urlEn,
+      "x-default": urlFa,
     },
+  };
+}
+
+export function getDynamicCanonical({
+  basePath,
+  locale,
+  canonicalSlug,
+}: {
+  basePath: "blog" | "courses" | "teachers";
+  locale: Locale;
+  canonicalSlug: string;
+}) {
+  const encodedSlug = safeEncodeSlug(canonicalSlug);
+  const fullCanonicalUrl = `${SEO_CONFIG.baseUrl}/${locale}/${basePath}/${encodedSlug}`;
+
+  return {
+    canonical: fullCanonicalUrl,
   };
 }
 
@@ -97,40 +127,4 @@ export const PRIVATE_ROBOTS: Metadata["robots"] = {
 
 export function serializeJsonLd(data: Record<string, unknown>): string {
   return JSON.stringify(data).replace(/</g, "\\u003c").replace(/>/g, "\\u003e");
-}
-
-export function safeEncodeSlug(slug: string): string {
-  if (!slug) return "";
-  try {
-    return encodeURIComponent(decodeURIComponent(slug));
-  } catch {
-    return encodeURIComponent(slug);
-  }
-}
-
-export function getDynamicAlternates({
-  basePath,
-  currentLocale,
-  slugFa,
-  slugEn,
-}: {
-  basePath: "blog" | "courses" | "teachers";
-  currentLocale: Locale;
-  slugFa: string;
-  slugEn?: string;
-}) {
-  const encodedFa = safeEncodeSlug(slugFa);
-  const encodedEn = slugEn ? safeEncodeSlug(slugEn) : encodedFa;
-
-  const urlFa = `${SEO_CONFIG.baseUrl}/fa/${basePath}/${encodedFa}`;
-  const urlEn = `${SEO_CONFIG.baseUrl}/en/${basePath}/${encodedEn}`;
-
-  return {
-    canonical: currentLocale === "fa" ? urlFa : urlEn,
-    languages: {
-      fa: urlFa,
-      en: urlEn,
-      "x-default": urlFa,
-    },
-  };
 }

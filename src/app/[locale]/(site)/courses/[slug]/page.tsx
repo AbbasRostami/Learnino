@@ -4,7 +4,7 @@ import {
   cleanMetaDescription,
   getDefaultOpenGraph,
   getDefaultTwitter,
-  getDynamicAlternates,
+  getDynamicCanonical,
   getFullUrl,
   PRIVATE_ROBOTS,
   safeEncodeSlug,
@@ -14,7 +14,7 @@ import {
 import { getCourseBySlugServer } from "@/services/course/courses";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { Suspense } from "react";
 
 interface CourseSectionProps {
@@ -32,6 +32,12 @@ async function CourseDetailSection({ paramsPromise }: CourseSectionProps) {
     notFound();
   }
 
+  const decodedUrlSlug = decodeURIComponent(slug);
+  const decodedCourseSlug = decodeURIComponent(course.slug);
+  if (decodedUrlSlug !== decodedCourseSlug) {
+    permanentRedirect(`/${locale}/courses/${safeEncodeSlug(course.slug)}`);
+  }
+
   return (
     <>
       <CourseJsonLd course={course} locale={locale} />
@@ -44,7 +50,7 @@ async function CourseDetailSection({ paramsPromise }: CourseSectionProps) {
         ]}
       />
 
-      <CourseDetailClient slug={slug} initialCourse={course} />
+      <CourseDetailClient slug={course.slug} initialCourse={course} />
     </>
   );
 }
@@ -82,12 +88,15 @@ export async function generateMetadata({
       };
     }
 
-    const description = cleanMetaDescription(course?.description || "");
-    const title = course?.title;
-    const encodedSlug = safeEncodeSlug(course?.slug);
-    const fullPageUrl = getFullUrl(`/courses/${encodedSlug}`, locale);
+    const canonicalSlug = course.slug;
+    const description = cleanMetaDescription(course.description || "");
+    const title = course.title;
+    const fullPageUrl = getFullUrl(
+      `/courses/${safeEncodeSlug(canonicalSlug)}`,
+      locale,
+    );
 
-    const rawImageUrl = course?.imageUrl || SEO_CONFIG.defaultImages.og;
+    const rawImageUrl = course.imageUrl || SEO_CONFIG.defaultImages.og;
     const ogImageUrl = rawImageUrl.startsWith("http")
       ? rawImageUrl
       : getFullUrl(rawImageUrl);
@@ -114,11 +123,10 @@ export async function generateMetadata({
         description,
         images: [ogImageUrl],
       }),
-      alternates: getDynamicAlternates({
+      alternates: getDynamicCanonical({
         basePath: "courses",
-        currentLocale: locale,
-        slugFa: course?.slug,
-        slugEn: course?.slug,
+        locale,
+        canonicalSlug,
       }),
     };
   } catch {

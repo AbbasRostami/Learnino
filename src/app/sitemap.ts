@@ -36,6 +36,14 @@ function createStaticLocalizedEntry(
       ? `${SEO_CONFIG.baseUrl}/${locale}`
       : `${SEO_CONFIG.baseUrl}/${locale}${cleanPath}`;
 
+    const urlFa = isHome
+      ? `${SEO_CONFIG.baseUrl}/fa`
+      : `${SEO_CONFIG.baseUrl}/fa${cleanPath}`;
+
+    const urlEn = isHome
+      ? `${SEO_CONFIG.baseUrl}/en`
+      : `${SEO_CONFIG.baseUrl}/en${cleanPath}`;
+
     return {
       url: routeUrl,
       lastModified,
@@ -43,15 +51,9 @@ function createStaticLocalizedEntry(
       priority,
       alternates: {
         languages: {
-          fa: isHome
-            ? `${SEO_CONFIG.baseUrl}/fa`
-            : `${SEO_CONFIG.baseUrl}/fa${cleanPath}`,
-          en: isHome
-            ? `${SEO_CONFIG.baseUrl}/en`
-            : `${SEO_CONFIG.baseUrl}/en${cleanPath}`,
-          "x-default": isHome
-            ? `${SEO_CONFIG.baseUrl}/fa`
-            : `${SEO_CONFIG.baseUrl}/fa${cleanPath}`,
+          fa: urlFa,
+          en: urlEn,
+          "x-default": urlFa,
         },
       },
     };
@@ -68,42 +70,54 @@ function createDynamicLocalizedEntries<T extends BaseEntity>(
   const enMap = new Map(itemsEn.map((item) => [item.id, item]));
   const entries: MetadataRoute.Sitemap = [];
 
-  itemsFa?.forEach((itemFa) => {
+  itemsFa.forEach((itemFa) => {
     const itemEn = enMap.get(itemFa.id);
+    const lastModified = new Date(itemFa.updatedAt || itemFa.createdAt);
 
-    const slugFa = itemFa?.slug;
-    const slugEn = itemEn?.slug || itemFa?.slug;
+    const encodedFa = safeEncodeSlug(itemFa.slug);
+    const urlFa = `${SEO_CONFIG.baseUrl}/fa/${basePath}/${encodedFa}`;
 
-    const encodedSlugFa = safeEncodeSlug(slugFa);
-    const encodedSlugEn = safeEncodeSlug(slugEn);
+    if (itemEn && itemEn.slug) {
+      const encodedEn = safeEncodeSlug(itemEn.slug);
+      const urlEn = `${SEO_CONFIG.baseUrl}/en/${basePath}/${encodedEn}`;
 
-    const urlFa = `${SEO_CONFIG.baseUrl}/fa/${basePath}/${encodedSlugFa}`;
-    const urlEn = `${SEO_CONFIG.baseUrl}/en/${basePath}/${encodedSlugEn}`;
-    const lastModified = new Date(itemFa?.updatedAt || itemFa?.createdAt);
+      const alternates = {
+        languages: {
+          fa: urlFa,
+          en: urlEn,
+          "x-default": urlFa,
+        },
+      };
 
-    const alternates = {
-      languages: {
-        fa: urlFa,
-        en: urlEn,
-        "x-default": urlFa,
-      },
-    };
+      entries.push({
+        url: urlFa,
+        lastModified,
+        changeFrequency,
+        priority,
+        alternates,
+      });
 
-    entries.push({
-      url: urlFa,
-      lastModified,
-      changeFrequency,
-      priority,
-      alternates,
-    });
-
-    entries.push({
-      url: urlEn,
-      lastModified,
-      changeFrequency,
-      priority,
-      alternates,
-    });
+      entries.push({
+        url: urlEn,
+        lastModified,
+        changeFrequency,
+        priority,
+        alternates,
+      });
+    } else {
+      entries.push({
+        url: urlFa,
+        lastModified,
+        changeFrequency,
+        priority,
+        alternates: {
+          languages: {
+            fa: urlFa,
+            "x-default": urlFa,
+          },
+        },
+      });
+    }
   });
 
   return entries;
